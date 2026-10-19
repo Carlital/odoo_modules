@@ -1,0 +1,20 @@
+{
+    'name': 'Test Drive Management',
+    'version': '1.0',
+    'summary': 'Manage test drive configurations and reservations',
+    'sequence': -100,
+    'description': 'Module to manage test drive configurations and reservations.',
+    'category': 'Sales',
+    'author': 'Carla Lomas',
+    'license': 'LGPL-3',
+    'depends': ['base', 'crm'],
+    'data': [
+        'security/ir.model.access.csv',
+        'security/security.xml',
+        'views/test_drive_configuration_views.xml',
+        'views/test_drive_import_wizard_views.xml',
+    ],
+    'installable': True,
+    'application': True,
+    'auto_install': False,
+}

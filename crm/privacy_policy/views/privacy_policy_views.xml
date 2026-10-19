@@ -1,0 +1,24 @@
+<odoo>
+    <record id="view_privacy_policy_form" model="ir.ui.view">
+        <field name="name">privacy.policy.form</field>
+        <field name="model">privacy.policy</field>
+        <field name="arch" type="xml">
+            <form string="Privacy Policy">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="content"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_privacy_policy" model="ir.actions.act_window">
+        <field name="name">Privacy Policy</field>
+        <field name="res_model">privacy.policy</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_privacy_policy" name="Privacy Policy" parent="base.menu_custom" action="action_privacy_policy"/>
+</odoo>

@@ -1,0 +1,38 @@
+<odoo>
+    <record id="view_test_drive_configuration_form" model="ir.ui.view">
+        <field name="name">test.drive.configuration.form</field>
+        <field name="model">test.drive.configuration</field>
+        <field name="arch" type="xml">
+            <form string="Test Drive Configuration">
+                <sheet>
+                    <group>
+                        <field name="date"/>
+                        <field name="time"/>
+                        <field name="available"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_test_drive_configuration_tree" model="ir.ui.view">
+        <field name="name">test.drive.configuration.tree</field>
+        <field name="model">test.drive.configuration</field>
+        <field name="arch" type="xml">
+            <tree string="Test Drive Configuration">
+                <field name="date"/>
+                <field name="time"/>
+                <field name="available"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_test_drive_configuration" model="ir.actions.act_window">
+        <field name="name">Test Drive Configuration</field>
+        <field name="res_model">test.drive.configuration</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_test_drive_management" name="Test Drive Management" parent="crm.crm_menu_root" sequence="10"/>
+    <menuitem id="menu_test_drive_slot" name="Test Drive Slots" parent="menu_test_drive_management" action="action_test_drive_configuration" sequence="10"/>
+</odoo>

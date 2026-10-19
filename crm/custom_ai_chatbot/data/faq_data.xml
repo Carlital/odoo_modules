@@ -1,0 +1,10 @@
+<odoo>
+    <record id="faq_1" model="crm.faq">
+        <field name="question">¿Cuáles son los métodos de pago disponibles?</field>
+        <field name="answer">Puedes pagar en efectivo, tarjeta de crédito o financiamiento a 24, 36 o 48 meses.</field>
+    </record>
+    <record id="faq_2" model="crm.faq">
+        <field name="question">¿Cuáles son los colores disponibles del auto modelo X?</field>
+        <field name="answer">El modelo X está disponible en rojo, azul y negro.</field>
+    </record>
+</odoo>

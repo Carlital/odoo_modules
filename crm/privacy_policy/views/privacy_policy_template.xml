@@ -1,0 +1,10 @@
+<odoo>
+    <template id="privacy_policy_template" name="Privacy Policy">
+        <t t-call="website.layout">
+            <div class="container">
+                <h1 t-field="policy.name"/>
+                <div t-raw="policy.content"/>
+            </div>
+        </t>
+    </template>
+</odoo>

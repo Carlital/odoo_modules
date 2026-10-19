@@ -1,0 +1,18 @@
+<odoo>
+    <record id="view_crm_lead_form_inherit_product" model="ir.ui.view">
+        <field name="name">crm.lead.form.inherit.product</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet/group/group[last()]" position="after">
+                <group string="Selected Product">
+                    <field name="selected_product_id"/>
+                    <field name="selected_product_code"/>
+                </group>
+                <group string="Product Details">
+                    <field name="price"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>

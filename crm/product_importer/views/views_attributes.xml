@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Vista de formulario para productos -->
+    <record id="view_product_form_inherit" model="ir.ui.view">
+        <field name="name">product.form.inherit</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_only_form_view"/>
+        <field name="arch" type="xml">
+            <sheet position="inside">
+                <group string="Información del Producto">
+                    <group>
+                        <field name="name"/>
+                        <field name="default_code"/>
+                    </group>
+                    <group>
+                        <field name="category_id"/>
+                        <field name="subcategory_id"/>
+                    </group>
+                    <group>
+                        <field name="list_price"/>
+                        <field name="description_sale"/>
+                    </group>
+                    <group>
+                        <field name="image_url"/>
+                    </group>
+                </group>
+            </sheet>
+        </field>
+    </record>
+
+    <!-- Vista kanban para productos -->
+    <record id="product_template_kanban_view_inherit" model="ir.ui.view">
+        <field name="name">product.template.kanban.inherit</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_kanban_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[contains(@class, 'oe_kanban_details')]" position="inside">
+                <div class="oe_kanban_text">
+                    <strong><field name="category_id"/></strong> - <field name="subcategory_id"/>
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>

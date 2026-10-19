@@ -1,0 +1,42 @@
+<odoo>
+    <!-- Acción para mostrar las Preguntas Frecuentes en la vista de lista y formulario -->
+    <record id="action_crm_faq" model="ir.actions.act_window">
+        <field name="name">Preguntas Frecuentes</field>
+        <field name="res_model">crm.faq</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p>Gestiona las preguntas frecuentes para mejorar la asistencia en ventas.</p>
+        </field>
+    </record>
+
+    <!-- Vista Formulario -->
+    <record id="view_crm_faq_form" model="ir.ui.view">
+        <field name="name">crm.faq.form</field>
+        <field name="model">crm.faq</field>
+        <field name="arch" type="xml">
+            <form string="Preguntas Frecuentes">
+                <sheet>
+                    <group>
+                        <field name="question"/>
+                        <field name="answer"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Vista Árbol -->
+    <record id="view_crm_faq_tree" model="ir.ui.view">
+        <field name="name">crm.faq.tree</field>
+        <field name="model">crm.faq</field>
+        <field name="arch" type="xml">
+            <tree string="Preguntas Frecuentes">
+                <field name="question"/>
+                <field name="answer"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Menú en Configuración del CRM -->
+    <menuitem id="menu_crm_faq" name="Preguntas Frecuentes" parent="crm.crm_menu_config" action="action_crm_faq"/>
+</odoo>

@@ -1,0 +1,22 @@
+<odoo>
+    <data noupdate="1">
+        <record id="access_test_drive_configuration_user" model="ir.model.access">
+            <field name="name">test_drive_configuration_access_user</field>
+            <field name="model_id" ref="model_test_drive_configuration"/>
+            <field name="group_id" ref="base.group_user"/>
+            <field name="perm_read" eval="1"/>
+            <field name="perm_write" eval="1"/>
+            <field name="perm_create" eval="1"/>
+            <field name="perm_unlink" eval="1"/>
+        </record>
+        <record id="access_test_drive_import_wizard_user" model="ir.model.access">
+            <field name="name">test_drive_import_wizard_access_user</field>
+            <field name="model_id" ref="model_test_drive_import_wizard"/>
+            <field name="group_id" ref="base.group_user"/>
+            <field name="perm_read" eval="1"/>
+            <field name="perm_write" eval="1"/>
+            <field name="perm_create" eval="1"/>
+            <field name="perm_unlink" eval="1"/>
+        </record>
+    </data>
+</odoo>

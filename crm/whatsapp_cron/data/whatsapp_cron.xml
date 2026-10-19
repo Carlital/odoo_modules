@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="ir_cron_whatsapp_messages" model="ir.cron">
+            <field name="name">Send WhatsApp Messages</field>
+            <field name="model_id" ref="model_whatsapp_cron"/>
+            <field name="state">code</field>
+            <field name="code">model.send_whatsapp_messages()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">hours</field>
+            <field name="numbercall">-1</field>
+            <field name="active">True</field>
+        </record>
+    </data>
+</odoo>
