@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_invoice_activity">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <div class="page">
+                    <h2>Reporte de Facturas por Actividad</h2>
+                    <p>
+                        <strong>Periodo:</strong>
+                        <span t-esc="date_from"/> - <span t-esc="date_to"/>
+                    </p>
+                    <p>
+                        <strong>Actividad:</strong>
+                        <span t-esc="selected_activity and selected_activity.name or 'Todas'"/>
+                    </p>
+
+                    <table class="table table-sm o_main_table">
+                        <thead>
+                            <tr>
+                                <th>Fecha</th>
+                                <th>Factura</th>
+                                <th>Cliente/Proveedor</th>
+                                <th>Actividad</th>
+                                <th class="text-end">Subtotal</th>
+                                <th class="text-end">Impuestos</th>
+                                <th class="text-end">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="docs" t-as="move">
+                                <tr>
+                                    <td><span t-esc="move.invoice_date"/></td>
+                                    <td><span t-esc="move.name"/></td>
+                                    <td><span t-esc="move.partner_id.display_name"/></td>
+                                    <td><span t-esc="move.activity_id.name or '-'"/></td>
+                                    <td class="text-end"><span t-esc="move.amount_untaxed" t-options="{'widget': 'monetary', 'display_currency': move.currency_id}"/></td>
+                                    <td class="text-end"><span t-esc="move.amount_tax" t-options="{'widget': 'monetary', 'display_currency': move.currency_id}"/></td>
+                                    <td class="text-end"><span t-esc="move.amount_total" t-options="{'widget': 'monetary', 'display_currency': move.currency_id}"/></td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+
+                    <div class="mt16">
+                        <p><strong>Cantidad de facturas:</strong> <span t-esc="totals['count']"/></p>
+                        <p><strong>Subtotal acumulado:</strong> <span t-esc="totals['amount_untaxed']"/></p>
+                        <p><strong>Impuestos acumulados:</strong> <span t-esc="totals['amount_tax']"/></p>
+                        <p><strong>Total acumulado:</strong> <span t-esc="totals['amount_total']"/></p>
+                    </div>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>

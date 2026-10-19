@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="acs_multiaddress_pos_18.SelectDirectionPopup">
+        <Dialog size="'md'">
+            <t t-set-slot="header">
+                <h4 class="modal-title"><t t-esc="title"/></h4>
+            </t>
+            <div class="popup-select-direction">
+                <div class="selection-container">
+                    <div class="mb-3">
+                        <label class="form-label">Dirección</label>
+                        <div class="input-group">
+                            <select class="form-select" t-ref="addressSelect" t-on-change="onAddressChange">
+                                <option value=""
+                                    t-att-selected="!state.selectedAddressId"
+                                    t-att-data-edit="props.partner.id"
+                                    t-att-data-original-id="props.partner.id_original || props.partner.id">
+                                    <t t-esc="props.partner.address || 'Dirección principal'"/>
+                                </option>
+                                <t t-if="state.addresses and state.addresses.length > 0 and !props.singleMode">
+                                    <t t-foreach="state.addresses" t-as="address" t-key="address.id">
+                                        <option t-att-value="address.id"
+                                            t-att-selected="state.selectedAddressId == address.id"
+                                            t-att-data-edit="address.id"
+                                            t-att-data-original-id="address.id_original || address.id">
+                                            <t t-esc="address.address"/>
+                                        </option>
+                                    </t>
+                                </t>
+                            </select>
+                            <button class="btn btn-secondary" type="button" t-on-click="onEditAddress" title="Editar dirección">
+                                <i class="fa fa-pencil-square"/>
+                            </button>
+                            <button class="btn btn-success" type="button" t-on-click="onAddAddress" title="Agregar nueva dirección">
+                                <i class="fa fa-plus"/>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Otros</label>
+                        <input type="text"
+                            class="form-control"
+                            t-ref="otherInput"
+                            t-att-value="state.other"
+                            t-on-input="onOtherChange"
+                            placeholder="Otros datos"/>
+                    </div>
+                </div>
+            </div>
+            <t t-set-slot="footer">
+                <button class="btn btn-primary" t-on-click="confirm">
+                    <t t-esc="confirmText"/>
+                </button>
+                <button class="btn btn-secondary" t-on-click="cancel">
+                    <t t-esc="cancelText"/>
+                </button>
+            </t>
+        </Dialog>
+    </t>
+</templates>

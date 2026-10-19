@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="group_activity_restricted_invoice_view" model="res.groups">
+        <field name="name">Facturacion por Actividad</field>
+        <field name="category_id" ref="base.module_category_accounting"/>
+        <field name="implied_ids" eval="[(4, ref('account.group_account_invoice'))]"/>
+    </record>
+
+    <record id="rule_account_move_activity_filter" model="ir.rule">
+        <field name="name">Facturas por actividad seleccionada</field>
+        <field name="model_id" ref="account.model_account_move"/>
+        <field name="domain_force">[("move_type", "in", ["out_invoice", "out_refund", "in_invoice", "in_refund"]), ("activity_id", "=", user.invoice_activity_id.id)]</field>
+        <field name="groups" eval="[(4, ref('account_billing_excel_flex.group_activity_restricted_invoice_view'))]"/>
+    </record>
+
+    <record id="rule_billing_activity_own_user" model="ir.rule">
+        <field name="name">Actividades propias por usuario</field>
+        <field name="model_id" ref="account_billing_excel_flex.model_billing_activity"/>
+        <field name="domain_force">[("id", "in", user.billing_activity_ids.ids)]</field>
+        <field name="groups" eval="[(4, ref('account_billing_excel_flex.group_activity_restricted_invoice_view'))]"/>
+    </record>
+
+</odoo>

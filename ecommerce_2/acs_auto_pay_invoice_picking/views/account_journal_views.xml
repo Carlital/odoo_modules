@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_account_journal_form_inherit_acs" model="ir.ui.view">
+        <field name="name">account.journal.form.inherit.acs</field>
+        <field name="model">account.journal</field>
+        <field name="inherit_id" ref="account.view_account_journal_form" />
+        <field name="arch" type="xml">
+            <div class="oe_title" position="after">
+                <group>
+                    <field name="preferred_method" string="Preferente"
+                        invisible="type not in ['cash', 'bank']" />
+                </group>
+            </div>
+        </field>
+    </record>
+</odoo>

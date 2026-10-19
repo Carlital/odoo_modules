@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    
+    <!-- Cargar assets CSS y JS en el frontend -->
+    <template id="assets_frontend" inherit_id="website.assets_frontend" name="Directorio Institucional Assets">
+        <xpath expr="." position="inside">
+            <link rel="stylesheet" href="/directorio_institucional/static/src/css/directorio.css"/>
+            <script type="text/javascript" src="/directorio_institucional/static/src/js/directorio.js"></script>
+        </xpath>
+    </template>
+
+</odoo>

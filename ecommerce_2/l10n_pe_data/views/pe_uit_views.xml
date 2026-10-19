@@ -1,0 +1,49 @@
+<odoo>
+  <data>
+    <!-- catalog 01 -->
+    <record id="view_pe_uit_tree" model="ir.ui.view" >
+      <field name="name">pe.uit.tree</field>
+      <field name="model">pe.uit</field>
+      <field name="arch" type="xml">
+        <list>
+          <field name="year"/>
+          <field name="start_date"/>
+          <field name="due_date"/>
+          <field name="amount"/>
+        </list>
+      </field>
+    </record>
+
+    <record id="view_pe_uit_from" model="ir.ui.view">
+        <field name="name">pe.uit.form</field>
+        <field name="model">pe.uit</field>
+        <field name="arch" type="xml">
+            <form>
+              <sheet>
+                <group>
+                    <group>
+                        <field name="year"/>
+                        <field name="start_date"/>
+                    </group>
+                    <group>
+                        <field name="amount"/>
+                        <field name="due_date"/>
+                        <field name="active"/>
+                    </group>
+                </group>
+                <label for="description"/>
+                <field name="description" />
+              </sheet>
+            </form>
+        </field>
+    </record>
+
+      <record id="action_pe_uit" model="ir.actions.act_window">
+        <field name="name">UIT</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">pe.uit</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help">Display and manage the UIT.</field>
+    </record>
+  </data>
+</odoo>

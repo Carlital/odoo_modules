@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+        <!-- Crear departamento Motorizados si no existe -->
+        <record id="hr_department_motorizados" model="hr.department">
+            <field name="name">Motorizados</field>
+        </record>
+        
+        <!-- Función para configurar categoría Motorizado -->
+        <function model="hr.employee.category" name="_setup_motorizado_category"/>
+        
+        <!-- Recomputar es_motorizado para todos los empleados -->
+        <function model="hr.employee" name="_recompute_es_motorizado"/>
+    </data>
+</odoo>

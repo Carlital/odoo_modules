@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="purchase_order_form_acs_inherit" model="ir.ui.view">
+            <field name="name">purchase.order.form.acs.inherit</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form" />
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='partner_id']" position="after">
+                    <field name="acs_contact_provider"
+                        context="{'default_parent_id': partner_id, 'default_type': 'contact'}"
+                        options="{'no_create_edit': False, 'no_create': False}" />
+                </xpath>
+
+                <!-- Añade los campos al final de la segunda columna del grupo principal -->
+                <xpath expr="//div[@class='oe_title']/following-sibling::group/group[2]"
+                    position="inside">
+                    <field name="other_reception_street" readonly="state not in ('draft', 'sent')" />
+                </xpath>
+
+                <!-- Oculta el campo de su posición original -->
+                <xpath expr="//field[@name='payment_term_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='currency_id']" position="after">
+                    <field name="payment_term_id"
+                        readonly="state in ('purchase', 'done')" />
+                    <field name="other_reception_input"
+                        readonly="state not in ('draft', 'sent')"
+                        invisible="not other_reception_street"
+                        required="other_reception_street" />
+                </xpath>
+
+                <xpath expr="//field[@name='origin']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='date_order']" position="before">
+                    <field name="origin"
+                        readonly="state in ('purchase', 'done')" />
+                </xpath>
+
+            </field>
+        </record>
+    </data>
+</odoo>

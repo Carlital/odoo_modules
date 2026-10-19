@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="addval_view_sale_report_search" model="ir.ui.view">
+        <field name="name">addval.sale.report.search</field>
+        <field name="model">sale.report</field>
+        <field name="inherit_id" ref="sale.view_order_product_search"/>
+        <field name="arch" type="xml">
+            <data>
+                <xpath expr="//filter[@name='company']" position="after">
+                    <filter string="Marca" name="product_brand_id" context="{'group_by':'product_brand_id'}"/>
+                </xpath>
+            </data>
+        </field>
+    </record>
+</odoo>

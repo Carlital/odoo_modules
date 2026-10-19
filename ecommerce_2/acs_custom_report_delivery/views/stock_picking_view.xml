@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_picking_form_acs_custom" model="ir.ui.view">
+            <field name="name">stock.picking.form.acs.custom</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form" />
+            <field name="arch" type="xml">
+                <xpath expr="//page[@name='note']" position="after">
+                    <page string="Información de Reporte" name="acs_report_info">
+                        <group>
+                            <field name="acs_indications"
+                                placeholder="Añadir indicaciones para el reporte..." />
+                            <field name="acs_coordinations"
+                                placeholder="Añadir coordinaciones para el reporte..." />
+                            <field name="acs_history"
+                                placeholder="Añadir historia para el reporte..." />
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

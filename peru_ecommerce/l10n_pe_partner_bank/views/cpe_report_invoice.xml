@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template id="report_invoice_document" inherit_id="l10n_pe_cpe.report_cpe_document">
+        <xpath expr="//div[hasclass('bank_data')]" position="inside">
+            <strong>CUENTAS BANCARIAS</strong>
+            <t t-set="bank_ids" t-value="o.company_id.partner_id.bank_ids.filtered(lambda s: s.pe_no_print == False)"/>
+            <table style="width: 100%; border-radius: 0.25rem !important; border: 2px solid #dee2e6 !important; padding: 0px 15px 0px 15px;">
+                <thead>
+                    <tr>
+                        <strong>
+                            <th name="th_bank_id"><span>Bank</span></th>
+                            <th name="th_currency_id"><span>Currency</span></th>
+                            <th name="th_pe_acc_type"><span>Account Type</span></th>
+                            <th name="th_pe_acc_number"><span>Account Number</span></th>
+                            <th name="th_pe_acc_ncci"><span>Number CCI</span></th>
+                        </strong>
+                    </tr>
+                </thead>
+                <tbody>
+                    <t t-foreach="bank_ids" t-as="line_bank">
+                        <tr>
+                             <td>
+                                <span t-field="line_bank.bank_id"/>
+                             </td>
+                             <td>
+                                <span t-field="line_bank.currency_id"/>
+                             </td>
+                             <td>
+                                <span t-field="line_bank.pe_acc_type"/>
+                             </td>
+                             <td>
+                                <span t-field="line_bank.acc_number"/>
+                             </td>
+                             <td>
+                                <span t-field="line_bank.pe_acc_ncci"/>
+                             </td>
+                        </tr>
+                    </t>
+                </tbody>
+            </table>
+        </xpath>
+    </template>
+</odoo>

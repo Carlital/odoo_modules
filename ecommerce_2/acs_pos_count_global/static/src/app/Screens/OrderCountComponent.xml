@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="acs_pos_count_global.OrderCountComponent">
+        <div style="display: inline-flex;
+                        height: 100%;
+                        align-items: center;
+                        margin-right: auto;"
+            >
+                <span style="font-size: 16px; 
+                            font-weight: 900; 
+                            color:#ddd; 
+                            margin-left: 18px;
+                            margin-right: 4px;"
+                >
+                </span> 
+                <span class="order_count" id="order_count_id">
+                    <t t-esc="orderCount"/>
+                    <!-- <t t-if="this.pos.session">
+                        <t t-esc="this.pos.session.order_count"/>
+                    </t> -->
+                </span>
+            </div>
+        
+    </t>
+
+</templates>

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_picking_form_inherit_eguide" model="ir.ui.view">
+        <field name="name">stock.picking.form.inherit.eguide</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form" />
+        <field name="arch" type="xml">
+
+            <!-- CORRECCIÓN: Agregar el Smart Button en la oe_button_box -->
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="action_open_eguide_tree" type="object" string="Guías"
+                    icon="fa-file-text-o"
+                    class="oe_stat_button">
+                    <field name="eguide_count" widget="statinfo" string="Guías" />
+                </button>
+            </xpath>
+
+            <!-- CORRECCIÓN: Agregar el botón Crear Guía después del botón Return -->
+            <xpath expr="//button[@name='620']" position="after">
+                <button name="action_create_eguide" type="object" string="Crear Guía"
+                    class="btn btn-primary" invisible="state != 'done'" />
+            </xpath>
+
+        </field>
+    </record>
+
+    <record id="view_picking_form_hide_peruvian_customization" model="ir.ui.view">
+        <field name="name">stock.picking.form.hide.peruvian.customization</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="l10n_pe_eguide.view_picking_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='peruvian_customization']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <!--     <record id="view_pe_electronic_guide_tree" model="ir.ui.view">
+        <field name="name">pe.electronic.guide.tree</field>
+        <field name="model">pe.electronic.guide</field>
+        <field name="inherit_id" ref="l10n_pe_eguide_advanced.view_pe_electronic_guide_list" />
+        <field name="arch" type="xml">
+            <xpath expr="//list" position="attributes">
+                <attribute name="create">
+                    user.ver_boton_crear_guias and
+                    user.has_group('l10n_pe_eguide_advanced.group_pe_eguide_manager')
+                </attribute>
+            </xpath>
+        </field>
+    </record> -->
+    <!-- Vista heredada para controlar acceso -->
+    <record id="view_pe_electronic_guide_tree_custom" model="ir.ui.view">
+        <field name="name">pe.electronic.guide.tree.custom</field>
+        <field name="model">pe.electronic.guide</field>
+        <field name="inherit_id" ref="l10n_pe_eguide_advanced.view_pe_electronic_guide_list" />
+        <field name="arch" type="xml">
+            <xpath expr="//tree | //list" position="attributes">
+                <!-- Control de creación basado en el campo personalizado -->
+                <attribute name="create">user.ver_boton_crear_guias</attribute>
+                <!-- Mantener otros permisos intactos -->
+                <attribute name="edit">true</attribute>
+                <attribute name="delete">true</attribute>
+            </xpath>
+            <xpath expr="//field[@name='response']" position="after">
+                <field name="invoice_id" string="Factura" />
+            </xpath>
+        </field>
+    </record>
+
+    <!-- También controlar en la vista form si existe -->
+    <record id="view_pe_electronic_guide_form_custom" model="ir.ui.view">
+        <field name="name">pe.electronic.guide.form.custom</field>
+        <field name="model">pe.electronic.guide</field>
+        <field name="inherit_id" ref="l10n_pe_eguide_advanced.view_pe_electronic_guide_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="attributes">
+                <attribute name="create">user.ver_boton_crear_guias</attribute>
+            </xpath>
+            <xpath expr="//field[@name='transport_mode']" position="after">
+                <field name="invoice_id"
+                    options="{'no_create': True, 'no_create_edit': True}"
+                    placeholder="Relacionar factura..." />
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

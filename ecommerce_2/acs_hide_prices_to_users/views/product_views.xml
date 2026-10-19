@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--
+        PRODUCT.TEMPLATE VIEWS
+    -->
+    <record id="product_template_form_hide_prices_view" model="ir.ui.view">
+        <field name="name">product.template.form.hide.prices</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_form_view" />
+        <field name="arch" type="xml">
+            <!-- Add the computed field to the view, so it can be used in 'invisible' attributes -->
+            <field name="active" position="after">
+                <field name="acs_show_prices" invisible="1" />
+            </field>
+
+            <!-- Hide the entire "Pricing" group in the Sales tab -->
+            <xpath expr="//group[@name='pricing']" position="attributes">
+                <attribute name="invisible">not acs_show_prices</attribute>
+            </xpath>
+
+            <!-- Hide Cost field group in General Information Tab -->
+            <xpath expr="//group[@name='group_standard_price']" position="attributes">
+                <attribute name="invisible">not acs_show_prices</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Hide 'Sold' smart button -->
+    <record id="product_template_sale_order_button_hide_prices_view" model="ir.ui.view">
+        <field name="name">product.template.sale.order.button.hide.prices</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="sale.product_template_form_view_sale_order_button" />
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='action_view_sales']" position="attributes">
+                <attribute name="invisible">not acs_show_prices</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Hide price in the Tree/List view -->
+    <record id="product_template_tree_hide_prices_view" model="ir.ui.view">
+        <field name="name">product.template.tree.hide.prices</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_tree_view" />
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                <field name="acs_show_prices" invisible="1" />
+            </field>
+            <xpath expr="//field[@name='list_price']" position="attributes">
+                <attribute name="invisible">not acs_show_prices</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Hide price in the Kanban view -->
+    <record id="product_template_kanban_hide_prices_view" model="ir.ui.view">
+        <field name="name">product.template.kanban.hide.prices</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_kanban_view" />
+        <field name="arch" type="xml">
+            <field name="list_price" position="before">
+                <field name="acs_show_prices" invisible="1" />
+            </field>
+            <xpath expr="//div[hasclass('oe_kanban_bottom_left')]//b" position="attributes">
+                <attribute name="invisible">not acs_show_prices</attribute>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

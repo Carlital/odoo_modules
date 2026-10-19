@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_invoice_activity_report_wizard_form" model="ir.ui.view">
+        <field name="name">invoice.activity.report.wizard.form</field>
+        <field name="model">invoice.activity.report.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Reporte de facturacion por actividad">
+                <group>
+                    <field name="date_from"/>
+                    <field name="date_to"/>
+                    <field name="activity_id"/>
+                </group>
+                <footer>
+                    <button name="action_print_report" type="object" string="Generar reporte" class="btn-primary"/>
+                    <button string="Cancelar" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

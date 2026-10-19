@@ -1,0 +1,33 @@
+<odoo>
+    <template id="custom_internal_layout" inherit_id="web.internal_layout">
+        <xpath expr="//div[@class='header']" position="replace">
+            <div class="header" style="text-align: center;">
+                <div style="text-align: left; display: inline-block; width:10%;">
+                    <!-- Insertamos el logo de la empresa -->
+                    <t t-set="company" t-value="res_company"/>
+                    <img t-att-src="'/web/image?model=res.company&amp;id=%d&amp;field=logo' % company.id"
+                         style="height: 80px; width: auto; vertical-align: middle;" t-if="company.logo"/>
+                </div>
+                <div style="text-align: center; display: inline-block; width:70%;">
+                    <h2 t-esc="company.name" style="margin: 0;"/>
+                </div>
+                <div style="text-align: right; display: inline-block; width:10%;">
+                    <span class="page"></span> / <span class="topage"></span>
+                </div>
+            </div>
+        </xpath>
+    </template>
+
+    <!-- Sobrescribimos el reporte de PDF para usar el nuevo layout -->
+    <template id="custom_export_in_pdf" inherit_id="export_view_pdf.export_in_pdf">
+        <xpath expr="//t[@t-call='web.internal_layout']" position="attributes">
+            <attribute name="t-call">custom_pdf_header.custom_internal_layout</attribute>
+        </xpath>
+    </template>
+
+    <template id="custom_export_in_pdf_group_by" inherit_id="export_view_pdf.export_in_pdf_group_by">
+        <xpath expr="//t[@t-call='web.internal_layout']" position="attributes">
+            <attribute name="t-call">custom_pdf_header.custom_internal_layout</attribute>
+        </xpath>
+    </template>
+</odoo>

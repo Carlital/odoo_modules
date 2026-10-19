@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_report_sale_order_custom" model="ir.actions.report">
+        <field name="name">Cotización Personalizada</field>
+        <field name="model">sale.order</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">acs_custom_sale_report.sale_order_custom_report_template</field>
+        <field name="binding_model_id" ref="sale.model_sale_order" />
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="report_sale_order_paper_format" />
+    </record>
+    <!--
+    <record id="sale_order_action_menu" model="ir.ui.menu">
+        <field name="name">Custom Sale Report Menu</field>
+        <field name="action" ref="action_report_sale_order_custom" />
+        <field name="parent_id" ref="sale.menu_sale_order" />
+        <field name="sequence" eval="10" />
+    </record>-->
+</odoo>

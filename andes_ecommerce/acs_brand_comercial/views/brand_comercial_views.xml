@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_brand_comercial_tours_tree" model="ir.ui.view">
+        <field name="name">brand.comercial.tours.tree</field>
+        <field name="model">brand.comercial.tours</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_brand_comercial_tours_form" model="ir.ui.view">
+        <field name="name">brand.comercial.tours.form</field>
+        <field name="model">brand.comercial.tours</field>
+        <field name="arch" type="xml">
+            <form>
+                
+                <sheet>
+                    <field name="logo" widget="image" class="oe_avatar"/>
+                    <div class="oe_title">
+                        <label for="name" class="oe_edit_only"/>
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                    </div>
+                    <notebook colspan="4">
+                        <page string="General Information">
+                            <group>
+                                <group>
+                                    <field name="reason"/>
+                                    <field name="rut"/>
+                                    <field name="street"/>
+                                    <field name="email"/>
+                                    <field name="phone"/>
+                                    <field name="mobile"/>
+                                    <field name="website"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Plantillas">
+                            <group>
+                                <group>
+                                    <field name="custom_template_mail_sale_id"/>
+                                    <field name="custom_template_mail_invoice_id"/>
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+
+            </form>
+        </field>
+    </record>
+
+    <record id="action_brand_comercial_tours" model="ir.actions.act_window">
+        <field name="name">Marcas Comerciales</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">brand.comercial.tours</field>
+        <!-- <field name="view_type">form</field> -->
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="view_brand_comercial_tours_tree"/>
+    </record>
+
+    <menuitem id="id_brand_comercial_tours"
+        name="Marcas Comerciales"
+        parent="crm.crm_menu_config"
+        action="action_brand_comercial_tours"
+        sequence="1"/>
+
+</odoo>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+
+    <record model="ir.ui.view" id="view_account_letter_report_wizard">
+      <field name="model">account.letter.report.wizard</field>
+      <field name="arch" type="xml">
+          <form>
+              <group>
+                <group>
+                  <field name="partner_ids" widget="many2many_tags" options="{'no_create_edit': True}"  />
+                </group>
+                <group>
+                </group>
+              </group>
+              <footer class="oe_edit_only">
+                  <button class="btn-primary" name="button_export_pdf" string="Print PDF" type="object"/>
+                  <button string="Discard" special="cancel"/>
+              </footer>
+          </form>
+      </field>
+    </record>
+
+    <record id="action_account_letter_report_wizard" model="ir.actions.act_window">
+      <field name="name">Letter Report</field>
+      <field name="type">ir.actions.act_window</field>
+      <field name="res_model">account.letter.report.wizard</field>
+      <field name="view_mode">form</field>
+      <field name="target">new</field>
+    </record>
+
+    <menuitem action="action_account_letter_report_wizard" id="menu_action_account_letter_report_wizard" parent="account.menu_finance_reports" sequence="100"/>
+
+  </data>
+</odoo>

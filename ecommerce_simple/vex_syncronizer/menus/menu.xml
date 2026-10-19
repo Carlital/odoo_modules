@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="vex_sync_store_open_instances" model="ir.actions.act_window">
+        <field name="name">Instance</field>
+        <field name="res_model">vex.instance</field>
+        <field name="view_mode">kanban,form</field>
+        <field name="context">{'default_state_filter': 'all'}</field>
+    </record>
+
+    <menuitem 
+        id="menu_main_vex_sync_store"
+        name="Store Syncronizer"
+        action="vex_sync_store_open_instances" 
+        />
+        
+</odoo>

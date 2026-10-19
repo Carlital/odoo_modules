@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="addval_website_analytic_account" model="ir.ui.view">
+        <field name="name">addval.website.analytic.account</field>
+        <field name="model">website</field>
+        <field name="inherit_id" ref="website.view_website_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='company_id']" position="after">
+                <field name="website_analytic_id"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

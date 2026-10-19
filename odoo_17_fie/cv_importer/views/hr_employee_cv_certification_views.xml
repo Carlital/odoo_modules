@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    
+    <!-- Extender formulario de hr.employee para agregar Certificaciones -->
+    <record id="view_employee_form_cv_certification_inherit" model="ir.ui.view">
+        <field name="name">hr.employee.form.cv.certification.inherit</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+            
+            <!-- Agregar botón estadístico para Certificaciones -->
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="action_view_certifications"
+                        type="object"
+                        class="oe_stat_button"
+                        icon="fa-certificate">
+                    <div class="o_field_widget o_stat_info">
+                        <span class="o_stat_value">
+                            <field name="cv_certification_count"/>
+                        </span>
+                        <span class="o_stat_text">Certificaciones</span>
+                    </div>
+                </button>
+            </xpath>
+
+            <!-- Agregar tab para Certificaciones -->
+            <xpath expr="//notebook" position="inside">
+                <page string="Certificaciones" 
+                      name="page_certifications">
+                    <field name="cv_certification_ids" 
+                           context="{'default_employee_id': active_id}">
+                        <tree editable="bottom">
+                            <field name="certification_name"/>
+                            <field name="certification_type"/>
+                            <field name="institution"/>
+                            <field name="duration_hours"/>
+                            <field name="duration_days"/>
+                            <field name="source" optional="hide"/>
+                        </tree>
+                    </field>
+                    <group>
+                        <div class="alert alert-info" role="alert" style="margin-top: 10px;">
+                            <i class="fa fa-info-circle"/> 
+                            <strong>Nota:</strong> Este es el modelo normalizado para certificaciones y educación continua.
+                        </div>
+                    </group>
+                </page>
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>

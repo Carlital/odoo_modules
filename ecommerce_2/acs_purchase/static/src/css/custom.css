@@ -1,0 +1,7 @@
+.o_list_view thead th.text-danger {
+    color: #dc3545 !important; /* Bootstrap danger color */
+}
+
+.o_list_view thead th.text-info {
+    color: #17a2b8 !important; /* Bootstrap info color */
+}

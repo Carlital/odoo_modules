@@ -1,0 +1,64 @@
+<odoo>
+    <data>
+        <record id="paperformat_account_letter" model="report.paperformat">
+            <field name="name">Account letter A4</field>
+            <field name="default" eval="True" />
+            <field name="format">A4</field>
+            <field name="page_height">0</field>
+            <field name="page_width">0</field>
+            <field name="orientation">Landscape</field>
+            <field name="margin_top">20</field>
+            <field name="margin_bottom">28</field>
+            <field name="margin_left">7</field>
+            <field name="margin_right">7</field>
+            <field name="header_line" eval="False" />
+            <field name="header_spacing">35</field>
+            <field name="dpi">90</field>
+        </record>
+
+        <record id="account_letter_pdf" model="ir.actions.report">
+            <field name="name">Letters</field>
+            <field name="model">account.letter</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">account_letter.report_letter_pdf</field>
+            <field name="report_file">account_letter.report_letter_pdf</field>
+            <field name="print_report_name">'Letter'</field>
+            <field name="binding_model_id" ref="paperformat_account_letter"/>
+            <field name="binding_type">report</field>
+        </record>
+        <template id="report_letter_document">
+            <t t-call="web.basic_layout">
+                <t t-foreach="docs" t-as="o">
+                    <div class="page">
+                        <div class="remitente" style="width:100%">
+                            <h1 style="text-align:left;font-size:50px;text-decoration:underline">Remitente:</h1>
+                            <br/>
+                            <h4 style="text-align:left;font-size:40px"><t t-esc="o.env.user.company_id.name"/></h4>
+                            <h4 style="text-align:left;font-size:40px" t-if="o.env.user.company_id.partner_id.referencia">(Referencia:<t t-esc="o.env.user.company_id.partner_id.referencia"/>)</h4>
+                            <h4 style="text-align:left;font-size:40px" t-if="o.env.user.company_id.partner_id.mobile">Celular:<t t-esc="o.env.user.company_id.partner_id.mobile"/></h4>
+                        </div>
+                        <br/>
+                        <br/>
+                        
+                        <div class="destinatario" style="width:100%; text-align:right">
+                            <h2 style="font-size:50px;text-align:right;text-decoration:underline">Destinatario</h2>
+                            <br/>
+                            <h4 style="font-size:40px;text-align:right;"><t t-esc="o.partner_id.name"/></h4>
+                            <h4 style="font-size:40px;text-align:right;" t-if="o.partner_id.street"><t t-esc="o.partner_id.street"/></h4>
+                            <h4 style="font-size:40px;text-align:right;" t-if="o.partner_id.state_id and o.partner_id.province_id and o.partner_id.district_id"><t t-esc="o.partner_id.state_id.name"/>-<t t-esc="o.partner_id.province_id.name"/>-<t t-esc="o.partner_id.district_id.name"/></h4>
+                            <h4 style="text-align:right;font-size:40px" t-if="o.partner_id.referencia">(Referencia:<t t-esc="o.partner_id.referencia"/>)</h4>
+                            <h4 style="font-size:40px;text-align:right;" t-if="o.partner_id.phone">Teléfono: <t t-esc="o.partner_id.phone"/></h4>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </template>
+        <template id="report_letter_pdf">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="account_letter.report_letter_document" t-lang="o.partner_id.lang"/>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

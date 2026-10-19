@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+    <t t-inherit="web.CommandPalette" t-inherit-mode="extension">
+        <xpath expr="//small[hasclass('o_command_focus')]" position="before">
+            <Dropdown t-if="command.is_action" position="'left-start'" menuClass="'cmp_menu'">
+                <span class="btn btn-light btn-sm lh-1 px-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-dots-vertical"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M12 19m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M12 5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /></svg>
+                </span>
+                <t t-set-slot="content">
+                    <li t-if="command.can_oint"><a role="menuitem" t-on-click.stop.prevent="command.ointAction" class="dropdown-item">Open in new tab</a></li>
+                    <li t-if="command.category === 'norm'"><a role="menuitem" t-on-click.stop.prevent="command.pinAction" class="dropdown-item">Pin to General</a></li>
+                    <li t-if="command.category === 'pin'"><a role="menuitem" t-on-click.stop.prevent="command.unpinAction" class="dropdown-item">Unpin from General</a></li>
+                    <div role="separator" class="dropdown-divider"/>
+                    <li><a role="menuitem" t-on-click.stop.prevent="command.deleteAction" type="delete" class="dropdown-item">Delete</a></li>
+                </t>
+            </Dropdown>
+        </xpath>
+
+        <xpath expr="//t[@t-foreach='command.splitName']" position="before">
+            <i t-if="command.category == 'add'" class="ri-lg text-info ri-add-circle-line me-3"/>
+            <i t-elif="command.is_action" class="ri-lr text-primary me-3" t-att-class="view_imap[command.view_type] || 'ri-airplay-line'"/>
+        </xpath>
+    </t>
+</templates>

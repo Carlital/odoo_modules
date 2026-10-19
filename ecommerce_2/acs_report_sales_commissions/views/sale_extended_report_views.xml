@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Vista Lista para el Reporte de Ventas Extendido -->
+    <record id="view_sale_extended_report_tree" model="ir.ui.view">
+        <field name="name">sale.extended.report.tree</field>
+        <field name="model">sale.extended.report</field>
+        <field name="arch" type="xml">
+            <list string="Reporte de ventas extendido" create="false" edit="false" delete="false">
+                <field name="currency_id" column_invisible="1" />
+                <field name="name" optional="show" />
+                <field name="date_order" optional="show" />
+                <field name="advisors" widget="preformatted" optional="show" />
+                <field name="partner_id" optional="show" />
+                <field name="vat" optional="show" />
+                <field name="rubro_ids" widget="preformatted" optional="show" />
+                <field name="address" optional="hide" />
+                <field name="source_id" optional="hide" />
+                <field name="contact_name" optional="hide" />
+                <field name="contact_function" optional="hide" />
+                <field name="contact_mobile" optional="hide" />
+                <field name="contact_email" widget="email" optional="hide" />
+                <field name="quoted_products" widget="preformatted" optional="show"
+                    class="quoted_products_cell" />
+                <field name="amount_untaxed" sum="Total" widget="monetary"
+                    options="{'currency_field': 'currency_id'}" />
+                <field name="quotation_state" />
+                <field name="lost_reason" optional="show" />
+            </list>
+        </field>
+    </record>
+
+    <!-- Vista de Búsqueda -->
+    <record id="view_sale_extended_report_search" model="ir.ui.view">
+        <field name="name">sale.extended.report.search</field>
+        <field name="model">sale.extended.report</field>
+        <field name="arch" type="xml">
+            <search string="Búsqueda de Reporte de Ventas">
+                <field name="name" string="Nº de Pedido" />
+                <field name="partner_id" />
+                <field name="vat" />
+                <field name="advisors" />
+                <field name="contact_name" />
+                <field name="quoted_products" />
+
+                <!-- Filtros -->
+                <filter name="my_sales" string="Mis Ventas"
+                    domain="['|', ('user_id', '=', uid), ('x_seller2_id', '=', uid)]" />
+                <filter name="this_month" string="Este Mes"
+                    domain="[('date_order', '&gt;=', (context_today()).strftime('%Y-%m-01')),
+                            ('date_order', '&lt;', (context_today() + relativedelta(months=1)).strftime('%Y-%m-01'))]" />
+
+                <!-- Agrupaciones -->
+                <group expand="0" string="Agrupar Por">
+                    <filter name="group_by_state" string="Estado"
+                        context="{'group_by': 'quotation_state'}" />
+                    <filter name="group_by_partner" string="Cliente"
+                        context="{'group_by': 'partner_id'}" />
+                    <filter name="group_by_source" string="Canal"
+                        context="{'group_by': 'source_id'}" />
+                    <filter name="group_by_date" string="Fecha"
+                        context="{'group_by': 'date_order:month'}" />
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Acción para abrir el reporte -->
+    <record id="action_sale_extended_report" model="ir.actions.act_window">
+        <field name="name">Reporte de ventas extendido</field>
+        <field name="res_model">sale.extended.report</field>
+        <field name="view_mode">list</field>
+        <field name="view_id" ref="view_sale_extended_report_tree" />
+        <field name="search_view_id" ref="view_sale_extended_report_search" />
+        <field name="context">{'search_default_this_month': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No hay datos para mostrar en el reporte
+            </p>
+            <p>
+                Este reporte muestra información detallada de las ventas, incluyendo datos del
+                cliente,
+                contactos, productos cotizados y estados de las cotizaciones.
+            </p>
+        </field>
+    </record>
+
+    <!-- Entrada de menú para el reporte -->
+    <menuitem id="menu_sale_extended_report"
+        name="Reporte de ventas extendido"
+        parent="sale.menu_sale_report"
+        action="action_sale_extended_report"
+        sequence="20" />
+</odoo>

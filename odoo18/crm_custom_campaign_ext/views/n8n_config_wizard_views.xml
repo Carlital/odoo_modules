@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ===== Vista del Wizard ===== -->
+    <record id="view_bc_n8n_config_wizard" model="ir.ui.view">
+        <field name="name">bc.n8n.config.wizard.form</field>
+        <field name="model">bc.n8n.config.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Configurar n8n">
+                <header>
+                    <button name="action_test" type="object" string="Probar conexión" class="btn-secondary"/>
+                </header>
+                <sheet>
+                    <group string="Conexión">
+                        <field name="n8n_webhook_url" placeholder="https://n8n.tu-dominio.com/webhook/..."/>
+                        <field name="n8n_timeout"/>
+                        <field name="n8n_verify_ssl"/>
+                    </group>
+                </sheet>
+                <footer>
+                    <button name="action_save" type="object" string="Guardar configuración" class="btn-primary"/>
+                    <button string="Cancelar" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!-- ===== Acción (solo el grupo exclusivo) ===== -->
+    <record id="action_bc_n8n_config_wizard" model="ir.actions.act_window">
+        <field name="name">Configurar n8n</field>
+        <field name="res_model">bc.n8n.config.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="context">{}</field>
+        <field name="groups_id" eval="[(6, 0, [ref('crm_custom_campaign_ext.group_bc_n8n_admin')])]"/>
+    </record>
+
+    <!-- ===== Menú bajo CRM / Configuration (solo el grupo exclusivo) ===== -->
+    <menuitem
+        id="menu_bc_n8n_config_popup"
+        name="n8n"
+        parent="crm.crm_menu_config"
+        action="crm_custom_campaign_ext.action_bc_n8n_config_wizard"
+        sequence="200"
+        groups="crm_custom_campaign_ext.group_bc_n8n_admin"
+    />
+
+</odoo>

@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="report_pe_eguide_advanced_document_standard">
+            <t t-if="not o" t-set="o" t-value="doc"/>
+
+            <t t-if="not company">
+                <!-- Multicompany -->
+                <t t-if="company_id">
+                    <t t-set="company" t-value="company_id"/>
+                </t>
+                <t t-elif="o and 'company_id' in o and o.company_id.sudo()">
+                    <t t-set="company" t-value="o.company_id.sudo()"/>
+                </t>
+                <t t-else="else">
+                    <t t-set="company" t-value="res_company"/>
+                </t>
+            </t>
+            <t t-set="o" t-value="o.with_context(lang=lang)" />
+            <div class="header" style="font-family: Monaco;">
+                <div class="row">
+                    <div class="col-3">
+                        <img t-if="o.pe_qr_code" t-att-src="'data:image/png;base64,%s' %to_text(o.pe_qr_code)"
+                             style="width: 170px;  height: 170px;" />
+                    </div>
+                    <div class="col-6" >
+                        <strong style="font-size: 16px" t-field="company.name" />
+                        <br/>
+                        <br/>
+                        <strong>Fecha y hora de emisión:</strong> <span t-field="o.date_issue"/>
+                    </div>
+                    <div class="col-3 text-center">
+                        <div style="padding: 5px 10px 5px 10px; border: 1px solid #000 !important;" class="d-print-block">
+                            <h3 style="font-size: 12px">
+                                RUC N°<span t-field="company.vat"/>
+                                <t t-if="o.state in ['to_send', 'generate']">
+                                    <span>BORRADOR</span>
+                                </t>
+                                <span>GUÍA DE REMISIÓN ELECTRÓNICA REMITENTE</span>
+                                <t t-if="o.state in ['cancel','cancelled']">
+                                    <span>CANCELADO</span>
+                                </t>
+                                <span t-if="o.name != '/'" t-field="o.name"/><br />
+                            </h3>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="row">
+
+                </div>
+            </div>
+
+
+            <div class="article" t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id" t-att-data-oe-lang="o and o.env.context.get('lang')">
+
+
+                <div class="page" style="font-family: Monaco;">
+                    <style>
+                        table, th, td {
+                            border:  1px solid #000 !important;
+                        }
+                    </style>
+                    <div class="row text-justify" >
+                        <div class="col-6">
+                            <strong>Fecha de inicio de Traslado :</strong> <span t-field="o.transfer_date"/>
+                        </div>
+                        <div class="col-6">
+                            <strong>Punto de Partida:</strong>
+                            <span t-field="o.src_street"/>
+                            <t t-if="o.src_district_id">
+                                <span t-field="o.src_district_id"/>-
+                                <span t-field="o.src_province_id"/>
+                                -
+                                <span t-field="o.src_state_id"/>
+                            </t><br />
+                        </div>
+                    </div>
+                    <div class="row text-justify">
+                        <div class="col-6">
+                            <strong>Motivo de Traslado :</strong>
+                            <span t-field="o.reason_transfer"/>
+                        </div>
+                        <div class="col-6">
+                            <strong>Punto de llegada :</strong>
+                            <span t-field="o.dst_street"/>
+                            <t t-if="o.dst_district_id">
+                                <span t-field="o.dst_district_id"/>-
+                                <span t-field="o.dst_province_id"/>
+                                -
+                                <span t-field="o.dst_state_id"/>
+                            </t>
+                        </div>
+                    </div>
+                    <div class="row text-justify">
+                        <div class="col-12">
+                            <strong> Datos del Destinatario :</strong>
+                            MINERA MAXIMO JESUS SOCIEDA ANONIMA CERRADA - REGISTRO ÚNICO DE CONTRIBUYENTES N°
+                            <t t-if="o.reason_transfer in ['02', '04', '06', '08']">
+                                <span t-field="o.company_id.name"/>
+                                RUC N°<span t-field="o.company_id.vat"/><br />
+                                </t>
+                                <t t-else="">
+                                    <span t-esc="o.partner_id.name"/>
+                                    <t t-if="o.partner_id.pe_doc_type == '1'">
+                                        <span>D.N.I.:</span>
+                                    </t>
+                                    <t t-if="o.partner_id.pe_doc_type == '6'">
+                                        <span>R.U.C.:</span>
+                                    </t>
+                                    <t t-if="o.partner_id.pe_doc_type not in ['1', '6']">
+                                        <span t-field="o.partner_id.pe_doc_type"/>
+                                    </t><br />
+                                    N° <span t-esc="o.partner_id.vat"/><br />
+                                </t>
+                        </div>
+                    </div>
+                    <div class="row text-justify">
+                        <div class="col-12">
+                            <strong> Bienes por transportar</strong>
+                        </div>
+                    </div>
+                    <table class="table" border="1">
+                        <thead>
+                            <tr style="background: #cccccc; border: 1px solid #000 !important;">
+                                <th>Nº</th>
+                                <th>Código bien</th>
+                                <th>Descripción detallada</th>
+                                <th>Unidad de medida</th>
+                                <th>Cantidad</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-set="count" t-value="0"/>
+                            <tr t-foreach="o.line_ids" t-as="line_id">
+                                <td class="text-center">
+                                    <span t-esc="count"/>
+                                    <t t-set="count" t-value="count+1"/>
+                                </td>
+                                <td>
+                                    <span t-field="line_id.product_code"/>
+                                </td>
+                                <td>
+                                    <span t-field="line_id.name"/>
+                                </td>
+                                <td>
+                                    <span t-field="line_id.product_code"/>
+                                </td>
+                                <td class="text-right">
+                                    <span t-field="line_id.quantity"/>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="row">
+                        <div class="col-12"><strong>Datos del traslado</strong></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <strong>Unidad de Medida del Peso Bruto:</strong>
+                            <span t-field="o.gross_weight_unit" />
+                        </div>
+                        <div class="col-6">
+                            <strong>Peso Bruto total de la carga:</strong>
+                            <span t-field="o.gross_weight" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <strong>Modalidad de traslado:</strong>
+                            <span t-field="o.transport_mode"/>
+                        </div>
+                        <div class="col-6">
+                            <strong>Indicador de retorno de vehículo con envases o embalajes vacios:</strong> No
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <strong>Indicador traslado en vehículos de categoría M1 o L:</strong> No
+                            <t t-if="o.pe_vehicle_m1_l">
+                                <span>Si</span>
+                            </t>
+                            <t t-else="">
+                                <span>No</span>
+                            </t>
+                        </div>
+                        <div class="col-6">
+
+                        </div>
+                    </div>
+
+                    <br/>
+                    <div class="row" t-if="o.carrier_ids">
+                        <div class="col-12">
+                            <strong> Datos de los vehículos </strong>
+                        </div>
+                    </div>
+                    <t t-set="vehicle_id" t-value="o.vehicle_ids and (o.vehicle_ids.filtered(lambda s:s.is_main==True) or o.vehicle_ids[0]) or False"/>
+                    <t t-set="vehicle_int_id" t-value="vehicle_id and vehicle_id.id or False"/>
+                    <div class="row" t-if="vehicle_id">
+                        <div class="col-3">
+                            <strong>Principal:</strong>
+                        </div>
+                        <div class="col-9">
+                            Número de placa
+                            <span t-field="vehicle_id.name"/>
+                            <!--<br/>
+                            Entidad emisora de autorización especial: MTC - Número de autorización especial: 15M22038272E -->
+                        </div>
+                    </div>
+                    <div class="row" t-foreach="o.line_ids" t-as="o.vehicle_ids.filtered(lambda s:s.id != vehicle_int_id)">
+                        <div class="col-3">
+                            <strong>Secundario:</strong>
+                        </div>
+                        <div class="col-9">
+                            Número de placa
+                            <span t-field="vehicle_id.name"/>
+                            <!--<br/>
+                            Entidad emisora de autorización especial: MTC - Número de autorización especial: 15M22038272E -->
+                        </div>
+                    </div>
+                    <br/>
+                    <div class="row" t-if="o.carrier_ids">
+                        <div class="col-12">
+                            <strong> Datos de los conductores </strong>
+                        </div>
+                    </div>
+                    <t t-set="main_driver_id" t-value="True"/>
+                    <div class="row" t-foreach="o.carrier_ids" t-as="carrier_id">
+                        <div class="col-3">
+                            <t t-if="main_driver_id">
+                                <strong>Principal:</strong>
+                                <t t-set="main_driver_id" t-value="False"/>
+                            </t>
+                            <t t-else="">
+                                <strong>Secundario:</strong>
+                            </t>
+                        </div>
+                        <div class="col-9">
+                            <span t-field="carrier_id.name" /> -
+                            <span t-field="carrier_id.doc_type" /> N°
+                            <span t-field="carrier_id.doc_number" />
+                            <br/>
+                            Número de licencia de conducir:
+                            <span t-field="carrier_id.driver_license" />
+                        </div>
+                    </div>
+                    <br/>
+                    <div class="row">
+                        <div class="col-12"><strong>Observaciones</strong></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <span t-field="o.note" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div t-attf-class="footer o_standard_footer" style="font-family: Monaco;">
+                <div class="text-center">
+
+                    <div t-field="company.report_footer">Company Report Footer</div>
+                    <div t-if="report_type == 'pdf'">
+                        Page: <span class="page"/> / <span class="topage"/>
+                    </div>
+                    <div t-if="report_type == 'pdf' and display_name_in_footer" class="text-muted">
+                        <span t-out="o.name">(document name)</span>
+                    </div>
+                </div>
+            </div>
+        </template>
+
+    </data>
+</odoo>

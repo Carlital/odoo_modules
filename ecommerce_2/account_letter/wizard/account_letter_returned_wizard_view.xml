@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+  	<record model="ir.ui.view" id="view_account_letter_returned_wizard">
+  		<field name="model">account.letter.returned.wizard</field>
+  		<field name="arch" type="xml">
+  			<form>
+  				<group>
+  					<group>
+  						<field name="letter_id" invisible="True" />	
+  						<field name="product_id"  />
+              <field name="name"  />
+  					</group>
+  					<group>
+  						<field name="currency_id" groups="base.group_multi_currency" />
+  						<field name="amount"  />
+              <field name="number"  /> 
+  					</group>
+  				</group>
+  				<group class="oe_subtotal_footer oe_right">
+  					<field name="amount_total"/>
+  				</group>
+  				<footer class="oe_edit_only">
+  					<button class="btn-primary" name="action_returned" string="Returned" type="object"/>
+  					<button string="Discard" special="cancel"/>
+  				</footer>
+  			</form>
+  		</field>
+  	</record>
+
+
+  </data>
+</odoo>

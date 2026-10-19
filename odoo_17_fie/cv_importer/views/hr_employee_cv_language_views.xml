@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    
+    <!-- Extender formulario de hr.employee para agregar Idiomas -->
+    <record id="view_employee_form_cv_language_inherit" model="ir.ui.view">
+        <field name="name">hr.employee.form.cv.language.inherit</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+            
+            <!-- Agregar botón estadístico para Idiomas -->
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="action_view_languages"
+                        type="object"
+                        class="oe_stat_button"
+                        icon="fa-language">
+                    <div class="o_field_widget o_stat_info">
+                        <span class="o_stat_value">
+                            <field name="language_count"/>
+                        </span>
+                        <span class="o_stat_text">Idiomas</span>
+                    </div>
+                </button>
+            </xpath>
+
+            <!-- Agregar tab para Idiomas -->
+            <xpath expr="//notebook" position="inside">
+                <page string="Idiomas" 
+                      name="page_languages">
+                    <field name="cv_language_ids" 
+                           context="{'default_employee_id': active_id}">
+                        <tree editable="bottom">
+                            <field name="language_name"/>
+                            <field name="proficiency_level"/>
+                            <field name="writing_level"/>
+                            <field name="speaking_level"/>
+                            <field name="source" optional="hide"/>
+                        </tree>
+                    </field>
+                    <group>
+                        <div class="alert alert-info" role="alert" style="margin-top: 10px;">
+                            <i class="fa fa-info-circle"/> 
+                            <strong>Nota:</strong> Este es el modelo normalizado para idiomas y niveles de competencia.
+                        </div>
+                    </group>
+                </page>
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>

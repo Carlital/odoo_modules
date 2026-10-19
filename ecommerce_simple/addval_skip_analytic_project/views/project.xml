@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+      <record id="no_crate_project_analytic" model="ir.ui.view">
+        <field name="name">no.create.project.analytic</field>
+        <field name="inherit_id" ref="project.edit_project"/>
+        <field name="model">project.project</field>
+        <field name="arch" type="xml">
+          <field name="analytic_account_id"   options="{'no_create': True, 'no_create_edit':True}" position="attributes">
+          </field>
+        </field>
+      </record>
+    </data>
+</odoo>

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="external_layout_comercial_brand">
+        
+        <t t-if="not doc.brand_comercial_id">
+            <div class="header o_boxed_header row">
+                <div class="company_address col-8">
+                    <h3 class="mt0 text-right" t-field="doc.company_id.report_header"/>
+                    <div>
+                        <strong t-field="doc.company_id.partner_id.name"/>
+                    </div>
+                    <span t-field="doc.company_id.partner_id" t-field-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;], &quot;no_marker&quot;: true}"/>
+                </div>
+                
+                <div class="col-4 pull-right">
+                  <img t-if="doc.company_id.logo" t-att-src="'data:image/png;base64,%s' % doc.company_id.logo.decode('utf-8')" class="pull-right"/>  
+                </div>
+            </div>
+            <div class="article o_report_layout_boxed">
+                <t t-raw="0" />
+            </div>
+            <div class="footer o_background_footer">
+                <div class="text-center">
+                    <ul class="list-inline">
+                        <li t-if="doc.company_id.phone"><i class="fa fa-phone"/> <span t-field="doc.company_id.phone"/></li>
+                        <li t-if="doc.company_id.email"><i class="fa fa-at"/> <span t-field="doc.company_id.email"/></li>
+                        <li t-if="doc.company_id.website"><i class="fa fa-globe"/> <span t-field="doc.company_id.website"/></li>
+                        <li t-if="doc.company_id.vat"><i class="fa fa-building-o"/><t t-esc="doc.company_id.vat or 'TIN'"/>: <span t-field="doc.company_id.vat"/></li>
+                    </ul>
+                    <div t-field="doc.company_id.report_footer"/>
+                    <div class="text-muted">
+                        Pagina:
+                        <span class="page"/>
+                        de
+                        <span class="topage"/>
+                    </div>
+                </div>
+            </div>
+        </t>
+
+        <t t-if="doc.brand_comercial_id">
+            <div class="header o_boxed_header row">
+                
+                
+                <div class="col-8 company_address">
+                    <h5>
+                        <strong t-field="doc.brand_comercial_id.name"/>
+                    </h5>
+                    
+                    Razón social: <span t-field="doc.brand_comercial_id.reason"/> / RUT: <span t-field="doc.brand_comercial_id.rut"/>
+                    <br/>
+                    Dirección: <span t-field="doc.brand_comercial_id.street"/>
+                    <br/>
+                    Cel: <span t-field="doc.brand_comercial_id.mobile"/> / <span t-field="doc.brand_comercial_id.phone"/>
+                    <br/>
+                    Email: <span t-field="doc.brand_comercial_id.email"/>
+                    <br/>
+                    Website: <span t-field="doc.brand_comercial_id.website"/>
+                    <br/>
+                </div>
+                <div class="col-4 pull-right">
+                    <img t-if="doc.brand_comercial_id.logo" t-att-src="'data:image/png;base64,%s' % doc.brand_comercial_id.logo.decode('utf-8')" class="pull-right"/>
+                </div>
+
+                <!-- <div class="clearfix mb8"/> -->
+            </div>
+            <div class="article o_report_layout_boxed">
+                <t t-raw="0" />
+            </div>
+            <div class="footer o_background_footer">
+                <div class="text-center">
+                    <div class="text-muted">
+                        Pagina:
+                        <span class="page"/>
+                        de
+                        <span class="topage"/>
+                    </div>
+                    
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <template id="report_saleorder_document" inherit_id="sale.report_saleorder_document">
+        <xpath expr="//t[@t-call='web.external_layout']" position="attributes">
+            <attribute name="t-call">acs_brand_comercial.external_layout_comercial_brand</attribute>
+        </xpath>
+
+    </template>
+
+</odoo>

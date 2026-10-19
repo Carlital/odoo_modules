@@ -1,0 +1,47 @@
+<odoo>
+  <data>
+	<record id="view_move_form" model="ir.ui.view">
+       <field name="name">account.move.inherit.cpe.check</field>
+       <field name="model">account.move</field>
+       <field name="inherit_id" ref="account.view_move_form"/>
+       <field name="arch" type="xml">
+            <xpath expr="//field[@name='partner_id']" position="after">
+              <field name="pe_cpe_state" readonly="True" />
+            </xpath>
+       </field>
+   </record>
+
+      <record id="view_invoice_tree" model="ir.ui.view">
+           <field name="name">account.move.inherit.cpe.check</field>
+           <field name="model">account.move</field>
+           <field name="inherit_id" ref="account.view_invoice_tree"/>
+           <field name="arch" type="xml">
+                <field name="status_in_payment" position="after">
+                   <field name="pe_cpe_state" optional="hide"/>
+               </field>
+           </field>
+       </record>
+
+  <!--record id="invoice_supplier_cpe_form" model="ir.ui.view">
+       <field name="name">account.invoice.supplier.inherit.cpe.check</field>
+       <field name="model">account.invoice</field>
+       <field name="inherit_id" ref="account.invoice_supplier_form"/>
+       <field name="arch" type="xml">
+            <xpath expr="//field[@name='partner_id']" position="after">
+              <field name="pe_cpe_state" readonly="True"/>
+            </xpath>
+       </field>
+   </record-->
+
+      <!--record id="invoice_supplier_tree" model="ir.ui.view">
+           <field name="name">account.invoice.inherit.cpe.check</field>
+           <field name="model">account.invoice</field>
+           <field name="inherit_id" ref="account.invoice_supplier_tree"/>
+           <field name="arch" type="xml">
+                <field name="state" position="after">
+                   <field name="pe_cpe_state" />
+               </field>
+           </field>
+       </record-->
+  </data>
+</odoo>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="OrderReceipt" t-inherit="point_of_sale.OrderReceipt" t-inherit-mode="extension" owl="1">
+        <xpath expr="//div[hasclass('pos-move-name')]" position="inside">
+            <t t-if="props.order.pe_move_name!=''">
+                <div>--------------------------------</div>
+                <strong><t t-esc="props.order.pe_invoice_name || ''" /></strong> <br />
+                <strong><t t-esc="props.order.pe_move_name || ''" /></strong>
+                <div>--------------------------------</div>
+            </t>
+            <t t-if="receipt.pe_src_move_name">
+                <br />
+                <div style="text-align: center; font-size: 75%;">Source: <t t-esc='receipt.pe_src_move_name' /></div>
+            </t>
+        </xpath>
+        <xpath expr="//div[hasclass('before-footer')]" position="after">
+            <br />
+            <div id="qr-code" style="display: flex; justify-content: center;" t-if="receipt.pe_qr_string!=''">
+                <img style="display: block;" t-att-src="receipt.pe_qr_code" t-att-alt="receipt.pe_qr_string" />
+            </div>
+            <div style="text-align: center; font-size: 100%;" t-if="receipt.pe_qr_string!=''">
+                <strong class="doc-sunat"> 
+                        <t t-esc="'Representación impresa de, ' + (props.order.pe_invoice_name || '') + ' consulte en ' + env.pos.company.website || ''+'cpe'" />
+                </strong>
+            </div>
+        </xpath>
+
+
+
+    </t>
+</templates>

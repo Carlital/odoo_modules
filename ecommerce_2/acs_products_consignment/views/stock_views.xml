@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Agregar el filtro de cliente consignación a la vista de búsqueda de stock -->
+    <record id="product_search_form_stock_consignment" model="ir.ui.view">
+        <field name="name">product.product.search.stock.consignment</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="stock.product_search_form_view_stock_report" />
+        <field name="arch" type="xml">
+            <xpath expr="//search" position="inside">
+                <field name="consignment_client_id" string="Cliente Consignación" />
+                <filter name="with_consignment" string="Con Cliente Consignación"
+                    domain="[('consignment_client_ids', '!=', False)]" />
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Agregar el campo a la vista de lista de stock -->
+    <record id="product_stock_tree_consignment" model="ir.ui.view">
+        <field name="name">product.product.stock.tree.consignment</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="stock.product_product_stock_tree" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='qty_available']" position="after">
+                <field name="consignment_client_ids" widget="many2many_tags"
+                    string="Clientes Consignación" optional="hide" />
+            </xpath>
+        </field>
+    </record>
+</odoo>

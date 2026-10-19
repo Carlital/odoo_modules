@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.l10n.pe.pos.cpe</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="point_of_sale.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//block[@id='pos_accounting_section']" position="inside">
+                <setting string="Auto Journal Select" help="Automatically select the journal">
+                    <!--label string="Auto Journal Select" for="pos_pe_auto_journal_select" />
+                    <i
+                        class="fa fa-info-circle me-1"
+                        title="This setting is common to all PoS."
+                        pos-data-toggle="tooltip"
+                    />
+                    <div class="text-muted">
+                        Automatically select the journal
+                    </div-->
+                    <field name="pos_pe_auto_journal_select" />
+                </setting>
+                <setting string="Force Journal Select" help="Force select the journal">
+                    <!--label string="Force Journal Select" for="pos_pe_force_journal_select" />
+                    <i
+                        class="fa fa-info-circle me-1"
+                        title="This setting is common to all PoS."
+                        pos-data-toggle="tooltip"
+                    />
+                    <div class="text-muted">
+                        Force select the journal
+                    </div-->
+                    <field name="pos_pe_force_journal_select" />
+                </setting>
+
+                <setting>
+                    <label string="Invoice Sale Journals" for="pos_pe_journal_ids" />
+                    <i
+                        class="fa fa-info-circle me-1"
+                        title="This setting is common to all PoS."
+                        pos-data-toggle="tooltip"
+                    />
+                    <div class="text-muted">
+                        Invoice Sale Journals available
+                    </div>
+                    <field name="pos_pe_journal_ids" colspan="4" nolabel="1" widget="many2many_tags"/>
+                </setting>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

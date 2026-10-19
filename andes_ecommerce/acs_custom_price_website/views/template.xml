@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="product_quantity_inh" inherit_id="website_sale.product_quantity">
+        <xpath expr="//div[contains(@t-attf-class, 'css_quantity')]" position="attributes">
+            <attribute name="t-if">not product.is_custom_price</attribute>
+        </xpath>
+    </template>
+    <template id="product_price_inh" inherit_id="website_sale.product_price">
+        <xpath expr="//div[@itemprop='offers']" position="attributes">
+            <attribute name="t-if">not product.is_custom_price</attribute>
+        </xpath>
+        <xpath expr="//div[@itemprop='offers']" position="after">
+
+            <!-- h4 style hiden -->
+            <style>
+                h4 {
+                    display: none;
+                }
+            </style>
+
+            <div t-if="product.is_custom_price">
+                <span></span>
+            </div>
+            <div t-if="not product.is_custom_price">
+                <span></span>
+            </div>
+        </xpath>
+    </template>
+
+    <template id="product_quantity_config_inh" inherit_id="website_sale_product_configurator.product_quantity_config">
+        <xpath expr="//div[@class='css_quantity input-group']" position="replace">
+            <t t-if="product.is_custom_price">
+                <div t-if="is_view_active('website_sale.product_quantity')" class="css_quantity input-group">
+                    <button t-attf-href="#" class="btn btn-primary float_left js_add_cart_json d-none d-md-inline-block" aria-label="Remove one" title="Remove one">
+                        <i class="fa fa-minus"></i>
+                    </button>
+                    <input type="text" class="js_quantity form-control quantity text-center" style="max-width: 4rem" data-min="1" name="add_qty" t-att-value="add_qty or 1"/>
+                    <button t-attf-href="#" class="btn btn-primary float_left js_add_cart_json d-none d-md-inline-block" aria-label="Add one" title="Add one">
+                        <i class="fa fa-plus"></i>
+                    </button>
+                </div>
+            </t>
+        </xpath>
+    </template>
+
+    <template id="configure_optional_products_inh" inherit_id="website_sale_product_configurator.configure_optional_products">
+        <xpath expr="//table/tbody/tr[@class='o_total_row']" position="replace">
+            <t t-if="product.is_custom_price">
+                <tr class="o_total_row">
+                    <td colspan="4" class="text-end">
+                        <strong>Total:</strong>
+                        <span class="js_price_total fw-bold" style="white-space: nowrap;" t-att-data-product-id="product.id" t-out="combination_info['price'] * (add_qty or 1)" t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"/>
+                    </td>
+                </tr>
+            </t>
+        </xpath>
+
+        <xpath expr="//table/thead/tr/th[@class='text-center td-price']" position="replace">
+            <t t-set="is_custom_price" t-value="product.product_tmpl_id.is_custom_price or False"/>
+            <t t-if="not is_custom_price">
+                <th class="text-center">Price</th>
+            </t>
+        </xpath>
+        <xpath expr="//table/thead/tr/th[@class='text-center td-qty']" position="replace">
+            <t t-set="is_custom_price" t-value="product.product_tmpl_id.is_custom_price or False"/>
+            <th class="text-center td-qty">
+                <t t-if="not is_custom_price">
+                    <span t-if="is_view_active('website_sale.product_quantity')" class="label">
+                    Quantity
+                    </span>
+                </t>
+            </th>
+        </xpath>
+
+        <xpath expr="//table/tbody/tr[@class='js_product in_cart main_product']/td[@class='text-center td-qty']" position="replace">
+
+            <t t-set="is_custom_price" t-value="product.product_tmpl_id.is_custom_price or False"/>
+            <t t-if="is_custom_price">
+                <td class="text-center td-qty">
+                    <td class="text-center td-qty">
+                        <td class="text-center td-qty" style="display: none;">
+                            <div t-if="is_view_active('website_sale.product_quantity')" class="css_quantity input-group">
+                                <button t-attf-href="#" class="btn btn-primary float_left js_add_cart_json d-none d-md-inline-block" aria-label="Remove one" title="Remove one">
+                                    <i class="fa fa-minus"></i>
+                                </button>
+                                <input type="text" class="js_quantity form-control quantity text-center" style="max-width: 4rem" data-min="1" name="add_qty" t-att-value="add_qty or 1"/>
+                                <button t-attf-href="#" class="btn btn-primary float_left js_add_cart_json d-none d-md-inline-block" aria-label="Add one" title="Add one">
+                                    <i class="fa fa-plus"></i>
+                                </button>
+                            </div>
+                            <input t-else="" type="hidden" class="d-none js_quantity form-control quantity" name="add_qty" t-att-value="add_qty or 1"/>
+                        </td>
+                    </td>
+                </td>
+            </t>
+            <t t-else="">
+                <td class="text-center td-qty">
+                    <div t-if="is_view_active('website_sale.product_quantity')" class="css_quantity input-group">
+                        <button t-attf-href="#" class="btn btn-primary float_left js_add_cart_json d-none d-md-inline-block" aria-label="Remove one" title="Remove one">
+                            <i class="fa fa-minus"></i>
+                        </button>
+                        <input type="text" class="js_quantity form-control quantity text-center" style="max-width: 4rem" data-min="1" name="add_qty" t-att-value="add_qty or 1"/>
+                        <button t-attf-href="#" class="btn btn-primary float_left js_add_cart_json d-none d-md-inline-block" aria-label="Add one" title="Add one">
+                            <i class="fa fa-plus"></i>
+                        </button>
+                    </div>
+                    <input t-else="" type="hidden" class="d-none js_quantity form-control quantity" name="add_qty" t-att-value="add_qty or 1"/>
+                </td>
+            </t>
+        </xpath>
+
+        <xpath expr="//table/tbody/tr[@class='js_product in_cart main_product']/td[@class='text-center td-price']" position="replace">
+
+            <t t-set="is_custom_price" t-value="product.product_tmpl_id.is_custom_price or False"/>
+            <t t-if="not is_custom_price">
+                <td class="text-center td-price" name="price">
+                    <div t-attf-class="text-danger oe_default_price oe_striked_price {{'' if combination_info['has_discounted_price'] else 'd-none'}}" t-out="combination_info['list_price']" t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"/>
+                    <span class="oe_price product_id" style="white-space: nowrap;" t-att-data-product-id="product.id" t-out="combination_info['price']" t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"/>
+                    <span class="js_raw_price d-none" t-out="product._get_contextual_price()"/>
+                    <p class="css_not_available_msg alert alert-warning">Option not available</p>
+                </td>
+            </t>
+            <t t-else="">
+                <td class="text-center td-price" name="price">
+                    <!-- input to insert price -->
+                    <input type="text" class="custom_price form-control" id="custom_price" placeholder="Precio" />
+                </td>
+            </t>
+        </xpath>
+
+    </template>
+
+</odoo>

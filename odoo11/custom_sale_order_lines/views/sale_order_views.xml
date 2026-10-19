@@ -1,0 +1,25 @@
+<odoo>
+    <record id="view_sale_order_tree_inherit" model="ir.ui.view">
+        <field name="name">sale.order.tree.inherit</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_quotation_tree"/>
+        <field name="arch" type="xml">
+            <!-- Agregar botón "+" después del campo 'name' -->
+            <xpath expr="//field[@name='name']" position="after">
+                <button name="toggle_show_order_lines" string="+" type="object" icon="fa-plus-square"/>
+            </xpath>
+            <!-- Agregar visualización de líneas de pedido -->
+            <xpath expr="//tree" position="inside">
+                <field name="show_order_lines" invisible="1"/>
+                <field name="order_line" widget="one2many_list" context="{'show_lines': show_order_lines}">
+                    <tree>
+                        <field name="product_id"/>
+                        <field name="product_uom_qty"/>
+                        <field name="price_unit"/>
+                        <field name="price_subtotal"/>
+                    </tree>
+                </field>
+            </xpath>
+        </field>
+    </record>
+</odoo>

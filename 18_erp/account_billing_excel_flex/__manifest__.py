@@ -1,0 +1,26 @@
+{
+    "name": "Facturacion Flexible con Excel",
+    "version": "18.0.1.0.0",
+    "summary": "Importacion de facturas desde Excel configurable y filtrado por actividad",
+    "category": "Accounting",
+    "author": "Custom",
+    "license": "LGPL-3",
+    "depends": ["account", "contacts"],
+    "external_dependencies": {"python": ["openpyxl"]},
+    "data": [
+        "security/security.xml",
+        "security/ir.model.access.csv",
+        "views/billing_activity_views.xml",
+        "views/res_users_views.xml",
+        "views/account_move_views.xml",
+        "views/import_template_views.xml",
+        "wizard/invoice_excel_import_wizard_views.xml",
+        "wizard/billing_activity_selector_wizard_views.xml",
+        "report/invoice_activity_report_templates.xml",
+        "report/invoice_activity_report_actions.xml",
+        "wizard/invoice_activity_report_wizard_views.xml",
+        "views/menuitems.xml"
+    ],
+    "installable": True,
+    "application": False,
+}

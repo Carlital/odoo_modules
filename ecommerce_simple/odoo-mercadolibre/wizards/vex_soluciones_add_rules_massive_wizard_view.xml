@@ -1,0 +1,22 @@
+<odoo>
+  <record id="view_mercado_libre_product_massive_wizard_form" model="ir.ui.view">
+    <field name="name">mercado.libre.product.massive.wizard.form</field>
+    <field name="model">mercado.libre.product.massive.wizard</field>
+    <field name="arch" type="xml">
+      <form string="Add Massive Rules MercadoLibre">
+        <group>
+          <field name="file" filename="filename"/>
+        </group>
+        <footer>
+          <button name="download_template" type="object" string="Download Template" class="btn-primary"/>
+          <button name="action_import_template"
+            type="object"
+            string="Import Rules"
+            class="btn-success"
+            attrs="{'invisible': [('file', '=', False)]}"/>
+          <button string="Cancelar" class="btn-secondary" special="cancel"/>
+        </footer>
+      </form>
+    </field>
+  </record>
+</odoo>

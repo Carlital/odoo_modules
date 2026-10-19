@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<template xml:space="preserve">
+    <t t-name="vex_sync_mercado_libre.price_comparasion" owl="1">
+        <div class="container mt-4">
+            <div class="row">
+                <div class="col-md-2">
+                    <img
+                        src="https://www.gravatar.com/avatar/00000000000000000000000000000000"
+                        alt="" srcset="" class="img-fluid img-thumbnail mb-4"
+                        style="width:70%" />
+                    <h2 class="fs-4 fw-semibold text-dark">Detalle del producto</h2>
+                    <p class="text-danger">NIVEL DE PRECIO: Alto ⚠️</p>
+                    <p class="text-muted">ID: 105521</p>
+                    <p class="text-muted">PRECIO: 17.00</p>
+                    <p class="text-muted">CATEGORÍA: sistema respiratorio</p>
+                    <p class="text-muted">MARCA: Test brand</p>
+                    <button class="mt-2 btn btn-secondary text-white hover:bg-secondary">Agregar
+                        Competencia</button>
+                </div>
+                <div class="col-md-10">
+                    <div class="col-md-4 mb-4 grid-stack-item mb-4" gs-w="4" gs-h="3" style="display: flex; align-items: center; justify-content: center;">
+                        <div class="grid-stack-item-content card-body" style="width: 100%; height: 100%;">
+                          <canvas t-ref="priceComparasionChart" style="width: 100% !important; height: 100% !important;"></canvas>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <span>Show: </span>
+                        <select
+                            class="py-1 px-2 border border-zinc-200 dark:border-zinc-700 rounded"
+                            style="width: auto">
+                            <option value="10">10</option>
+                            <option value="20">20</option>
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                        </select>
+                        <span>entries</span>
+                    </div>
+                    <table class="table table-striped table-bordered">
+                        <thead>
+                            <tr class="bg-secondary">
+                                <th>Image</th>
+                                <th>Company</th>
+                                <th>Product</th>
+                                <th>Regular Price</th>
+                                <th>Promotion Price</th>
+                                <th>Card Price</th>
+                                <th>Price Level</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <img
+                                        src="https://www.gravatar.com/avatar/00000000000000000000000000000000"
+                                        alt="" srcset="" />
+                                </td>
+                                <td>Company A</td>
+                                <td>Product A</td>
+                                <td>$10.00</td>
+                                <td>$8.00</td>
+                                <td>$7.50</td>
+                                <td>Low</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <img
+                                        src="https://www.gravatar.com/avatar/00000000000000000000000000000000"
+                                        alt="" srcset="" />
+                                </td>
+                                <td>Company A</td>
+                                <td>Product A</td>
+                                <td>$10.00</td>
+                                <td>$8.00</td>
+                                <td>$7.50</td>
+                                <td>Low</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <img
+                                        src="https://www.gravatar.com/avatar/00000000000000000000000000000000"
+                                        alt="" srcset="" />
+                                </td>
+                                <td>Company A</td>
+                                <td>Product A</td>
+                                <td>$10.00</td>
+                                <td>$8.00</td>
+                                <td>$7.50</td>
+                                <td>Low</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </t>
+</template>

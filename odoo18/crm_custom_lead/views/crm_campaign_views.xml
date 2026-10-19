@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <record id="view_crm_custom_campaign_list" model="ir.ui.view">
+        <field name="name">crm.custom.campaign.list</field>
+        <field name="model">crm.custom.campaign</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="fecha_inicio"/>
+                <field name="fecha_fin"/>
+                <field name="descuento"/>
+                <field name="activo"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_crm_custom_campaign_form" model="ir.ui.view">
+        <field name="name">crm.custom.campaign.form</field>
+        <field name="model">crm.custom.campaign</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="fecha_inicio"/>
+                        <field name="fecha_fin"/>
+                        <field name="descuento"/>
+                        <field name="activo"/>
+                    </group>
+                    <group>
+                        <field name="descripcion"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <menuitem id="menu_crm_custom_campaign_root" name="Campañas Personalizadas" parent="crm.crm_menu_root"/>
+
+
+</odoo>
+

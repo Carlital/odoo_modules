@@ -1,0 +1,419 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Formato de papel personalizado sin encabezado/pie de página -->
+    <record id="paperformat_manufacturing_order" model="report.paperformat">
+        <field name="name">Formato Orden de Fabricación</field>
+        <field name="default" eval="True" />
+        <field name="format">A4</field>
+        <field name="page_height">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">5</field>
+        <field name="margin_bottom">10</field>
+        <field name="margin_left">5</field>
+        <field name="margin_right">5</field>
+        <field name="header_line" eval="False" />
+        <field name="header_spacing">0</field>
+        <field name="dpi">90</field>
+    </record>
+
+    <template id="report_manufacturing_order_document" name="Orden de Fabricación">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <!-- Forzar idioma español Perú para textos y formatos -->
+                <t t-set="doc" t-value="doc.with_context(lang='es_PE')" />
+                <!-- web.basic_layout aporta la estructura <main> y assets necesarios -->
+                <t t-call="web.basic_layout">
+                    <div class="page">
+                        <!-- Encabezado personalizado -->
+                        <style>
+                            table, th, td,tbody, tr {
+                            border: 0 !important;
+                            }
+                        </style>
+                        <table class="table" style="width:100%; border:0; border-collapse:collapse;">
+                            <tbody>
+                                <tr>
+                                    <td style="width:35%; vertical-align:top; border:0;">
+                                        <t t-if="doc.company_id.logo">
+                                            <img t-att-src="image_data_uri(doc.company_id.logo)"
+                                                style="height:auto; width:250px; vertical-align:middle;" />
+                                        </t>
+                                    </td>
+                                    <td style="width:30%; text-align:center; border:0;">
+
+                                        <div>
+                                            <strong t-field="doc.company_id.name" />
+                                        </div>
+                                        <div style="font-size:12px;"
+                                            t-esc="('RUC: ' + doc.company_id.vat if doc.company_id.vat else '')" />
+                                        <div style="font-size:11px;"
+                                            t-esc="('RUC: ' + doc.company_id.phone if doc.company_id.phone else '')" />
+                                        <div style="font-size:11px;"
+                                            t-esc="('RUC: ' + doc.company_id.email if doc.company_id.email else '')" />
+                                    </td>
+                                    <td
+                                        style="width:35%; text-align:center; border:0;">
+                                        <h5>ORDEN DE FABRICACIÓN
+                                        </h5>
+                                        <h6>
+                                            <span t-esc="doc.sequence_order_production or '/'" />
+                                        </h6>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <!-- Contenido detalles de cliente y envío-->
+                        <div style="padding: 10px;border:1px solid #dee2e6;border-radius:5px;">
+                            <table
+                                style="font-size:11px;text-transform:uppercase;width:100%; border:0; border-collapse:collapse;">
+                                <tbody>
+                                    <tr>
+                                        <td style="width:130px;">
+                                            <strong>#COTIZACIÓN:</strong>
+                                        </td>
+                                        <td>
+                                            <span t-field="doc.name" />
+                                        </td>
+                                        <td style="width:60px;text-align:right;">
+                                            <strong style="padding-right: 10px"># O.C:</strong>
+                                        </td>
+                                        <td>
+                                            <span t-esc="doc.client_order_ref or ''" />
+                                        </td>
+                                        <td style="width:180px;text-align:right;">
+                                            <strong style="padding-right: 10px"># FACTURA(s):</strong>
+                                        </td>
+                                        <td>
+                                            <t t-set="invoices"
+                                                t-value="doc.invoice_ids.filtered(lambda inv: inv.move_type == 'out_invoice' and inv.state == 'posted')" />
+                                            <t t-if="invoices">
+                                                <t t-foreach="invoices" t-as="invoice">
+                                                    <span t-esc="invoice.name" />
+                                                    <t t-if="not invoice_last">, </t>
+                                                </t>
+                                            </t>
+                                            <t t-if="not invoices">-</t>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="6" style="padding-bottom: 6px"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>CLIENTE:</strong>
+                                        </td>
+                                        <td>
+                                            <span t-field="doc.partner_id" />
+                                        </td>
+                                        <td style="text-align:right;">
+                                            <strong style="padding-right: 10px">RUC:</strong>
+                                        </td>
+                                        <td>
+                                            <span t-field="doc.partner_id.vat" />
+                                        </td>
+                                        <td style="text-align:right;">
+                                            <strong style="padding-right: 10px">FECHA:</strong>
+                                        </td>
+                                        <td>
+                                            <span t-field="doc.date_order"
+                                                t-options="{'widget': 'date'}" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="6" style="padding-bottom: 6px"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>DIRECCIÓN LEGAL:</strong>
+                                        </td>
+                                        <td colspan="5">
+
+                                            <span
+                                                t-esc="(doc.partner_id.street or '') + 
+                                            (', ' + doc.partner_id.l10n_pe_district.name if doc.partner_id.l10n_pe_district else '') +
+                                            (', ' + doc.partner_id.city_id.name if doc.partner_id.city_id else '') +
+                                            (', ' + doc.partner_id.state_id.name if doc.partner_id.state_id else '') +
+                                            (', ' + doc.partner_id.country_id.name if doc.partner_id.country_id else '') or '-'" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="6" style="padding-bottom: 6px"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>CONTACTO:</strong>
+                                        </td>
+                                        <td>
+                                            <span t-esc="doc.contact_person_id.name or '-'" />
+                                        </td>
+                                        <td style="text-align:right;">
+                                            <strong style="padding-right: 10px">CELULAR:</strong>
+                                        </td>
+                                        <td>
+                                            <span t-esc="doc.contact_person_id.mobile or '-'" />
+                                        </td>
+                                        <td style="text-align:right;">
+                                            <strong style="padding-right: 10px">FECHA Y HORA DE
+                                                ENTREGA:</strong>
+                                        </td>
+                                        <td>
+                                            <t t-if="doc.commitment_date"> El día <span
+                                                    t-field="doc.commitment_date"
+                                                    t-options="{'widget': 'date', 'format': 'dd/MM/yyyy'}" />
+                                                a las <span t-field="doc.commitment_date"
+                                                    t-options="{'widget': 'datetime', 'format': 'HH:mm'}" />
+                                                horas </t>
+                                            <t t-if="not doc.commitment_date">-</t>
+
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="6" style="padding-bottom: 6px"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>LUGAR DE ENTREGA: </strong>
+                                        </td>
+                                        <td colspan="5">
+                                            <span
+                                                t-esc="(doc.contact_delivery_id.street or '') + 
+                                            (', ' + doc.contact_delivery_id.l10n_pe_district.name if doc.contact_delivery_id.l10n_pe_district else '') +
+                                            (', ' + doc.contact_delivery_id.city_id.name if doc.contact_delivery_id.city_id else '') +
+                                            (', ' + doc.contact_delivery_id.state_id.name if doc.contact_delivery_id.state_id else '') +
+                                            (', ' + doc.contact_delivery_id.country_id.name if doc.contact_delivery_id.country_id else '') or '-'" />
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Tabla de productos agrupados -->
+                        <div t-if="grouped_lines" class="table-responsive" style="margin-top:10px;">
+                            <table class="table table-sm table-bordered"
+                                style="font-size:11px;text-transform:uppercase;">
+                                <t t-set="item" t-value="0" />
+                                <t t-foreach="grouped_lines.values()" t-as="group">
+                                    <!-- Fila del producto -->
+                                    <tr style="background-color:#f8f9fa;">
+                                        <td colspan="7" class="text-left">
+                                            <strong>MATERIAL/PRODUCTO: <span
+                                                    t-esc="group['product'].display_name.split(']', 1)[-1].strip() if ']' in group['product'].display_name else group['product'].display_name" /></strong>
+                                        </td>
+                                        <td class="text-end">
+                                            <span t-if="group.get('lot_numbers_str')"
+                                                style="font-weight:bold;"> # BOBINA: <span
+                                                    t-esc="group.get('lot_numbers_str')" />
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <!-- Encabezados de columna -->
+                                    <tr style="background-color:#e9ecef;">
+                                        <th class="text-center" style="width:40px">Nº</th>
+                                        <th class="text-center" style="width:120px">Modelo</th>
+                                        <th class="text-center" style="width:60px">Cant.</th>
+                                        <th class="text-center" style="width:50px">Udv</th>
+                                        <th class="text-center" style="width:80px">M.LINEAL</th>
+                                        <th class="text-center" style="width:110px">Long(Pza)</th>
+                                        <th class="text-center" style=" width:80px">Peso(KG)</th>
+                                        <th class="text-center">Observación</th>
+                                    </tr>
+                                    <!-- Líneas del producto -->
+                                    <t t-foreach="group['lines']" t-as="line">
+                                        <tr style="border-bottom:1px solid #dee2e6;">
+                                            <t t-set="item" t-value="item + 1" />
+                                            <td class="text-center">
+                                                <t t-esc="item" />
+                                            </td>
+                                            <td class="text-end">
+                                                <span t-field="line.product_id.default_code" />
+                                                <t t-if="line.acs_line_color">
+                                                    <span t-esc="'- ' + line.acs_line_color.name" />
+                                                </t>
+                                            </td>
+                                            <td class="text-end">
+                                                <span t-esc="'%.0f' % line.acs_cant_pzs" />
+                                            </td>
+                                            <td class="text-end">
+                                                <span t-field="line.acs_udv" />
+                                            </td>
+                                            <td class="text-end">
+                                                <span t-field="line.product_uom_qty" />
+                                                <span t-field="line.product_uom" />
+                                            </td>
+                                            <td class="text-end">
+                                                <span t-field="line.acs_largue_pza" />
+                                            </td>
+                                            <td class="text-end">
+                                                <t t-set="peso_total"
+                                                    t-value="line.product_id.weight * line.product_uom_qty" />
+                                                <span
+                                                    t-esc="'%.2f' % peso_total" /> Kg </td>
+                                            <td class="text-left">
+                                                <span t-field="line.acs_observations" />
+                                            </td>
+                                        </tr>
+                                    </t>
+                                    <!-- Totales por grupo: mostrar solo si hay 2+ líneas -->
+                                    <tr t-if="len(group['lines']) &gt;= 2" style="font-size:10px;">
+                                        <td />
+                                        <td />
+                                        <td class="text-end">Total: <span
+                                                t-esc="'%.0f' % sum(line.acs_cant_pzs for line in group['lines'])" /></td>
+                                        <td />
+
+                                        <td class="text-end">Total: <span
+                                                t-esc="'%.2f' % sum(line.product_uom_qty for line in group['lines'])" /></td>
+                                        <td />
+                                        <td>Total: <span
+                                                t-esc="'%.2f' % sum(line.product_id.weight * line.product_uom_qty for line in group['lines'])" /></td>
+                                        <td />
+
+                                    </tr>
+                                    <!-- Espacio entre grupos -->
+                                    <tr>
+                                        <td colspan="8" style="height:20px; border:none;"></td>
+                                    </tr>
+                                </t>
+                            </table>
+                            <table class="table table-sm table-bordered"
+                                style="font-size:11px;text-transform:uppercase;">
+                                <tbody>
+                                    <tr>
+                                        <td>TOTAL PIEZAS: <t t-set="gran_total_piezas"
+                                                t-value="0" />
+                                        <t
+                                                t-foreach="grouped_lines.values()" t-as="group">
+                                                <t t-foreach="group['lines']" t-as="line">
+                                                    <t t-set="gran_total_piezas"
+                                                        t-value="gran_total_piezas + line.acs_cant_pzs" />
+                                                </t>
+                                            </t>
+                                        <span
+                                                t-esc="'%.0f' % gran_total_piezas" />
+                                        </td>
+                                        <td>TOTAL KILOS: <t t-set="gran_total_peso"
+                                                t-value="0" />
+                                        <t
+                                                t-foreach="grouped_lines.values()" t-as="group">
+                                                <t t-foreach="group['lines']" t-as="line">
+                                                    <t t-set="gran_total_peso"
+                                                        t-value="gran_total_peso + (line.product_id.weight * line.product_uom_qty)" />
+                                                </t>
+                                            </t>
+                                        <span
+                                                t-esc="'%.2f' % gran_total_peso" /> Kg </td>
+                                        <td style="height:20px; border:none;">PAGO DE FLETE: <span
+                                                t-field="doc.pay_flete" /></td>
+                                        <td style="height:20px; border:none;"> VENDEDOR: <span
+                                                t-field="doc.user_id.name" />
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div t-else="" class="alert alert-warning">
+                            No hay líneas de producto para mostrar.
+                        </div>
+
+                        <!-- Sección de Firmas -->
+                        <div style="margin-top: 0px; page-break-inside: avoid;">
+                            <table
+                                style="width: 100%;text-align: center;text-transform: uppercase; border:0; border-collapse:collapse;">
+                                <tbody>
+                                    <style>
+                                        td.relleno {
+                                        width: 10%
+                                        }
+
+                                        .img_firma td.firma {
+                                        width: 20%;
+                                        border-bottom: 1px solid black !important;
+                                        }
+                                        .img_firma td.firma img {
+                                        margin-bottom: 5px;
+                                        }
+                                        .firma {
+                                        text-align: center;
+                                        }
+                                    </style>
+                                    <tr class="img_firma">
+                                        <td class="relleno"></td>
+                                        <td class="firma">
+                                            <t
+                                                t-if="auto_sign_user and auto_sign_user.signature_image">
+                                                <img
+                                                    t-att-src="image_data_uri(auto_sign_user.signature_image)"
+                                                    style="max-height: 80px; max-width: 150px;"
+                                                    alt="Firma" />
+                                            </t>
+                                            <t t-else="">
+                                                <img
+                                                    t-att-src="'/acs_sale_extra_calcs/static/src/img/fondo_blanco.png'"
+                                                    style="height: 80px; display: block;"
+                                                    alt="Firma" />
+                                            </t>
+                                        </td>
+                                        <td class="relleno"></td>
+                                        <td class="firma">
+                                            <img
+                                                t-att-src="'/acs_sale_extra_calcs/static/src/img/fondo_blanco.png'"
+                                                style="height: 80px; display: block;" alt="Firma" />
+                                        </td>
+                                        <td class="relleno"></td>
+                                        <td class="firma">
+                                            <img
+                                                t-att-src="'/acs_sale_extra_calcs/static/src/img/fondo_blanco.png'"
+                                                style="height: 80px; display: block;" alt="Firma" />
+                                        </td>
+                                        <td class="relleno"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="relleno"></td>
+                                        <td class="firma">
+                                            <t
+                                                t-if="auto_sign_user and auto_sign_user.signature_image">
+                                                <span t-field="auto_sign_user.name" />
+                                            </t>
+                                            <t t-else="">
+                                                Ing. Percy Rodrigues
+                                            </t>
+                                        </td>
+                                        <td class="relleno"></td>
+                                        <td class="firma">Luis Oria</td>
+                                        <td class="relleno"></td>
+                                        <td class="firma">Romero Haro</td>
+                                        <td class="relleno"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!-- Footer fuera del contenido principal -->
+                    <div class="footer o_standard_footer">
+                        <div class="text-center"
+                            style="border-top: 1px solid #aaa;font-size: 11px;padding-top: 5px;">
+                            Página: <span
+                                class="page" /> / <span class="topage" />
+
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <!-- Registrar el reporte -->
+    <record id="action_report_manufacturing_order" model="ir.actions.report">
+        <field name="name">Orden de Fabricación</field>
+        <field name="model">sale.order</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">acs_sale_extra_calcs.report_manufacturing_order_document</field>
+        <field name="report_file">acs_sale_extra_calcs.report_manufacturing_order_document</field>
+        <field name="binding_model_id" ref="sale.model_sale_order" />
+        <field name="binding_type">report</field>
+        <field name="print_report_name">'Orden de Fabricación - %s' %
+            (object.sequence_order_production)</field>
+        <field name="paperformat_id" ref="acs_sale_extra_calcs.paperformat_manufacturing_order" />
+    </record>
+</odoo>

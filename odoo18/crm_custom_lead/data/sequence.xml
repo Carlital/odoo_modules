@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <record id="seq_crm_lead_opportunity" model="ir.sequence">
+        <field name="name">Opportunity Sequence</field>
+        <field name="code">crm.lead.opportunity</field>
+        <field name="prefix">Oportunidad </field>
+        <field name="padding">1</field>
+        <field name="number_increment">1</field>
+        <field name="number_next">1</field>
+    </record>
+</odoo>

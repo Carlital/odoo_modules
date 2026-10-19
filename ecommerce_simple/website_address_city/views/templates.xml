@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (c) 2016-Present Webkul Software Pvt. Ltd. (<https://webkul.com/>;) -->
+<!-- See LICENSE file for full copyright and licensing details. -->
+<!-- License URL : https://store.webkul.com/license.html/ -->
+<odoo>
+    <template id="inherit_address" inherit_id="website_sale.address" name="Add city in address">
+        <!-- <xpath expr="//input[@name='city']" position="replace">
+            <select id="country_id" name="country_id" t-attf-class="form-select #{error.get('country_id') and 'is-invalid' or ''}" t-att-mode="mode[1]">
+                <option value="">Pais...</option>
+                <t t-foreach="countries" t-as="c">
+                    <option t-att-value="c.id" t-att-selected="c.id == (country and country.id or -1)">
+                        <t t-esc="c.name" />
+                    </option>
+                </t>
+            </select>
+        </xpath> -->
+        <!-- <xpath expr="//label[@for='city']" position="replace">
+            <label class="col-form-label" for="country_id">Pais</label>
+        </xpath> -->
+
+
+        <xpath expr="//div[@class='mb-3 #{error.get('street') and 'o_has_error' or ''} col-lg-12 div_street']" position="after">
+            <div t-attf-class="mb-3 #{error.get('street2') and 'o_has_error' or ''} col-lg-12 div_street2">
+                <label class="col-form-label label-optional" for="street2">Street 2</label>
+                <input type="text" name="street2" t-attf-class="form-control #{error.get('street2') and 'is-invalid' or ''}" t-att-value="'street2' in checkout and checkout['street2']" />
+            </div>
+        </xpath>
+        <xpath expr="//div[@class='mb-3 #{error.get('city') and 'o_has_error' or ''} col-md-8 div_city']" position="before">
+            <div t-attf-class="mb-3 #{error.get('zip') and 'o_has_error' or ''} col-md-4 div_zip">
+                <label class="col-form-label label-optional" for="zip">Zip Code</label>
+                <input type="text" name="zip" t-attf-class="form-control #{error.get('zip') and 'is-invalid' or ''}" t-att-value="'zip' in checkout and checkout['zip']" />
+            </div>
+        </xpath>
+        <xpath expr="//div[@class='mb-3 #{error.get('country_id') and 'o_has_error' or ''} col-lg-6 div_country']" position="before">
+            <div t-attf-class="mb-3 #{error.get('state_id') and 'o_has_error' or ''} col-lg-6 div_state" t-att-style="(not country or not country.state_ids) and 'display: none'">
+                <label class="col-form-label" for="state_id">State / Province</label>
+                <select name="state_id" t-attf-class="form-select #{error.get('state_id') and 'is-invalid' or ''}" data-init="1">
+                    <option value="">State / Province...</option>
+                    <t t-foreach="country_states" t-as="s">
+                        <option t-att-value="s.id" t-att-selected="s.id == ('state_id' in checkout and country and checkout['state_id'] != '' and int(checkout['state_id']))">
+                            <t t-esc="s.name" />
+                        </option>
+                    </t>
+                </select>
+            </div>
+        </xpath>
+    </template>
+    <!-- <template id="inherit_address" inherit_id="website_sale.address" name="Add city in address">
+        <xpath expr="//div[1]/div[1]/div[2]/div[2]//form/div[hasclass('row')]/div[12]" position="after">
+            <div class="form-group col-lg-6 div_state_city" t-att-style="(not country) and 'display: none'">
+                <label class="col-form-label" for="city_id">Comuna</label>
+                <select name="city_id" t-attf-class="form-control #{error.get('city_id') and 'is-invalid' or ''}" data-init="1" style="margin-bottom: 10px;">
+                    <option value="">Comuna...</option>
+                    <t t-foreach="state_city" t-as="s">
+                        <option t-att-value="s.id" t-att-selected="s.id == ('city_id' in checkout and country and checkout['city_id'] != '' and int(checkout['city_id']))">
+                            <t t-esc="s.name" />
+                        </option>
+                    </t>
+                </select>
+            </div>
+        </xpath>
+    </template> -->
+    <template id="inherit_portal_my_details" inherit_id="portal.portal_my_details_fields" name="Inherit portal my detail">
+        <xpath expr="//div[11]" position="replace">
+            <t t-set="cities" t-value="request.env['res.city'].search([('state_id','=',partner.state_id.id)])" />
+            <div t-attf-class="form-group #{error.get('city_id') and 'o_has_error' or ''} col-xl-6" t-att-style="'display:block' if cities else 'display:none'">
+                <label class="col-form-label label-optional" for="city_id">Comuna</label>
+                <t t-set="cities" t-value="request.env['res.city'].search([('state_id','=',partner.state_id.id)])" />
+                <select name="city_id" t-attf-class="form-control #{error.get('city_id') and 'is-invalid' or ''}">
+                    <t t-foreach="cities or []" t-as="c">
+                        <option t-att-value="c.id" t-att-data-state_id="c.state_id.id" t-att-selected="c.id == partner.city_id.id">
+                            <t t-esc="c.name" />
+                        </option>
+                    </t>
+                </select>
+            </div>
+
+            <div t-attf-class="form-group #{error.get('city') and 'o_has_error' or ''} col-xl-6" t-att-style="'display:block' if not cities else 'display:none'">
+                <label class="col-form-label" for="city">Comuna</label>
+                <input type="text" name="city" t-attf-class="form-control #{error.get('city') and 'is-invalid' or ''}" t-att-value="partner.city" />
+            </div>
+
+        </xpath>
+    </template>
+
+    <!--
+        Pais      / Country   (country_id)
+        Provincia / State     (state_id)
+        Ciudad    / City      (city_id)
+        ZIP                   (zipcode)
+        Calle     / Street    (street)
+         -->
+</odoo>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="acs_company_nickname.SwitchCompanyMenu" t-inherit="web.SwitchCompanyMenu" t-inherit-mode="extension" owl="1">
+        <xpath expr="//span[hasclass('oe_topbar_name')]" position="attributes">
+            <attribute name="t-esc">companyService.currentCompany.nickname</attribute>
+        </xpath>
+    </t>
+
+
+    <t t-name="acs_company_nickname.SwitchCompanyItem" t-inherit="web.SwitchCompanyItem" t-inherit-mode="extension" owl="1">
+        <!-- Reemplaza el texto del nombre de la compañía por el apodo -->
+        <xpath expr="//span[hasclass('company_label')]/t" position="replace">
+            <t t-out="props.company.nickname"/>
+        </xpath>
+        <!-- Actualiza las etiquetas de accesibilidad (aria-label, title) con el apodo -->
+        <xpath expr="//div[@role='menuitemcheckbox']" position="attributes">
+            <attribute name="t-att-aria-label">props.company.nickname</attribute>
+            <attribute name="t-att-title">(isCompanySelected ? 'Hide ' : 'Show ') + props.company.nickname + ' content.'</attribute>
+        </xpath>
+        <xpath expr="//div[@role='button']" position="attributes">
+            <attribute name="t-att-aria-label">'Switch to ' + props.company.nickname</attribute>
+            <attribute name="t-att-title">'Switch to ' + props.company.nickname</attribute>
+        </xpath>
+    </t>
+
+</templates>

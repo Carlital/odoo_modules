@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.eguide.advanced</field>
+        <field name="model">res.config.settings</field>
+        <field name="priority" eval="10"/>
+        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="inside">
+                <app string="Electronic Guide" data-string="Electronic Guide" name="l10n_pe_eguide_advanced" groups="l10n_pe_eguide_advanced.group_pe_eguide_manager">
+                    <block title="Electronic Guide Advanced">
+                        <setting id="pe_guide_report_template" string="Report Template" company_dependent="1" help="Set Report Template">
+                            <field name="pe_guide_report_template" />
+                        </setting>
+                        <setting string="Electronic Guide" company_dependent="1" >
+                            <div class="mt8">
+                                <button name="action_eguide_advanced_config_wizard" icon="fa-arrow-right" type="object" string="Configure Wizard" class="btn-link"/>
+                            </div>
+                        </setting>
+                    </block>
+
+                </app>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="action_l10n_pe_eguide_advanced_config_settings" model="ir.actions.act_window">
+        <field name="name">Settings</field>
+        <field name="res_model">res.config.settings</field>
+<!--        <field name="view_id" ref="res_config_settings_view_form"/>-->
+        <field name="view_mode">form</field>
+        <field name="target">inline</field>
+        <field name="context">{'module' : 'l10n_pe_eguide_advanced', 'bin_size': False}</field>
+    </record>
+
+</odoo>

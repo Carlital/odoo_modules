@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="paperformat_acs_product_labels_price" model="report.paperformat">
+            <field name="name">Lista de precios</field>
+            <field name="default" eval="True" />
+            <field name="format">custom</field>
+            <field name="page_height">70</field>
+            <field name="page_width">105</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">5</field>
+            <field name="margin_bottom">0</field>
+            <field name="margin_left">0</field>
+            <field name="margin_right">0</field>
+            <field name="header_line" eval="False" />
+            <field name="header_spacing">55</field>
+            <field name="dpi">90</field>
+        </record>
+
+
+        <record id="report_product_label_price_acs" model="ir.actions.report">
+            <field name="name">Etiquetas de precios</field>
+            <field name="model">product.product</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">acs_product_labels_price.report_productlabelprice_acs</field>
+            <field name="report_file">acs_product_labels_price.report_productlabelprice_acs</field>
+            <field name="paperformat_id" ref="product.paperformat_label_sheet" />
+            <field name="print_report_name">'Etiquetas de precio - %s' % (object.name)</field>
+            <field name="binding_model_id" eval="False" />
+            <field name="binding_type">report</field>
+        </record>
+
+
+        <record id="report_product_template_label_price_acs" model="ir.actions.report">
+            <field name="name">Etiquetas de precios</field>
+            <field name="model">product.template</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">acs_product_labels_price.report_producttemplatelabelprice_acs</field>
+            <field name="report_file">acs_product_labels_price.report_producttemplatelabelprice_acs</field>
+            <field name="paperformat_id" ref="product.paperformat_label_sheet" />
+            <field name="print_report_name">'Etiquetas de precio - %s' % (object.name)</field>
+            <field name="binding_model_id" eval="False" />
+            <field name="binding_type">report</field>
+        </record>
+
+        <template id="report_productlabelprice_acs">
+            <t t-call="web.basic_layout">
+                <div class="page">
+                    <t t-foreach="docs" t-as="product">
+                        <t t-call="acs_product_labels_price.report_simple_labelprice_acs">
+                            <t t-set="product" t-value="product" />
+                        </t>
+                    </t>
+                </div>
+            </t>
+        </template>
+
+        <template id="report_producttemplatelabelprice_acs">
+            <t t-call="web.basic_layout">
+                <div class="page">
+                    <t t-foreach="docs" t-as="o">
+                        <t t-foreach="o.product_variant_ids" t-as="product">
+                            <t t-call="acs_product_labels_price.report_simple_labelprice_acs">
+                                <t t-set="product" t-value="product" />
+                            </t>
+                        </t>
+                    </t>
+                </div>
+            </t>
+        </template>
+
+        <!-- <record id="acs_product_labels_price.report_product_label_price_acs"
+        model="ir.actions.report">
+            <field name="name">Product Label Price ACS</field>
+            <field name="report_name">Product Label Price ACS</field>
+            <field name="model">product.template</field>
+            <field name="paperformat_id" ref="acs_product_labels_price.paperformat_acs_product_labels_price" />
+        </record>
+
+        <record id="acs_product_labels_price.report_product_template_label_price_acs"
+        model="ir.actions.report">
+            <field name="name">Product Template Label Price ACS</field>
+            <field name="report_name">Product Template Label Price ACS</field>
+            <field name="model">product.template</field>
+            <field name="paperformat_id" ref="acs_product_labels_price.paperformat_acs_product_labels_price" />
+        </record> -->
+
+        <template id="report_simple_labelprice_acs">
+            <div class="col-md-12"
+                style="width: 100%;max-width: 381.73px;display: block;margin: 5px auto">
+                <style>
+                    @font-face {
+                    font-family: 'Lato-Black';
+                    font-style: normal;
+                    font-weight: bold;
+                    src: url('Lato-Black.ttf') format('truetype');
+                    }
+                    @font-face {
+                    font-family: 'Futura Bold font';
+                    font-style: normal;
+                    font-weight: bold;
+                    src: url('Futura Bold font.ttf') format('truetype');
+                    }
+                    .precios strong{
+                    font-family: Lato-Black;
+                    }
+
+                    table, table * {
+                    border: none !important;
+                    border-collapse: collapse !important;
+                    }
+
+                </style>
+                <table style="width:100%">
+                    <colgroup>
+                        <col width="50%" />
+                        <col width="50%" />
+                    </colgroup>
+                    <tbody>
+                        <tr>
+                            <td style="height:75.59px">
+                                <table>
+                                    <tbody>
+                                        <tr>
+                                            <td style="font-size: 12px;">C.INTERN</td>
+                                            <td style="font-size: 12px;">:</td>
+                                            <td style="font-size: 12px;">
+                                                <span t-if="product.default_code"
+                                                    t-field="product.default_code" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="font-size: 12px;">C</td>
+                                            <td style="font-size: 12px;">: </td>
+                                            <td style="font-size: 12px;">
+                                                <span t-field="product.qty_last_purchase"
+                                                    t-options='{"widget": "float", "precision": 2}' />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="font-size: 12px;">S.T</td>
+                                            <td style="font-size: 12px;">: </td>
+                                            <td style="font-size: 12px;">
+                                                <span t-field="product.qty_available"
+                                                    t-options='{"widget": "float", "precision": 2}' />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="font-size: 12px;">C. BARRAS</td>
+                                            <td style="font-size: 12px;">: </td>
+                                            <td style="font-size: 12px;">
+                                                <span t-field="product.barcode" />
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                            <td style="height:75.59px;text-align: center; vertical-align: middle;">
+                                <!-- <t t-if="product.reprint"><span style="font-size:
+                                10px;">Reimprimir código de barras</span></t> 
+                                <img t-if="product.barcode and len(product.barcode) == 13"
+                                    t-att-src="'/report/barcode/?barcode_type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('EAN13', quote_plus(product.barcode or ''), 175, 48)"
+                                    style="width:95%;height:auto;" />
+
+                                <img t-elif="product.barcode and len(product.barcode) == 8"
+                                    t-att-src="'/report/barcode/?barcode_type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('EAN8', quote_plus(product.barcode or ''), 175, 48)"
+                                    style="width:95%;height:auto;" />
+
+                                <img t-else=""
+                                    t-att-src="'/report/barcode/?barcode_type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('Code128', quote_plus(product.barcode or ''), 175, 48)"
+                                    style="width:95%;height:auto;" />
+
+                                <strong t-field="product.barcode" />-->
+                                <t t-if='product.wholesale_price_2'>
+                                <strong>PRECIO IMPORTACIÓN</strong>
+                                    <strong style="font-size: 35px; line-height: 1"
+                                        t-field="product.wholesale_price_2.fixed_price"
+                                        t-options='{"widget": "float", "precision": 2}' />
+                                </t>
+                                <t t-else="product.wholesale_price_2">
+                                    <!--<strong
+                                        style="font-size: 35px; line-height: 1;font-family: Futura Bold font"
+                                        t-field="product.list_price"
+                                        t-options='{"widget": "float", "precision": 2}' />-->
+                                </t>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2"
+                                style="height:75.59px;text-align: center; vertical-align: top;">
+                                <strong style="font-size: 23px; line-height: 1;"
+                                    t-field="product.name" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span style="color:transparent">PRECIO UNITARIO</span>
+                            </td>
+                            <td>
+                                <span style="color:transparent">PRECIO POR MAYOR</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="precios"
+                                style="height:75.59px;text-align: center; vertical-align: middle;">
+                                <strong
+                                    style="font-size: 35px; line-height: 1;font-family: Futura Bold font"
+                                    t-field="product.list_price"
+                                    t-options='{"widget": "float", "precision": 2}' />
+                            </td>
+                            <td class="precios"
+                                style="height:75.59px;text-align: right; vertical-align: middle;font-family: Futura Bold font">
+                                <t t-if='product.wholesale_price'>
+                                    <strong style="font-size: 35px; line-height: 1"
+                                        t-field="product.wholesale_price.fixed_price"
+                                        t-options='{"widget": "float", "precision": 2}' />
+                                </t>
+                                <t t-else="product.wholesale_price">
+                                    <strong
+                                        style="font-size: 35px; line-height: 1;font-family: Futura Bold font"
+                                        t-field="product.list_price"
+                                        t-options='{"widget": "float", "precision": 2}' />
+                                </t>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </template>
+
+    </data>
+</odoo>

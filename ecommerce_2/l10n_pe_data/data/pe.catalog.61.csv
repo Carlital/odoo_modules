@@ -1,0 +1,13 @@
+id,code,name,description
+catalog61_01,01,Factura electrónica o en formatos impresos o importados,
+catalog61_03,03,Boleta de venta electrónica o formatos impresos o importados,
+catalog61_04,04,Liquidación de compra electrónica o emitida en formatos impresos o importados,
+catalog61_09,09,Guía de remisión remitente electrónica o emitida en formatos impresos o importados,
+catalog61_12,12,Ticket o cinta emitido por máquina registradora,
+catalog61_31,31,Guía de remisión transportista electrónica o emitida en formatos impresos o importados,
+catalog61_49,49,Constancia de depósito - IVAP (Ley N.° 28211),
+catalog61_50,50,Declaración Aduanera de Mercancías,
+catalog61_52,52,Declaración Simplificada,
+catalog61_80,80,Constancia de depósito – Detracción,
+catalog61_81,81,Código de autorización emitida por el SCOP,
+catalog61_82,82,Declaración jurada de mudanza,

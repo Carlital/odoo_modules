@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_users_form_billing_activity" model="ir.ui.view">
+        <field name="name">res.users.form.billing.activity</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='access_rights']/group" position="after">
+                <group string="Facturacion por actividad">
+                    <field name="billing_activity_ids" context="{'default_owner_user_id': id}">
+                        <list editable="bottom" create="1" delete="1">
+                            <field name="name"/>
+                            <field name="code"/>
+                            <field name="ruc"/>
+                            <field name="active"/>
+                        </list>
+                    </field>
+                    <field name="invoice_activity_option" widget="radio" invisible="not billing_activity_ids"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>

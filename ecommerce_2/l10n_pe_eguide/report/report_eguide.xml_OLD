@@ -1,0 +1,367 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="report_eguide_document">
+            <t t-if="not o" t-set="o" t-value="doc"/>
+
+            <t t-if="not company">
+                <!-- Multicompany -->
+                <t t-if="company_id">
+                    <t t-set="company" t-value="company_id"/>
+                </t>
+                <t t-elif="o and 'company_id' in o and o.company_id.sudo()">
+                    <t t-set="company" t-value="o.company_id.sudo()"/>
+                </t>
+                <t t-else="else">
+                    <t t-set="company" t-value="res_company"/>
+                </t>
+            </t>
+            <t t-set="o" t-value="o.with_context(lang=lang)" />
+            <div class="header">
+              <table class="table"  style="width: 100%; border-color:#FFFFFF !important;">
+                <tr style="border-top: none;">
+                  <th scope="row"  style="border-top: none;">
+                      <img t-if="company.logo" t-att-src="image_data_uri(company.logo)" style="max-height: 45px;" alt="Logo"/>
+                  </th>
+                  <td rowspan="2"  style="border-top: none; max-width: 256px; width: 256px;">
+                    <div class="text-center" style="background-color: #eeeeee !important; border-radius: 10px; padding: 10px 15px 10px 15px;">
+                      <h1 style="font-size: 18px !important;">
+                        RUC <span t-field="company.vat"/> <br />
+                        GUÍA DE REMISIÓN REMITENTE ELECTRÓNICA<br />
+                        <span t-field="o.pe_guide_number" /><br />
+                      </h1>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <th style="font-size: 12px;">
+                    <span t-field="company.name"/><br />
+                    <span t-field="company.street" style="font-weight: normal;"/><br />
+                    <span t-field="company.city" style="font-weight: normal;"/>-
+                      <span t-field="company.partner_id.city_id.name" style="font-weight: normal;"/>-
+                      <span t-field="company.state_id.name" style="font-weight: normal;"/><br />
+                  </th>
+                </tr>
+              </table>
+            </div>
+            <div class="article"  t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id" t-att-data-oe-lang="o and o.env.context.get('lang')" style="font-size: 12px !important;">
+                <div class="page">
+                    <div class="row" style="border-radius: 0.25rem !important; border: 1px solid #dee2e6 !important;" >
+                        <t t-if="o.picking_type_id.code == 'outgoing'">
+                            <t t-set="partner_id" t-value="o.partner_id.parent_id or o.partner_id"/>
+                        </t>
+                        <t t-else="">
+                            <t t-set="partner_id" t-value="o.picking_type_id.warehouse_id.partner_id"/>
+                        </t>
+                        <div class="col-12"  style="border-radius: 0.25rem !important; border: 1px solid #dee2e6 !important; background-color: #eeeeee !important; padding: 0px 15px 0px 15px;">
+                            DESTINATARIO
+                        </div>
+                    </div>
+                    <div class="row" style="border-radius: 0.25rem !important; border: 1px solid #dee2e6 !important;" >
+                        <table  style="width: 100%; border-color:#FFFFFF !important;">
+                            <tr>
+                                <td style="width: 30%;" class="text-right">
+                                    RUC:
+                                </td>
+                                <td style="padding-left: 15px">
+                                    <span t-field="partner_id.vat"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-right">
+                                    DENOMINACIÓN:
+                                </td>
+                                <td style="padding-left: 15px">
+                                    <span t-field="partner_id.name"/>
+                                </td>
+                            </tr>
+                        </table>
+
+                    </div>
+
+                    <div class="row" style="border-radius: 0.25rem !important; border: 1px solid #dee2e6 !important;">
+                      <div class="col-12"  style="border-radius: 0.25rem !important; border: 1px solid #dee2e6 !important; background-color: #eeeeee !important; padding: 0px 15px 0px 15px;">
+                        DATOS DEL TRASLADO
+                      </div>
+                    </div>
+                    <div class="row" style="border-radius: 0.25rem !important; border: 1px solid #dee2e6 !important;">
+                        <table  style="width: 100%; border-color:#FFFFFF !important;">
+                            <tr>
+                                <td style="width: 30%;" class="text-right">
+                                    FECHA EMISIÓN:
+                                </td>
+                                <td style="padding-left: 15px">
+                                    <span t-field="o.pe_date_issue"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width: 30%;" class="text-right">
+                                    FECHA INICIO DE TRASLADO:
+                                </td>
+                                <td style="padding-left: 15px">
+                                    <span t-field="o.pe_transfer_date"/>
+                                </td>
+                            </tr>
+
+
+                            <tr>
+                                <td style="width: 30%;" class="text-right">
+                                    MOTIVO DE TRASLADO:
+                                </td>
+                                <td style="padding-left: 15px">
+                                    <span t-esc="o.env['pe.catalog.20'].get_by_code(o.pe_transfer_code).name"/>
+                                </td>
+                            </tr>
+                            <tr t-if="o.pe_transport_mode">
+                                <td style="width: 30%;" class="text-right">
+                                    MODALIDAD DE TRANSPORTE:
+                                </td>
+                                <td style="padding-left: 15px">
+                                    <span t-esc="o.env['pe.catalog.18'].get_by_code(o.pe_transport_mode).name"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width: 30%;" class="text-right">
+                                    PESO BRUTO TOTAL (KGM):
+                                </td>
+                                <td style="padding-left: 15px">
+                                    <span t-field="o.pe_gross_weight"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width: 30%;" class="text-right">
+                                    NÚMERO DE BULTOS:
+                                </td>
+                                <td style="padding-left: 15px">
+                                    <span t-field="o.pe_unit_quantity"/>
+                                </td>
+                            </tr>
+                        </table>
+                    </div> 
+                    
+                    <div class="row" style="border-radius: 0.25rem !important; border: 1px solid #dee2e6 !important;">
+                      <div class="col-12"  style="border-radius: 0.25rem !important; border: 1px solid #dee2e6 !important; background-color: #eeeeee !important; padding: 0px 15px 0px 15px;">
+                        DATOS DEL TRANSPORTE 
+                      </div>
+                    </div>
+                    <div class="row" style="border-radius: 0.25rem !important; border: 1px solid #dee2e6 !important;">
+                        <table  style="width: 100%; border-color:#FFFFFF !important;">
+                            <tr t-if="o.pe_transport_mode=='01'">
+                                <td style="width: 30%;" class="text-right">
+                                    TRANSPORTISTA:
+                                </td>
+                                <td style="padding-left: 15px">
+                                    RUC<span t-field="o.pe_carrier_id.vat"/>
+                                    <span t-field="o.pe_carrier_id.name"/> <br />
+                                </td>
+                            </tr>
+                            <tr t-if="o.pe_fleet_ids">
+                                <td style="width: 30%;" class="text-right">
+                                    VEHÍCULO:
+                                </td>
+                                <td style="padding-left: 15px">
+                                    <span t-field="o.pe_fleet_ids[0].name"/>
+                                </td>
+                            </tr>
+                            <tr t-if="o.pe_transport_mode=='02' and o.pe_carrier_id">
+                                <td style="width: 30%;" class="text-right">
+                                    CONDUCTOR:
+                                </td>
+                                <td style="padding-left: 15px">
+                                    DNI<span t-field="o.pe_carrier_id.vat"/>
+                                    <span t-field="o.pe_carrier_id.name"/>
+                                </td>
+                            </tr>
+                            <tr t-if="o.pe_transport_mode=='02' and o.pe_carrier_id">
+                                <td style="width: 30%;" class="text-right">
+                                    LICENCIA DE CONDUCIR:
+                                </td>
+                                <td style="padding-left: 15px">
+                                    <span t-field="o.pe_carrier_id.pe_driver_license"/>
+                                </td>
+                            </tr>
+                            <tr t-if="o.pe_vehicle_m1_l">
+                                <td style="width: 30%;" class="text-right">
+                                    INDICADOR DE TRASLADO EN VEHÍCULOS DE CATEGORÍA M1 O L:
+                                </td>
+                                <td style="padding-left: 15px">
+                                    Si
+                                </td>
+                            </tr>
+                        </table>
+                    </div> 
+
+
+                    <div class="row" style="border-radius: 0.25rem !important; border: 1px solid #dee2e6 !important;">
+                      <div class="col-12"  style="border-radius: 0.25rem !important; border: 1px solid #dee2e6 !important; background-color: #eeeeee !important; padding: 0px 15px 0px 15px;">
+                        DATOS DEL PUNTO DE PARTIDA Y PUNTO DE LLEGADA
+                      </div>
+                    </div>
+                    <div class="row" style="border-radius: 0.25rem !important; border: 1px solid #dee2e6 !important;">
+                        <t t-if="o.picking_type_id.code != 'outgoing'">
+                          <t t-set="sender_id" t-value="o.partner_id.parent_id or o.partner_id"/>
+                        </t>
+                        <t t-else="">
+                          <t t-set="sender_id" t-value="o.picking_type_id.warehouse_id.partner_id"/>
+                        </t>
+                        <table  style="width: 100%; border-color:#FFFFFF !important;">
+                            <tr>
+                                <td style="width: 30%;" class="text-right">
+                                    PUNTO DE PARTIDA:
+                                </td>
+                                <td style="padding-left: 15px">
+                                    <t t-if="o.picking_type_id.code != 'outgoing'">
+                                        <span t-field="o.l10n_pe_district.code" />
+                                        <span t-field="o.l10n_pe_district.name" />-
+                                        <span t-field="o.pe_state_id.name" />-
+                                        <span t-field="o.pe_state_id.name" />
+                                        <span t-field="o.pe_street" />
+                                    </t>
+                                    <t t-else="">
+                                        <span t-field="sender_id.l10n_pe_district.code" />
+                                        <span t-field="sender_id.city" />-
+                                        <span t-field="sender_id.city_id.name" />-
+                                        <span t-field="sender_id.state_id.name" />
+                                        <span t-field="sender_id.street" />
+                                    </t>
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-right">
+                                    PUNTO DE LLEGADA:
+                                </td>
+                                <td style="padding-left: 15px">
+                                    <t t-if="o.picking_type_id.code == 'outgoing'">
+                                        <span t-field="o.l10n_pe_district.code" />
+                                        <span t-field="o.l10n_pe_district.name" />-
+                                        <span t-field="o.pe_state_id.name" />-
+                                        <span t-field="o.pe_state_id.name" />
+                                        <span t-field="o.pe_street" />
+                                    </t>
+                                    <t t-else="">
+                                        <span t-field="partner_id.l10n_pe_district.code" />
+                                        <span t-field="partner_id.city" />-
+                                        <span t-field="partner_id.city_id.name" />-
+                                        <span t-field="partner_id.state_id.name" />
+                                        <span t-field="partner_id.street" />
+                                    </t>
+
+                                </td>
+                            </tr>
+                        </table>
+                    </div> 
+                    <br />
+                    <table class="table table-sm o_main_table" name="invoice_line_table" style="width: 100%; border-color:#FFFFFF !important;">
+                      <thead style="background-color: #eeeeee !important;">
+                        <tr>
+                          <th class="text-left">
+                            <span>Nro.</span>
+                          </th>
+                          <th class="text-left">
+                            <span>CÓD.</span>
+                          </th>
+                          <th class="text-left">
+                            <span>DESCRIPCIÓN</span>
+                          </th>
+                          <th class="text-left">
+                            <span>U/M</span>
+                          </th>
+                          <th class="text-left">
+                            <span>CANTIDAD</span>
+                          </th>
+                        </tr>
+                      </thead>
+                      <t t-set="item" t-value="1"/>
+                      <tbody class="invoice_tbody">
+                        <tr t-foreach="o.move_line_ids" t-as="move_line">
+                          <td class="text-right">
+                            <span t-esc="item" />
+                            <t t-set="item" t-value="item+1"/>
+                          </td>
+                          <td>
+                            <span t-field="move_line.product_id.default_code"/>
+                          </td>
+                          <td class="text-center">
+                            <span t-field="move_line.product_id.name"/>
+                          </td>
+                          <td class="text-center">
+                            <span t-esc="move_line.product_uom_id.pe_unit_code or 'NIU'"/>
+                          </td>
+                          <td class="text-right">
+                            <span t-field="move_line.quantity"/>
+                          </td>
+                        </tr>
+                      </tbody>
+
+                    </table>
+                    
+                    <div class="row rounded border" >
+                      <div class="col-12 rounded border" >
+                          <t t-if="o.origin">
+
+                            DESCRIPCIÓN: <span t-field="o.origin"/><br />
+                          </t>
+                        OBSERVACIONES: <span t-field="o.note"/>
+
+                      </div>
+                    </div>
+                    
+                    <div class="row rounded border" >
+                      <div class="col-9" >
+                          Representacion impresa de: GUÍA DE REMISIÓN REMITENTE ELECTRÓNICA, consulte en
+                        <span t-field="o.company_id.website"/><br />
+                        <t t-if="o.company_id.pe_resolution_type and o.company_id.pe_resolution_number">
+                            Autorizado mediante
+                            <span t-field="o.company_id.pe_resolution_type"/> N°
+                            <span t-field="o.company_id.pe_resolution_number"/>
+                        </t>
+                      </div>
+                      <div class="col-3" >
+                          <img t-if="o.pe_qr_code" t-att-src="'data:image/png;base64,%s' %o.pe_qr_code.decode('utf-8')"
+							style="width: 40mm;  height: 40mm;" />
+                      </div>
+                    </div>
+
+        
+
+                </div>
+            </div>
+
+            <div t-attf-class="footer o_standard_footer">
+                <div class="text-center" style="border-top: 1px solid black;">
+                    <ul class="list-inline mb4">
+                        <li t-if="company.phone" class="list-inline-item d-inline">Phone: <span class="o_force_ltr" t-field="company.phone"/></li>
+                        <li t-if="company.email" class="list-inline-item d-inline">Email: <span t-field="company.email"/></li>
+                        <li t-if="company.website" class="list-inline-item d-inline">Web: <span t-field="company.website"/></li>
+                    </ul>
+
+                    <div t-if="report_type == 'pdf'" class="text-muted">
+                        Page: <span class="page"/> / <span class="topage"/>
+                    </div>
+                </div>
+            </div>
+        </template>
+
+        <template id="report_eguide">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-set="lang" t-value="o.partner_id.lang"/>
+                    <t t-call="l10n_pe_eguide.report_eguide_document" t-lang="lang"/>
+                </t>
+            </t>
+        </template>
+
+        <record id="action_report_eguide" model="ir.actions.report">
+            <field name="name">E-Guide</field>
+            <field name="model">stock.picking</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">l10n_pe_eguide.report_eguide</field>
+            <field name="report_file">l10n_pe_eguide.report_eguide</field>
+            <field name="print_report_name">('%s' % (object.pe_guide_number or object.name))</field>
+            <field name="binding_model_id" ref="model_stock_picking"/>
+            <field name="binding_type">report</field>
+        </record>
+
+    </data>
+</odoo>

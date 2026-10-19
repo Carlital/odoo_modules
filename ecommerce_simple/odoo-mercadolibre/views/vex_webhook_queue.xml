@@ -1,0 +1,58 @@
+<odoo>
+    <!-- Vista árbol -->
+    <record id="view_vex_webhook_queue_tree" model="ir.ui.view">
+        <field name="name">vex.webhook.queue.tree</field>
+        <field name="model">vex.webhook.queue</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="create_date"/>
+                <field name="meli_id"/>
+                <field name="event_type"/>
+                <field name="processed"/>
+                <field name="status"/>
+                <field name="retry_count"/>
+                <field name="instance_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Vista formulario -->
+    <record id="view_vex_webhook_queue_form" model="ir.ui.view">
+        <field name="name">vex.webhook.queue.form</field>
+        <field name="model">vex.webhook.queue</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="meli_id"/>
+                    <field name="event_type"/>
+                    <field name="processed"/>
+                    <field name="status"/>
+                    <field name="retry_count"/>
+                    <field name="max_retries"/>
+                    <field name="error_message"/>
+                    <field name="response"/>
+                    <field name="instance_id"/>
+                </group>
+                <group>
+                    <field name="payload" widget="text"/>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <!-- Acción -->
+    <record id="action_vex_webhook_queue" model="ir.actions.act_window">
+        <field name="name">Webhook Queue</field>
+        <field name="res_model">vex.webhook.queue</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('event_type', 'in', ['orders_v2', 'items', 'inventory_changes','items_prices'])]</field>
+        <field name="help" type="html">
+            <p>Cola de Webhooks recibidos desde MercadoLibre</p>
+        </field>
+    </record>
+
+    <!-- Menú -->
+    <!-- <menuitem id="menu_vex_webhook_root" name="Vex Soluciones" sequence="30" parent="odoo-mercadolibre.menu_main_odoo-mercadolibre"/> -->
+    <menuitem id="menu_vex_webhook" name="Webhooks" parent="odoo-mercadolibre.menu_main_odoo-mercadolibre" sequence="30"/>
+    <menuitem id="menu_vex_webhook_queue" name="Webhook Queue" action="action_vex_webhook_queue" parent="menu_vex_webhook" sequence="1"/>
+</odoo>

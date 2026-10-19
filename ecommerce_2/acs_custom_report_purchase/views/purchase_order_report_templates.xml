@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Heredar el layout bubble para inyectar estilos CSS -->
+        <template id="acs_external_layout_bubble_styles" inherit_id="web.external_layout_bubble">
+            <!-- Inyectar estilos antes del SVG del header -->
+            <xpath expr="//div[@name='company_address']" position="before">
+                <style>
+                    div.header,
+                    div.header *,
+                    div.header ul,
+                    div.header ul li,
+                    div.header .o_company_tagline,
+                    div.header [name='company_address'],
+                    div.header [name='company_address_list'],
+                    div.header [name='company_address_list'] li,
+                    div.header [name='company_address_list'] li span {
+                    font-size: 13px !important;
+                    }
+                </style>
+            </xpath>
+            <xpath expr="//div[@t-field='company.report_footer']" position="before">
+                <style>
+                    div.footer,
+                    div.footer *,
+                    div.footer .o_footer_content,
+                    div.footer .o_footer_content div,
+                    div.footer .text-muted,
+                    div.footer .border-top,
+                    div.footer span {
+                    font-size: 13px !important;
+                    }
+                    body main div.header *,
+                    body main div.footer *,
+                    body main div.header div,
+                    body main div.header p,
+                    body main div.footer div,
+                    body main div.footer p{
+                    font-size: 13px !important;
+                    }
+                </style>
+            </xpath>
+        </template>
+
+        <template id="acs_report_purchaseorder_document_custom"
+            inherit_id="purchase.report_purchaseorder_document">
+
+            <xpath expr="//t[@t-set='address']" position="replace">
+            </xpath>
+
+            <xpath expr="//div[@class='mt-4']" position="replace">
+                <div class="text-center mb-4">
+                    <h2>
+                        <t t-if="o.state in ['draft', 'sent', 'to approve']">Solicitud de cotización
+                            Nº <span
+                                t-field="o.name" /></t>
+                        <t t-if="o.state in ['purchase', 'done']">Orden de compra Nº <span
+                                t-field="o.name" /></t>
+                        <t t-if="o.state == 'cancel'">Orden de compra anulada Nº <span
+                                t-field="o.name" /></t>
+                    </h2>
+                </div>
+            </xpath>
+
+            <xpath expr="//div[@id='informations']" position="replace">
+                <style>
+                    table.without-before:before{
+                    display: none !important;
+                    }
+                    table.provider-info td strong {
+                    text-transform: uppercase;
+                    }
+                    table.provider-info,
+                    table.provider-info th,
+                    table.provider-info td {
+                    border: none !important;
+
+                    }
+                    table.o_main_table th,
+                    table.o_main_table th span,
+                    table.o_main_table td,
+                    table.o_main_table td span,
+                    #total table th,
+                    #total table th span,
+                    #total table td,
+                    #total table span{
+                    font-size: 13px !important;
+                    }
+                    table.provider-info tbody tr td:nth-child(3) {
+                    text-align: right;
+                    padding-right: 10px;
+                    }
+                    .page > strong {
+                    display: none !important;
+                    }
+                </style>
+                <div class="row">
+                    <div class="col-md-12 mb-4">
+
+                        <table class="table table-sm table-borderless provider-info without-before">
+                            <tbody>
+                                <tr>
+                                    <td style="width: 12%;">
+                                        <strong>Proveedor:</strong>
+                                    </td>
+                                    <td style="width: 48%;">
+                                        <span t-field="o.partner_id.name" />
+                                    </td>
+                                    <td>
+                                        <strong>Referencia:</strong>
+                                    </td>
+                                    <td>
+                                        <span t-field="o.origin" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <strong>Nº de RUC:</strong>
+                                    </td>
+                                    <td>
+                                        <span t-field="o.partner_id.vat" />
+                                    </td>
+                                    <td>
+                                        <strong>Moneda:</strong>
+                                    </td>
+                                    <td>
+                                        <span t-field="o.currency_id.full_name" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <strong>Dirección:</strong>
+                                    </td>
+                                    <td>
+                                        <span
+                                            t-esc="', '.join(filter(None, [o.partner_id.street, o.partner_id.city, o.partner_id.state_id and o.partner_id.state_id.name]))" />
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <strong>Teléfono:</strong>
+                                    </td>
+                                    <td>
+                                        <span t-field="o.acs_contact_provider.mobile" />
+                                    </td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-md-12 mb-4" t-if="o.state in ['purchase', 'done']">
+                    <p class="text-center" style="display:block;">
+                        <strong>Atención a: <span t-field="o.acs_contact_provider.name" /></strong>
+                    </p>
+                    <p>Estimado (a) <span t-field="o.acs_contact_provider.title" /> <span
+                            t-field="o.acs_contact_provider.name" /> Por medio de la presente nos es
+                        grato dirigirnos a ustedes a fin de solicitarle el suministro de:</p>
+                </div>
+            </xpath>
+
+            <xpath expr="//span[@t-field='o.payment_term_id']" position="replace">
+                <table class="table table-sm table-borderless mt-4 provider-info purchase-terms">
+
+                    <thead>
+                        <tr>
+                            <td colspan="2" class="text-center">
+                                <strong>Condiciones</strong>
+                            </td>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <tr>
+                            <td style="width: 20%;">
+                                <strong>Forma de pago:</strong>
+                            </td>
+                            <td>
+                                <span t-field="o.payment_term_id" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>Fecha de entrega:</strong>
+                            </td>
+                            <td>
+                                <span t-field="o.date_planned" t-options='{"widget": "date"}' />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>Lugar de entrega:</strong>
+                            </td>
+                            <td>
+                                <t t-if="o.other_reception_street">
+                                    <span t-field="o.other_reception_input" />
+                                </t>
+                                <t t-else="">
+                                    <span
+                                        t-esc="', '.join(filter(None, [o.picking_type_id.warehouse_id.partner_id.street, o.picking_type_id.warehouse_id.partner_id.l10n_pe_district.name, o.picking_type_id.warehouse_id.partner_id.city, o.picking_type_id.warehouse_id.partner_id.state_id and o.picking_type_id.warehouse_id.partner_id.state_id.name]))" />
+                                </t>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </xpath>
+        </template>
+    </data>
+</odoo>

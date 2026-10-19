@@ -1,0 +1,35 @@
+.o_wsale_products_grid_table_wrapper{
+    .oe_product_cart{
+        .oe_product_image{
+            position: relative;
+            .label_div{
+                position: absolute;
+                top: 8px;
+                left: 8px;                      
+                line-height: 1;                       
+                .ribbon_label_name{
+                    color: #fff;
+                    font-size: 13px !important;
+                }
+            }                   
+        }
+    }
+}
+
+#product_details{
+    .biz_prod_label{
+        .biz_label_tag{
+            line-height: 1;
+            .ribbon_label_name{
+                color: #fff;
+                font-size: 13px !important;
+            }
+        }
+    }
+}
+#o_wsale_offcanvas{
+    .in_stock_filter{
+        border-top: 1px solid #dee2e6;
+        padding-left: 20px;
+    }
+}

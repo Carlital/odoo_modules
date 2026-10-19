@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record model="ir.ui.view" id="view_move_form">
+        <field name="name">account.move.inherit.l10n.pe.cpe</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='ref']" position="after">
+              <field name="pe_is_cpe" invisible="True"  />
+              <field name="pe_response" invisible="country_code != 'PE' and move_type not in ['out_invoice','out_refund']" />
+            </xpath>
+            <xpath expr="//label[@for='journal_id']" position="before">
+              <field name="pe_operation_type" invisible="country_code != 'PE' and move_type not in ['out_invoice','out_refund']" required="country_code == 'PE'" readonly="state != 'draft'" />
+            </xpath>
+
+            <xpath expr="//page[@name='other_info']" position="after">
+              <page string="Peruvian Customization" name="peruvian_customization" invisible="country_code != 'PE' and move_type not in ['out_invoice','out_refund']" >
+                <group>
+                  <group>
+                    <field name="pe_cpe_id" readonly="True" />
+                    <field name="pe_summary_id" invisible="pe_invoice_code not in ('03','07','08')" readonly="True" />
+                    <field name="pe_voided_id" readonly="True" invisible="pe_annul == False"  />
+                    
+                  </group>
+                  <group>
+                    <field name="pe_return_code" />
+                  </group>
+                </group>
+                <div>
+                  <label for="pe_digest" string="Digest value:" />
+                  <field name="pe_digest"/>
+                </div>
+                <!--div>
+                  <label for="pe_signature" string="Signature value:" />
+                  <field name="pe_signature"/>
+                </div-->
+                <field name="pe_legend_ids" readonly="state != 'draft'" >
+                    <tree editable="bottom" string="Sunat Legend">
+                        <field name="code" required="True"/>
+                        <field name="name" invisible="True"/>
+                    </tree>
+                </field>
+
+                  <field name="pe_related_document_ids" readonly="state != 'draft'" >
+                    <tree editable="bottom" string="Sunat Legend">
+                        <field name="document_type" required="True"/>
+                        <field name="name" required="True"/>
+                    </tree>
+                </field>
+              </page>
+           </xpath>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_move_form_cpe">
+        <field name="name">account.move.inherit.l10n.pe.account</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="l10n_pe_account.view_move_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='pe_invoice_code']" position="after">
+              <field name="pe_reversed_entry_id" invisible="pe_invoice_code not in ('07','08')"
+                     required="country_code == 'PE' and move_type in ('out_invoice', 'out_refund') and pe_invoice_code in ('07','08') and pe_is_cpe == True"
+                     domain="[('partner_id','=',partner_id),('move_type','in',('out_invoice','out_refund','in_invoice','in_refund')),('state','=','posted')]"
+                     readonly="state != 'draft'"
+              />
+            </xpath>
+        </field>
+    </record>
+</odoo>

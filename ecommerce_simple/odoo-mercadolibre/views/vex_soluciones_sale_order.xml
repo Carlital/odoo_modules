@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_order_form_sale_inherit" model="ir.ui.view">
+        <field name="name">sale.order.view.form.inherit</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header/field[@name='state']" position="attributes">
+                <attribute name="statusbar_visible">draft,sent,sale,cancel,done</attribute>
+            </xpath>
+            <xpath expr="//notebook" position="inside">
+                <page name="meli_mediations" string="MELI Mediations">
+                    <field name="meli_mediation_ids">
+                        <tree>
+                            <field name="meli_order_id"></field>
+                            <field name="meli_recourse_id"></field>
+                            <field name="meli_mediation_id"></field>
+                            <field name="meli_mediation_status"></field>
+                            <field name="meli_mediation_type"></field>
+                            <field name="meli_mediation_reason_id"></field>
+                            <field name="meli_mediation_quantity_type"></field>
+                            <field name="meli_mediation_buyer_id"></field>
+                            <field name="meli_mediation_seller_id"></field>
+                            <field name="meli_resolution_reason"></field>
+                            <field name="meli_resolution_date"></field>
+                        </tree>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

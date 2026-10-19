@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Diagrama UML - Gestión de Docentes</title>
+<style>
+  :root {
+    --line:#000;
+    --bg:#fff;
+    --muted:#555;
+    --border:2px solid #000;
+    --cellpad:6px 8px;
+    --font:ui-sans-serif,system-ui,"Segoe UI",Roboto,Arial;
+  }
+
+  * { box-sizing:border-box; }
+
+  body{
+    margin:0;
+    font-family:var(--font);
+    background:#fff;
+    color:#000;
+    font-size:14px;
+  }
+
+  header{
+    padding:16px 20px;
+    border-bottom:var(--border);
+  }
+  header h1{
+    margin:0 0 4px;
+    font-size:20px;
+    line-height:1.2;
+  }
+  header p{
+    margin:0;
+    color:var(--muted);
+    font-size:13px;
+    line-height:1.4;
+  }
+
+  /* zona scroll */
+  .wrapper{
+    width:100%;
+    height:80vh;
+    overflow:auto;
+    border-bottom:var(--border);
+    background:#fff;
+  }
+
+  /* GRID PRINCIPAL DEL DIAGRAMA
+     columnas:
+     [1] RecursoInterno
+     [2] línea vacía para conexión
+     [3] Docente
+     [4] línea vacía para conexión
+     [5] ContactoPersonal
+  */
+  .diagram{
+    min-width:max-content;
+    display:grid;
+    grid-template-columns: 280px 80px 320px 80px 280px;
+    grid-auto-rows:auto;
+    gap:32px 24px;
+    padding:32px;
+    background:#fff;
+  }
+
+  /***** CAJAS UML *****/
+  .uml-class{
+    border:var(--border);
+    background:#fff;
+    min-width:240px;
+    max-width:320px;
+    font-size:12px;
+    line-height:1.35;
+    box-shadow:0 2px 4px rgba(0,0,0,.06);
+  }
+
+  .uml-header{
+    border-bottom:var(--border);
+    background:#fff;
+    padding:8px 10px;
+    text-align:center;
+    font-weight:600;
+    font-size:13px;
+  }
+
+  .uml-section{
+    border-bottom:var(--border);
+    padding:8px 10px;
+  }
+
+  .uml-section:last-child{
+    border-bottom:0;
+  }
+
+  .attr{
+    border:1px solid #000;
+    background:#fff;
+    margin:5px 0;
+    padding:var(--cellpad);
+    font-size:12px;
+  }
+
+  .note{
+    font-size:11px;
+    color:#333;
+    margin-top:6px;
+    line-height:1.3;
+    font-style:italic;
+  }
+
+  /* Para resaltar que son datos calculados / metadata */
+  .meta{
+    background:#fffefc;
+  }
+
+  /***** CONECTORES (líneas/multiplicidad) *****/
+  .h-connector{
+    position:relative;
+    align-self:start;
+    margin-top:40px;     /* baja la línea más o menos a mitad de la clase */
+    border-top:var(--border);
+    height:0;
+  }
+  /* puntitos de multiplicidad */
+  .multiplicity{
+    position:absolute;
+    top:-22px;
+    font-size:11px;
+    padding:2px 4px;
+    background:#fff;
+    border:1px solid #000;
+    border-radius:2px;
+    box-shadow:0 1px 2px rgba(0,0,0,.08);
+    white-space:nowrap;
+  }
+  .mult-left { left:8px;  }
+  .mult-right{ right:8px; }
+
+  /* Conector vertical */
+  .v-connector{
+    position:relative;
+    justify-self:center;
+    width:0;
+    border-left:var(--border);
+  }
+  .v-connector .multiplicity{
+    left:50%;
+    transform:translateX(-50%);
+  }
+
+  /* línea horizontal larga al final de v-connector (T invertida) */
+  .branch-row{
+    position:relative;
+    border-top:var(--border);
+    height:0;
+  }
+  .branch-row .multiplicity{
+    top:-22px;
+  }
+
+  footer{
+    padding:12px 18px;
+    color:#333;
+    font-size:12px;
+    line-height:1.4;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Diagrama UML de Clases – Gestión de Docentes</h1>
+  <p>
+    Boceto conceptual. Cada caja es una clase conceptual del sistema. Las líneas muestran asociaciones
+    y multiplicidades (por ejemplo 1..N). Incluye datos internos del docente, datos de contacto,
+    y trazabilidad de importaciones desde Sheets y CVs.
+  </p>
+</header>
+
+<div class="wrapper">
+  <div class="diagram">
+
+    <!-- FILA 1: izquierda = RecursoInterno -->
+    <div class="uml-class" style="grid-column:1; grid-row:1;">
+      <div class="uml-header">RecursoInterno</div>
+      <div class="uml-section">
+        <div class="attr">- id : int</div>
+        <div class="attr">- nombreInterno : string</div>
+        <div class="attr">- usuarioSistemaId : int</div>
+        <div class="attr">- activo : bool</div>
+      </div>
+      <div class="uml-section">
+        <div class="note">Representa el recurso humano interno del sistema (Odoo resource_resource).</div>
+      </div>
+    </div>
+
+    <!-- Conector horizontal RecursoInterno <-> Docente -->
+    <div class="h-connector" style="grid-column:2; grid-row:1;">
+      <div class="multiplicity mult-left">1</div>
+      <div class="multiplicity mult-right">0..1</div>
+    </div>
+
+    <!-- FILA 1: centro = Docente -->
+    <div class="uml-class" style="grid-column:3; grid-row:1;">
+      <div class="uml-header">Docente</div>
+
+      <div class="uml-section">
+        <div class="attr">- id : int</div>
+        <div class="attr">- nombre : string</div>
+        <div class="attr">- correoInstitucional : string</div>
+        <div class="attr">- telefonoInstitucional : string</div>
+        <div class="attr">- cedula : string</div>
+        <div class="attr">- cargo : string</div>
+        <div class="attr">- activo : bool</div>
+        <div class="attr">- creadoEn : datetime</div>
+        <div class="attr">- actualizadoEn : datetime</div>
+      </div>
+
+      <div class="uml-section meta">
+        <div class="attr">- sheetSource : string</div>
+        <div class="attr">- importStatus : string</div>
+        <div class="attr">- lastImportAt : datetime</div>
+        <div class="attr">- importedByUser : string</div>
+        <div class="note">Metadatos de importación desde Google Sheets.
+          (No es otra clase, son campos dentro de Docente.)</div>
+      </div>
+
+      <div class="uml-section meta">
+        <div class="attr">- cvStatus : string</div>
+        <div class="attr">- cvScore : number</div>
+        <div class="attr">- cvLastUpdate : datetime</div>
+        <div class="attr">- cvSource : string</div>
+        <div class="note">Resumen del CV analizado automáticamente.
+          (Campos dentro de Docente.)</div>
+      </div>
+    </div>
+
+    <!-- Conector horizontal Docente <-> ContactoPersonal -->
+    <div class="h-connector" style="grid-column:4; grid-row:1;">
+      <div class="multiplicity mult-left">1</div>
+      <div class="multiplicity mult-right">0..1</div>
+    </div>
+
+    <!-- FILA 1: derecha = ContactoPersonal -->
+    <div class="uml-class" style="grid-column:5; grid-row:1;">
+      <div class="uml-header">ContactoPersonal</div>
+      <div class="uml-section">
+        <div class="attr">- id : int</div>
+        <div class="attr">- nombreCompleto : string</div>
+        <div class="attr">- correoPersonal : string</div>
+        <div class="attr">- telefonoPersonal : string</div>
+      </div>
+      <div class="uml-section">
+        <div class="note">Datos personales del docente (dirección / teléfono). Corresponde a res_partner.</div>
+      </div>
+    </div>
+
+    <!-- ===================== Fila 2: Conectores hacia abajo ===================== -->
+
+    <!-- conector vertical desde Docente hacia zona de auditoría -->
+    <div class="v-connector" style="grid-column:3; grid-row:2; height:80px;">
+      <div class="multiplicity" style="top:28px;">1 Docente</div>
+    </div>
+
+    <!-- ===================== Fila 3: auditoría Sheets (izq) y CV (der) ===================== -->
+
+    <!-- LoteSheets -->
+    <div class="uml-class" style="grid-column:2; grid-row:3;">
+      <div class="uml-header">LoteSheets</div>
+      <div class="uml-section">
+        <div class="attr">- id : int</div>
+        <div class="attr">- nombreLote : string</div>
+        <div class="attr">- estado : string</div>
+        <div class="attr">- sheetId : string</div>
+        <div class="attr">- rangoLeido : string</div>
+      </div>
+      <div class="uml-section">
+        <div class="note">Una importación masiva desde la hoja de cálculo.</div>
+      </div>
+    </div>
+
+    <!-- conector horizontal LoteSheets -> LineaSheets -->
+    <div class="h-connector" style="grid-column:3; grid-row:3;">
+      <div class="multiplicity mult-left">1</div>
+      <div class="multiplicity mult-right">0..N</div>
+    </div>
+
+    <!-- LineaSheets -->
+    <div class="uml-class" style="grid-column:4; grid-row:3;">
+      <div class="uml-header">LineaSheets</div>
+      <div class="uml-section">
+        <div class="attr">- id : int</div>
+        <div class="attr">- batchId : int</div>
+        <div class="attr">- docenteId : int</div>
+      </div>
+      <div class="uml-section">
+        <div class="note">
+          Cada fila importada que terminó vinculándose a un Docente específico.
+        </div>
+      </div>
+    </div>
+
+    <!-- LoteCV -->
+    <div class="uml-class" style="grid-column:2; grid-row:4;">
+      <div class="uml-header">LoteCV</div>
+      <div class="uml-section">
+        <div class="attr">- id : int</div>
+        <div class="attr">- nombreLote : string</div>
+        <div class="attr">- estadoProcesamiento : string</div>
+        <div class="attr">- contadoresResumen : string</div>
+      </div>
+      <div class="uml-section">
+        <div class="note">
+          Proceso masivo de CVs (ej. varios PDFs analizados en lote).
+        </div>
+      </div>
+    </div>
+
+    <!-- conector horizontal LoteCV -> LineaCV -->
+    <div class="h-connector" style="grid-column:3; grid-row:4;">
+      <div class="multiplicity mult-left">1</div>
+      <div class="multiplicity mult-right">0..N</div>
+    </div>
+
+    <!-- LineaCV -->
+    <div class="uml-class" style="grid-column:4; grid-row:4;">
+      <div class="uml-header">LineaCV</div>
+      <div class="uml-section">
+        <div class="attr">- id : int</div>
+        <div class="attr">- batchId : int</div>
+        <div class="attr">- docenteId : int</div>
+        <div class="attr">- referenciaUnica : string</div>
+      </div>
+      <div class="uml-section">
+        <div class="note">
+          Resultado individual del análisis de un CV concreto asociado a un Docente.
+        </div>
+      </div>
+    </div>
+
+    <!-- relación LineaSheets -> Docente y LineaCV -> Docente:
+         usamos la línea vertical que ya baja desde Docente (fila 2)
+         y la interpretamos en la defensa:
+         "cada LineaSheets y cada LineaCV apunta a 1 Docente"
+         Eso ya está textual en las notas de las clases.
+    -->
+
+  </div><!-- /diagram -->
+</div><!-- /wrapper -->
+
+<footer>
+  <small>
+    Lectura rápida:
+    • Docente es el centro.  
+    • RecursoInterno y ContactoPersonal son datos existentes en Odoo.  
+    • Se agregan metadatos de origen (Sheets) y análisis de CV directamente
+      dentro de Docente (no son clases separadas).  
+    • Para auditoría/migraciones masivas existen LoteSheets/LineaSheets y
+      LoteCV/LineaCV, que guardan histórico de importaciones y CVs procesados.
+  </small>
+</footer>
+
+</body>
+</html>

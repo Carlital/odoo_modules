@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <!-- Lista de campañas -->
+  <record id="view_bc_campaign_list" model="ir.ui.view">
+    <field name="name">bc.campaign.list</field>
+    <field name="model">bc.campaign</field>
+    <field name="arch" type="xml">
+      <list>
+        <field name="name"/>
+        <field name="date_start"/>
+        <field name="date_end"/>
+        <field name="active"/>
+      </list>
+    </field>
+  </record>
+
+  <!-- Formulario de campaña -->
+  <record id="view_bc_campaign_form" model="ir.ui.view">
+    <field name="name">bc.campaign.form</field>
+    <field name="model">bc.campaign</field>
+    <field name="arch" type="xml">
+      <form>
+        <sheet>
+          <group>
+            <field name="name"/>
+            <field name="date_start"/>
+            <field name="date_end"/>
+            <field name="active"/>
+          </group>
+
+          <notebook>
+            <page string="Subcampañas">
+                <!-- editable solo Admin / Jefe de Operaciones -->
+                <field name="subcampaign_ids"
+                    mode="list,form"
+                    groups="base.group_system,crm_custom_lead.group_jefe_operaciones"/>
+            </page>
+          </notebook>
+
+        </sheet>
+      </form>
+    </field>
+  </record>
+
+  <!-- Acción -->
+  <record id="action_bc_campaign" model="ir.actions.act_window">
+    <field name="name">Campañas (BC)</field>
+    <field name="res_model">bc.campaign</field>
+    <field name="view_mode">list,form</field>
+    <field name="context">{'search_default_active': 1}</field>
+  </record>
+
+  <!-- Menú (debajo de Campañas Personalizadas existente) -->
+  <menuitem id="menu_bc_campaign"
+            parent="crm_custom_lead.menu_crm_custom_campaign_root"
+            action="action_bc_campaign"
+            sequence="40"/>
+</odoo>

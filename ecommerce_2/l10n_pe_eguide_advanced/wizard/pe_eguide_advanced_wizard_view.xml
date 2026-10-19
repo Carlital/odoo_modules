@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record model="ir.ui.view" id="view_form_eguide_advanced_wizard_wizard">
+        <field name="name">pe.eguide.advanced.wizard.form</field>
+        <field name="model">pe.eguide.advanced.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+                <group name="container_eguide" string="Electronic Guide Advanced">
+                    <group>
+                        <field name="pe_guide_adv_server"/>
+                        <field name="pe_guide_adv_user" required="True"/>
+                        <field name="pe_guide_adv_password" password="password" required="True"/>
+                        <field name="pe_guide_adv_client_id" password="password"
+                               invisible="pe_guide_adv_server == 'nubefact_pse'"
+                               required="pe_guide_adv_server != 'nubefact_pse'" />
+                        <field name="pe_guide_adv_client_secret" password="password"
+                               invisible="pe_guide_adv_server == 'nubefact_pse'"
+                               required="pe_guide_adv_server != 'nubefact_pse'"/>
+                        <field name="company_id"/>
+                    </group>
+                    <group>
+                        <field name="pe_guide_adv_ws_url" required="True"/>
+                        <field name="pe_guide_adv_verify_url" required="True"/>
+                    </group>
+                </group>
+                <label for="pe_guide_adv_private_key" invisible="pe_guide_adv_server == 'nubefact_pse'"/>
+                <field name="pe_guide_adv_private_key"
+                       invisible="pe_guide_adv_server == 'nubefact_pse'"
+                       required="pe_guide_adv_server != 'nubefact_pse'" />
+                <label for="pe_guide_adv_public_key" invisible="pe_guide_adv_server == 'nubefact_pse'"/>
+                <field name="pe_guide_adv_public_key"
+                       invisible="pe_guide_adv_server == 'nubefact_pse'"
+                       required="pe_guide_adv_server != 'nubefact_pse'" />
+                <footer>
+                    <button
+                        name="appy_configuration"
+                        string="Confirm"
+                        type="object"
+                        class="oe_highlight"
+                    />
+                    <button string="Cancel" class="oe_link" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

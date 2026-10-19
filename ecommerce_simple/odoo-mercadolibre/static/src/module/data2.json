@@ -1,0 +1,116 @@
+{
+  "segments": ["Segment A", "Segment B", "Segment C"],
+  "orders_synced_today": 25,
+  "total_orders": 1200,
+  "new_customers_this_month": 87,
+  "total_customers": 15670,
+  "total_products": 5230,
+  "total_questions": 14,
+
+  "top_clients": [
+    {"name": "Empresa Alpha", "order_number": 32, "volume": 10400.50},
+    {"name": "Empresa Beta", "order_number": 28, "volume": 9400.00},
+    {"name": "Cliente Retail", "order_number": 25, "volume": 8800.30}
+  ],
+
+  "top_products": [
+    {"product_name": "Laptop X", "number_of_sales": 120, "sales_volume": 95000},
+    {"product_name": "Mouse Pro", "number_of_sales": 300, "sales_volume": 12000},
+    {"product_name": "Monitor 4K", "number_of_sales": 85, "sales_volume": 34000}
+  ],
+
+  "recent_orders": [
+    {
+      "name": "Carlos Paredes",
+      "order_number": "SO2513",
+      "mail": "carlos.paredes@example.com",
+      "phone": "+51 999111222",
+      "amount": 750.50,
+      "products": 2
+    },
+    {
+      "name": "Lucía Torres",
+      "order_number": "SO2514",
+      "mail": "lucia.torres@example.com",
+      "phone": "+51 988444555",
+      "amount": 1320.00,
+      "products": 4
+    }
+  ],
+
+  "customers_evolution": {
+    "labels": ["Ene", "Feb", "Mar", "Abr", "May", "Jun"],
+    "datasets": [
+      {
+        "label": "Customers",
+        "data": [800, 950, 1100, 1300, 1500, 1700]
+      }
+    ]
+  },
+
+  "total_earnings": {
+    "labels": ["Ene", "Feb", "Mar", "Abr", "May", "Jun"],
+    "datasets": [
+      {
+        "label": "Earnings",
+        "data": [10000, 12500, 14300, 16000, 18000, 20000]
+      }
+    ]
+  },
+
+  "average_customer_order": {
+    "labels": ["Ene", "Feb", "Mar", "Abr", "May", "Jun"],
+    "datasets": [
+      {
+        "label": "Sales evolution",
+        "data": [150, 165, 170, 180, 190, 200]
+      }
+    ]
+  },
+
+  "top_categories_sold": [
+    {"category": "Electrónica", "sales": 42000},
+    {"category": "Accesorios", "sales": 18000},
+    {"category": "Muebles", "sales": 15000},
+    {"category": "Moda", "sales": 12000},
+    {"category": "Hogar", "sales": 10000}
+  ],
+
+  "completed_and_canceled": {
+    "labels": ["Feb", "Mar", "Abr", "May", "Jun"],
+    "datasets": [
+      {
+        "label": "Completed",
+        "data": [300, 350, 320, 280, 260]
+      },
+      {
+        "label": "Canceled",
+        "data": [20, 15, 18, 10, 5]
+      }
+    ]
+  },
+
+  "sales_distribution_by_channel": {
+    "labels": ["Ene", "Feb", "Mar", "Abr", "May"],
+    "datasets": [
+      {
+        "label": "Web",
+        "data": [10000, 15000, 18000, 16000, 17000]
+      },
+      {
+        "label": "Marketplace",
+        "data": [8000, 9000, 10000, 9500, 9800]
+      }
+    ]
+  },
+
+  "questions": {
+    "labels": ["Electrónica", "Moda", "Hogar", "Otros"],
+    "datasets": [
+      {
+        "label": "History",
+        "data": [6, 3, 4, 1]
+      }
+    ]
+  }
+}

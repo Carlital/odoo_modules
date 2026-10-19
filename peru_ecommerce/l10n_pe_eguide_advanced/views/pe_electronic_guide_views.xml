@@ -1,0 +1,212 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+    <record model="ir.ui.view" id="view_pe_electronic_guide_tree">
+      <field name="name">pe.electronic.guide.tree</field>
+      <field name="model">pe.electronic.guide</field>
+      <field name="arch" type="xml">
+        <tree string="Electronic Guide">
+          <field name="name"/>
+          <field name="transfer_date"/>
+          <field name="reason_transfer"/>
+          <field name="partner_id"/>
+          <field name="src_state_id"/>
+          <field name="src_district_id"/>
+          <field name="dst_state_id"/>
+          <field name="dst_district_id"/>
+          <field name="gross_weight"/>
+          <field name="unit_quantity"/>
+          <field name="response"/>
+          <field name="state"/>
+        </tree>
+      </field>
+    </record>
+
+    <record id="view_pe_electronic_guide_form" model="ir.ui.view">
+      <field name="name">pe.electronic.guide.form</field>
+      <field name="model">pe.electronic.guide</field>
+      <field name="arch" type="xml">
+          <form>
+            <header>
+              <button name="action_to_send" string="Draft" invisible="state in ['generate','cancelled']" type="object" groups="l10n_pe_eguide_advanced.group_pe_eguide_personal_guides" />
+              <button name="action_generate" string="Generate" class="btn-primary" invisible="state in ['to_send']" type="object" groups="l10n_pe_eguide_advanced.group_pe_eguide_personal_guides" />
+              <button name="action_sent" string="Sent" class="btn-primary" invisible="state in ['generate']" type="object"  groups="l10n_pe_eguide_advanced.group_pe_eguide_personal_guides"/>
+              <button name="action_document_status" string="Document Status" invisible="ticket == False or state in ['to_check']"
+                      class="btn-primary" type="object" groups="l10n_pe_eguide_advanced.group_pe_eguide_personal_guides" />
+              <button name="action_cancelled" string="Cancel" invisible="state in ['to_check']" type="object" groups="l10n_pe_eguide_advanced.group_pe_eguide_personal_guides" />
+
+              <field name="state" widget="statusbar" nolabel="1" statusbar_visible="draft"/>
+            </header>
+            <sheet string="Electronic Guide">
+              <h1 class="mt0">
+                  <field name="name" readonly="1" class="oe_inline" invisible="state in ('to_send','generate')"/>
+              </h1>
+
+              <group string="General Information">
+                <group>
+                  <field name="session_id" widget="selection" required="True" force_save="1" />
+                  <field name="reason_transfer" required="1" readonly="state != 'to_send'"/>
+
+                  <label for="partner_id" string="Sender"
+                           invisible="reason_transfer not in ['02', '04', '06', '08']" />
+                  <div invisible="reason_transfer not in ['02', '04', '06', '08']">
+                    <field name="partner_id" nolabel="1" class="oe_inline" domain="[('parent_id','=',False)]" required="True" readonly="state != 'to_send'"/>
+                  </div>
+                  <label for="partner_id" string="Addressee"
+                           invisible="reason_transfer in ['02', '04', '06', '08']"/>
+                  <div invisible="reason_transfer in ['02', '04', '06', '08']">
+                    <field name="partner_id" nolabel="1" class="oe_inline" domain="[('parent_id','=',False)]" required="True" readonly="state != 'to_send'"/>
+                  </div>
+                  <field name="date_issue" required="True" readonly="state != 'to_send'"/>
+                  <field name="transfer_date" required="True" readonly="state != 'to_send'"/>
+                  <field name="description" required="reason_transfer == '13'" readonly="state != 'to_send'"/>
+                </group>
+                 <group>
+                   <!--field name="gross_weight" required="True" readonly="state != 'to_send'"/-->
+                   <label for="gross_weight" />
+                   <div name="gross_weight_div" class="d-flex">
+                        <field name="gross_weight" required="True" readonly="state != 'to_send'"/>
+                        <span class="oe_inline o_form_label mx-3"> Unit </span>
+                        <field name="gross_weight_unit" required="True" readonly="state != 'to_send'"/>
+                    </div>
+                  <field name="unit_quantity" required="True" readonly="state != 'to_send'"/>
+                  <field name="vehicle_m1_l" readonly="state != 'to_send'"/>
+                  <field name="is_programmed" readonly="state != 'to_send'"/>
+                  <field name="transport_mode" required="True" readonly="state != 'to_send'"/>
+                  <field name="carrier_id" invisible="transport_mode == '02' or vehicle_m1_l == True"
+                         required="transport_mode == '01' and vehicle_m1_l == False"
+                         domain="[('pe_doc_type','=','6')]" readonly="state != 'to_send'"/>
+                </group>
+              </group>
+              <group>
+                <group string="Source Address">
+                  <field name="country_id" invisible="True"/>
+                  <field name="src_branch_id"  widget="selection"
+                         invisible="reason_transfer in ['02', '06', '08']"
+                         required="reason_transfer in ['04']"
+                         readonly="state != 'to_send'"/>
+                  <field name="src_state_id" domain="[('country_id','=',country_id)]" required="True" options='{"no_open": True, "no_create": True}' readonly="state != 'to_send'"/>
+                  <field name="src_province_id" domain="[('state_id','=',src_state_id)]" required="True" options='{"no_open": True, "no_create": True}' readonly="state != 'to_send'"/>
+                  <field name="src_district_id" domain="[('city_id','=',src_province_id)]" required="True" options='{"no_open": True, "no_create": True}' readonly="state != 'to_send'"/>
+                  <field name="src_street"  required="True" readonly="state != 'to_send'"/>
+                </group>
+                <group string="Destination Address">
+                  <field name="dst_branch_id"  widget="selection"
+                         invisible="reason_transfer not in ['02', '04', '06', '08']"
+                         required="reason_transfer in ['04']"
+                         readonly="state != 'to_send'"/>
+                  <field name="dst_state_id" domain="[('country_id','=',country_id)]" required="True" options='{"no_open": True, "no_create": True}' readonly="state != 'to_send'"/>
+                  <field name="dst_province_id" domain="[('state_id','=',dst_state_id)]" required="True" options='{"no_open": True, "no_create": True}' readonly="state != 'to_send'"/>
+                  <field name="dst_district_id" domain="[('city_id','=',dst_province_id)]" required="True" options='{"no_open": True, "no_create": True}' readonly="state != 'to_send'"/>
+                  <field name="dst_street"  required="True" readonly="state != 'to_send'"/>
+                </group>
+              </group>
+              <group>
+                <group>
+                  <field name="response" readonly="1"/>
+                </group>
+                <group>
+                  <field name="company_id" readonly="1"/>
+                </group>
+              </group>
+              <notebook colspan="4">
+                <page string="Guide Lines">
+                  <field name="line_ids" nolabel="1" widget="one2many_list" mode="tree" readonly="state != 'to_send'">
+                    <tree string="Guide Lines" editable="bottom">
+                      <field name="sequence" widget="handle"/>
+                      <field name="product_id" options='{"no_open": True, "no_create": True}' groups="l10n_pe_eguide_advanced.group_pe_eguide_all_guides"/>
+                      <field name="name"/>
+                      <field name="product_code"/>
+                      <field name="uom_code"/>
+                      <field name="quantity"/>
+                    </tree>
+                  </field>
+
+                  <label for="vehicle_ids" string="Vehicles:" invisible="vehicle_m1_l == True or transport_mode == '01'" />
+                  <field name="vehicle_ids" nolabel="1" widget="one2many_list" mode="tree" invisible="vehicle_m1_l == True or transport_mode == '01'" readonly="state != 'to_send'">
+                      <tree string="Vehicle Lines" editable="bottom">
+                          <field name="vehicle_id" options='{"no_open": True, "no_create": True}' groups="l10n_pe_eguide_advanced.group_pe_eguide_all_guides"/>
+                          <field name="name"/>
+                      </tree>
+                  </field>
+
+                  <label for="carrier_ids" string="Carriers:" invisible="vehicle_m1_l == True or transport_mode == '01'" />
+                  <field name="carrier_ids" invisible="vehicle_m1_l == True or transport_mode == '01'" readonly="state != 'to_send'">
+                    <tree string="Vehicle Lines" editable="bottom">
+                      <field name="driver_id" domain="[('pe_doc_type','!=','6')]"/>
+                      <field name="doc_type"/>
+                      <field name="doc_number"/>
+                      <field name="name"/>
+                      <field name="driver_license"/>
+                    </tree>
+                  </field>
+                  <label for="note" string="Notes:" />
+                  <field name="note" readonly="state != 'to_send'"/>
+                </page>
+                <page string="Sunat Sent/Response">
+                  <group>
+                    <group string="Sent">
+                      <field name="attachment_id" />
+                      <field name="digest" />
+                      <field name="sent_date" />
+                    </group>
+                    <group string="Response">
+                      <field name="ticket" />
+                      <field name="response_id" />
+                      <field name="response_return_code" />
+                      <field name="date_end" />
+                    </group>
+                  </group>
+                  <label for="response_note" string="Response Note:" />
+                  <field name="response_note" />
+                </page>
+                <page string="Other Info" name="other_info">
+                  <group>
+                    <group>
+
+                    </group>
+                    <group>
+                      <field name="user_id" options='{"no_open": True, "no_create": True}' />
+                    </group>
+                  </group>
+                  <label for="related_ids" string="Related Document:" />
+                  <field name="related_ids" nolabel="1" widget="one2many_list" mode="tree" readonly="state != 'to_send'">
+                      <tree string="Related Lines" editable="bottom">
+                          <field name="document_type" />
+                        <field name="name" />
+                        <field name="partner_id" />
+                      </tree>
+                  </field>
+                </page>
+              </notebook>
+
+            </sheet>
+            <div class="o_attachment_preview"
+                         invisible="state not in ('to_send', 'to_cancel', 'cancelled') or state != 'draft'" />
+            <!-- Chatter -->
+            <div class="oe_chatter">
+                <field name="message_follower_ids" groups="base.group_user"/>
+                <field name="activity_ids"/>
+                <field name="message_ids"/>
+            </div>
+          </form>
+      </field>
+    </record>
+
+    <!-- actions opening views on models -->
+    <record model="ir.actions.act_window" id="action_pe_electronic_guide">
+      <field name="name">Electronic Guide</field>
+      <field name="res_model">pe.electronic.guide</field>
+      <field name="view_mode">tree,form</field>
+      <field name="view_id" ref="view_pe_electronic_guide_tree"/>
+      <!--field name="context">{'search_default_dashboard':1}</field -->
+      <field name="help" type="html">
+          <p>
+              This is the Electronic Guide.
+          </p>
+      </field>
+    </record>
+
+
+  </data>
+</odoo>

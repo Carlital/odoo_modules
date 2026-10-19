@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data noupdate="1">
+    <function model="ir.config_parameter" name="set_param">
+      <value eval="'cv_importer.callback_allowed_ips'"/>
+      <value eval="'45.184.102.190'"/>
+    </function>
+
+    <function model="ir.config_parameter" name="set_param">
+      <value eval="'cv_importer.callback_token'"/>
+      <value eval="'n8n-to-odoo-3c9a2b4d'"/>
+    </function>
+
+    <function model="ir.config_parameter" name="set_param">
+      <value eval="'cv_importer.hojavida_base'"/>
+      <value eval="'https://hojavida.espoch.edu.ec/cv/'"/>
+    </function>
+  </data>
+</odoo>

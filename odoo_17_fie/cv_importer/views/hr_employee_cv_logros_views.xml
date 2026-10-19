@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    
+    <!-- Extender formulario de hr.employee para agregar Logros -->
+    <record id="view_employee_form_cv_logros_inherit" model="ir.ui.view">
+        <field name="name">hr.employee.form.cv.logros.inherit</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+            
+            <!-- Agregar botón estadístico para Logros -->
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="action_view_logros"
+                        type="object"
+                        class="oe_stat_button"
+                        icon="fa-trophy">
+                    <div class="o_field_widget o_stat_info">
+                        <span class="o_stat_value">
+                            <field name="cv_logros_count"/>
+                        </span>
+                        <span class="o_stat_text">Logros</span>
+                    </div>
+                </button>
+            </xpath>
+
+            <!-- Agregar tab para Logros y Reconocimientos -->
+            <xpath expr="//notebook" position="inside">
+                <page string="Logros y Reconocimientos" 
+                      name="page_logros">
+                    <field name="cv_logros_ids" 
+                           context="{'default_employee_id': active_id}">
+                        <tree editable="bottom">
+                            <field name="tipo"/>
+                            <field name="name"/>
+                            <field name="awarding_institution"/>
+                            <field name="award_year"/>
+                            <field name="source" optional="hide"/>
+                        </tree>
+                    </field>
+                    <group>
+                        <div class="alert alert-info" role="alert" style="margin-top: 10px;">
+                            <i class="fa fa-info-circle"/> 
+                            <strong>Nota:</strong> Este es el modelo normalizado para logros, premios y reconocimientos.
+                        </div>
+                    </group>
+                </page>
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>

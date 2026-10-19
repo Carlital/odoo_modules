@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="view_account_move_reversal" model="ir.ui.view">
+            <field name="name">account.move.reversal.form.inherit.l10n.pe.invoice</field>
+            <field name="model">account.move.reversal</field>
+            <field name="inherit_id" ref="account.view_account_move_reversal" />
+            <field name="arch" type="xml">
+            	<xpath expr="//field[@name='reason']" position="after" >
+                  <field name="country_code" invisible="True"/>
+                  <field name="pe_credit_note_code" required="country_code == 'PE'" invisible="country_code != 'PE'"/>
+                </xpath>
+                <xpath expr="//field[@name='reason']" position="attributes" >
+                    <!--attribute name="invisible">country_code != 'PE'</attribute-->
+                    <attribute name="required">country_code == 'PE'</attribute>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <!-- Vista heredada para agregar el filtro de categoría -->
+        <record id="view_sales_order_line_filter_inherit" model="ir.ui.view">
+            <field name="name">sale.order.line.filter.inherit</field>
+            <field name="model">sale.order.line</field>
+            <field name="inherit_id" ref="sale.view_sales_order_line_filter"/>
+            <field name="arch" type="xml">
+            <xpath expr="//filter[@name='salesperson']" position="after">
+                    <filter string="Meli Brand" 
+                            name="group_by_brand" 
+                            domain="[]" 
+                            context="{'group_by':'product_brand'}"/>
+                </xpath>          
+              <xpath expr="//filter[@name='salesperson']" position="after">
+                    <filter string="Meli OrderDate" 
+                            name="group_by_order_date" 
+                            domain="[]" 
+                            context="{'group_by':'order_date'}"/>
+                </xpath>
+                <xpath expr="//filter[@name='salesperson']" position="after">
+                    <filter string="Meli Category" 
+                            name="group_by_category" 
+                            domain="[]" 
+                            context="{'group_by':'product_categ_id'}"/>
+                </xpath>                
+            </field>
+        </record>
+    </data>
+</odoo>

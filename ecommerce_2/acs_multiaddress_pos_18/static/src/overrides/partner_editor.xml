@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="acs_multiaddress_pos_18.PartnerDetailsEdit" t-inherit="point_of_sale.PartnerDetailsEdit" t-inherit-mode="extension">
+        <xpath expr="//div[hasclass('partner-details')]" position="after">
+            <div class="extra-addresses-section mt-3">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <h5>Direcciones Adicionales</h5>
+                    <button class="btn btn-sm btn-primary" t-on-click="onAddExtraAddress">
+                        <i class="fa fa-plus"/> Añadir Dirección
+                    </button>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Otros</label>
+                    <input type="text"
+                        class="form-control"
+                        name="other"
+                        t-att-value="props.partner.other || ''"
+                        placeholder="Otros datos"/>
+                </div>
+
+                <t t-if="props.partner.address_array and props.partner.address_array.length">
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>Dirección</th>
+                                <th style="width: 50px;"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="props.partner.address_array" t-as="address" t-key="address.id">
+                                <tr>
+                                    <td><t t-esc="address.address"/></td>
+                                    <td></td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                </t>
+
+                <t t-if="props.partner.extra_addresses and props.partner.extra_addresses.length">
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>Calle</th>
+                                <th>Calle 2</th>
+                                <th>Ciudad</th>
+                                <th>País</th>
+                                <th style="width: 50px;"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="props.partner.extra_addresses" t-as="addr" t-key="addr_index">
+                                <tr class="new-address">
+                                    <td><t t-esc="addr.street"/></td>
+                                    <td><t t-esc="addr.street2"/></td>
+                                    <td><t t-esc="addr.city"/></td>
+                                    <td><t t-esc="addr.country_name"/></td>
+                                    <td>
+                                        <button class="btn btn-sm btn-link text-danger"
+                                            t-on-click="() => this.onDeleteAddress(addr_index)">
+                                            <i class="fa fa-trash-o"/>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                </t>
+            </div>
+        </xpath>
+    </t>
+</templates>

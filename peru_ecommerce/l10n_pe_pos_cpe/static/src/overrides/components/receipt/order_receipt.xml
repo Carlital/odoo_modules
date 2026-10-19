@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="l10n_pe_pos_cpe.OrderReceipt" t-inherit="point_of_sale.OrderReceipt" t-inherit-mode="extension">
+        <xpath expr="//div[hasclass('before-footer')]" position="after">
+            <div id="qr-code" style="display: flex; justify-content: center;" t-if="props.data.pe_qr_string!=''">
+                <img style="display: block;" t-att-src="props.data.pe_qr_code" t-att-alt="props.data.pe_qr_string" />
+            </div>
+            <div t-if="props.data.pe_qr_string!=''" style="text-align: center;">
+                <span>Representación impresa de, </span>
+                <strong t-esc="props.data.pe_invoice_name || ''" />
+                <span> consulte en </span>
+                <span t-esc="props.data.headerData.company.website || ''" />
+                <span>cpe</span>
+            </div>
+        </xpath>
+
+    </t>
+</templates>

@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates xml:space="preserve">
+
+    <!-- =======================================================
+         TEMPLATE bc.BcPlanGalleryField
+         usado en crm.lead (selector de plan)
+    ======================================================== -->
+    <t t-name="bc.BcPlanGalleryField">
+        <div style="display:flex; flex-direction:column; gap:12px;">
+
+            <t t-if="state.loading">
+                <span>Cargando planes...</span>
+            </t>
+
+            <t t-elif="state.plans.length === 0">
+                <p>No hay planes activos para la subcampaña seleccionada.</p>
+            </t>
+
+            <t t-else="">
+                <div style="display:flex; flex-wrap:wrap; gap:16px;">
+                    <t t-foreach="state.plans" t-as="p" t-key="p.id">
+                        <div style="
+                            border:1px solid #d0d0d0;
+                            border-radius:8px;
+                            padding:12px;
+                            width:360px;
+                            background-color:#fff;
+                            box-shadow:0 2px 4px rgba(0,0,0,.05);
+                        ">
+                            <!-- header -->
+                            <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:8px;">
+                                <div>
+                                    <div style="font-weight:600; font-size:15px; text-transform:uppercase;">
+                                        <t t-esc="p.name"/>
+                                    </div>
+                                    <div t-if="p.headline"
+                                         style="color:#555; font-size:13px;">
+                                        <t t-esc="p.headline"/>
+                                    </div>
+                                </div>
+                                <div style="text-align:right;">
+                                    <t t-if="p.price_with_tax">
+                                        <div style="font-size:16px; font-weight:700; line-height:1;">
+                                            <t t-esc="p.price_with_tax"/>
+                                            <t t-if="p.currency_name">
+                                                <t t-esc="p.currency_name"/>
+                                            </t>
+                                        </div>
+                                        <div style="font-size:11px; color:#666; line-height:1.2;">
+                                            con IVA
+                                        </div>
+                                    </t>
+                                </div>
+                            </div>
+
+                            <!-- bullets -->
+                            <ul style="margin-top:8px; padding-left:18px; font-size:13px; line-height:1.4; color:#333;">
+                                <t t-if="p.lines.length">
+                                    <t t-foreach="p.lines" t-as="ln" t-key="ln.id">
+                                        <li style="margin-bottom:4px;">
+                                            <t t-esc="ln.titulo"/>
+                                            <t t-if="ln.detalle">:
+                                                <t t-esc="ln.detalle"/>
+                                            </t>
+                                        </li>
+                                    </t>
+                                </t>
+                                <t t-else="">
+                                    <li style="color:#999;">(Sin bloques definidos)</li>
+                                </t>
+                            </ul>
+
+                            <!-- estado + elegir -->
+                            <div style="margin-top:10px; font-size:12px; color:#666; display:flex; justify-content:space-between;">
+                                <div>
+                                    <t t-if="p.active">
+                                        <span style="color:#2e7d32; font-weight:600;">Activo</span>
+                                    </t>
+                                    <t t-if="!p.active">
+                                        <span style="color:#b71c1c; font-weight:600;">Inactivo</span>
+                                    </t>
+                                </div>
+                                <div style="font-size:11px; color:#888; text-align:right;">
+                                    <!-- subcampaña nombre opcional: no lo necesitamos aquí -->
+                                </div>
+                            </div>
+
+                            <div style="margin-top:10px; display:flex; justify-content:flex-end;">
+                                <button type="button"
+                                        class="btn btn-primary"
+                                        t-on-click="() => this.selectPlan(p.id)">
+                                    Seleccionar este plan
+                                </button>
+                            </div>
+                        </div>
+                    </t>
+                </div>
+            </t>
+
+        </div>
+    </t>
+
+
+    <!-- =======================================================
+         TEMPLATE bc.BcSubcampaignGalleryField
+         usado en bc.subcampaign pestaña "Vista comercial"
+         (solo lectura)
+    ======================================================== -->
+    <t t-name="bc.BcSubcampaignGalleryField">
+        <div class="bcGalleryWrapper o_bc_gallery_wrapper">
+
+            <!-- Estado cargando -->
+            <t t-if="state.loading">
+                <div class="bcGalleryLoading">
+                    Cargando planes comerciales...
+                </div>
+            </t>
+
+            <!-- Sin datos -->
+            <t t-if="!state.loading and (state.plans.length === 0)">
+                <div class="bcGalleryEmpty">
+                    No hay planes activos configurados para esta subcampaña.
+                </div>
+            </t>
+
+            <!-- Render de planes -->
+            <div class="bcGalleryRow"
+                t-if="!state.loading and state.plans.length"
+                t-ref="galleryContainer">
+
+                <t t-foreach="state.plans" t-as="p" t-key="p.id">
+                    <!-- Usar la clase CSS ya preparada en JavaScript -->
+                    <div t-attf-class="bcPlanCard {{p.planClass}}"
+                         draggable="true"
+                         t-on-dragstart="(ev) => this.onDragStart(p.id, ev)"
+                         t-on-dragend="(ev) => this.onDragEnd(ev)"
+                         t-on-dragover="(ev) => this.onDragOver(ev)"
+                         t-on-drop="(ev) => this.onDrop(p.id, ev)">
+
+                        <!-- Botones de acción (hover) -->
+                        <div class="bcPlanActions">
+                            <button class="bcActionBtn bcActionEdit"
+                                    title="Editar plan"
+                                    t-on-click.stop="() => this.onEditPlan(p.id)">
+                                <i class="fa fa-pencil"/>
+                            </button>
+                            <button class="bcActionBtn bcActionToggle"
+                                    t-att-title="p.active ? 'Desactivar' : 'Activar'"
+                                    t-on-click.stop="() => this.onToggleActive(p.id)">
+                                <i t-attf-class="fa {{p.active ? 'fa-eye-slash' : 'fa-eye'}}"/>
+                            </button>
+                            <button class="bcActionBtn bcActionDuplicate"
+                                    title="Duplicar plan"
+                                    t-on-click.stop="() => this.onDuplicatePlan(p.id)">
+                                <i class="fa fa-copy"/>
+                            </button>
+                            <button class="bcActionBtn bcActionArchive"
+                                    title="Archivar plan"
+                                    t-on-click.stop="() => this.onArchivePlan(p.id)">
+                                <i class="fa fa-trash"/>
+                            </button>
+                        </div>
+
+                        <!-- HEADER: nombre del plan y tagline -->
+                        <div class="bcPlanHeader">
+                            <div class="bcPlanDragHandle" title="Arrastrar para reordenar">
+                                <i class="fa fa-grip-vertical"/>
+                            </div>
+                            <div class="bcPlanName">
+                                <t t-esc="p.name"/>
+                            </div>
+                            <div class="bcPlanHeadline">
+                                <t t-esc="p.headline or 'Plan Controlado'"/>
+                            </div>
+                        </div>
+
+                        <!-- BODY: bloques comerciales -->
+                        <div class="bcPlanBody">
+
+                            <!-- Bloque principal destacado (primeras líneas de datos) -->
+                            <t t-set="mainLines" t-value="p.lines.filter(ln => ['gb', 'min'].includes(ln.tipo)).slice(0, 3)"/>
+                            <t t-foreach="mainLines" t-as="ln" t-key="ln.id">
+                                <div class="bcPlanBigFeature">
+                                    <div class="bcPlanBigValue">
+                                        <t t-esc="ln.titulo"/>
+                                    </div>
+                                    <div class="bcPlanBigDetail" t-if="ln.detalle">
+                                        <t t-esc="ln.detalle"/>
+                                    </div>
+                                </div>
+                            </t>
+
+                            <!-- Iconos de redes sociales -->
+                            <t t-set="socialIcons" t-value="p.lines.filter(ln => ln.icons &amp;&amp; ln.icons.length).flatMap(ln => ln.icons)"/>
+                            <div class="bcPlanSocialIcons" t-if="socialIcons.length">
+                                <t t-foreach="socialIcons.slice(0, 5)" t-as="icon" t-key="icon.name">
+                                    <img t-att-src="icon.src" t-att-alt="icon.name" t-att-title="icon.name"/>
+                                </t>
+                            </div>
+
+                            <!-- Resto de beneficios -->
+                            <ul class="bcPlanBullets">
+                                <t t-set="otherLines" t-value="p.lines.filter(ln => !['gb', 'min'].includes(ln.tipo))"/>
+                                <t t-foreach="otherLines" t-as="ln" t-key="ln.id">
+                                    <li class="bcPlanBullet">
+                                        <div class="bcBulletTitle">
+                                            <t t-esc="ln.titulo"/>
+                                        </div>
+                                        <div class="bcBulletDetail" t-if="ln.detalle">
+                                            <t t-esc="ln.detalle"/>
+                                        </div>
+                                    </li>
+                                </t>
+                            </ul>
+                        </div>
+
+                        <!-- FOOTER: precio -->
+                        <div class="bcPlanFooter">
+                            <div class="bcPlanPriceMain">
+                                <t t-if="p.price_with_tax">
+                                    $<t t-esc="p.price_with_tax.toFixed(2)"/> + IVA
+                                </t>
+                                <t t-if="!p.price_with_tax">
+                                    <span>Sin precio</span>
+                                </t>
+                            </div>
+                            <div class="bcPlanPriceSecondary" t-if="p.price_with_tax">
+                                <t t-set="priceWithIVA" t-value="p.price_with_tax * 1.12"/>
+                                $<t t-esc="priceWithIVA.toFixed(2)"/> Incl. IVA
+                            </div>
+                        </div>
+
+                    </div>
+                </t>
+            </div>
+        </div>
+    </t>
+
+
+</templates>

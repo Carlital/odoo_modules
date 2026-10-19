@@ -1,0 +1,38 @@
+<odoo>
+  <data>
+    <record id="view_stock_letter_form_inherit" model="ir.ui.view">
+      <field name="name">stock.letter.form.inherit</field>
+      <field name="model">stock.picking</field>
+      <field name="inherit_id" ref="stock.view_picking_form"/>
+      <field name="arch" type="xml">
+        <xpath expr="//header" position="inside">
+          <button name="print_pdf_letter" string="Imprimir rotulo" type="object" class="oe_highlight" confirm="Are you sure you want to do this?"/>
+        </xpath>
+        <xpath expr="//sheet//div[@name='button_box']" position="inside">
+          <button name="toggle_sent" class="oe_stat_button" type="object" icon="fa-check">
+            <field name="is_sent" widget="boolean_button" options='{"terminology": {
+                                    "string_true": "Enviado",
+                                    "hover_true": "Cambiar no enviado",
+                                    "string_false": "No enviado",
+				    "hover_false": "Marcar Enviado"
+                                }}'/>
+          </button>
+        </xpath>
+
+      </field>
+    </record>
+    <record id="view_res_partner_form_inherit" model="ir.ui.view">
+      <field name="name">res.partner.form.inherit</field>
+      <field name="model">res.partner</field>
+      <field name="inherit_id" ref="base.view_partner_form"/>
+      <field name="arch" type="xml">
+        <xpath expr="//notebook" position="before">
+          <group>
+            <field name="reference" />
+          </group>
+        </xpath>
+      </field>
+    </record>
+
+  </data>
+</odoo>

@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_pe_payment_date,access_pe_payment_date,model_pe_payment_date,base.group_user,1,1,1,1
+access_pe_account,access_pe_account,model_pe_account,base.group_user,1,0,0,0
+access_pe_account_user,access_pe_account_user,model_pe_account,group_pe_account,1,1,1,0
+access_pe_account_account,access_pe_account_account,model_pe_account,group_pe_account_account,1,1,1,0
+access_pe_account_manager,access_pe_account_manager,model_pe_account,group_pe_account_manager,1,1,1,1
+access_pe_prepaid_wizard,access_pe_prepaid_wizard,l10n_pe_account.model_pe_prepaid_wizard,base.group_user,1,1,1,1

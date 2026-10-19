@@ -1,0 +1,14 @@
+.o_notification_manager:has(.udoo_bookmark_notify) {
+    top: auto !important;
+    bottom: 0 !important;
+}
+
+.cmp_menu {
+    .dropdown-item {
+        line-height: $u-lh * 1.2 !important;
+    }
+}
+
+.bookmark_tg {
+    margin-right: 1.1rem !important;
+}

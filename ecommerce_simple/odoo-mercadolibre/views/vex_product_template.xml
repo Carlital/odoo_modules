@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_product_template_form_meli" model="ir.ui.view">
+        <field name="name">product.template.form.inherit.meli</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_only_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="MercadoLibre Info">
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_publish_product" type="object" string="Publish Product"
+                            class="btn-primary" icon="fa-paper-plane" style="margin-right:10px;"
+                            help="Press to sync all details of product from Mercadolibre"/>
+                        <button name="action_get_details" type="object" string="Sync Details"
+                            class="btn-primary" icon="fa-info-circle" style="margin-right:10px;"
+                            help="Press to sync all details of product from Mercadolibre"/>
+                        <button name="action_get_price" type="object" string="Sync Pricing"
+                                class="btn-primary" icon="fa-money" style="margin-right:10px;"
+                                help="Press to sync Pricing and Promotions od this product from Mercadolibre"/>
+                        <button name="action_update_stock" type="object" string="Update Stock to ML"
+                                class="btn-primary" icon="fa-retweet" style="margin-right:10px;"/>
+                        <button name="action_sync_questions" type="object" string="Sync Questions"
+                                class="btn-primary" icon="fa-comments" style="margin-right:10px;"
+                                help="Press to sync all questions of product from Mercadolibre."/>
+                        <button name="action_update_price" type="object" string="Update Price to ML"
+                                class="btn-primary" icon="fa-dollar" style="margin-right:10px;"/>
+                        <button name="action_change_status" type="object" string="Change Status in ML"
+                                class="btn-primary" icon="fa-toggle-on" style="margin-right:10px;"/>
+                        <!-- <button name="action_update_post" type="object" string="Update Post"
+                                class="btn-primary" icon="fa-edit"/> -->
+                                <!-- attrs="{'invisible': [('meli_product_id','!=',False)]}" -->
+                        <button name="set_image_from_meli" type="object" string="Update Image in Odoo"
+                                class="btn-primary" icon="fa-image"/>
+                    </div>
+                    <notebook>
+                        <page name="general_info" string="General Information">
+                            <group>
+                                <button name="action_get_category_meli_form_name"
+                                        type="object"
+                                        string="Buscar Categoría ML"
+                                        class="oe_highlight"/>
+                            </group>
+                            <group  string="General Info">
+                                <group col="2">
+                                    <field name="meli_product_id"/>
+                                    <field name="meli_site_id"/>
+                                    <field name="meli_status"/>
+                                    <field name="meli_sub_status"/>
+                                    <field name="meli_listing_type"/>
+                                    <field name="meli_condition"/>
+                                    <field name="meli_title"/>
+                                    <field name="meli_stock_location_id"/>
+                                    <field name="meli_permalink" widget="url"/>
+                                    <field name="ready_create" />
+                                </group>
+                                <group>
+                                    <field name="meli_thumbnail"/>
+                                    <field name="meli_domain_id"/>
+                                    <field name="meli_catalog_product_id"/>
+                                    <field name="meli_category_vex"/>
+                                    <field name="meli_category_id"/>
+                                    <field name="meli_description" />
+                                    <field name="meli_inventory_id"/>
+                                    <field name="meli_tag_ids" widget="many2many_tags" placeholder="Agregar etiquetas..."/>
+                                    <field name="meli_channel_ids" widget="many2many_tags" placeholder="Agregar canales..."/>
+                                    <field name="meli_health"/>
+                                    <field name="meli_warranty_type" />
+                                    <field name="meli_warranty_time" placeholder="Escribe el tiempo de garantía (30 días o 1 mes)"/>                       
+                                </group>
+                            </group>
+                        </page>
+                        <page name="extra_info" string="Pricing Information">
+                            <group>
+                                <group string="Pricing and Stock" col="2">
+                                    <field name="meli_actual_price"/>
+                                    <field name="meli_price"/>
+                                    <field name="meli_base_price"/>
+                                    <!-- <field name="meli_original_price"/> -->
+                                    <field name="meli_currency_id"/>
+                                    <field name="meli_initial_quantity"/>
+                                    <field name="meli_available_quantity"/>
+                                    <field name="meli_sold_quantity"/>
+                                    <field name="meli_item_market_fee"/>
+                                </group>   
+                                <group string="Promotions" col="2">
+                                    <field name="meli_campaign_id"/>
+                                    <field name="meli_promotion_id"/>
+                                    <field name="meli_promotion_type"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page name="shipment_info" string="Shipment Information">
+                            <group>
+                                <group string="Shipping Info" col="2">
+                                    <field name="meli_shipping_mode"/>
+                                    <field name="meli_free_shipping"/>
+                                    <field name="meli_logistic_type"/>
+                                    <field name="meli_store_pick_up"/>
+                                    <field name="meli_local_pick_up"/>
+                                    <field name="meli_shipping_tags"/>
+                                    <field name="meli_accepts_mp"/>
+                                </group>                        
+                                <group string="Seller Location" col="2">
+                                    <field name="meli_address_line"/>
+                                    <field name="meli_zip_code"/>
+                                    <field name="meli_seller_city"/>
+                                    <field name="meli_seller_state"/>
+                                    <field name="meli_seller_country"/>
+                                    <field name="meli_geolocation_lat"/>
+                                    <field name="meli_geolocation_lng"/>
+                                </group>
+                            </group>  
+                        </page>
+                        <page name="relations_info" string="Relations Information">
+                            <group string="Relations">
+                                <field name="meli_pictures_ids">
+                                    <tree>
+                                        <field name="url" widget="url" invisible="1"/>
+                                        <field name="secure_url" widget="url"/>
+                                    </tree>
+                                </field>
+
+                                <field name="meli_variation_ids">
+                                    <tree>
+                                        <field name="meli_variation_id"/>
+                                        <field name="meli_price"/>
+                                        <field name="meli_available_quantity"/>
+                                        <field name="meli_sold_quantity"/>
+                                    </tree>
+                                </field>
+
+                                <field name="meli_attribute_ids">
+                                    <tree editable="bottom">
+                                        <field name="meli_category_id" invisible="0"/>
+                                        <field name="meli_attribute_ref_id" domain="[('meli_category_id','=',meli_category_id)]"/>
+                                        <field name="meli_attribute_name" readonly="1"/>
+                                        <field name="meli_values_id" domain="[('attribute_id','=', meli_attribute_ref_id)]"/>
+                                        <field name="meli_value_name" attrs="{'readonly': [('meli_values_id','!=',False)]}"/>
+                                    </tree>
+                                </field>
+                            </group>
+                        </page>
+                        <page name="questions" string="Questions">
+                            <field name="meli_question_ids">
+                                <tree editable="bottom">
+                                    <field name="meli_id" string="Meli"/>
+                                    <field name="meli_from_nickname" string="Meli From Nickname"/>
+                                    <field name="meli_text" string="Meli Text"/>
+                                    <field name="meli_status" string="Meli Status"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="MELI Score">
+                            <field name="performance_score_ids" nolabel="1">
+                                <tree editable="bottom">
+                                    <field name="name"/>
+                                    <field name="sub_performance_score"  widget="handle"/>
+                                    <field name="sub_performance_level" decoration-danger="sub_performance_score &lt; 60"
+                                            decoration-warning="sub_performance_score &lt; 90"
+                                            decoration-success="sub_performance_score &gt;= 90"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page name="price_history" string="Price History">
+                            <!-- <div class="row">
+                                <div class="col-6">
+                                    <label for="date_from">Start Date</label>
+                                    <field name="date_from" nolabel="1"/>
+                                </div>
+                                <div class="col-6">
+                                    <label for="date_to">End Date</label>
+                                    <field name="date_to" nolabel="1"/>
+                                </div>
+                            </div> -->
+                            <field name="evolution_data_ids">
+                                <tree editable="bottom" create="0" edit="0">
+                                    <field name="change_date"/>
+                                    <field name="old_price"/>
+                                    <field name="new_price"/>                           
+                                </tree>
+                            </field>
+                        </page>     
+                        <page name="competence_history" string="Competence Price History">                    
+                            <!-- <div class="row">
+                                <div class="col-6">
+                                    <label for="date_from">Start Date</label>
+                                    <field name="date_from" nolabel="1"/>
+                                </div>
+                                <div class="col-6">
+                                    <label for="date_to">End Date</label>
+                                    <field name="date_to" nolabel="1"/>
+                                </div>
+                            </div> -->
+
+                            <field name="competitor_price_history_ids">
+                                <tree editable="false" create="0" edit="0" delete="0">
+                                    <field name="name"/>
+                                    <field name="price"/>
+                                    <field name="currency_id"/>
+                                    <!-- <field name="link"  widget="url"/> -->
+                                    <field name="url_html" widget="html"/>
+                                    <field name="condition"/>
+                                    <field name="create_date"/>
+                                    <field name="write_date"/>
+                                    <!-- <field name="competence_image" widget="image" string="Image"/>
+                                    <field name="name" string="Competitor Name"/>
+                                    <field name="link" string="Competitor Link" widget="url"/>
+                                    <field name="competence_actual_price" string="Price"/>
+                                    <field name="write_date" string="Last Updated" widget="datetime"/> -->
+                                </tree>
+                            </field>
+                        </page>
+                        <page name="meli_product_json" string="JSON Product">
+                            <group string="JSON Data">
+                                <field name="meli_json_data" widget="text" colspan="2"/>
+                            </group>
+                        </page>
+                        
+                    </notebook>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_vex_meli_attribute_value_tree" model="ir.ui.view">
+        <field name="name">vex.meli.attribute.value.tree</field>
+        <field name="model">vex.meli.attribute.value</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="meli_value_name"/>
+                <field name="attribute_id"/>
+                <field name="meli_value_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="product_template_tree_view_product_mercadolibre" model="ir.ui.view">
+        <field name="name">product_template.tree.view.product.meli</field>
+        <field name="model">product.template</field>
+        <field name="arch" type="xml">
+            <tree string="">
+                <field name="name"/>
+                <field name="meli_type_item_logistc" decoration-success="meli_type_item_logistc=='fulfillment'"/>
+                <field name="instance_id"/>
+                <field name="marketplace_ids" widget="many2many_tags" readonly="1" options="{'color_field': 'color'}"/>
+                <field name="meli_product_id"/>
+                <field name="meli_site_id"/>
+                <field name="meli_status" widget="badge" decoration-danger="meli_status == 'paused'" decoration-success="meli_status == 'active'"/>
+                <field name="meli_listing_type"/>
+                <field name="meli_condition"/>
+                <field name="meli_price"/>
+                <field name="meli_available_quantity"/>
+            </tree>
+        </field>
+    </record>
+    <record id="vex_product_tmpl_mercadolibre_filters" model="ir.ui.view">
+        <field name="name">product.template.search.view.mercadolibre</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_search_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//search" position="inside">
+                <filter name="meli_actives"
+                        string="Meli Products Active"
+                        domain="[('meli_status', '=', 'active')]"
+                        help="Mostrar solo productos con estado activo en MercadoLibre"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="report_letter_all_document">
+            <t t-call="web.html_container">
+                <t t-set="data_report_margin_top" t-value="12"/>
+                <t t-set="data_report_header_spacing" t-value="9"/>
+                <t t-set="data_report_dpi" t-value="110"/>
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="web.internal_layout">
+                        <div class="page">
+                            <h2 class="text-center">INVENTORIES AND BALANCE SHEET BOOK - ACCOUNT BALANCE DETAIL <br />COMMERCIAL LETTERS-THIRD PARTIES</h2>
+
+                            <div class="row">
+                                <div class="col-xs-12 text-center">
+                                    <strong>Start Date:</strong>
+                                    <p t-esc="data.get('date_to', '')"/>
+                                </div>
+                            </div>
+                                
+                            <table class="table table-condensed">
+                                <thead>
+                                    <tr style="border: 1px solid black !important;">
+                                        <th colspan="2" class="text-center" style="border: 1px solid black !important;">
+                                            CUSTOMER INFORMATION
+                                        </th>
+                                        <th colspan="8" class="text-center" style="border: 1px solid black !important;">
+                                            PROOF OF PAYMENT
+                                        </th>
+                                        <th rowspan="2" class="text-center" style="border: 1px solid black !important;">
+                                            TOTAL BALANCE
+                                        </th>
+                                    </tr>
+                                    <tr style="border: 1px solid black !important;">
+                                        <th class="text-center" style="border: 1px solid black !important;">
+                                            SURNAMES AND NAMES, NAME OR CORPORATE NAME
+                                        </th>
+                                        <th class="partner-header-vat text-center" style="border: 1px solid black !important;">
+                                            VAT
+                                        </th>
+                                        <!--th>
+                                            DOC TYPE
+                                        </th -->
+                                        <th class="text-center" style="border: 1px solid black !important;">
+                                            NUMBER
+                                        </th>
+                                        <th class="text-center" style="border: 1px solid black !important;">
+                                            UNIQUE N.
+                                        </th>
+                                        <th class="text-center" style="border: 1px solid black !important;">
+                                            ISSUE DATE
+                                        </th>
+                                        <th class="text-center" style="border: 1px solid black !important;">
+                                            DUE DATE
+                                        </th>
+                                        <!--th>
+                                            SEAT
+                                        </th-->
+                                        <th class="text-center" style="border: 1px solid black !important;">
+                                            STATE
+                                        </th>
+                                        <th class="text-center" style="border: 1px solid black !important;">
+                                            BANK
+                                        </th>
+                                        <th class="text-center" style="border: 1px solid black !important;">
+                                            CURRENCY
+                                        </th>
+                                        <th class="text-center" style="border: 1px solid black !important;">
+                                            AMOUNT
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="data.get('journal_ids', [])" t-as="journal_id" >
+                                        <t t-foreach="get_partner_by_journal(journal_id.id, letter_ids)" t-as="partner_id">
+                                            <tr>
+                                                <td colspan="11">
+                                                    <span t-field="journal_id.default_debit_account_id.name" />
+                                                </td>
+                                            </tr>
+                                            <t t-set="letter_amount_total" t-value="0.0"/>
+                                            <t t-foreach="get_currency_by_partner(partner_id.id, journal_id.id,letter_ids)" t-as="currency_id">
+                                                <t t-set="show_partner" t-value="True"/>
+                                                <t t-set="amount_total" t-value="0.0"/>
+                                                <tr t-foreach="get_letter_by_partner(partner_id.id, journal_id.id, currency_id, letter_ids)" t-as="letter_id">
+                                                    <td>
+                                                        <t t-if="show_partner" >
+                                                            <span t-field="letter_id.partner_id.name"/>
+                                                        </t>
+                                                    </td>
+                                                    <td class="partner-vat">
+                                                        <t t-if="show_partner" >
+                                                            <span t-field="letter_id.partner_id.vat"/>
+                                                        </t>
+                                                    </td>
+                                                    <td>
+                                                        <span t-field="letter_id.name"/>
+                                                    </td>
+                                                    <td>
+                                                        <span t-field="letter_id.number"/>
+                                                    </td>
+                                                    <td>
+                                                        <span t-field="letter_id.date"/>
+                                                    </td>
+                                                    <td>
+                                                        <span t-field="letter_id.date_due"/>
+                                                    </td>
+                                                    <td>
+                                                        <span t-field="letter_id.state"/>
+                                                    </td>
+                                                    <td>
+                                                        <span t-field="letter_id.bank_id.name"/>
+                                                    </td>
+                                                    <td>
+                                                        <span t-field="letter_id.currency_id.name"/>
+                                                    </td>
+                                                    <td class="text-right">
+                                                        <span t-field="letter_id.residual_amount"/>
+                                                    </td>
+                                                    <td class="text-right">
+                                                        <t t-set="amount_total" t-value="amount_total+letter_id.residual_amount"/>
+                                                        <t t-set="letter_amount_total" t-value="letter_amount_total+letter_id.residual_amount"/>
+                                                        <span t-esc="get_total_letter(amount_total, currency_id)"/>
+                                                    </td>
+
+                                                    <t t-if="show_partner" >
+                                                        <t t-set="show_partner" t-value="False"/>
+                                                    </t>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="10">
+                                                        <b>TOTAL</b>
+                                                    </td>
+                                                    <td class="text-right">
+                                                        <span t-esc="get_total_letter(letter_amount_total, currency_id)"/>
+                                                    </td>
+                                                </tr>
+                                            </t>
+                                                
+                                            
+                                        </t>
+                                    </t>
+                                </tbody>
+                            </table>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+
+        <report
+            id="action_report_letter_all_document"
+            model="account.letter.report.wizard"
+            string="Letter Report"
+            report_type="qweb-pdf"
+            name="account_letter.report_letter_all_document"
+            file="account_letter.report_letter_all_document"
+        />
+    </data>
+</odoo>

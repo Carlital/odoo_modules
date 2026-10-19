@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="acs_pos_partner_search.PartnerSearchComponent">
+        <div class="acs-search-container">
+            <Input tModel="[state, 'searchValue']"
+                        placeholder.translate="Buscar clientes"
+                        t-on-input="onInputChange"
+                        debounceMillis="500"/>
+
+            <i class="fa fa-save acs-save-icon" t-on-click="onSavePartner.bind(this)"></i>
+            <t t-if="state.results.length > 0">
+                <div class="acs-results-list test" t-if="state.results.length > 0">
+                    <ul t-if="state.results.length > 0">
+                        <t t-foreach="state.results" t-as="partner" t-key="partner.id" t-if="state.results.length > 0">
+                            <li t-on-click="onSelectPartner.bind(this, partner)">
+                                <t t-esc="partner.name"/>
+                            </li>
+                        </t>
+                    </ul>
+                </div>
+            </t>
+        </div>
+    </t>
+
+</templates>

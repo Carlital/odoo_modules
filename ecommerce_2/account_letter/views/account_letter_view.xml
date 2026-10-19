@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        
+        <record id="hr_expense_submit_action_server" model="ir.actions.server">
+            <field name="name">Generar Letras</field>
+            <field name="model_id" ref="account.model_account_move"/>
+            <field name="binding_model_id" ref="account.model_account_move"/>
+            <field name="binding_view_types">form,list</field>
+            <field name="state">code</field>
+            <field name="code">
+                if records:
+                    action = records.create_letters()</field>
+        </record>
+        <record id="view_account_letter_list" model="ir.ui.view">
+            <field name="name">account.letter.list</field>
+            <field name="model">account.letter</field>
+            <field name="arch" type="xml">
+                <list edit="false">
+                    <field name="date"/>
+                    <field name="name"/>
+                    <field name="journal_id"/>
+                    <field name="partner_id" string="Customer"/>
+                    <field name="amount" sum="Amount"/>
+                    <field name="state"/>
+                    <field name="company_id" groups="base.group_multi_company"/>
+                    <field name="currency_id" invisible="1"/>
+                    <field name="partner_type" invisible="1"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="view_account_supplier_letter_list" model="ir.ui.view">
+            <field name="name">account.supplier.letter.list</field>
+            <field name="model">account.letter</field>
+            <field name="arch" type="xml">
+                <list decoration-info="state == 'draft'" decoration-muted="state in ['reconciled', 'cancelled']" edit="false">
+                    <field name="date_due"/>
+                    <field name="name" string="Nombre"/>
+                    <field name="journal_id"/>
+                    <field name="partner_id" string="Vendor"/>
+                    <field name="amount" sum="Amount" string="Monto de pago"/>
+                    <field name="company_id" groups="base.group_multi_company" string="Compañia"/>
+                    <field name="state"/>
+                    <field name="currency_id" invisible="1"/>
+                    <field name="partner_type" invisible="1"/>
+                    <field name="is_sent" />
+                </list>
+            </field>
+        </record>
+
+        <record id="view_account_letter_kanban" model="ir.ui.view">
+            <field name="name">account.letter.kanban</field>
+            <field name="model">account.letter</field>
+            <field name="arch" type="xml">
+                <kanban class="o_kanban_mobile">
+                    <field name="name"/>
+                    <field name="partner_id"/>
+                    <field name="date"/>
+                    <field name="state"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_global_click">
+                                <div class="row mb4">
+                                    <div class="col-xs-6">
+                                        <strong><span><field name="name"/></span></strong>
+                                    </div>
+                                    <div class="col-xs-6 text-right">
+                                        <strong><i class="fa fa-clock-o"/> <t t-esc="record.date.value"/></strong>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <span><field name="partner_id"/></span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-6">
+                                        <field name="amount" widget='monetary'/>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <span class="pull-right label label-default">
+                                            <field name="state" widget="label_selection" options="{'classes': {'draft': 'default', 'sent': 'success'}}"/>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+
+        <record id="view_account_letter_search" model="ir.ui.view">
+            <field name="name">account.letter.search</field>
+            <field name="model">account.letter</field>
+            <field name="arch" type="xml">
+                <search string="Payments">
+                    <field name="name" filter_domain="['|', ('name','ilike',self), ('communication','ilike',self)]" string="Description"/>
+                    <separator/>
+                    <field name="partner_id" />
+                    <field name="journal_id" />
+                    <field name="company_id" groups="base.group_multi_company" />
+                    <filter string="Archivados" name="archived_filter" domain="[('active','=',True)]"/>
+                    <separator/>
+                    <filter string="Draft" domain="[('state','=','draft')]" name='state_draft'/>
+                    <filter string="Posted" domain="[('state','=','posted')]" name='state_posted'/>
+                    <filter string="Sent" domain="[('state','=','sent')]" name='state_sent'/>
+                    <filter string="Reconciled" domain="[('state','=','reconciled')]" name='state_reconciled'/>
+                    <separator/>
+                    <filter string="Partner" domain="" context="{'group_by': 'partner_id'}" name="partner_filter"/>
+                    <filter string="Journal" domain="" context="{'group_by': 'journal_id'}" name="journal_filter"/>
+                    <filter string="State" domain="" context="{'group_by': 'state'}" name="state_filter"/>
+                    <filter string="Currency" domain="" context="{'group_by': 'currency_id'}" name="currency_filter" groups="base.group_multi_currency"/>
+                    <filter string="Company" domain="" context="{'group_by': 'company_id'}" name="company_filter" groups="base.group_multi_company"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="view_account_letter_form" model="ir.ui.view">
+            <field name="name">account.letter.form</field>
+            <field name="model">account.letter</field>
+            <field name="arch" type="xml">
+                <form string="Register Payment">
+                    <header>
+                        
+                        <button name="action_post" class="oe_highlight" invisible="state != 'draft'" string="Confirmar" type="object"/>
+                        <button name="action_draft" class="oe_highlight" invisible="state != 'cancelled'" string="Pasar a borrador" type="object"/>
+
+						<button name="action_letter_sent" type="object" string="Enviar email" groups="base.group_user"/>
+						<button name="action_accepted_bank" class="oe_highlight" invisible="state != 'posted'" string="Aceptada por banco" type="object"/>
+                        <button name="action_register_payment" class="btn btn-secondary" invisible="state not in ('posted','accepted_bank')" string="Registrar Pago" type="object"/>
+                        <button name="action_declined" invisible="state not in ('posted','accepted_bank')" string="Declinar" type="object" confirm="Esta seguro de declinar?"/>
+                        <button name="action_withdrawal_request" invisible="state not in ('posted','accepted_bank')" string="Retiro a solicitud" type="object" confirm="Esta seguro de la acción?"/>
+                        <!-- <button name="action_returned" invisible="state != 'accepted_bank'" string="Returned" type="object"/> -->
+                        
+                        <button name="action_cance_multiple" invisible="state not in ('draft','posted') or has_letter_ids == False" string="Cancelar" type="object" confirm="Esta seguro de cancelar?"/>
+                        <button name="action_cancel" invisible="state not in ('draft','posted') or has_letter_ids == True" string="Cancelar" type="object" />
+                        <button name="letter_pdf_print" string="Imprimir Letra" type="object" class="oe_highlight" confirm="Esta seguro de imprimir?"/>
+
+                        <field name="state" widget="statusbar" statusbar_visible="draft,accepted,paid,cancelled"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <field name="active" invisible="1"/>
+                            <button name="action_unarchive" class="oe_stat_button" string="Desarchivar" type="object" invisible="active == False" icon="fa-check"/>
+                            <button name="action_archive" class="oe_stat_button" string="Archivar" type="object" invisible="active == True" icon="fa-times"/>
+                            <field name="invoice_ids" invisible="1"/>
+                            <button name="toggle_sent" class="oe_stat_button" type="object" icon="fa-check">
+                                <field name="is_sent" widget="boolean_button" options='{"terminology": {
+                                                        "string_true": "Enviado",
+                                                        "hover_true": "Cambiar no enviado",
+                                                        "string_false": "No enviado",
+                                                        "hover_false": "Marcar Enviado"
+                                                    }}'/>
+                            </button>
+                        </div>
+                        <field name="id" invisible="1"/>
+                        <div class="oe_title" invisible="state == 'draft'">
+                            <h1><field name="name"/></h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="has_letter_ids" invisible="1"/>
+                                <field name="payment_type" invisible="True" />
+                                <field name="partner_type" widget="selection" invisible="True"/>
+                                <field name="partner_id" string="Proveedor" required="state == 'draft' and payment_type in ('inbound', 'outbound')" invisible="payment_type not in ('inbound', 'outbound')" readonly="state != 'draft'" context="{'default_is_company': True, 'default_supplier': payment_type == 'outbound', 'default_customer': payment_type == 'inbound'}"/>
+                                <label for="amount" string="Monto de pago"/>
+                                <div name="amount_div" class="o_row">
+                                    <field name="amount"/>
+                                    <field name="currency_id" options="{'no_create': True, 'no_open': True}" groups="base.group_multi_currency" readonly="state != 'draft'"/>
+                                </div>
+                                <field name="journal_id" readonly="state != 'draft'" domain="[('is_letter','=',True)]"/>
+                                
+                            </group>
+                            <group>
+                                <field name="date" string="Fecha de pago" readonly="state != 'draft'"/>
+                                <field name="date_due" required="True" readonly="state != 'draft'"/>
+                                <field name="number" required="state == 'accepted_bank'" readonly="state not in ('posted','draft','accepted_bank')"  />
+                            </group>
+                        </group>
+                        <notebook>
+                        	<page id="invoice_tab" string="Facturas">
+                        		<field name="invoice_ids" nolabel="1" readonly="state != 'draft'"/>
+                        		<group class="oe_subtotal_footer" >
+                                    <field name="amount_residual" class="oe_subtotal_footer_separator" />
+                                </group>
+                        	</page>
+                        	<page id="payment_tab" string="Pagos">
+                        		<field name="payment_ids" nolabel="1">
+                        			<list string="Quote lines" >
+										<field name="payment_date" />
+                                        <field name="journal_id"/>
+                                        <field name="amount"/>
+                                        <field name="payment_id"/>
+                                        <!-- <field name="from_bank"/> -->
+									</list>
+                        		</field>
+                        	</page>
+                        </notebook>
+                    </sheet>
+                    <chatter/>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_account_letter_graph" model="ir.ui.view">
+            <field name="name">account.letter.graph</field>
+            <field name="model">account.letter</field>
+            <field name="arch" type="xml">
+                <graph string="Invoices" type="bar" stacked="1">
+                    <field name="payment_type"/>
+                    <field name="journal_id"/>
+                    <field name="amount" type="measure"/>
+                </graph>
+            </field>
+        </record>
+
+        <record id="action_account_letters" model="ir.actions.act_window">
+            <field name="name">Letters</field>
+            <field name="res_model">account.letter</field>
+            <field name="view_mode">list,kanban,form,graph</field>
+            <field name="domain">[('partner_type', '=', 'customer')]</field>
+            <field name="context">{'default_partner_type':'customer', 'default_payment_type':'inbound','default_payment_type': 'inbound','default_invoice_type': 'out_invoice', 'default_partner_type': 'customer', 'search_default_receivable_filter': 1}</field>
+            <field name="view_id" ref="view_account_letter_list"/>
+        </record>
+        
+
+        <record id="action_account_letters_payable" model="ir.actions.act_window">
+            <field name="name">Letters</field>
+            <field name="res_model">account.letter</field>
+            <field name="view_mode">list,kanban,form,graph</field>
+            <field name="domain">[('partner_type', '=', 'supplier')]</field>
+            <field name="context">{'default_partner_type':'supplier', 'default_payment_type':'outbound','default_payment_type': 'outbound','default_invoice_type': 'in_invoice', 'default_partner_type': 'supplier', 'search_default_payable_filter': 1}</field>
+            <field name="view_id" ref="view_account_supplier_letter_list"/>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                  Click to register a payment
+                </p><p>
+                  Payments are used to register liquidity movements (send, collect or transfer money).
+                  You can then process those payments by your own means or by using installed facilities.
+                </p>
+            </field>
+        </record>
+
+        <menuitem action="action_account_letters" id="menu_action_account_letter_receivable" parent="account.menu_finance_receivables" sequence="30"/>
+        <menuitem action="action_account_letters_payable" id="menu_action_account_letter_payable" parent="account.menu_finance_payables" sequence="30"/>
+
+
+
+    </data>
+</odoo>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+
+    <!-- <template id="product_item_price_inh" name="Theme Prime: Product Item. Only info" inherit_id="theme_prime.product_item_price">
+        <xpath expr="//div[1]" position="after">
+            <h1>sdk</h1>
+        </xpath>
+    </template> -->
+    <template id="b2b_price_label_inherit" inherit_id="theme_prime.tp_b2b_price_label" name="Inherit B2B Price Label">
+        <!-- <xpath expr="//span[@t-attf-class='{{_classes}}']" position="after">
+            <span t-att-class="_classes">
+                <a href="/web/login" class="link-primary">Login</a>
+                <t t-if="request.website._get_dr_theme_config()['has_sign_up']"> |                    <a href="/web/signup" class="link-primary">Register</a>
+                </t>
+                <span class="text-muted"> to see price</span>
+            </span>
+        </xpath> -->
+    </template>
+</odoo>

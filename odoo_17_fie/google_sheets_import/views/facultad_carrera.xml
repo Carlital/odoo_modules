@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_hr_employee_kanban_facultad_carrera" model="ir.ui.view">
+        <field name="name">hr.employee.kanban.facultad.carrera</field>
+        <field name="model">hr.employee</field>
+        <field name="priority">16</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click">
+                            <div class="o_kanban_image">
+                                <img t-att-src="kanban_image('hr.employee', 'image_128', record.id.raw_value)" 
+                                     alt="Employee Photo" class="o_image_64_contain"/>
+                            </div>
+                            <div>
+                                <strong><field name="name"/></strong><br/>
+                                <field name="job_title"/><br/>
+                                <field name="facultad"/><br/>
+                                <field name="carrera"/>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="view_employee_form_inherit_facultad_carrera" model="ir.ui.view">
+        <field name="name">hr.employee.form.facultad.carrera</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='job_id']" position="after">
+            <group string="Unidad Académica">
+                <field name="facultad" required="1"/>
+                <field name="carrera"/>
+            </group>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_employee_tree_inherit_facultad_carrera" model="ir.ui.view">
+        <field name="name">hr.employee.tree.facultad.carrera</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="job_title"/>
+                <field name="facultad"/>
+                <field name="carrera"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_employee_form_inherit_webpage_button" model="ir.ui.view">
+        <field name="name">hr.employee.form.webpage.button</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <button name="action_open_webpage" string="Ver Página Pública" type="object" class="btn-primary"/>
+            </xpath>
+        </field>
+    </record>
+
+    <menuitem id="menu_facultad_carrera"
+              name="Facultades / Carrera"
+              parent="hr.menu_hr_root"
+              sequence="96"
+              groups="hr.group_hr_user"/>
+
+</odoo>

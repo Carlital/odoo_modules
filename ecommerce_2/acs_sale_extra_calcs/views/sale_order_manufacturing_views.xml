@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Vista de Lista (list) para Ordenes de Fabricación -->
+    <record id="view_manufacturing_order_list" model="ir.ui.view">
+        <field name="name">sale.order.manufacturing.list</field>
+        <field name="model">sale.order</field>
+        <field name="arch" type="xml">
+            <list string="Ordenes de Fabricación" create="false" delete="false"
+                class="acs-ordenes-fabricacion">
+                <field name="sequence_order_production" string="Numero" />
+                <field name="partner_name" />
+                <field name="name" string="Nº Pedido" options="{'no_open': True}" />
+                <field name="date_order" />
+                <field name="acs_saleorder_with_paid" column_invisible="1" />
+                <field name="acs_payment_status_text" widget="badge"
+                    decoration-success="acs_saleorder_with_paid == True"
+                    decoration-danger="acs_saleorder_with_paid == False" />
+
+                <!--<field
+                name="state" string="Estado" />-->
+            </list>
+        </field>
+    </record>
+
+    <!-- Vista de Formulario para Ordenes de Fabricación -->
+    <record id="view_manufacturing_order_form" model="ir.ui.view">
+        <field name="name">sale.order.manufacturing.form</field>
+        <field name="model">sale.order</field>
+        <field name="arch" type="xml">
+            <form string="Orden de Fabricación" create="false" delete="false" duplicate="false"
+                class="o_manufacturing_orders_form acs-ordenes-fabricacion">
+                <style>
+                    .acs_hide_open_button th.o_list_controller,
+                    .acs_hide_open_button th.o_list_open_form_view,
+                    .acs_hide_open_button td.o_list_record_open_form_view {
+                    display: none !important;
+                    }
+                </style>
+                <header>
+                    <!-- Botón personalizado para imprimir orden de fabricación -->
+                    <button name="action_print_manufacturing_order"
+                        type="object"
+                        string="Imprimir"
+                        class="btn-primary"
+                        icon="fa-print" />
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="sequence_order_production" readonly="1" />
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="partner_name" readonly="1" />
+                            <field name="name" readonly="1" />
+                        </group>
+                        <group>
+                            <field name="date_order" readonly="1" />
+                            <field name="commitment_date" />
+                            <field name="user_id" readonly="1"
+                                options="{'no_create': True, 'no_create_edit': True, 'no_open': True}" />
+                            <field name="acs_saleorder_with_paid" invisible="1" />
+                            <field name="acs_payment_status_text" widget="badge"
+                                decoration-success="acs_saleorder_with_paid == True"
+                                decoration-danger="acs_saleorder_with_paid == False" />
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Líneas de Pedido" name="order_lines">
+                            <field name="manufacturing_order_line_ids" nolabel="1" readonly="0">
+                                <list string="Líneas de Pedido de Venta" create="false"
+                                    delete="false" no_open="True" disable_open="True"
+                                    class="acs_hide_open_button" editable="bottom">
+                                    <field name="acs_manufacturing_display_name"
+                                        string="Producto / Descripción" readonly="1"
+                                        widget="section_and_note_text" />
+                                    <field name="acs_line_color" readonly="1" />
+                                    <field name="acs_cant_pzs" readonly="1" />
+                                    <field name="acs_udv" readonly="1" />
+                                    <field name="acs_largue_pza" readonly="1" />
+                                    <field name="product_uom_qty" string="Cantidad (M. Lineal)"
+                                        readonly="1" />
+                                    <field name="product_uom" readonly="1"
+                                        options="{'no_create': True, 'no_create_edit': True, 'no_open': True}" />
+                                    <field name="acs_lot_serial"
+                                        options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"
+                                        readonly="0"
+                                        domain="[('product_qty', '>', 0)]" />
+                                    <field name="acs_lot_stock_qty" readonly="1" />
+                                    <field name="acs_comments" />
+                                    <!-- Campos de precio, impuestos y totales ocultos -->
+                                    <field name="acs_observations" column_invisible="1" />
+                                    <field name="product_purchase_ok" column_invisible="1" />
+                                    <field name="product_id" column_invisible="1" />
+                                    <field name="price_unit" column_invisible="1" />
+                                    <field name="tax_id" column_invisible="1" />
+                                    <field name="price_subtotal" column_invisible="1" />
+                                    <field name="price_total" column_invisible="1" />
+                                    <field name="acs_price_pza" column_invisible="1" />
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+
+            </form>
+        </field>
+    </record>
+
+    <!-- Acción de Ventana para Ordenes de Fabricación -->
+    <record id="action_manufacturing_orders" model="ir.actions.act_window">
+        <field name="name">Ordenes de Fabricación</field>
+        <field name="res_model">sale.order</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('sequence_order_production', '!=', False), ('state', '=', 'sale')]</field>
+        <field name="context">{}</field>
+        <field name="view_ids"
+            eval="[(5, 0, 0),
+            (0, 0, {'view_mode': 'list', 'view_id': ref('view_manufacturing_order_list')}),
+            (0, 0, {'view_mode': 'form', 'view_id': ref('view_manufacturing_order_form')})]" />
+    </record>
+
+    <!-- Elemento de Menú para Ordenes de Fabricación -->
+    <menuitem id="menu_manufacturing_orders"
+        name="Ordenes de Fabricación"
+        parent="sale.sale_order_menu"
+        action="action_manufacturing_orders"
+        sequence="25" />
+
+</odoo>

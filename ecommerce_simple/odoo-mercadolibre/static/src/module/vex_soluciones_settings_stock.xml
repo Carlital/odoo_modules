@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<template xml:space="preserve">
+    <t t-name="vex_sync_mercado_libre.settings_stock" owl="1">
+      <div class="p-6">
+        <h2 class="h4 text-primary mb-4">Configuración Stock</h2>
+        <div class="row">
+          <div class="col-6">
+            <div class="mb-4">
+              <label for="stock-warehouse-default" class="form-label text-foreground">Stock Warehouse Default</label>
+              <div class="mt-1">
+                <select id="stock-warehouse-default" class="form-select text-base border border-border bg-background rounded-md">
+                  <option>Default Ecommerce</option>
+                </select>
+              </div>
+            </div>
+            <div>
+              <label for="stock-location-to-post" class="form-label text-foreground">Stock Location To Post</label>
+              <div class="mt-1">
+                <select id="stock-location-to-post" class="form-select text-base border border-border bg-background rounded-md">
+                  <option>ECOM/Stock</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="mb-4 d-flex align-items-center">
+              <label for="stock-warehouse-default-full" class="form-label text-foreground me-2">Stock Warehouse Default for FULL</label>
+            </div>
+            <div class="mt-1">
+              <select id="stock-warehouse-default-full" class="form-select text-base border border-border bg-background rounded-md">
+                <option>Full MercadoLibre</option>
+              </select>
+            </div>
+            <div class="mb-4 d-flex align-items-center mt-4">
+              <label for="stock-location-to-post-full" class="form-label text-foreground me-2">Stock Location To Post for Full</label>
+            </div>
+            <div class="mt-1">
+              <select id="stock-location-to-post-full" class="form-select text-base border border-border bg-background rounded-md">
+                <option>FULLM/Stock</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="p-6">
+        <div class="row">
+          <div class="col-md-6">
+            <h2 class="h4 text-primary mb-4">Automatic warehouse selection for Orders</h2>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="processAllNotifications" />
+              <label class="form-check-label" for="processAllNotifications">Process all notifications</label>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <h5>Automatic location selection for Stock posting</h5>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="checkMercadoLibreLocation" />
+              <label class="form-check-label" for="checkMercadoLibreLocation">Check MercadoLibre active location to post</label>
+            </div>
+          </div>
+        </div>
+        <div class="row mt-4">
+          <div class="col-md-6">
+            <h5>Automatic location selection Updating Odoo inventory from ML</h5>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="syncStockQuantities" />
+              <label class="form-check-label" for="syncStockQuantities">Set stock quantities in each location accordingly</label>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <h5>Sku Rules</h5>
+            <div class="form-group">
+              <label for="externalSkuMapping">Rule for mapping external Sku to local Sku</label>
+              <select class="form-control" id="externalSkuMapping">
+                <option>Ideal for packs</option>
+                <option>Option 2</option>
+                <option>Option 3</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="mappingFormula">Rule for mapping formula</label>
+              <select class="form-control" id="mappingFormula">
+                <option>Option 1</option>
+                <option>Option 2</option>
+                <option>Option 3</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </t>
+</template>

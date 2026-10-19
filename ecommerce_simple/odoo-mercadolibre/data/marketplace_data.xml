@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <record id="vex_marketplace_mercadolibre" model="vex.marketplace">
+            <field name="name">Mercado Libre</field>
+            <field name="color_hex">#D9E133</field>
+            <field name="color">3</field>
+        </record>
+
+    </data>
+</odoo>

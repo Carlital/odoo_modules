@@ -1,0 +1,36 @@
+<odoo>
+    <!-- Vista Tree de Categorías -->
+    <record id="view_category_tree" model="ir.ui.view">
+        <field name="name">category.tree</field>
+        <field name="model">product.category</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" string="Categoría"/>
+                <field name="product_count" string="Number of Products"/>
+                <button name="action_show_fake_trends" type="object" string="Ver Tendencias" class="oe_highlight"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Vista del Wizard de Tendencias -->
+    <record id="view_trend_wizard_form" model="ir.ui.view">
+        <field name="name">trend.wizard.form</field>
+        <field name="model">trend.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Tendencias de Búsqueda (Prueba)">
+                <group>
+                    <field name="category_id"/>
+                    <field name="trends" widget="one2many_list">
+                        <tree>
+                            <field name="keyword"/>
+                            <field name="url"/>
+                        </tree>
+                    </field>
+                </group>
+                <footer>
+                    <button string="Cerrar" class="btn-primary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

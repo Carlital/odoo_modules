@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="l10n_pe_pos_extend.OrderReceipt" t-inherit="point_of_sale.OrderReceipt" t-inherit-mode="extension">
+        <xpath expr="//div[hasclass('pos-receipt-taxes')]" position="attributes">
+            <attribute name="t-if" add="(!props.data.pe_is_company)" separator=" and " />
+        </xpath>
+        <xpath expr="//div[hasclass('pos-receipt-amount')]" position="attributes">
+            <attribute name="t-if" add="(!props.data.pe_is_company)" separator=" and " />
+        </xpath>
+        <xpath expr="//div[hasclass('pos-receipt-amount')]" position="before">
+            <div t-if="props.data.pe_is_company" class="pos-receipt-taxes" style="grid-template-columns: auto auto !important">
+                <t t-foreach="props.data.tax_details" t-as="tax" t-key="tax.tax.id">
+                    <span>
+                        <t t-if="tax.tax.l10n_pe_edi_tax_code == '1000'">
+                            Operaciones Gravadas
+                        </t>
+                        <t t-if="tax.tax.l10n_pe_edi_tax_code == '9998'">
+                            Operaciones Inafectas
+                        </t>
+                        <t t-if="tax.tax.l10n_pe_edi_tax_code == '9997'">
+                            Operaciones Exoneradas
+                        </t>
+                    </span>
+                    <span t-esc="props.formatCurrency(tax.base, false)" />
+                </t>
+                <t t-foreach="props.data.tax_details" t-as="tax" t-key="tax.tax.id">
+                    <t t-if="tax.amount!=0.0">
+                        <span>
+                            <span t-esc="tax.tax.invoice_label || ''"/>
+                        </span>
+                        <span t-esc="props.formatCurrency(tax.amount, false)" />
+                    </t>
+
+                </t>
+                <span style="font-size: 125%">Total</span>
+                <span style="font-size: 125%" t-esc="props.formatCurrency(props.data.amount_total, false)" />
+            </div>
+            <div class="pos-receipt-right-align">--------</div>
+            <br/>
+            <div t-if="props.data.pe_is_company">
+                SON: <t t-esc="props.data.pe_amount_text" />
+            </div>
+        </xpath>
+
+    </t>
+</templates>

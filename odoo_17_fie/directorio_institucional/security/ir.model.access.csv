@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_res_partner_directorio_public,res.partner.directorio.public,base.model_res_partner,base.group_public,1,0,0,0
+access_res_partner_directorio_user,res.partner.directorio.user,base.model_res_partner,base.group_user,1,1,1,0
+access_res_partner_category_public,res.partner.category.public,base.model_res_partner_category,base.group_public,1,0,0,0

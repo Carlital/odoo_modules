@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+
+    <t t-name="OrderReceipt" t-inherit="point_of_sale.OrderReceipt" t-inherit-mode="extension" owl="1">
+        <xpath expr="//t[@t-if='receipt.company.contact_address']" position="after">
+            <t t-if='env.pos.company.street'>
+                <div><t t-esc='receipt.company.street' /></div>
+            </t>
+            <t t-if="receipt.company.l10n_pe_district">
+                <div>
+                    <t t-esc="receipt.company.l10n_pe_district || ''" />
+                    <t t-esc="receipt.company.city_id || ''" />
+                    <t t-esc="receipt.company.state_id || ''" />
+                    <t t-esc="receipt.company.zip || ''" />
+                </div>
+            </t>
+        </xpath>
+        <xpath expr="//div[hasclass('pos-receipt-contact')]" position="after">
+            <div class="pos-move-name" style="text-align: center; font-size: 100%;">
+
+            </div>
+            <br />
+            <div class="pos-receipt-partner">
+                <div style="text-align: center; font-size: 75%;">Date: <t t-esc='receipt.invoice_date' /></div>
+                <div  style="text-align: center; font-size: 75%;" t-if="receipt.partner">
+                    <t t-if="receipt.partner.name">
+                        <div><t t-esc="receipt.partner.name" /></div>
+                    </t>
+                    <t t-if="receipt.partner.vat">
+                        <div>RUC/DNI: <t t-esc="receipt.partner.vat"/></div>
+                    </t>
+                    <t t-if="receipt.partner.street">
+                        <div>Street: <t t-esc="receipt.partner.street || ''"/></div>
+                    </t>
+                </div>
+                <div style="text-align: center; font-size: 75%;">
+                    Currency: <t t-esc="receipt.currency.name"/>
+                </div>  
+            </div>
+        </xpath>
+        
+        <xpath expr='//t[@t-if="!isTaxIncluded"]' position="replace">
+            <t t-if="!isTaxIncluded">
+                <div class="pos-receipt-right-align">--------</div>
+                <br/>
+                <t t-foreach='receipt.pe_tax_details' t-as='tax' t-key="tax.name">
+                    <div>
+                        <t t-esc='tax.name' />
+                        <span t-esc='env.pos.format_currency_no_symbol(tax.amount)' class="pos-receipt-right-align"/>
+                    </div>
+                </t>
+            </t>
+        </xpath>
+
+        <xpath expr="//t[@t-if='isTaxIncluded']" position="replace">
+            <t t-if='isTaxIncluded'>
+                <div class="pos-receipt-right-align">--------</div>
+                <br/>
+                <t t-foreach='receipt.pe_tax_details' t-as='tax' t-key="tax.name">
+                    <div>
+                        <t t-esc='tax.name' />
+                        <span t-esc='env.pos.format_currency_no_symbol(tax.amount)' class="pos-receipt-right-align"/>
+                    </div>
+                </t>
+            </t>
+        </xpath>
+
+        <xpath expr="//div[hasclass('before-footer')]" position="before">
+            <div style="font-size: 75%;">
+                SON: <t t-esc="receipt.pe_amount_text" />
+            </div>
+        </xpath>
+        
+        
+    </t>
+q
+</templates>

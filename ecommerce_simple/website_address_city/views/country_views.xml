@@ -1,0 +1,18 @@
+<odoo>
+    <data>
+        <record id="action_country_for_city" model="ir.actions.act_window">
+            <field name="name">Countries</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">res.country</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    No Country Found!
+                </p>
+                <p>
+                    Manage the list of countries that can be set on your contacts.
+                </p>
+            </field>
+        </record>
+        <menuitem id="menu_country_group_for_city" action="website_address_city.action_country_for_city" name="Countries" parent="website.menu_website_global_configuration" sequence="30"/>
+    </data>
+</odoo>

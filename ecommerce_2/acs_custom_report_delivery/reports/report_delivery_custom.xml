@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Reporte completamente personalizado sin header ni footer -->
+    <template id="report_picking_custom" inherit_id="stock.report_picking" priority="99">
+
+        <!-- Reemplazar el layout externo por nuestro contenido sin header/footer -->
+        <xpath expr="//t[@t-call='web.external_layout']" position="replace">
+            <t t-set="o" t-value="o.with_context(lang=o.partner_id.lang)" />
+            <t t-call="web.basic_layout">
+                <div style="font-family: Arial, sans-serif; font-size: 10pt;">
+
+                    <!-- Encabezado centrado -->
+                    <div
+                        style="text-align: center; margin-bottom: 25px; padding-bottom: 10px; border-bottom: 1px solid #000;">
+                        <div style="font-size: 16pt; font-weight: bold; margin-bottom: 8px;">
+                            <span t-field="o.name">WH/OUT/00001</span>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <div style="font-size: 9pt; margin-bottom: 3px;"> IMPRESION - FECHA <span
+                                    t-esc="context_timestamp(datetime.datetime.now()).strftime('%d/%m/%Y')" />
+                                HORA <span
+                                    t-esc="context_timestamp(datetime.datetime.now()).strftime('%H:%M')" />
+                            </div>
+                            <div style="font-size: 9pt; margin-bottom: 2px;">
+                                <span t-field="o.partner_id.name">EMPRESA 01</span>
+                            </div>
+                            <div style="font-size: 8pt; margin-bottom: 2px;">
+                                <span t-field="o.partner_id.street" />
+                                <span t-if="o.partner_id.city"> - <t t-esc="o.partner_id.city" /></span>
+                            </div>
+                            <div style="font-size: 8pt; margin-bottom: 5px;"> RUC/DNI: <span
+                                    t-field="o.partner_id.vat" />
+                            </div>
+                            <div style="font-size: 9pt;"> VEND: <span
+                                    t-field="o.sale_id.user_id.name"
+                                    t-if="o.sale_id.user_id">Administrator</span>
+                            </div>
+                        </div>
+                        <div class="col-1" />
+                        <div class="col-5">
+                            <div style="margin-bottom: 20px;">
+                                <strong>INDICACIONES :</strong>
+                                <div style="margin-top: 1px; min-height: 40px;">
+                                    <span t-field="o.acs_indications" />
+                                </div>
+                            </div>
+
+                            <div style="margin-bottom: 20px;">
+                                <strong>COORDINACIONES :</strong>
+                                <div style="margin-top: 1px; min-height: 40px;">
+                                    <span t-field="o.acs_coordinations" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tabla de productos -->
+                    <table
+                        style="width: 100%; border-collapse: collapse; font-size: 9pt; margin-bottom: 15px;"
+                        t-if="o.move_line_ids and o.move_ids_without_package">
+                        <thead>
+                            <tr
+                                style="border-top: 1px solid #000; border-bottom: 1px solid #000;">
+                                <th style="padding: 8px 4px; text-align: left; width: 6%;">ITEM</th>
+                                <th style="padding: 8px 4px; text-align: center; width: 8%;">
+                                    CANT.</th>
+                                <th style="padding: 8px 4px; text-align: left; width: 18%;">
+                                    CODIGO</th>
+                                <th style="padding: 8px 4px; text-align: left; width: 36%;">
+                                    DESCRIPCION</th>
+                                <th style="padding: 8px 4px; text-align: right; width: 10%;">
+                                    STOCK</th>
+                                <th style="padding: 8px 4px; text-align: right; width: 11%;">
+                                    PRECIO</th>
+                                <th style="padding: 8px 4px; text-align: right; width: 11%;">
+                                    TOTAL</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-set="item_number" t-value="1" />
+                            <tr
+                                t-foreach="o.move_line_ids_without_package.sorted(lambda ml: ml.id)"
+                                t-as="ml">
+                                <td
+                                    style="padding: 5px 4px; text-align: left; border-bottom: 1px dotted #ccc;">
+                                    <span t-esc="item_number" />
+                                    <t t-set="item_number" t-value="item_number + 1" />
+                                </td>
+                                <td
+                                    style="padding: 5px 4px; text-align: center; border-bottom: 1px dotted #ccc;">
+                                    <span t-esc="'%.2f' % ml.quantity" />
+                                </td>
+                                <td
+                                    style="padding: 5px 4px; text-align: left; border-bottom: 1px dotted #ccc; font-size: 8pt;">
+                                    <div>
+                                        <span t-field="ml.product_id.default_code">PROD01</span>
+                                    </div>
+                                    <div t-if="ml.product_id.barcode"
+                                        style="font-size: 7pt; color: #666;">
+                                        <span t-field="ml.product_id.barcode" />
+                                    </div>
+                                </td>
+                                <td
+                                    style="padding: 5px 4px; text-align: left; border-bottom: 1px dotted #ccc;">
+                                    <span t-field="ml.product_id.name">PRODUCTO 01</span>
+                                </td>
+                                <td
+                                    style="padding: 5px 4px; text-align: right; border-bottom: 1px dotted #ccc;">
+                                    <span t-esc="int(ml.product_id.qty_available)" />
+                                </td>
+                                <td
+                                    style="padding: 5px 4px; text-align: right; border-bottom: 1px dotted #ccc;">
+                                    <!-- Calculamos el precio unitario con impuestos incluidos -->
+                                    <t
+                                        t-set="sol" t-value="ml.move_id.sale_line_id" />
+                                    <t
+                                        t-set="price_unit_incl"
+                                        t-value="sol and sol.product_uom_qty and (sol.price_total / sol.product_uom_qty) or sol.price_unit" />
+                                    S/ <span t-esc="'%.2f' % price_unit_incl" />
+                                </td>
+                                <td
+                                    style="padding: 5px 4px; text-align: right; border-bottom: 1px dotted #ccc;">
+                                    <!-- Calculamos el total de línea con impuestos incluidos -->
+                                    <span
+                                        t-esc="'%.2f' % (ml.quantity * price_unit_incl)" />
+                                </td>
+                            </tr>
+                            <!-- Limpiamos la variable para la siguiente iteración (buena práctica) -->
+                            <t t-set="sol" t-value="None" />
+                            <t t-set="price_unit_incl" t-value="0" />
+                        </tbody>
+                    </table>
+
+                    <!-- Línea divisoria antes del total -->
+                    <div style="border-top: 1px solid #000; margin-bottom: 10px;"></div>
+
+                    <!-- Total -->
+                    <div
+                        style="text-align: right; font-size: 11pt; font-weight: bold; margin-bottom: 25px;">
+                        <t t-set="total_amount"
+                            t-value="sum(
+                                ml.quantity * (
+                                    (ml.move_id.sale_line_id and ml.move_id.sale_line_id.product_uom_qty and (ml.move_id.sale_line_id.price_total / ml.move_id.sale_line_id.product_uom_qty))
+                                    or (ml.move_id.sale_line_id and ml.move_id.sale_line_id.price_unit)
+                                    or 0
+                                ) for ml in o.move_line_ids_without_package
+                            )" />
+                        TOTAL : S/. <span t-esc="'{:,.2f}'.format(total_amount)" />
+                    </div>
+
+                    <!-- Secciones adicionales -->
+                    <div style="font-size: 9pt;">
+                        <div style="display:none">
+                            <strong>HISTORIA :</strong>
+                            <div style="margin-top: 5px; min-height: 40px;">
+                                <span t-field="o.acs_history" />
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </t>
+        </xpath>
+
+    </template>
+
+</odoo>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Grupo exclusivo para el menú/acción de n8n -->
+    <record id="group_bc_n8n_admin" model="res.groups">
+        <field name="name">Administrador n8n (BC)</field>
+        <field name="category_id" ref="base.module_category_hidden"/>
+    </record>
+
+    <!-- Asignar el grupo al usuario admin (xmlid base.user_admin, id=2) -->
+    <!-- Opción A: usar function write (seguro incluso si el registro original tiene noupdate=1) -->
+    <function model="res.users" name="write">
+        <value eval="[ref('base.user_admin')]"/>
+        <value eval="{'groups_id': [(4, ref('crm_custom_campaign_ext.group_bc_n8n_admin'))]}"/>
+    </function>
+
+    <!-- (Alternativa B, no necesaria si usas la A)
+    <record id="base.user_admin" model="res.users">
+        <field name="groups_id" eval="[(4, ref('crm_custom_campaign_ext.group_bc_n8n_admin'))]"/>
+    </record>
+    -->
+</odoo>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="pdf_print_preview.PDFViewerDialog">
+        <Dialog size="getDialogSize()" footer="false">
+            <t t-set-slot="header">
+                <div class="d-flex align-items-center justify-content-between flex w-100">
+                    <div style="width: 90px"></div>
+                    <h4 class="modal-title text-break fw-normal">
+                        <b><t t-esc="props.title" /></b>
+                    </h4>
+                    <div class="d-flex align-items-center" style="width: 45px">
+                        <button type="button" class="btn" t-on-click="toggle">
+                            <i t-if="!state.isMaximized" class="fa fa-square-o" />
+                            <i t-else="" class="fa fa-clone" />
+                        </button>
+                        <button type="button" class="btn-close" t-on-click="props.close"/>
+                    </div>
+                </div>
+            </t>
+            
+            <div class="o_pdf_viewer position-relative">
+                <!-- Loading spinner -->
+                <div t-if="state.isLoading" 
+                    class="position-absolute w-100 h-100 d-flex justify-content-center align-items-center" 
+                    style="z-index: 1;">
+                    <div class="spinner-border" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+                
+                <!-- PDF.js viewer iframe -->
+                <iframe t-att-src="state.viewerUrl"
+                    class="w-100 border-0"
+                    t-att-style="getFrameStyle()"
+                    t-on-load="onIframeLoad"
+                    allowfullscreen="true"
+                    webkitallowfullscreen="true" />
+            </div>
+        </Dialog>
+    </t>
+</templates>

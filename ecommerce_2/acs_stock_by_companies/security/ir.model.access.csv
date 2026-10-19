@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_product_kardex,acs_stock_by_companies.product_kardex,model_product_kardex,base.group_user,1,1,1,1
+access_report_kardex,acs_stock_by_companies.report_kardex,model_report_kardex,base.group_user,1,1,1,1
+access_kardex_per_company,acs_stock_by_companies.kardex_per_company,model_kardex_per_company,base.group_user,1,1,1,1

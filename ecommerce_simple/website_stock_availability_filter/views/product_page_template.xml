@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- -*- coding: utf-8 -*-
+Developed by Bizople Solutions Pvt. Ltd.
+See LICENSE file for full copyright and licensing details -->
+<odoo>
+	<template id="avalible_in_stock" customize_show="True" active="True" name="Availability Filter" >
+		<div class="accordion-item nav-item mb-1 in_stock_filter">
+			<div><strong class="o_products_attributes_title d-block my-2">Stock</strong></div>
+			<div class="flex-column">
+				<div class="custom-control custom-checkbox mb-1">
+					<input type="checkbox" class="custom-control-input" id="stock_filter" name="show_instock" t-att-value="'on' if show_instock == 'true' else off" t-att-checked="'true' if show_instock == 'on' else false"/>
+					<label class="custom-control-label font-weight-normal" for="stock_filter">En Stock</label>
+				</div>
+			</div>
+		</div>
+	</template>
+
+	<template id="avalible_in_stock_attribute" name="Availability Filter Attribute" inherit_id="website_sale.products_attributes" priority="9">
+		<xpath expr="//form[hasclass('js_attributes')]" position="attributes">
+			<attribute name="t-if"></attribute>
+		</xpath>
+		<xpath expr="//form[hasclass('js_attributes')]//t[@t-foreach='attributes']" position="attributes">
+			<attribute name="t-if">attributes</attribute>
+		</xpath>
+		<xpath expr="//form[hasclass('js_attributes')]//t[@t-foreach='attributes']" position="before">
+			<t t-call="website_stock_availability_filter.avalible_in_stock"/>
+		</xpath>
+	</template>
+
+	<!-- <template id="avalible_in_stock_offcanvas" name="Availability Filter Offcan" inherit_id="website_sale.o_wsale_offcanvas">
+		<xpath expr="//div[@t-if='opt_wsale_categories']" position="before">
+			<t t-call="website_stock_availability_filter.avalible_in_stock"/>
+		</xpath>
+	</template> -->
+
+
+	<template id="avalible_in_stock_offcanvas" name="Availability Filter Offcan" inherit_id="website_sale.products">
+		<xpath expr="//div[@class='products_attributes_filters']" position="before">
+			<t t-call="website_stock_availability_filter.avalible_in_stock"/>
+		</xpath>
+	</template>
+
+
+	<template id="product_items_label" customize_show="True" inherit_id="website_sale.products_item" name="Show Available Label">
+		<xpath expr="//div[hasclass('oe_product_image')]" position="inside">
+			<t t-if="product.sudo().qty_available > 0">
+				<div class="biz_ribbon-wrapper">
+					<span id="style_3" class="style_3 label_div d-inline-block p-1" style="background-color: #08B43C;">
+						<span class="ribbon_label_name px-1">Available</span>
+					</span>
+				</div>
+			</t>
+		</xpath>
+	</template>
+
+	<template id="product_page_stock_label" customize_show="True" inherit_id="website_sale.product" name="Product Page Available Label">
+		<xpath expr="//div[@id='product_details']//h1" position="before">
+			<t t-if="product.sudo().qty_available > 0">
+				<div class="biz_prod_label p-0">
+					<span class="biz_label_tag d-inline-block p-1" style="background-color: #08B43C;">
+						<span class="ribbon_label_name px-1">Available</span>
+					</span>
+				</div>
+			</t>
+		</xpath>
+	</template>
+</odoo>

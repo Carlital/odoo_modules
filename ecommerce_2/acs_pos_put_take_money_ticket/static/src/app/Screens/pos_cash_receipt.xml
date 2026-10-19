@@ -1,0 +1,40 @@
+<templates xml:space="preserve">
+    <t t-name="acs_pos_put_take_money_ticket.CashMoveReceipt">
+      <div class="pos-receipt">
+          <div style="font-size:16px; margin-bottom:30px; border-bottom:1px dashed #000;">
+            <div>FECHA Y HORA DE INGRESO/SALIDA DE DINERO: <t t-esc="props.date"/></div>
+            <div>MONTO: <t t-esc="props.formattedAmount"/></div>
+            <div>USUARIO: <t t-esc="props.headerData.cashier"/></div>
+            <!-- <div>SALDO: <t t-esc="props.headerData.balance"/></div> -->
+
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <div>=====================</div>
+            <div>FIRMA.</div>
+          </div>
+
+          <br/>
+          <br/>
+          <br/>
+
+          <div style="font-size:16px; margin-bottom:30px; border-bottom:1px dashed #000;">
+            <div>FECHA Y HORA DE INGRESO/SALIDA DE DINERO: <t t-esc="props.date"/></div>
+            <div>MONTO: <t t-esc="props.formattedAmount"/></div>
+            <div>USUARIO: <t t-esc="props.headerData.cashier"/></div>
+            <!-- <div>SALDO: <t t-esc="props.headerData.balance"/></div> -->
+
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <div>=====================</div>
+            <div>FIRMA.</div>
+          </div>
+      </div>
+    </t>
+  </templates>
+  

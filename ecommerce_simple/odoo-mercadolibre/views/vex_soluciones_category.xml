@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="product_category_form_view_product_new_ml" model="ir.ui.view">
+        <field name="name">product.category.view.form.inherit.new.ml</field>
+        <field name="model">product.category</field>
+        <field name="inherit_id" ref="product.product_category_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='parent_id']" position="after">
+                <field name="meli_category_id"></field>
+                <field name="meli_description" />
+                <!-- <field name="server_meli"></field> -->
+            </xpath>
+            <xpath expr="//sheet" position="inside">
+                <notebook>
+                    <page string="MercadoLibre Info" name="meli_info">
+                        <button name="action_get_details" type="object" string="Sync Details"
+                            class="btn-primary" icon="fa-info-circle" style="margin-right:10px;"
+                            help="Press to sync all details of this Category from Mercadolibre"/> 
+                            
+                        <button name="action_view_attributes" type="object" string="View Attributes"
+                            class="btn-warning" icon="fa-list" style="margin-right:10px;"
+                            help="Press to view all Attributes of this Category from Mercadolibre"/>              
+                        <!-- Grupo básico -->
+                        <group string="Información General de la Categoría" colspan="4">
+                            <group>
+                                <field name="meli_category_id"/>
+                                <field name="meli_description"/>
+                                <field name="meli_status"/>
+                                <field name="meli_sub_vertical"/>
+                                <field name="meli_vertical"/>
+                                <field name="meli_tags"/>
+                                <field name="meli_picture_link"/>
+                                <field name="meli_permalink"/>
+                            </group>
+                            <group>
+                                <field name="meli_price"/>
+                                <field name="meli_stock"/>
+                                <field name="meli_catalog_domain"/>
+                                <field name="meli_coverage_areas"/>
+                                <field name="meli_vip_subdomain"/>
+                            </group>
+                        </group>
+
+                        <!-- Grupo Condiciones y Modos de Venta -->
+                        <group string="Condiciones y Modos de Venta" colspan="4">
+                            <group>
+                                <field name="meli_buying_allowed"/>
+                                <field name="meli_buying_modes"/>
+                                <field name="meli_item_conditions"/>
+                                <field name="meli_immediate_payment"/>
+                                <field name="meli_reservation_allowed"/>
+                            </group>
+                            <group>
+                                <field name="meli_restrictions"/>
+                                <field name="meli_subscribable"/>
+                                <field name="meli_seller_contact"/>
+                                <field name="meli_show_contact_information"/>
+                            </group>
+                        </group>
+
+                        <!-- Grupo Reglas de Precios -->
+                        <group string="Límites de Precios" colspan="4">
+                            <group>
+                                <field name="meli_minimum_price"/>
+                                <field name="meli_minimum_price_currency"/>
+                            </group>
+                            <group>
+                                <field name="meli_maximum_price"/>
+                                <field name="meli_maximum_price_currency"/>
+                            </group>
+                        </group>
+
+                        <!-- Grupo Reglas de Imágenes -->
+                        <group string="Límites de Imágenes y Variantes" colspan="4">
+                            <group>
+                                <field name="meli_max_pictures_per_item"/>
+                                <field name="meli_max_pictures_per_item_var"/>
+                                <field name="meli_max_title_length"/>
+                            </group>
+                            <group>
+                                <field name="meli_max_sub_title_length"/>
+                                <field name="meli_max_description_length"/>
+                                <field name="meli_max_variations_allowed"/>
+                            </group>
+                        </group>
+
+                        <!-- Grupo Envíos -->
+                        <group string="Opciones de Envío" colspan="4">
+                            <group>
+                                <field name="meli_shipping_options"/>
+                                <field name="meli_shipping_profile"/>
+                                <field name="meli_simple_shipping"/>
+                            </group>
+                            <group>
+                                <field name="meli_fragile"/>
+                                <field name="meli_rounded_address"/>
+                            </group>
+                        </group>
+
+                        <!-- Grupo Funcionalidades Adicionales -->
+                        <group string="Configuraciones Adicionales" colspan="4">
+                            <group>
+                                <field name="meli_adult_content"/>
+                                <field name="meli_items_reviews_allowed"/>
+                                <field name="meli_buyer_protection_programs"/>
+                            </group>
+                        </group>
+
+                        <!-- Grupo Categorías espejo -->
+                        <group string="Categorías Espejo" colspan="4">
+                            <group>
+                                <field name="meli_mirror_category"/>
+                                <field name="meli_mirror_master_category"/>
+                                <field name="meli_mirror_slave_categories"/>
+                            </group>
+                        </group>
+                    </page>
+                    <page name="attribute_info" string="Atributos">
+                        <group string="Atributos de la Categoría" colspan="2">
+                            <field name="meli_attribute_ids">
+                                <tree editable="bottom">
+                                    <field name="meli_attribute_id"/>
+                                    <field name="meli_attribute_name"/>
+                                    <field name="meli_attribute_required"/>
+                                    <field name="value_ids" widget="one2many_list" string="Valores">
+                                        <tree>
+                                            <field name="meli_value_id"/>
+                                            <field name="meli_value_name"/>
+                                        </tree>
+                                    </field>
+                                </tree>
+                            </field>
+                        </group>
+                    </page>
+                    <page name="values_info" string="Valores de Atributos">
+                        <group string="Valores de Atributos" colspan="2">
+                            <field name="meli_attribute_value_ids">
+                                <tree>
+                                    <field name="attribute_id"/>
+                                    <field name="meli_value_id"/>
+                                    <field name="meli_value_name"/>
+                                </tree>
+                            </field>
+                        </group>
+                    </page>
+                </notebook>
+            </xpath>            
+        </field>
+    </record>
+
+</odoo>

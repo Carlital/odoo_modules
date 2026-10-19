@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="action_archive_invoices_wizard" model="ir.actions.act_window">
+        <field name="name">Archivar Facturas sin CPE</field>
+        <field name="res_model">archive.invoices.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+		<field name="groups_id" eval="[(4, ref('base.group_user'))]"/> 
+    </record>
+
+	<record id="menu_parent_archiving" model="ir.ui.menu">
+        <field name="name">Gestión de Facturas</field>
+        <field name="parent_id" ref="base.menu_custom"/>
+        <field name="sequence">5</field>
+		<field name="groups_id" eval="[(4, ref('base.group_user'))]"/> 
+    </record>
+
+    <record id="menu_archive_invoices" model="ir.ui.menu">
+        <field name="name">Archivar Facturas sin CPE</field>
+        <field name="parent_id" ref="menu_parent_archiving"/>
+        <field name="action" ref="action_archive_invoices_wizard"/>
+        <field name="sequence">10</field>
+		<field name="groups_id" eval="[(4, ref('base.group_user'))]"/> 
+    </record>
+	
+	<record id="view_archive_invoices_wizard_form" model="ir.ui.view">
+        <field name="name">archive.invoices.wizard.form</field>
+        <field name="model">archive.invoices.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Archivar Facturas sin CPE">
+                <group>
+                    <field name="message" readonly="1"/>
+                </group>
+                <footer>
+                    <button name="archive_invoices" type="object" string="Archivar" class="btn-primary"/>
+                    <button name="action_close_wizard" string="Cancelar" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

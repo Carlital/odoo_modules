@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="vex_instance_view_tree" model="ir.ui.view">
+        <field name="name">vex.instance.view.tree</field>
+        <field name="model">vex.instance</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="vex_instance_view_form" model="ir.ui.view">
+        <field name="name">vex.instance.view.form</field>
+        <field name="model">vex.instance</field>
+        <field name="arch" type="xml">
+            <form string="">
+
+                <header>
+                    <field name="status" widget="statusbar" options="{'clickable': '1'}"/>
+                </header>   
+
+                <sheet>
+
+                    <div class="oe_button_box" name="button_box">
+                        <button name="test_connection" type="object" class="oe_stat_button" icon="fa-spinner" context="{'store_type': store_type}" >Test Connection</button>
+                    </div>
+
+                    <group class="mt-5 mb-5">
+                        <field name="name" />
+                        <field name="store_type" />
+                    </group>
+
+                    <notebook>
+                        <page name="introduction" string="Introduction" attrs="{'invisible': [('status', '!=', 'introduction')]}">
+                        </page>  
+                        <page name="basic_configuration" string="Basic Configuration" attrs="{'invisible': [('status', '!=', 'settings')]}">
+                            <div class="row">
+                                <div class="col-6">
+                                    <group >
+                                        <field name="registered_domain" readonly="1"/>
+                                        <field name="license_key"/>
+                                        <field name="license_valid_str"/>
+                                        <field name="license_expiry"/>
+                                        <field name="license_message"/>
+                                    </group>
+                                </div>
+                                <div class="col-6">
+                                    <group >
+                                    </group>
+                                </div>
+                            </div>
+                            <div id="register_license_section" class="alert alert-info d-flex align-items-center" role="alert" style="margin-bottom:0px;">
+                                <div style="flex: 1;">
+                                    <button name="register_licence" type="object" string="Register License" class="oe_highlight"/>
+                                </div>
+                                <div style="flex-shrink: 0;">
+                                    <img src="/vex_syncronizer/static/src/img/logo.png" alt="Logo" style="height: 50px; margin-left: 10px;" />
+                                </div>
+                            </div>
+                        </page>
+                        <!-- <page name="orders_state" string="Orders State" attrs="{'invisible': [('status', '!=', 'settings')]}">
+                        </page>    -->
+                        <page name="import_lines" string="Import Lines" attrs="{'invisible': [('status', '!=', 'settings')]}">
+
+                            <button name="stop_sync" type="object"
+                                class="oe_stat_button btn-primary" icon="fa-spinner"
+                                >
+                                    Stop Sync
+                            </button>
+
+                            <button name="action_start_sync" type="object"
+                                class="oe_stat_button btn-primary" icon="fa-spinner"
+                                >
+                                    Start Sync
+                            </button>
+                            <group>
+                                <field name="state_filter"/>
+                            </group>
+                            <field name="filtered_import_line_ids">
+                                <tree editable="bottom">
+                                    <field name="start_date"/>
+                                    <field name="end_date"/>
+                                    <field name="description"/>
+                                    <field name="checks_indicator"/>
+                                    <field name="action"/>
+                                    <field name="status"
+                                        decoration-danger="status == 'error'"
+                                        decoration-warning="status == 'obs'"
+                                        decoration-success="status == 'done'"/>
+                                </tree>
+                            </field>
+                            <!-- <field name="import_line_ids" domain="[( 'status', '=', state_filter )]"> 
+                                <tree editable="bottom">
+                                    <field name="start_date" />
+                                    <field name="end_date" />
+                                    <field name="description" />
+                                    <field name="checks_indicator" />
+                                    <field name="action" />
+                                    <field name="status" decoration-danger="status == 'error'" decoration-warning="status == 'obs'" decoration-success="status == 'done'"/>
+                                </tree>
+                            </field> -->
+                        </page>   
+                        <page name="sync_queue" string="Sync Queue">
+                            <field name="sync_queue_ids">
+                                <tree editable="bottom">
+                                    <field name="start_date"/>
+                                    <field name="end_date"/>
+                                    <field name="instance_id" />
+                                    <field name="description"/>
+                                    <field name="action"/>
+                                    <field name="result" />
+                                    <field name="status"
+                                        decoration-danger="status == 'error'"
+                                        decoration-warning="status == 'pending'"
+                                        decoration-success="status == 'done'"
+                                        decoration_info="status == 'in_progress'"
+                                        />
+                                </tree>
+                            </field>
+                        </page>                     
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>                                             
+</odoo>

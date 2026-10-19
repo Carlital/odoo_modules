@@ -1,0 +1,110 @@
+<odoo>
+    <record id="view_product_meli_update_stock_form" model="ir.ui.view">
+        <field name="name">product.meli.update.stock.form</field>
+        <field name="model">product.meli.update.stock</field>
+        <field name="arch" type="xml">
+            <form string="Update Stock con ML">
+                <group>
+                    <field name="current_qty" readonly="1"/>
+                    <field name="new_qty"/>
+                </group>
+                <footer>
+                    <button string="Update" name="action_confirm" type="object" class="btn-primary"/>
+                    <button string="Cancel" special="cancel" class="btn-secondary"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_product_meli_update_stock" model="ir.actions.act_window">
+        <field name="name">Update Stock ML</field>
+        <field name="res_model">product.meli.update.stock</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <record id="view_update_meli_price_wizard_form" model="ir.ui.view">
+        <field name="name">update.meli.price.wizard.form</field>
+        <field name="model">update.meli.price.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Update Price MercadoLibre">
+                <group>
+                    <field name="current_price"/>
+                    <field name="new_price"/>
+                </group>
+                <footer>
+                    <button name="action_update_price" type="object" string="Update" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_update_meli_price_wizard" model="ir.actions.act_window">
+        <field name="name">Actualizar Precio ML</field>
+        <field name="res_model">update.meli.price.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_update_meli_price_wizard_form"/>
+        <field name="target">new</field>
+    </record>
+
+    <record id="view_change_meli_status_wizard_form" model="ir.ui.view">
+        <field name="name">change.meli.status.wizard.form</field>
+        <field name="model">change.meli.status.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Cambiar Estado de Publicación">
+                <div class="oe_edit_only" style="margin-bottom: 1em;">
+                    <span>¿Estás seguro de cambiar el estado de la publicación de </span>
+                    <span style="font-weight: bold;">
+                        <field name="current_status" readonly="1" widget="label"/>
+                    </span>
+                    <span> a </span>
+                    <span style="font-weight: bold;">
+                        <field name="next_status" readonly="1" widget="label"/>
+                    </span>
+                    <span>?</span>
+                </div>
+                <footer>
+                    <button name="action_confirm_change" string="Confirmar" type="object" class="btn-primary"/>
+                    <button string="Cancelar" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_change_meli_status_wizard" model="ir.actions.act_window">
+        <field name="name">Cambiar Estado ML</field>
+        <field name="res_model">change.meli.status.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_change_meli_status_wizard_form"/>
+        <field name="target">new</field>
+    </record>
+
+    <record id="view_update_meli_publication_wizard_form" model="ir.ui.view">
+        <field name="name">update.meli.publication.wizard.form</field>
+        <field name="model">update.meli.publication.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Actualizar Publicación en MercadoLibre">
+                <group>
+                    <field name="update_title"/>
+                    <field name="update_price"/>
+                    <field name="update_stock"/>
+                    <field name="update_image"/>
+                    <field name="update_description"/>
+                </group>
+                <footer>
+                    <button name="action_confirm_update" string="Actualizar" type="object" class="btn-primary"/>
+                    <button string="Cancelar" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_update_meli_publication_wizard" model="ir.actions.act_window">
+        <field name="name">Actualizar Publicación</field>
+        <field name="res_model">update.meli.publication.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_update_meli_publication_wizard_form"/>
+        <field name="target">new</field>
+    </record>
+</odoo>

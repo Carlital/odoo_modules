@@ -1,0 +1,385 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_saleorder_document_inherit" inherit_id="sale.report_saleorder_document">
+        <!-- Agregar estilos CSS para reducir el tamaño de fuente -->
+        <xpath expr="//div[@class='page']" position="before">
+            <style>
+                .page {
+                font-size: 12px !important;
+                }
+                .page table {
+                font-size: 11px !important;
+                }
+                .page th {
+                font-size: 10px !important;
+                font-weight: bold;
+                }
+                .page td {
+                font-size: 11px !important;
+                }
+                .page .o_line_section {
+                font-size: 12px !important;
+                }
+                .page .o_line_note {
+                font-size: 10px !important;
+                }
+                /* Encabezado de la empresa */
+                .page .text-end h4, .page .text-end h5 {
+                font-size: 13px !important;
+                }
+                /* Información del cliente */
+                .page .oe_structure {
+                font-size: 11px !important;
+                }
+                /* Totales */
+                .page div[name="total"] {
+                font-size: 12px !important;
+                }
+
+                /* Estilos generales para toda la plantilla Bubble */
+                body, html {
+                font-size: 11px !important;
+                }
+
+                /* Header específico de Bubble */
+                .header, .header * {
+                font-size: 11px !important;
+                }
+                .header h1, .header h2, .header h3, .header h4, .header h5, .header h6 {
+                font-size: 13px !important;
+                }
+                .header strong {
+                font-size: 11px !important;
+                font-weight: bold;
+                }
+
+                /* Footer específico de Bubble */
+                .footer, .footer * {
+                font-size: 10px !important;
+                }
+                .footer strong {
+                font-size: 10px !important;
+                font-weight: bold;
+                }
+
+                /* Información de la empresa en Bubble */
+                .company_address, .company_address * {
+                font-size: 11px !important;
+                }
+
+                /* Contenido de la página */
+                .page, .page * {
+                font-size: 11px !important;
+                }
+                .page table {
+                font-size: 11px !important;
+                }
+                .page th {
+                font-size: 10px !important;
+                font-weight: bold;
+                }
+                .page td {
+                font-size: 11px !important;
+                }
+
+                /* Para impresión */
+                @media print {
+                body, html {
+                font-size: 11px !important;
+                }
+                .header, .header * {
+                font-size: 11px !important;
+                }
+                .footer, .footer * {
+                font-size: 10px !important;
+                }
+                }
+            </style>
+        </xpath>
+        <!-- Ocultar direcciones de factura y entrega -->
+        <xpath expr="//t[contains(@t-if, 'doc.partner_shipping_id == doc.partner_invoice_id')]"
+            position="replace">
+        </xpath>
+        <xpath expr="//div[@name='expiration_date']//strong" position="replace">
+            <strong>Validez hasta</strong>
+        </xpath>
+        <xpath expr="//div[@t-if='doc.user_id.name']" position="after">
+            <div t-if="doc.user_id.partner_id.mobile" class="col">
+                <strong>Celular</strong>
+                <div t-field="doc.user_id.partner_id.mobile">999 888 777</div>
+            </div>
+        </xpath>
+        <xpath expr="//div[@class='page']//table[1]" position="replace">
+            <table class="o_has_total_table table o_main_table table-borderless">
+                <thead>
+                    <tr>
+                        <th>Nº</th>
+                        <th class="text-center">Cant.<br />(Pzs)</th>
+                        <th>UdV</th>
+                        <th class="text-center">Descripción</th>
+                        <th class="text-center" style="width:100px">Cantidad</th>
+                        <th class="text-center">Largo<br />(Pza)</th>
+                        <th class="text-center">Prec.<br />(Pza)</th>
+                        <th class="text-center">Prec.<br />Unit.</th>
+                        <th class="text-center">Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <t t-set="current_subtotal" t-value="0" />
+                    <t t-set="item" t-value="0" />
+                    <t t-foreach="lines_to_report" t-as="line">
+                        <t t-set="current_subtotal" t-value="current_subtotal + line.price_subtotal" />
+                        <tr
+                            t-att-class="'fw-bold o_line_section' if line.display_type == 'line_section' else 'fst-italic o_line_note' if line.display_type == 'line_note' else ''">
+                            <t t-if="not line.display_type">
+                                <t t-set="item" t-value="item + 1" />
+                                <td>
+                                    <t t-esc="item" />
+                                </td>
+                                <td class="text-end">
+                                    <span
+                                        t-esc="'%.2f' % line.acs_cant_pzs if line.acs_cant_pzs else ''" />
+                                </td>
+                                <td>
+                                    <span t-field="line.acs_udv.name" />
+                                </td>
+                                <td class="text-start">
+                                    <span t-field="line.name" />
+                                </td>
+                                <td class="text-end">
+                                    <span t-field="line.product_uom_qty" />
+                                    <span t-field="line.product_uom" />
+                                </td>
+                                <td class="text-end">
+                                    <span
+                                        t-esc="'%.2f' % line.acs_largue_pza if line.acs_largue_pza else ''" />
+                                </td>
+                                <td class="text-end">
+                                    <span
+                                        t-esc="'%.2f' % line.acs_price_pza if line.acs_price_pza else ''" />
+                                </td>
+                                <td class="text-end">
+                                    <span t-field="line.price_unit" />
+                                </td>
+                                <td class="text-end">
+                                    <span t-field="line.price_subtotal" />
+                                </td>
+                            </t>
+                            <t t-elif="line.display_type == 'line_section'">
+                                <td colspan="99" class="o_line_section">
+                                    <span t-field="line.name" />
+                                </td>
+                                <t t-set="current_section" t-value="line" />
+                                <t t-set="current_subtotal" t-value="0" />
+                            </t>
+                            <t t-elif="line.display_type == 'line_note'">
+                                <td colspan="99" class="o_line_note">
+                                    <span t-field="line.name" />
+                                </td>
+                            </t>
+                        </tr>
+                        <t
+                            t-if="current_section and (line_last or lines_to_report[line_index + 1].display_type == 'line_section')">
+                            <tr class="is-subtotal text-end">
+                                <td colspan="99">
+                                    <strong class="me-2">Sub-total</strong>
+                                    <span t-esc="current_subtotal"
+                                        t-options="{'widget': 'monetary', 'display_currency': doc.currency_id}" />
+                                </td>
+                            </tr>
+                            <t t-set="current_section" t-value="False" />
+                        </t>
+                    </t>
+                </tbody>
+            </table>
+        </xpath>
+        <!-- <xpath expr="//td[@name='td_taxes']" position="replace">
+        </xpath> -->
+        <xpath expr="//div[@id='total']" position="replace">
+            <div id="total" class="row mt-n3 miTablaDiv" name="total">
+                <div class="col-8" style="text-transform: uppercase;">
+                    <style>
+                        table.miTabla, table.miTabla tbody, table.miTabla tr, table.miTabla td {
+                        border: 0 !important;
+
+                        }
+                        .miTabla:before
+                        {
+                        border: 0 !important;
+                        }
+                    </style>
+                    <table style="border: 0;" class="miTabla">
+                        <tbody style="border: 0;">
+                            <tr style="border: 0;">
+                                <td style="width: 145px;border: 0;">
+                                    <strong style="padding:2px">Forma de pago: </strong>
+                                </td>
+                                <td style="border: 0;padding:2px">
+                                    <span t-if="doc.payment_term_id"
+                                        t-field="doc.payment_term_id.name" />
+                                </td>
+                            </tr>
+                            <tr style="border: 0;">
+                                <td style="border: 0;padding:2px">
+                                    <strong>Fecha de Entrega: </strong>
+                                </td>
+                                <td style="border: 0;padding:2px">
+                                    <t t-if="doc.commitment_date"> El día <span
+                                            t-field="doc.commitment_date"
+                                            t-options="{'widget': 'date', 'format': 'dd/MM/yyyy'}" />
+                                    </t>
+                                </td>
+                            </tr>
+                            <tr style="border: 0;">
+                                <td style="border: 0;padding:2px">
+                                    <strong>Método de pago:</strong>
+                                </td>
+                                <td style="border: 0;padding:2px">
+                                    <span>Vía Transferencia Bancaria a nombre de COBERTURAS TECHOS
+                                        INDUSTRIALES
+                                        S.A.C</span>
+                                </td>
+                            </tr>
+                            <tr style="border: 0;">
+                                <td style="border: 0;padding:2px">
+                                    <strong>Lugar de Entrega: </strong>
+                                </td>
+                                <td style="border: 0;padding:2px">
+                                    <span>FABRICA DE COBERTEC / Av. Juan Pablo II Mza. B Lote 12
+                                        Zapallal Distrito Puente Piedra. Alt. Km 36.5 Panamericana
+                                        Norte (Paradero Fundición)</span>
+                                </td>
+                            </tr>
+                            <tr style="border: 0;">
+                                <td style="border: 0;padding:2px">
+                                    <strong>Horarios de Despacho: </strong>
+                                </td>
+                                <td style="border: 0;padding:2px">
+                                    <span>Lunes a Viernes de 08:30 am a 12:00 pm y 02:00 pm a 5:00
+                                        pm sabados de 8:30 am a 12:00 pm</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div
+                    t-attf-class="#{'col-4' if report_type != 'html' else 'col-sm-4 col-md-4'} ">
+                    <table class="o_total_table table table-borderless">
+                        <t t-call="sale.document_tax_totals">
+                            <t t-set="tax_totals" t-value="doc.tax_totals" />
+                            <t t-set="currency" t-value="doc.currency_id" />
+                        </t>
+                        <t t-if="doc.currency_id.name != 'PEN'">
+                            <tr>
+                                <td>
+                                    <strong>Tipo de Cambio:</strong>
+                                </td>
+                                <td class="text-end">
+                                    <span t-field="doc.acs_type_exchange"
+                                        t-options="{'widget': 'float', 'precision': 4}" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>Monto en Soles:</strong>
+                                </td>
+                                <td class="text-end">
+                                    <span t-field="doc.acs_amount_pen"
+                                        t-options="{'widget': 'monetary', 'display_currency': doc.pen_currency_id}" />
+                                </td>
+                            </tr>
+                        </t>
+                    </table>
+                </div>
+
+            </div>
+        </xpath>
+        <xpath expr="//span[@t-field='doc.note']" position="after">
+            <div class="row" style="margin-top: 10px;">
+                <div class="col-12">
+                    <table class="table table-borderless"
+                        style="width: 100%; page-break-inside: avoid;text-transform: uppercase;">
+                        <thead>
+                            <tr class="text-center" style="text-align: center;">
+                                <th>BANCO</th>
+                                <th>MONEDA</th>
+                                <th>Nº DE CUENTA</th>
+                                <th>CÓDIGO DE CUENTA CCI</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td rowspan="2">
+                                    <img t-att-src="'/acs_sale_extra_calcs/static/src/img/BCP.png'"
+                                        style="height;auto; max-width: 150px;" alt="BCP" />
+                                </td>
+                                <td>DÓLARES $</td>
+                                <td>191-8967067-1-42</td>
+                                <td>002-19100867067142-52</td>
+                            </tr>
+                            <tr>
+                                <td>SOLES S/</td>
+                                <td>191-9402195-0-65</td>
+                                <td>002-191-009402195065-57</td>
+                            </tr>
+                            <tr>
+                                <td rowspan="2">
+                                    <img t-att-src="'/acs_sale_extra_calcs/static/src/img/BBVA.png'"
+                                        style="height;auto; max-width: 150px;" alt="BBVA" />
+                                </td>
+                                <td>DÓLARES $</td>
+                                <td>0011-0733-0100015523</td>
+                                <td>001107330100015523-32</td>
+                            </tr>
+                            <tr>
+                                <td>SOLES S/</td>
+                                <td>0011-0733-0100015515</td>
+                                <td>001107330100015515-38</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <img t-att-src="'/acs_sale_extra_calcs/static/src/img/BN.png'"
+                                        style="height;auto; max-width: 150px;"
+                                        alt="Banco de la Nación" />
+                                </td>
+                                <td colspan="3">CUENTA de detracción / banco de la nación :
+                                    00-028-115717</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </xpath>
+        <xpath expr="//span[@t-field='doc.payment_term_id.note']" position="replace">
+
+        </xpath>
+    </template>
+    <template id="external_layout_bubble_inherit_small_font" inherit_id="web.external_layout_bubble">
+        <xpath expr="//div[@name='company_address']" position="before">
+            <style>
+                /* Header */
+                .header *, ul, li, div, strong, span {
+                font-size: 12px !important;
+                }
+
+                /* Footer específico */
+                div[class*="footer"] *,
+                div[t-attf-class*="footer"] *,
+                .o_footer_content,
+                .o_footer_content * {
+                font-size: 11px !important;
+                }
+            </style>
+        </xpath>
+
+        <!-- También puedes agregar estilos directamente al footer -->
+        <xpath expr="//div[@t-attf-class and contains(@t-attf-class, 'footer')]" position="inside">
+            <style>
+                .o_footer_content * {
+                font-size: 11px !important;
+                }
+            </style>
+        </xpath>
+    </template>
+
+</odoo>

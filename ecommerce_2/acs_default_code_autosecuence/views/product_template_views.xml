@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- 
+    This view inherits from the main product form view to add our new field.
+    -->
+    <record id="product_template_form_view_inherit_acs_autosequence" model="ir.ui.view">
+        <field name="name">product.template.form.inherit.autosequence</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_only_form_view"/>
+        <field name="arch" type="xml">
+            <!--
+            We use an xpath expression to find the 'default_code' field and
+            insert our 'standard_name' field right after it in the form.
+            -->
+            <field name="default_code" position="after">
+                <field name="standard_name"/>
+            </field>
+        </field>
+    </record>
+</odoo>

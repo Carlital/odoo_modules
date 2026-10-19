@@ -1,0 +1,198 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+    <record model="ir.ui.view" id="view_pe_electronic_guide_tree">
+      <field name="name">pe.electronic.guide.tree</field>
+      <field name="model">pe.electronic.guide</field>
+      <field name="arch" type="xml">
+        <list string="Electronic Guide">
+          <field name="name"/>
+          <field name="transfer_date"/>
+          <field name="reason_transfer"/>
+          <field name="partner_id"/>
+          <field name="src_state_id"/>
+          <field name="src_district_id"/>
+          <field name="dst_state_id"/>
+          <field name="dst_district_id"/>
+          <field name="gross_weight"/>
+          <field name="unit_quantity"/>
+          <field name="response"/>
+          <field name="state"/>
+        </list>
+      </field>
+    </record>
+
+    <record id="view_pe_electronic_guide_form" model="ir.ui.view">
+      <field name="name">pe.electronic.guide.form</field>
+      <field name="model">pe.electronic.guide</field>
+      <field name="arch" type="xml">
+          <form>
+            <header>
+              <button name="action_to_send" string="Draft" states="generate,cancelled" type="object" groups="l10n_pe_eguide_extend.group_pe_eguide_personal_guides" />
+              <button name="action_generate" string="Generate" class="btn-primary" states="to_send" type="object" groups="l10n_pe_eguide_extend.group_pe_eguide_personal_guides" />
+              <button name="action_sent" string="Sent" class="btn-primary" states="generate" type="object"  groups="l10n_pe_eguide_extend.group_pe_eguide_personal_guides"/>
+              <button name="action_document_status" string="Document Status" attrs="{'invisible':[('ticket','=',False)]}"
+                      class="btn-primary" states="to_check" type="object" groups="l10n_pe_eguide_extend.group_pe_eguide_personal_guides" />
+              <button name="action_cancelled" string="Cancel" states="to_check" type="object" groups="l10n_pe_eguide_extend.group_pe_eguide_personal_guides" />
+
+              <field name="state" widget="statusbar" nolabel="1" statusbar_visible="draft"/>
+            </header>
+            <sheet string="Electronic Guide">
+              <h1 class="mt0">
+                  <field name="name" readonly="1" class="oe_inline" attrs="{'invisible': [('state','in',('to_send','generate'))]}"/>
+              </h1>
+
+              <group string="General Information">
+                <group>
+                  <field name="session_id" widget="selection" required="True" />
+                  <field name="reason_transfer"/>
+
+                  <label for="partner_id" string="Sender"
+                           attrs="{'invisible':[('reason_transfer','not in',['02', '04', '06', '08'])]}" />
+                  <div attrs="{'invisible':[('reason_transfer','not in',['02', '04', '06', '08'])]}">
+                    <field name="partner_id" nolabel="1" class="oe_inline" domain="[('parent_id','=',False)]" required="True" />
+                  </div>
+                  <label for="partner_id" string="Addressee"
+                           attrs="{'invisible':[('reason_transfer','in',['02', '04', '06', '08'])]}"/>
+                  <div attrs="{'invisible':[('reason_transfer','in',['02', '04', '06', '08'])]}">
+                    <field name="partner_id" nolabel="1" class="oe_inline" domain="[('parent_id','=',False)]" required="True" />
+                  </div>
+                  <field name="date_issue" required="True"/>
+                  <field name="transfer_date" required="True"/>
+                  <field name="description" attrs="{'required':[('reason_transfer','=','13')]}"/>
+                </group>
+                 <group>
+                   <field name="gross_weight" required="True"/>
+                  <field name="unit_quantity" required="True"/>
+                  <field name="vehicle_m1_l"/>
+                  <field name="is_programmed"/>
+                  <field name="transport_mode" required="True"/>
+                  <field name="carrier_id" attrs="{'invisible':['|',('transport_mode','=','02'),('vehicle_m1_l','=',True)],'required':[('transport_mode','=','01'),('vehicle_m1_l','=',False)]}"
+                         domain="[('doc_type','=','6')]" />
+                </group>
+              </group>
+              <group>
+                <group string="Source Address">
+                  <field name="country_id" invisible="True"/>
+                  <field name="src_branch_id"  widget="selection"
+                         attrs="{'invisible':[('reason_transfer','in',['02', '06', '08'])],'required':[('reason_transfer','in',['04'])]}"/>
+                  <field name="src_state_id" domain="[('country_id','=',country_id)]" required="True" options='{"no_open": True, "no_create": True}'/>
+                  <field name="src_province_id" domain="[('state_id','=',src_state_id)]" required="True" options='{"no_open": True, "no_create": True}'/>
+                  <field name="src_district_id" domain="[('province_id','=',src_province_id)]" required="True" options='{"no_open": True, "no_create": True}'/>
+                  <field name="src_street"  required="True"/>
+                </group>
+                <group string="Destination Address">
+                  <field name="dst_branch_id"  widget="selection"
+                         attrs="{'invisible':[('reason_transfer','not in',['02', '04', '06', '08'])],'required':[('reason_transfer','in',['04'])]}"/>
+                  <field name="dst_state_id" domain="[('country_id','=',country_id)]" required="True" options='{"no_open": True, "no_create": True}'/>
+                  <field name="dst_province_id" domain="[('state_id','=',dst_state_id)]" required="True" options='{"no_open": True, "no_create": True}'/>
+                  <field name="dst_district_id" domain="[('province_id','=',dst_province_id)]" required="True" options='{"no_open": True, "no_create": True}'/>
+                  <field name="dst_street"  required="True"/>
+                </group>
+              </group>
+              <group>
+                <group>
+                  <field name="response" />
+                </group>
+                <group>
+                  <field name="company_id" />
+                </group>
+              </group>
+              <notebook colspan="4">
+                <page string="Guide Lines">
+                  <field name="line_ids" nolabel="1" widget="one2many_list" mode="tree">
+                    <list string="Guide Lines" editable="bottom">
+                      <field name="sequence" widget="handle"/>
+                      <field name="product_id" options='{"no_open": True, "no_create": True}' groups="l10n_pe_eguide_extend.group_pe_eguide_all_guides"/>
+                      <field name="name"/>
+                      <field name="product_code"/>
+                      <field name="uom_code"/>
+                      <field name="quantity"/>
+                    </list>
+                  </field>
+
+                  <label for="vehicle_ids" string="Vehicles:" attrs="{'invisible':['|',('vehicle_m1_l','=',True),('transport_mode','=','01')]}" />
+                  <field name="vehicle_ids" nolabel="1" widget="one2many_list" mode="tree" attrs="{'invisible':['|',('vehicle_m1_l','=',True),('transport_mode','=','01')]}" >
+                      <list string="Vehicle Lines" editable="bottom">
+                          <field name="vehicle_id" options='{"no_open": True, "no_create": True}' groups="l10n_pe_eguide_extend.group_pe_eguide_all_guides"/>
+                          <field name="name"/>
+                      </list>
+                  </field>
+
+                  <label for="carrier_ids" string="Carriers:" attrs="{'invisible':['|',('vehicle_m1_l','=',True),('transport_mode','=','01')]}" />
+                  <field name="carrier_ids" attrs="{'invisible':['|',('vehicle_m1_l','=',True),('transport_mode','=','01')]}" >
+                    <list string="Vehicle Lines" editable="bottom">
+                      <field name="driver_id" domain="[('doc_type','!=','6')]"/>
+                      <field name="doc_type"/>
+                      <field name="doc_number"/>
+                      <field name="name"/>
+                      <field name="driver_license"/>
+                    </list>
+                  </field>
+                  <label for="note" string="Notes:" />
+                  <field name="note" />
+                </page>
+                <page string="Sunat Sent/Response">
+                  <group>
+                    <group string="Sent">
+                      <field name="attachment_id" />
+                      <field name="digest" />
+                      <field name="sent_date" />
+                    </group>
+                    <group string="Response">
+                      <field name="ticket" />
+                      <field name="response_id" />
+                      <field name="response_return_code" />
+                      <field name="date_end" />
+                    </group>
+                  </group>
+                  <label for="response_note" string="Response Note:" />
+                  <field name="response_note" />
+                </page>
+                <page string="Other Info" name="other_info">
+                  <group>
+                    <group>
+
+                    </group>
+                    <group>
+                      <field name="user_id" options='{"no_open": True, "no_create": True}' />
+                    </group>
+                  </group>
+                  <label for="related_ids" string="Related Document:" />
+                  <field name="related_ids" nolabel="1" widget="one2many_list" mode="tree">
+                      <list string="Related Lines" editable="bottom">
+                          <field name="document_type" />
+                        <field name="name" />
+                        <field name="partner_id" />
+                      </list>
+                  </field>
+                </page>
+              </notebook>
+
+            </sheet>
+            <div class="oe_chatter">
+                <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+                <field name="activity_ids" widget="mail_activity"/>
+                <field name="message_ids" widget="mail_thread"/>
+            </div>
+          </form>
+      </field>
+    </record>
+
+    <!-- actions opening views on models -->
+    <record model="ir.actions.act_window" id="action_pe_electronic_guide">
+      <field name="name">Electronic Guide</field>
+      <field name="res_model">pe.electronic.guide</field>
+      <field name="view_mode">tree,form</field>
+      <field name="view_id" ref="view_pe_electronic_guide_tree"/>
+      <!--field name="context">{'search_default_dashboard':1}</field -->
+      <field name="help" type="html">
+          <p>
+              This is the Electronic Guide.
+          </p>
+      </field>
+    </record>
+
+
+  </data>
+</odoo>

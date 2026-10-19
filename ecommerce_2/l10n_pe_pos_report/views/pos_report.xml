@@ -1,0 +1,24 @@
+<odoo>
+    <data>
+        <record id="action_report_report_detailed_sales_report" model="ir.actions.report">
+            <field name="name">Report Detailed Sales Report PDF</field>
+            <field name="model">pos.session</field>
+            <field name="report_type">qweb-pdf</field>
+            <!--field name="binding_model_id" ref="point_of_sale.model_pos_session"/-->
+            <field name="binding_type">report</field>
+            <field name="report_name">l10n_pe_pos_report.report_detailed_sales_report</field>
+            <field name="report_file">l10n_pe_pos_report.report_detailed_sales_report</field>
+        </record>
+
+        <record id="action_report_box_closure_report" model="ir.actions.report">
+            <field name="name">Closure Box Report PDF</field>
+            <field name="model">pos.session</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="binding_model_id" ref="point_of_sale.model_pos_session"/>
+            <field name="binding_type">report</field>
+            <field name="report_name">l10n_pe_pos_report.report_box_closure_report</field>
+            <field name="report_file">l10n_pe_pos_report.report_box_closure_report</field>
+        </record>
+
+    </data>
+</odoo>

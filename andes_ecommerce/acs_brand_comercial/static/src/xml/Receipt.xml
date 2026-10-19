@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-inherit="point_of_sale.ReceiptHeader" t-inherit-mode="extension">
+        <xpath expr="//img" position="replace">
+            <t t-if="props.data.brand_comercial_data.logotipo">
+                <img t-attf-src="data:image/png;base64,{{props.data.brand_comercial_data.logotipo}}" alt="Logo" class="pos-receipt-logo"/>
+            </t>
+            <t t-else="">
+                <img t-attf-src="/web/image?model=res.company&amp;id={{props.data.company.id}}&amp;field=logo" alt="Logo" class="pos-receipt-logo"/>
+            </t>
+        </xpath>
+        <!-- <xpath expr="//t[@t-if='props.data.company.phone']" position="before">
+            <div><t t-esc="props.data.brand_comercial_data.address" /></div>
+        </xpath> -->
+        <xpath expr="//t[@t-if='props.data.company.phone']" position="replace">
+            <t t-if="props.data.company.phone">
+            </t>
+
+            <t t-if="props.data.brand_comercial_data.phone">
+                <div>Tel:<t t-esc="props.data.brand_comercial_data.phone" /></div>
+            </t>
+            <t t-elif="props.data.company.phone">
+                <div>Tel:<t t-esc="props.data.company.phone" /></div>
+            </t>
+            <t t-else="">
+            </t>
+        </xpath>
+        <xpath expr="//div[@t-if='props.data.company.email']" position="replace">
+            <t t-if="props.data.brand_comercial_data.email">
+                <div t-if="props.data.company.email" t-esc="props.data.brand_comercial_data.email" />
+            </t>
+            <t t-elif="props.data.company.email">
+                <div t-if="props.data.company.email" t-esc="props.data.company.email" />
+            </t>
+            <t t-else="">
+            </t>
+            
+        </xpath>
+        
+
+        
+    </t>
+
+</templates>

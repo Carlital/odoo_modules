@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<template xml:space="preserve">
+    <t t-name="vex_sync_mercado_libre.settings_accountant" owl="1">
+        <div class="p-4">
+          <h2 class="text-xl font-semibold mb-4">Automatic Record Payment</h2>
+          <div class="form-check mb-2">
+            <input class="form-check-input" type="checkbox" id="process-customer-payments" />
+            <label class="form-check-label" for="process-customer-payments">Process payments from Customer</label>
+          </div>
+          <div class="form-check mb-2">
+            <input class="form-check-input" type="checkbox" id="process-supplier-ml-payments" />
+            <label class="form-check-label" for="process-supplier-ml-payments">Process payments fee to Supplier ML</label>
+          </div>
+          <div class="form-check mb-2">
+            <input class="form-check-input" type="checkbox" id="process-shipping-list-cost-payments" />
+            <label class="form-check-label" for="process-shipping-list-cost-payments">Process payments shipping list cost to Supplier ML</label>
+          </div>
+        </div>
+    </t>
+</template>

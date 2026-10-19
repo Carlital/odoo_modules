@@ -1,0 +1,38 @@
+<odoo>
+  <data>
+    <!-- catalog 01 -->
+    <record id="view_pe_abstract_data_tree" model="ir.ui.view" >
+      <field name="name">pe.abstract.data.tree</field>
+      <field name="model">pe.abstract.data</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="code"/>
+          <field name="active"/>
+        </tree>
+      </field>
+    </record>
+
+    <record id="view_pe_abstract_data_from" model="ir.ui.view">
+        <field name="name">pe.abstract.data.form</field>
+        <field name="model">pe.abstract.data</field>
+        <field name="arch" type="xml">
+            <form>
+              <sheet>
+                <group>
+                    <group>
+                        <field name="name"/>
+                        <field name="code"/>
+                    </group>
+                    <group>
+                        <field name="active"/>
+                    </group>
+                </group>
+                <label for="description"/>
+                <field name="description" />
+              </sheet>
+            </form>
+        </field>
+    </record>
+  </data>
+</odoo>

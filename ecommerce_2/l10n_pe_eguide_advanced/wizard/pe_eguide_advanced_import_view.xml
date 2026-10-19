@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record model="ir.ui.view" id="view_form_eguide_advanced_import">
+        <field name="name">pe.eguide.advanced.import.form</field>
+        <field name="model">pe.eguide.advanced.import</field>
+        <field name="arch" type="xml">
+            <form>
+                <group name="container_eguide" string="Electronic Guide Advanced Import">
+                    <group name="container_eguide_group1">
+                        <field name="import_by" required="True"/>
+                    </group>
+                    <group name="container_eguide_group2">
+                    </group>
+                </group>
+                <group>
+                    <field name="move_ids" invisible="import_by != 'invoice'" />
+                    <field name="picking_ids" invisible="import_by != 'picking'" />
+                </group>
+                <footer>
+                    <button
+                        name="action_import"
+                        string="Confirm"
+                        type="object"
+                        class="oe_highlight"
+                    />
+                    <button string="Cancel" class="oe_link" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_form_eguide_advanced_import">
+        <field name="name">Electronic Guide Advanced Import</field>
+        <field name="res_model">pe.eguide.advanced.import</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_form_eguide_advanced_import"/>
+        <field name="target">new</field>
+    </record>
+</odoo>

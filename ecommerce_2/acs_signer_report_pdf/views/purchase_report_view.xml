@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_purchasequotation_document_signed"
+        inherit_id="purchase.report_purchaseorder_document">
+        <xpath expr="//span[@t-field='o.payment_term_id']" position="after">
+            <!-- Bloque de Firmas -->
+            <div id="signatures" class="mt-5" t-if="o.signer_user_ids">
+                <div class="row" style="page-break-inside: avoid;">
+                    <t t-foreach="o.signer_user_ids" t-as="user">
+                        <div class="col-4 text-center">
+                            <!-- Imagen de la Firma -->
+                            <div
+                                style="border-bottom: 1px solid black; margin: 5px auto 0 auto; width: 80%;padding-bottom: 5px;">
+                                <img t-if="user.signature_image"
+                                    t-att-src="image_data_uri(user.signature_image)"
+                                    style="max-height: 80px; max-width: 100%;" />
+                                <!-- Línea de Firma -->
+                            </div>
+                            <!-- Nombre del Usuario -->
+                            <p class="mb-0">
+                                <span style="font-weight: bold;" t-esc="user.name" />
+                                <br />
+                                <span t-esc="user.job_title" />
+                            </p>
+
+                        </div>
+                    </t>
+                </div>
+            </div>
+        </xpath>
+    </template>
+</odoo>

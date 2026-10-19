@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="PartnerDetailsEdit" t-inherit="point_of_sale.PartnerDetailsEdit" t-inherit-mode="extension" owl="1">
+        <!--xpath expr="//div[hasclass('partner-details-left')]" position="inside">
+            
+        </xpath-->
+        <xpath expr="//div[hasclass('partner-details-right')]//div[5]" position="after">
+            <div class='partner-detail'>
+                <span class='label'>Document Type</span>
+                <select class='detail' name='pe_doc_type' t-model="changes.pe_doc_type" t-on-change="captureChange">
+                    <option value=''>None</option>
+                    <t t-foreach='env.pos.pe_doc_types' t-as='pe_doc_type' t-key="pe_doc_type.code">
+                        <option t-att-value='pe_doc_type.code'>
+                            <t t-esc='pe_doc_type.name'/>
+                        </option>
+                    </t>
+                </select>
+            </div>
+        </xpath>
+        <xpath expr="//div[hasclass('partner-details-right')]" position="inside">
+            <div class='partner-detail partner-pe-state' t-att-style="props.partner.pe_doc_type!='6' ? 'display: none;' : ''">
+                <span class='label'>Status</span>
+                <select class='detail' name='pe_state' t-model="changes.pe_state" t-on-change="captureChange">
+                    <option value=''>None</option>
+                    <t t-foreach='env.pos.pe_states' t-as='pe_state' t-key="pe_state.code">
+                        <option t-att-value='pe_state.code'>
+                            <t t-esc='pe_state.name'/>
+                        </option>
+                    </t>
+                </select>
+            </div>
+            <div class='partner-detail partner-pe-condition' t-att-style="props.partner.pe_doc_type!='6' ? 'display: none;' : ''">
+                <span class='label'>Condition</span>
+                <select class='detail' name='pe_condition' t-model="changes.pe_condition" t-on-change="captureChange">
+                    <option value=''>None</option>
+                    <t t-foreach='env.pos.pe_conditions' t-as='pe_condition' t-key="pe_condition.code">
+                        <option t-att-value='pe_condition.code'>
+                            <t t-esc='pe_condition.name'/>
+                        </option>
+                    </t>
+                </select>
+            </div>
+        </xpath>
+    </t>
+
+</templates>

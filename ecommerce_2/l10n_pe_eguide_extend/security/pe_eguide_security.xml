@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+        <record model="ir.module.category" id="module_pe_eguide">
+            <field name="name">Configuration of Electronic Guide</field>
+            <field name="description">Set up electronic guide</field>
+            <field name="sequence">20</field>
+        </record>
+        <record id="group_pe_eguide_personal_guides" model="res.groups">
+            <field name="name">Personal Guides</field>
+            <field name="category_id" ref="module_pe_eguide"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+        <record id="group_pe_eguide_all_guides" model="res.groups">
+            <field name="name">All Guides</field>
+            <field name="category_id" ref="module_pe_eguide"/>
+            <field name="implied_ids" eval="[(4, ref('group_pe_eguide_personal_guides'))]"/>
+        </record>
+        <record id="group_pe_eguide_manager" model="res.groups">
+            <field name="name">Manager</field>
+            <field name="category_id" ref="module_pe_eguide"/>
+            <field name="implied_ids" eval="[(4, ref('group_pe_eguide_all_guides'))]"/>
+        </record>
+        <record id="group_pe_eguide_manager" model="res.groups">
+            <field name="users" eval="[(4, ref('base.user_root'))]"/>
+        </record>
+
+        <record id="pe_eguide_personal_rule" model="ir.rule">
+            <field name="name">Personal Guides</field>
+            <field ref="model_pe_electronic_guide" name="model_id"/>
+            <field name="domain_force">['|',('user_id','=',user.id),('user_id','=',False)]</field>
+            <field name="groups" eval="[(4, ref('l10n_pe_eguide_extend.group_pe_eguide_personal_guides'))]"/>
+        </record>
+        <record id="pe_eguide_see_all" model="ir.rule">
+            <field name="name">All Guides</field>
+            <field ref="model_pe_electronic_guide" name="model_id"/>
+            <field name="domain_force">[(1,'=',1)]</field>
+            <field name="groups" eval="[(4, ref('l10n_pe_eguide_extend.group_pe_eguide_all_guides'))]"/>
+        </record>
+    </data>
+</odoo>

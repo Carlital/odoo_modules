@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="vex_instance_view_form_vex_syncronizer" model="ir.ui.view">
+        <field name="name">vex.instance.view.form.inherit</field>
+        <field name="model">vex.instance</field>
+        <field name="inherit_id" ref="vex_syncronizer.vex_instance_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook/page[@name='introduction']" position="inside">
+                <div style="font-family: Arial, sans-serif; font-size: 14px; color: #333;">
+                    <h2 style="color: #2c3e50;">🔐 Cómo obtener tus credenciales de MercadoLibre</h2>
+                    <p>Para integrar tu tienda de MercadoLibre con esta aplicación, necesitas tus credenciales de acceso (App ID y Secret Key). Sigue estos pasos:</p>
+                    
+                    <ol style="padding-left: 20px;">
+                        <li>
+                            <strong>Crear una aplicación:</strong>
+                            <ul>
+                                <li>Ingresa a <a href="https://developers.mercadolibre.com.mx/apps" target="_blank">https://developers.mercadolibre.com.ar/apps</a>.</li>
+                                <li>Haz clic en <strong>"Crear una aplicación"</strong>.</li>
+                                <li>Completa los datos requeridos (nombre, descripción, categoría).</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <strong>Obtener App ID y Secret Key:</strong>
+                            <ul>
+                                <li>Una vez creada la app, verás tu <strong>App ID</strong> y <strong>Secret Key</strong>.</li>
+                                <li>Guárdalos en un lugar seguro.</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <strong>Configurar la URL de redirección (callback):</strong>
+                            <ul>
+                                <li>En la configuración de la app, agrega la URL de redirección. Ejemplo:</li>
+                                <li><code>https://tu-dominio.com/mercadolibre/callback</code></li>
+                                <li>Esta URL será utilizada para autorizar la conexión.</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <strong>Autorizar tu cuenta:</strong>
+                            <ul>
+                                <li>Haz clic en el botón "Conectar con MercadoLibre" dentro de esta app.</li>
+                                <li>Se abrirá una ventana para iniciar sesión y autorizar la aplicación.</li>
+                            </ul>
+                        </li>
+                    </ol>
+
+                    <p>Si tienes dudas, revisa la <a href="https://developers.mercadolibre.com.ar/es_ar/autenticacion-y-autorizacion" target="_blank">documentación oficial de MercadoLibre</a> o contacta a soporte técnico.</p>
+                    
+                    <hr></hr>
+                    <p style="font-size: 12px; color: #888;">Esta integración ha sido desarrollada por Digilab Soluciones SAC.</p>
+                </div>
+
+            </xpath>
+            <xpath expr="//notebook/page[@name='introduction']" position="after">
+                <page name="initial_settings_mercadolibre" string="Initial Settings ML" attrs="{'invisible': [('status', '=', 'initial_settings'), ('store_type', '=', 'mercadolibre')]}">
+                    <group>
+                        <!-- Columna 1: Credenciales -->
+                        <group string="Credenciales de la App" >
+                            <field name="meli_app_id" attrs="{'required': [('status', '=', 'initial_settings'), ('store_type', '=', 'mercadolibre')]}"/>
+                            <field name="meli_secret_key" attrs="{'required': [('status', '=', 'initial_settings'), ('store_type', '=', 'mercadolibre')]}"/>
+                            <field name="meli_redirect_uri" attrs="{'required': [('status', '=', 'initial_settings'), ('store_type', '=', 'mercadolibre')]}"/>
+                            <field name="meli_country" attrs="{'required': [('status', '=', 'initial_settings'), ('store_type', '=', 'mercadolibre')]}"/>
+                            <field name="meli_default_currency" attrs="{'required': [('status', '=', 'initial_settings'), ('store_type', '=', 'mercadolibre')]}"/>
+                            <field name="type_of_commission" />
+                            <field name="meli_commission" />
+                        </group>
+
+                        <!-- Columna 2: Usuario -->
+                        <group string="Autenticación del Usuario" >
+                            <field name="meli_nick"/>
+                            <button name="get_user" type="object" string="Obtener User ID" class="btn btn-primary" icon="fa-spinner"/>
+                            <field name="meli_user_id"/>
+                        </group>
+                    </group>
+                    <!-- Columna de Warehouse -->
+                    <group name="stock_settings" string="Warehouse Settings">
+                        <group name="ml_full" string="Mercadolibre FULL warehouse">
+                            <field name="ml_full_warehouse_id" />
+                            <field name="ml_full_location_id" />                            
+                        </group>
+                        <group name="ml_not_full" string="Mercadolibre NOT FULL warehouse">
+                            <field name="ml_not_full_warehouse_id" />
+                            <field name="ml_not_full_location_id" />
+                        </group>
+                    </group>
+                </page>    
+                <page name="keys_mercadolibre" string="Keys" attrs="{'invisible': [('status', '=', 'keys'), ('store_type', '=', 'mercadolibre')]}">
+                    <div class="col-12"> 
+                        <div class="row">     
+                            <div class="col-12">
+                                <div class="row">
+                                    <div class="col-3">
+                                        <label for="field_url_get_server_code"><strong>Url Get Server Code</strong></label>
+                                    </div>
+                                    <div class="col-9">
+                                        <field name="url_get_server_code" id="field_url_get_server_code" widget="url"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="row">
+                                    <div class="col-3">
+                                        <label for="field_server_code"><strong>Server Code</strong></label>
+                                    </div>
+                                    <div class="col-9">
+                                        <field name="meli_server_code" id="field_server_code"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 mt-3 mb-3">
+                                <button name="get_token" type="object" class="btn btn-primary" icon="fa-spinner" context="{'store_type': store_type}" > UPDATE TOKEN</button>
+                            </div>
+                            <div class="col-12">
+                                <div class="row">
+                                    <div class="col-3">
+                                        <label for="field_access_token"><strong>Access Token</strong></label>
+                                    </div>
+                                    <div class="col-9">
+                                        <field name="meli_access_token" id="field_access_token"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="row">
+                                    <div class="col-3">
+                                        <label for="field_refresh_token"><strong>Refresh Token</strong></label>
+                                    </div>
+                                    <div class="col-9">
+                                        <field name="meli_refresh_token" id="field_refresh_token"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>               
+                    </div> 
+                </page>                            
+            </xpath>
+            <xpath expr="//field[@name='sync_queue_ids']" position="before">
+                    <div class="oe_button_box" name="button_box">
+                        <button name="start_sync_products" type="object" string="Sync Products"
+                            class="btn-primary" icon="fa-info-circle" style="margin-right:10px;"
+                            help="Press to sync 20 Products from Mercadolibre from this queue"/>
+                        <button name="start_sync_orders" type="object" string="Sync Orders"
+                                class="btn-primary" icon="fa-money" style="margin-right:10px;"
+                                help="Press to sync 20 Orders from Mercadolibre from this queue"/>
+                    </div>            
+                <!-- <group>
+                    <button name="start_sync_products" type="object"
+                        class="oe_stat_button btn-primary" icon="fa-spinner"
+                        >
+                            Start Sync Queue Products
+                    </button>
+                    <button name="start_sync_orders" type="object"
+                        class="oe_stat_button btn-primary" icon="fa-spinner"
+                        >
+                            Start Sync Queue Orders
+                    </button>                    
+                </group> -->
+                
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

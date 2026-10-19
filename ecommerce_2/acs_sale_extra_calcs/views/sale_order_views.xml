@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_order_form_inherit_acs" model="ir.ui.view">
+        <field name="name">sale.order.form.inherit.acs</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form" />
+        <field name="arch" type="xml">
+            <!-- Smart Button para Orden de Fabricación -->
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="action_view_manufacturing_order"
+                    type="object"
+                    class="oe_stat_button"
+                    icon="fa-cogs"
+                    invisible="manufacturing_order_count == 0">
+                    <field name="manufacturing_order_count" widget="statinfo"
+                        string="O. Fabricación" />
+                </button>
+            </xpath>
+
+            <!-- Campos en líneas de venta -->
+            <xpath expr="//field[@name='order_line']/list/field[@name='product_uom_qty']"
+                position="before">
+                <field name="acs_line_color"
+                    options="{'no_create': True, 'no_create_edit': True, 'no_open':True}" />
+                <field name="acs_cant_pzs"
+                    readonly="state in ('sale', 'done', 'cancel')" />
+                <field name="acs_udv" options="{'no_create': True, 'no_edit': True, 'no_open':True}" />
+                <field name="acs_largue_pza"
+                    readonly="state in ('sale', 'done', 'cancel')" />
+            </xpath>
+
+            <!-- Aplicar readonly a los campos nativos -->
+            <xpath expr="//field[@name='order_line']/list/field[@name='product_uom_qty']"
+                position="attributes">
+                <attribute name="readonly">state in ('sale', 'done', 'cancel')</attribute>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/list/field[@name='price_unit']"
+                position="attributes">
+                <attribute name="readonly">state in ('sale', 'done', 'cancel')</attribute>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/list/field[@name='discount']"
+                position="attributes">
+                <attribute name="readonly">state in ('sale', 'done', 'cancel')</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='order_line']/list/field[@name='product_uom']"
+                position="after">
+                <field name="state" column_invisible="1" />
+                <field name="acs_price_pza" />
+            </xpath>
+
+            <xpath expr="//field[@name='order_line']/list/field[@name='product_uom']"
+                position="replace">
+                <field name="product_uom"
+                    readonly="1"
+                    force_save="1"
+                    options="{'no_create': True, 'no_create_edit': True, 'no_open': True, 'no_quick_create': True}"
+                    attrs="{'readonly': [('id', '!=', False)]}" />
+            </xpath>
+            <xpath expr="//field[@name='payment_term_id']" position="after">
+                <field name="sequence_order_production" readonly="1"
+                    invisible="not sequence_order_production" />
+                <field name="pay_flete" readonly="state in ('sale', 'cancel')" required="1" />
+                <field name="commitment_date" required="1" />
+            </xpath>
+            <xpath expr="//field[@name='partner_shipping_id']" position="after">
+                <field name="contact_person_id"
+                    options="{'no_create': True, 'no_create_edit': True, 'no_quick_create': True}"
+                    invisible="not partner_id" required="1" />
+                <field name="contact_delivery_id"
+                    options="{'no_create': True, 'no_create_edit': True, 'no_quick_create': True}"
+                    invisible="not partner_id" required="1" />
+            </xpath>
+            <!-- Campos en cabecera -->
+            <xpath expr="//field[@name='tax_totals']" position="after">
+                <div class="float-end" groups="base.group_user"
+                    invisible="currency_id == pen_currency_id">
+                    <field name="pen_currency_id" invisible="1" />
+                    <div>
+                        <label for="acs_type_exchange" string="Tipo de Cambio" />
+                        <field name="acs_type_exchange" class="oe_inline" readonly="1" />
+                        <br />
+                        <label for="acs_amount_pen" string="Monto en PEN" />
+                        <field name="acs_amount_pen" class="oe_inline" readonly="1" />
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+    <record id="view_order_tree_inherit_acs" model="ir.ui.view">
+        <field name="name">sale.order.tree.inherit.acs</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.sale_order_list_upload" />
+        <field name="arch" type="xml">
+            <!-- Asegurar que pen_currency_id esté disponible -->
+            <xpath expr="//field[@name='amount_total']" position="before">
+                <field name="pen_currency_id" invisible="1" />
+            </xpath>
+
+            <xpath expr="//field[@name='amount_total']" position="after">
+                <field name="acs_amount_pen"
+                    string="Monto en PEN"
+                    optional="show"
+                    sum="Total en PEN"
+                    widget="monetary"
+                    options="{'currency_field': 'pen_currency_id'}" />
+
+                <field name="sequence_order_production"
+                    string="Nº O.P."
+                    optional="show" />
+            </xpath>
+        </field>
+    </record>
+</odoo>

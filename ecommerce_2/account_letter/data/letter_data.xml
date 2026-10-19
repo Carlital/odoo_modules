@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        
+        <record id="letter_sequence" model="ir.sequence">
+            <field name="name">Account Letter Sequence</field>
+            <field name="code">account.letter.sequence.in</field>
+            <field name="prefix">LT%(year)s-IN-</field>
+            <field name="implementation">no_gap</field>
+            <field name="padding">6</field>
+            <field name="use_date_range" eval="True" />
+        </record>
+
+        <record id="letter_sequence_out" model="ir.sequence">
+            <field name="name">Account Letter Sequence</field>
+            <field name="code">account.letter.sequence.out</field>
+            <field name="prefix">LT%(year)s-OUT-</field>
+            <field name="implementation">no_gap</field>
+            <field name="padding">6</field>
+            <field name="use_date_range" eval="True" />
+        </record>
+    </data>
+</odoo>

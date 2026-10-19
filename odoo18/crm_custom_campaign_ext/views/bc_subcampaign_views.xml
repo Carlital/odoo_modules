@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Lista de subcampañas -->
+    <record id="view_bc_subcampaign_list" model="ir.ui.view">
+        <field name="name">bc.subcampaign.list</field>
+        <field name="model">bc.subcampaign</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="campaign_id"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Formulario de subcampaña -->
+    <record id="view_bc_subcampaign_form" model="ir.ui.view">
+        <field name="name">bc.subcampaign.form</field>
+        <field name="model">bc.subcampaign</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <!-- Llamar al método servidor que construye la acción con el contexto correcto -->
+                    <button name="action_open_gsheet_import_wizard"
+                            type="object"
+                            string="Importar desde Google Sheets"
+                            class="btn-primary"
+                            groups="base.group_system,crm_custom_lead.group_jefe_operaciones"/>
+                </header>
+                <sheet>
+                    <group>
+                        <field name="campaign_id"/>
+                        <field name="name"/>
+                        <field name="active"/>
+                    </group>
+
+
+
+                    <notebook>
+                        <!-- ===== pestaña edición interna (Ops / Admin) ===== -->
+                        <page string="Planes (edición interna)" groups="base.group_system,crm_custom_lead.group_jefe_operaciones">
+                            <!-- editable para roles altos -->
+                            <field name="plan_ids"
+                                   mode="list,form"/>
+                        </page>
+
+                        <!-- ===== pestaña vista comercial (solo lectura) ===== -->
+                        <page string="Vista comercial">
+                            <!-- Mostrar galería generada por el servidor (miniaturas) -->
+                            <field name="bc_gallery_html" readonly="1" nolabel="1" class="o_bc_gallery_wrapper"/>
+                            <!-- DEBUG: nombres detectados por el compute -->
+                            <field name="bc_gallery_debug_names" readonly="1" nolabel="1"/>
+                        </page>
+
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Acción y menú -->
+    <record id="action_bc_subcampaign" model="ir.actions.act_window">
+        <field name="name">Subcampañas (BC)</field>
+        <field name="res_model">bc.subcampaign</field>
+        <field name="view_mode">list,form</field>
+        <field name="context">{'search_default_active': 1}</field>
+    </record>
+
+    <menuitem id="menu_bc_subcampaign"
+              parent="crm_custom_lead.menu_crm_custom_campaign_root"
+              action="action_bc_subcampaign"
+              sequence="50"/>
+
+</odoo>

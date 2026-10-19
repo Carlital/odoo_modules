@@ -1,0 +1,50 @@
+<odoo>
+  <record id="view_partner_form_website_dte" model="ir.ui.view">
+    <field name="name">partner_website_dte</field>
+    <field name="model">res.partner</field>
+    <field name="priority" eval="101"/>
+    <field name="inherit_id" ref="base.view_partner_form"/>
+    <field name="arch" type="xml">
+      <xpath expr="//field[@name='state_id']" position="attributes">
+          <attribute name="invisible">True</attribute>
+      </xpath>
+      
+      <!-- <field name="city" position="after">
+        <field name="city_id" class="o_address_city" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}" domain="[('state_id', '=', state_id)]" placeholder="Comuna"/>
+      </field> -->
+      
+      <xpath expr="//field[@name='city']" position="attributes">
+          <attribute name="invisible">True</attribute>
+      </xpath>
+
+      <xpath expr="//div[@name='partner_address_country']" position="after">
+        <field name="state_id" class="o_address_state" placeholder="State" options="{'no_open': True, 'no_quick_create': True}" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}" context="{'country_id': country_id, 'default_country_id': country_id, 'zip': zip}"/>
+        <field name="city_id" class="o_address_city" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}" domain="[('state_id', '=', state_id)]" placeholder="Comuna"/>
+      </xpath>
+
+      <!-- <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='contact_addresses']/field[@name='child_ids']/form[1]/sheet[1]/group[1]/group[1]/div[1]/div[@name='div_address']/field[@name='city_id']" position="attributes">
+        <attribute name="attrs">{"invisible": False}</attribute>
+        <attribute name="domain">[('state_id', '=', state_id)]</attribute>
+        <attribute name="placeholder">Comuna</attribute>
+      </xpath>
+      <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='contact_addresses']/field[@name='child_ids']/form[1]/sheet[1]/group[1]/group[1]/div[1]/div[@name='div_address']/field[@name='city']" position="attributes">
+        <attribute name="attrs">{"readonly": [["type","=","contact"],["parent_id","!=",False]]}</attribute>
+        <attribute name="invisible">1</attribute>
+      </xpath>
+      <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='contact_addresses']/field[@name='child_ids']/form[1]/sheet[1]/group[1]/group[1]/div[1]/div[@name='div_address']/field[@name='state_id']" position="attributes">
+        <attribute name="attrs">{"readonly": False}</attribute>
+      </xpath> -->
+
+      <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='contact_addresses']/field[@name='child_ids']/form[1]/sheet[1]/group[1]/group[1]/div[1]/div[@name='div_address']" position="replace">
+        <div class="o_address_format" name="custom_div_address">
+          <field name="street" placeholder="Direccion..." class="o_address_street"/>
+          <field name="street2" placeholder="Info adicional 2..." class="o_address_street"/>
+          <field name="country_id" placeholder="Country" class="o_address_country" options='{"no_open": True, "no_create": True}'/>
+          <field name="state_id" class="o_address_state" placeholder="Región" options="{'no_open': True, 'no_quick_create': True}" context="{'country_id': country_id, 'default_country_id': country_id, 'zip': zip}"/>
+          <field name="city_id" placeholder="Comuna" class="o_address_city" domain="[('state_id', '=', state_id)]"/>
+          <field name="zip" placeholder="C.P." class="o_address_zip"/>
+        </div>
+      </xpath>
+    </field>
+  </record>
+</odoo>

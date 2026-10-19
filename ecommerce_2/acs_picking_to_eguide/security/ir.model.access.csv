@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_pe_electronic_guide_custom_user,access_pe_electronic_guide_custom_user,l10n_pe_eguide_advanced.model_pe_electronic_guide,base.group_user,1,0,1,0

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Boceto Tablas PostgreSQL – Módulos Odoo</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header>
+    <h1>Boceto de Tablas en PostgreSQL</h1>
+    <p>Vista conceptual de las tablas relevantes para los módulos google_sheets_import y cv_importer. Sólo estructura; sin atributos sensibles.</p>
+  </header>
+
+  <main>
+    <section class="tables">
+      <article class="table-card">
+        <h2>hr_employee (existente)</h2>
+        <div class="grid">
+          <div class="col">
+            <div class="field pk">id (PK)</div>
+            <div class="field">name</div>
+            <div class="field">work_email</div>
+            <div class="field">work_phone</div>
+            <div class="field">identification_id</div>
+            <div class="field">job_title</div>
+          </div>
+          <div class="col">
+            <div class="field fk">resource_id → resource_resource.id</div>
+            <div class="field fk">department_id → hr_department.id</div>
+            <div class="field fk">address_home_id → res_partner.id</div>
+            <div class="field">active</div>
+            <div class="field audit">create_date, write_date</div>
+            <div class="field audit">create_uid, write_uid</div>
+          </div>
+        </div>
+        <p class="note">Extensiones ligeras de los módulos pueden agregar columnas de estado/metadata aquí.</p>
+      </article>
+
+      <article class="table-card">
+        <h2>Extensión google_sheets_import</h2>
+        <div class="grid">
+          <div class="col">
+            <div class="field">x_origin_sheet (opcional)</div>
+            <div class="field">x_import_state (Pendiente/Validado)</div>
+          </div>
+          <div class="col">
+            <div class="field audit">x_last_import_at</div>
+            <div class="field audit">x_last_import_user_id</div>
+          </div>
+        </div>
+        <p class="note">Se añaden como columnas en hr_employee si el módulo extiende el modelo.</p>
+      </article>
+
+      <article class="table-card">
+        <h2>Extensión cv_importer</h2>
+        <div class="grid">
+          <div class="col">
+            <div class="field">x_cv_state (Pendiente/En proceso/Validado/Error)</div>
+            <div class="field">x_cv_score (0..1)</div>
+          </div>
+          <div class="col">
+            <div class="field audit">x_cv_updated_at</div>
+            <div class="field">x_cv_source_url (opcional)</div>
+          </div>
+        </div>
+        <p class="note">Idempotencia y payloads grandes deben evitarse aquí; usar adjuntos si aplica.</p>
+      </article>
+
+      <article class="table-card ghost">
+        <h2>(Opcional) gsi_batch / gsi_batch_line</h2>
+        <div class="grid">
+          <div class="col">
+            <div class="field pk">id (PK)</div>
+            <div class="field">name, state</div>
+            <div class="field">sheet_id, sheet_range</div>
+          </div>
+          <div class="col">
+            <div class="field">totales y conteos</div>
+            <div class="field audit">user_id, fechas</div>
+          </div>
+        </div>
+        <p class="note">Sugerido para auditoría por lote y por fila. No existe si no lo implementas.</p>
+      </article>
+
+      <article class="table-card ghost">
+        <h2>(Opcional) cvi_batch / cvi_batch_line</h2>
+        <div class="grid">
+          <div class="col">
+            <div class="field pk">id (PK)</div>
+            <div class="field">name, state</div>
+            <div class="field">ref_id (UNIQUE en línea)</div>
+          </div>
+          <div class="col">
+            <div class="field">quality_score, quality_checks</div>
+            <div class="field audit">fechas y reintentos</div>
+          </div>
+        </div>
+        <p class="note">Permite idempotencia y trazabilidad fina. Implementación opcional.</p>
+      </article>
+    </section>
+  </main>
+
+  <footer>
+    <small>Boceto conceptual en blanco y negro, listo para captura.</small>
+  </footer>
+</body>
+</html>
+

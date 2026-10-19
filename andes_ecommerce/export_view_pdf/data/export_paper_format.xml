@@ -1,0 +1,33 @@
+<odoo>
+    <data>
+        <record id="paperformat_custom_vertical" model="report.paperformat">
+            <field name="name">Custom PDF Vertical</field>
+            <field name="page_width">210</field>
+            <field name="page_height">297</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">40.00</field>
+            <field name="margin_bottom">32.00</field>
+            <field name="margin_left">7.00</field>
+            <field name="margin_right">7.00</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">35</field>
+            <field name="disable_shrinking" eval="True"/>
+            <field name="dpi">96</field>
+        </record>
+
+        <record id="paperformat_custom_horizontal" model="report.paperformat">
+            <field name="name">Custom PDF Horizontal</field>
+            <field name="page_width">297</field>
+            <field name="page_height">210</field>
+            <field name="orientation">Landscape</field>
+            <field name="margin_top">40.00</field>
+            <field name="margin_bottom">20.00</field>
+            <field name="margin_left">10.00</field>
+            <field name="margin_right">10.00</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">30</field>
+            <field name="disable_shrinking" eval="True"/>
+            <field name="dpi">96</field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ERD – Odoo (hr_employee) y Extensiones</title>
+  <style>
+    :root{--ink:#000;--line:#000;--bg:#fff;--muted:#444}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:ui-sans-serif,system-ui,Segoe UI,Roboto,Arial;background:#fff;color:#000}
+    header{padding:14px 18px;border-bottom:2px solid var(--line)}
+    h1{margin:0 0 4px 0;font-size:20px}
+    p{margin:0;color:var(--muted)}
+    .canvas{position:relative;height:900px;background:#fff}
+    .table{position:absolute;min-width:240px;border:2px solid var(--line);background:#fff}
+    .table header{border-bottom:2px solid var(--line);padding:8px 10px;background:#fff}
+    .table h3{margin:0;font-size:14px}
+    .cols{padding:8px 10px}
+    .col{border:1px solid var(--line);padding:5px 8px;margin:6px 0;background:#fff}
+    .pk{background:#f2f2f2;font-weight:600}
+    .fk{background:#fafafa}
+    .note{font-size:12px;color:#333;margin-top:4px}
+    .badge{display:inline-block;border:1px solid var(--line);padding:2px 6px;font-size:12px}
+    .ghost{opacity:.9}
+    /* connectors */
+    .line{position:absolute;border-top:2px solid var(--line)}
+    .vert{position:absolute;border-left:2px solid var(--line)}
+    .card{position:absolute;font-size:12px;background:#fff;border:1px solid var(--line);padding:0 4px}
+    footer{padding:12px 18px;border-top:2px solid var(--line);color:#333}
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Diagrama ERD (boceto B/N) – Odoo 17</h1>
+    <p>Tablas existentes y extensiones de módulos google_sheets_import y cv_importer. Opcionales de auditoría al final.</p>
+  </header>
+
+  <div class="canvas">
+    <!-- hr_employee central -->
+    <div class="table" id="hr_employee" style="left:440px; top:120px;">
+      <header><h3>hr_employee</h3></header>
+      <div class="cols">
+        <div class="col pk">id (PK)</div>
+        <div class="col">name</div>
+        <div class="col">work_email</div>
+        <div class="col">work_phone</div>
+        <div class="col">identification_id</div>
+        <div class="col">job_title</div>
+        <div class="col fk">resource_id → resource_resource.id</div>
+        <div class="col fk">address_home_id → res_partner.id</div>
+        <div class="col">active</div>
+        <div class="col">create_date, write_date</div>
+      </div>
+    </div>
+
+    <!-- resource_resource -->
+    <div class="table" id="resource" style="left:60px; top:80px; min-width:200px;">
+      <header><h3>resource_resource</h3></header>
+      <div class="cols">
+        <div class="col pk">id (PK)</div>
+        <div class="col">name</div>
+        <div class="col fk">user_id → res_users.id</div>
+        <div class="col">active</div>
+      </div>
+    </div>
+
+    <!-- res_partner -->
+    <div class="table" id="partner" style="left:820px; top:80px; min-width:200px;">
+      <header><h3>res_partner</h3></header>
+      <div class="cols">
+        <div class="col pk">id (PK)</div>
+        <div class="col">name</div>
+        <div class="col">email</div>
+        <div class="col">phone</div>
+      </div>
+    </div>
+
+    <!-- Extensiones (campos añadidos) -->
+    <div class="table ghost" id="gsi_ext" style="left:420px; top:420px; min-width:220px;">
+      <header><h3>Extensión Sheets (en hr_employee)</h3></header>
+      <div class="cols">
+        <div class="col">x_origin_sheet</div>
+        <div class="col">x_import_state</div>
+        <div class="col">x_last_import_at</div>
+        <div class="col">x_last_import_user_id</div>
+        <div class="note">Campos agregados por _inherit</div>
+      </div>
+    </div>
+
+    <div class="table ghost" id="cvi_ext" style="left:700px; top:420px; min-width:220px;">
+      <header><h3>Extensión CV (en hr_employee)</h3></header>
+      <div class="cols">
+        <div class="col">x_cv_state</div>
+        <div class="col">x_cv_score</div>
+        <div class="col">x_cv_updated_at</div>
+        <div class="col">x_cv_source_url</div>
+        <div class="note">Campos agregados por _inherit</div>
+      </div>
+    </div>
+
+    <!-- Conectores principales -->
+    <!-- resource_resource 1 —— 1 hr_employee -->
+    <div class="line" style="left:260px; top:130px; width:180px"></div>
+    <div class="card" style="left:260px; top:114px">1</div>
+    <div class="card" style="left:430px; top:114px">1</div>
+
+    <!-- hr_employee —— N res_partner (N:1) -->
+    <div class="line" style="left:700px; top:130px; width:140px"></div>
+    <div class="card" style="left:700px; top:114px">N</div>
+    <div class="card" style="left:830px; top:114px">1</div>
+
+    <!-- hr_employee a extensiones (solo referencia visual) -->
+    <div class="vert" style="left:560px; top:260px; height:160px"></div>
+    <div class="line" style="left:560px; top:420px; width: -1px"></div>
+    <div class="line" style="left:560px; top:520px; width:140px"></div>
+    <div class="card" style="left:565px; top:508px">campos</div>
+
+    <!-- Opcional: auditoría y lotes -->
+    <div class="table ghost" id="gsi_batch" style="left:60px; top:540px; min-width:220px;">
+      <header><h3>gsi_batch (opcional)</h3></header>
+      <div class="cols">
+        <div class="col pk">id</div>
+        <div class="col">name, state</div>
+        <div class="col">sheet_id, sheet_range</div>
+      </div>
+    </div>
+    <div class="table ghost" id="gsi_line" style="left:300px; top:540px; min-width:220px;">
+      <header><h3>gsi_batch_line (opcional)</h3></header>
+      <div class="cols">
+        <div class="col pk">id</div>
+        <div class="col fk">batch_id → gsi_batch.id</div>
+        <div class="col fk">employee_id → hr_employee.id</div>
+      </div>
+    </div>
+
+    <div class="line" style="left:280px; top:570px; width:20px"></div>
+    <div class="card" style="left:270px; top:554px">1</div>
+    <div class="card" style="left:310px; top:554px">N</div>
+
+    <div class="line" style="left:520px; top:570px; width:100px"></div>
+    <div class="card" style="left:520px; top:554px">N</div>
+    <div class="card" style="left:610px; top:554px">1</div>
+
+    <div class="table ghost" id="cvi_batch" style="left:820px; top:540px; min-width:220px;">
+      <header><h3>cvi_batch (opcional)</h3></header>
+      <div class="cols">
+        <div class="col pk">id</div>
+        <div class="col">name, state</div>
+        <div class="col">conteos</div>
+      </div>
+    </div>
+    <div class="table ghost" id="cvi_line" style="left:1060px; top:540px; min-width:230px;">
+      <header><h3>cvi_batch_line (opcional)</h3></header>
+      <div class="cols">
+        <div class="col pk">id</div>
+        <div class="col fk">batch_id → cvi_batch.id</div>
+        <div class="col fk">employee_id → hr_employee.id</div>
+        <div class="col">ref_id (unique)</div>
+      </div>
+    </div>
+
+    <div class="line" style="left:1040px; top:570px; width:20px"></div>
+    <div class="card" style="left:1032px; top:554px">1</div>
+    <div class="card" style="left:1066px; top:554px">N</div>
+
+    <div class="vert" style="left:980px; top:220px; height:350px"></div>
+    <div class="line" style="left:980px; top:570px; width:80px"></div>
+    <div class="card" style="left:984px; top:554px">1</div>
+    <div class="card" style="left:1050px; top:554px">N</div>
+  </div>
+
+  <footer>
+    <small>Estilo ERD en B/N. Las secciones “opcional” solo se crean si implementas tablas de auditoría y lotes.</small>
+  </footer>
+</body>
+</html>
+

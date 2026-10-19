@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Secuencia para Orden de Fabricación -->
+        <record id="seq_acs_order_production" model="ir.sequence">
+            <field name="name">Secuencia Orden de Fabricación</field>
+            <field name="code">acs.order.production</field>
+            <field name="prefix">PROD-</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False" />
+        </record>
+    </data>
+</odoo>

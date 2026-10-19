@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    
+    <!-- Extender formulario de hr.employee para agregar Proyectos -->
+    <record id="view_employee_form_cv_project_inherit" model="ir.ui.view">
+        <field name="name">hr.employee.form.cv.project.inherit</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+            
+            <!-- Agregar botón estadístico para Proyectos -->
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="action_view_projects"
+                        type="object"
+                        class="oe_stat_button"
+                        icon="fa-lightbulb-o">
+                    <div class="o_field_widget o_stat_info">
+                        <span class="o_stat_value">
+                            <field name="cv_project_count"/>
+                        </span>
+                        <span class="o_stat_text">Proyectos</span>
+                    </div>
+                </button>
+            </xpath>
+
+            <!-- Agregar tab para Proyectos -->
+            <xpath expr="//notebook" position="inside">
+                <page string="Proyectos" 
+                      name="page_projects">
+                    <field name="cv_project_ids" 
+                           context="{'default_employee_id': active_id}">
+                        <tree editable="bottom">
+                            <field name="project_title"/>
+                            <field name="project_code"/>
+                            <field name="project_type"/>
+                            <field name="institution"/>
+                            <field name="start_date"/>
+                            <field name="end_date"/>
+                            <field name="source" optional="hide"/>
+                        </tree>
+                    </field>
+                    <group>
+                        <div class="alert alert-info" role="alert" style="margin-top: 10px;">
+                            <i class="fa fa-info-circle"/> 
+                            <strong>Nota:</strong> Este es el modelo normalizado para proyectos de investigación y vinculación.
+                        </div>
+                    </group>
+                </page>
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>

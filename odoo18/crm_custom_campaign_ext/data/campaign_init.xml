@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <data noupdate="1">
+    <!-- Crear campañas en el modelo bc.campaign (no crm.custom.campaign) -->
+    <record id="campaign_digital" model="bc.campaign">
+        <field name="name">Digital</field>
+        <field name="date_start">2025-01-01</field>
+        <field name="date_end">2030-01-01</field>
+        <field name="active">True</field>
+    </record>
+
+    <record id="campaign_tradicional" model="bc.campaign">
+        <field name="name">Tradicional</field>
+        <field name="date_start">2025-01-01</field>
+        <field name="date_end">2030-01-01</field>
+        <field name="active">True</field>
+    </record>
+
+
+
+    <!-- Subcampañas CRM (modelo crm.custom.subcampaign) -->
+    <record id="sub_dig_portabilidad" model="crm.custom.subcampaign">
+      <field name="name">Digital - Portabilidad</field>
+      <field name="campaign_id" ref="crm_custom_campaign_ext.campaign_digital"/>
+      <field name="subtype">portabilidad</field>
+      <field name="active">True</field>
+    </record>
+
+    <!-- Subcampañas BC (modelo bc.subcampaign) - incluir campos NOT NULL (ej. subtype) -->
+    <record id="bc_sub_dig_portabilidad" model="bc.subcampaign">
+      <field name="name">Digital - Portabilidad</field>
+      <field name="campaign_id" ref="crm_custom_campaign_ext.campaign_digital"/>
+      <field name="subtype">portabilidad</field>
+      <field name="active">True</field>
+    </record>
+  </data>
+</odoo>

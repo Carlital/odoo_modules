@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="odoo-mercadolibre.forecast" owl="1">
+        <div>
+            <t t-if="state.showModal">
+                <div class="modal d-block" tabindex="-1" role="dialog" style="background: rgba(0,0,0,0.5);">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content p-3">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Licencia vencida</h5>
+                            </div>
+                            <div class="modal-body">
+                                <p>No tienes una licencia activa de MercadoLibre.</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-primary" t-on-click="redirigirAConfiguracion">Ir a configuración</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </div>
+        <div class="container-fluid d-flex flex-column align-items-center position-relative" style="height: 100vh; max-width: 100%;">
+            <div class="row d-flex justify-content-center align-items-center w-100 mt-4">    
+                <div class="col-12 mb-3">
+                    <div class="card p-4 mb-2">
+                        <div class="position-relative mb-3">
+                            <label for="productSearch" class="form-label fw-bold text-muted me-2" style="width: 100%;"><h2>Search Product:</h2></label>
+                            <input 
+                                type="text" 
+                                id="productSearch" 
+                                class="form-control form-control-sm" 
+                                style="width: 100%; font-size:20px;" 
+                                t-on-input="onSearchInput" 
+                                t-model="state.searchText"                                   
+                                placeholder="Type to search..."
+                                autocomplete="off"
+                            />
+                            <div class="autocomplete-list position-absolute w-100 bg-white border border-secondary rounded" t-if="state.filteredProducts.length" style="z-index: 1050;">
+                                <select
+                                    class="form-select form-select-sm" 
+                                    t-model="state.selectedProduct" 
+                                    t-on-change="onProductChange"
+                                    size="5"
+                                >
+                                    <option 
+                                        class="text-truncate py-2 px-3" 
+                                        style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+                                        t-att-value="product.product_id" 
+                                        t-foreach="state.filteredProducts" 
+                                        t-as="product" 
+                                        t-key="product.product_id"
+                                    >
+                                        <t t-esc="product.product_name"/>
+                                    </option>
+                                </select>
+                            </div>
+                        </div>                    
+                    </div>
+                    <t t-if="state.selectedProduct">
+                        <div class="card h-100" style="min-height: 350px;">
+                            <div class="card-body">
+                                <h1 style="font-family: 'Arial', 'Helvetica', sans-serif; 
+                                        font-size: 24px; 
+                                        font-weight: 600; 
+                                        color: #666666;  /* Color gris más suave */
+                                        margin: 10px 0;  /* Un pequeño margen superior e inferior */
+                                        padding: 0;
+                                        text-align: center;">  <!-- Centrado -->
+                                    Sales Forecast
+                                    <i class="bi bi-info-circle ms-2" 
+                                        data-bs-toggle="tooltip" 
+                                        title="Predicción realizada con Regresión Lineal Exponencial sobre datos históricos">
+                                    </i>
+                                </h1>
+                                <canvas style="max-height: 500px;" t-ref="ForecastSales"></canvas>
+
+                            </div>
+                        </div>
+                        <div class="card h-100" style="min-height: 350px;">
+                            <div class="card-body">
+                                <h1 style="font-family: 'Arial', 'Helvetica', sans-serif; 
+                                        font-size: 24px; 
+                                        font-weight: 600; 
+                                        color: #666666;  /* Color gris más suave */
+                                        margin: 10px 0;  /* Un pequeño margen superior e inferior */
+                                        padding: 0;
+                                        text-align: center;">  <!-- Centrado -->
+                                    Stock Forecast
+                                </h1>
+                                <canvas style="max-height: 500px;" t-ref="ForecastStock"></canvas>
+
+                            </div>
+                        </div>
+                        <div class="card h-100" style="min-height: 350px;">
+                            <div class="card-body">
+                                <h1 style="font-family: 'Arial', 'Helvetica', sans-serif; 
+                                        font-size: 24px; 
+                                        font-weight: 600; 
+                                        color: #666666;  /* Color gris más suave */
+                                        margin: 10px 0;  /* Un pequeño margen superior e inferior */
+                                        padding: 0;
+                                        text-align: center;">  <!-- Centrado -->
+                                    Customers Forecast
+                                </h1>
+                                <canvas style="max-height: 500px;" t-ref="ForecastCustomers"></canvas>
+
+                            </div>
+                        </div>
+                    </t>
+                    <t t-else="">
+                        <div class="text-center mt-5">
+                            <h4 class="text-muted">Seleccione un producto para ver las predicciones.</h4>
+                        </div>
+                    </t>
+                </div>
+                <!-- <button class="btn btn-primary mb-3" t-on-click="exportForecastExcel">
+                    Export predictions to Excel
+                </button>  --> 
+            </div>                              
+        </div>    
+        <div class="o_action_manager custom-whatsapp-suite" bis_skin_checked="1" style="overflow: auto !important;">
+            <div class="o_dashboard_view my-5">
+                <div class="grid-stack"> 
+                </div>
+            </div>
+            
+        </div>        
+    </t>
+</templates>
+    

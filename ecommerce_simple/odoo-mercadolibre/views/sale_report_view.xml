@@ -1,0 +1,16 @@
+<odoo>
+    <record id="view_sale_report_form" model="ir.ui.view">
+        <field name="name">sale.report.form</field>
+        <field name="model">sale.report</field>
+        <field name="arch" type="xml">
+            <form string="Historial de Ventas Mensual" class="o_form_full_width o_form_empty">
+                <group>
+                    <!-- Este botón estará centrado en la vista -->
+                    <div style="display: flex; justify-content: center; align-items: center; height: 100vh;">
+                        <!-- <button name="get_sales_by_month" type="object" string="Calcular Ventas Mensuales" class="btn-primary" style="height: 50px; width: 200px; font-size: 16px;"/> -->
+                    </div>
+                </group>
+            </form>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,15 @@
+id,code,name,description,active
+catalog20_01,01,Venta,,1
+catalog20_02,02,Compra,,1
+catalog20_03,03,Venta con entrega a terceros,,1
+catalog20_04,04,Traslado entre establecimientos de la misma empresa,,1
+catalog20_05,05,Consignación,,1
+catalog20_06,06,Devolución,,1
+catalog20_07,07,Recojo de bienes transformados,,1
+catalog20_08,08,Importación,,1
+catalog20_09,09,Exportación,,1
+catalog20_13,13,Otros,,1
+catalog20_14,14,Venta sujeta a confirmación del comprador   ,,1
+catalog20_17,17,Traslado de bienes para transformación,,1
+catalog20_18,18,Traslado emisor itinerante CP,,1
+catalog20_19,19,Traslado a zona primaria,,0

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+
+        <record model="ir.cron" id="invoice_auto_check">
+            <field name="name">Cron: Check Invoices</field>
+            <field name="interval_number">15</field>
+            <field name="interval_type">minutes</field>
+            <field name="numbercall">-1</field>
+            <field name="doall" eval="False"/>
+            <field name="user_id" ref="base.user_root"/>
+            <field name="state">code</field>
+            <field name="model_id" ref="account.model_account_move" />
+            <field name="code">model.check_pe_cpe_state()</field>
+            <field name="active" eval="True"/>
+        </record>
+
+        <record id="action_check_invoices" model="ir.actions.server">
+            <field name="name">Check Invoices</field>
+            <field name="model_id" ref="account.model_account_move"/>
+            <field name="binding_model_id" ref="account.model_account_move"/>
+            <field name="binding_view_types">form</field>
+            <field name="state">code</field>
+            <field name="code">records._get_pe_cpe_state()</field>
+        </record>
+    </data>
+</openerp>

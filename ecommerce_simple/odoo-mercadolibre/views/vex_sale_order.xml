@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="sale_order_search_view_meli_today" model="ir.ui.view">
+        <field name="name">sale.order.search.view.meli.today</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_sales_order_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//search" position="inside">
+                <filter string="Meli Hoy" name="meli_created_today"
+                    domain="[('meli_date_create_without_time', '=', context_today())]"
+                    help="Filtra las órdenes de MercadoLibre creadas hoy"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_order_tree_meli_info" model="ir.ui.view">
+        <field name="name">sale.order.tree.meli.info</field>
+        <field name="model">sale.order</field>
+        <field name="arch" type="xml">
+            <tree string="Mercadolibre orders">
+                <field name="meli_date_created"/>
+                <field name="meli_date_create_without_time"/>
+                <field name="name"/>
+                <field name="meli_order_id"/>
+                <!-- <field name="marketplace_ids" string="Marketplace" widget="many2many_tags"/> -->
+                <field name="marketplace_ids" widget="many2many_tags" options="{'color_field': 'color'}">
+                </field>
+                <field name="meli_buyer_nickname"/>
+                <!-- <field name="product_sold_ids" widget="many2many_tags"/> -->
+                <field name="meli_shipping_tracking_number"/>
+                <field name="meli_shipping_logistic_type" string="Logistic Type"/>
+                <field name="meli_status" string="Status Order"/>
+                <field name="meli_item_cost" />
+                <field name="meli_shipping_cost" string="Shipping Cost"/> 
+                <field name='meli_sale_fee' string="ML Fee"/>
+                <!-- <field name="meli_paid_amount" string="Total Paid Amount"/> -->
+                <field name="meli_total_amount"/>
+                <field name="meli_net_gain" />
+                <field name="state" widget="badge" decoration-info="state=='draft'" decoration-success="state=='sale'"/>
+                <!-- <field name="net_profit" string="Net Gain"/>
+                <field name="meli_listing_type_id" decoration-warning="listing_type_id=='gold_special'" decoration-success="listing_type_id=='gold_pro'"/> -->
+                <!-- <field name="invoice_status"/> -->
+                </tree>
+        </field>
+    </record>
+    
+    <record id="action_order_tree_meli_today" model="ir.actions.act_window">
+        <field name="name">Órdenes MercadoLibre de Hoy</field>
+        <field name="res_model">sale.order</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="odoo-mercadolibre.sale_order_search_view_meli_today"/>
+        <field name="view_id" ref="odoo-mercadolibre.view_order_tree_meli_info"/>
+        <field name="context">{'search_default_meli_created_today': 1}</field>
+        <field name="target">current</field>
+    </record>
+    <record id="action_order_tree_meli_all" model="ir.actions.act_window">
+        <field name="name">Órdenes MercadoLibre de Hoy</field>
+        <field name="res_model">sale.order</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="odoo-mercadolibre.sale_order_search_view_meli_today"/>
+        <field name="view_id" ref="odoo-mercadolibre.view_order_tree_meli_info"/>
+        <!-- <field name="context">{'search_default_meli_created_today': 1}</field> -->
+        <field name="target">current</field>
+    </record>    
+    <record id="view_order_form_meli_info" model="ir.ui.view">
+        <field name="name">sale.order.form.meli.info</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="MercadoLibre Info">
+                        <div class="oe_button_box" name="button_box">
+                            <button name="action_get_details" type="object" string="Sync Order Details"
+                                    class="btn-primary" icon="fa-info-circle" style="margin-right:10px;"/>
+                            <button name="action_get_shipping_details" type="object" string="Sync Shipping Details"
+                                    class="btn-primary" icon="fa-truck" style="margin-right:10px;"/>
+                            <button name="action_get_customer_details" type="object" string="Sync Customer Details"
+                                    class="btn-primary" icon="fa-user" style="margin-right:10px;"/>
+                        </div>
+                    <notebook>
+                        <page name="general_info" string="General Information">
+                            <group string="Order Details">
+                                <group>
+                                    <field name="meli_order_id"/>
+                                    <field name="meli_pack_id"/>
+                                    <field name="meli_fulfilled"/>
+                                    <field name="meli_buying_mode"/>
+                                    <field name="meli_shipping_cost"/>
+                                </group>
+                                <group>
+                                    <field name="meli_total_amount"/>
+                                    <field name="meli_paid_amount"/>
+                                    <field name="meli_currency_id_api"/>
+                                    <field name="meli_status"/>
+                                    <field name="meli_status_detail"/>       
+                                </group>
+                            </group>  
+                            <group string="Timestamps">
+                                <div class="oe_button_box" name="button_box">
+                                    <button name="action_copy_datetime_to_date" type="object" string="Get UTC TIME"
+                                        class="btn-primary" icon="fa-clock-o" style="margin-right:10px;"
+                                        help="Click to get the current time in UTC format"/>
+                                </div>                                
+                                <group>
+                                    <field name="meli_date_created"/>
+                                    <field name="meli_date_create_without_time"/>
+                                    <field name="meli_last_updated"/>
+                                </group>
+                                <group>
+                                    <field name="meli_date_closed"/>
+                                    <field name="meli_manufacturing_ending_date"/>
+                                </group>
+                            </group>
+                            <group string="Buyer and Seller Info">
+                                <group string="Buyer">
+                                    <field name="meli_buyer_id"/>
+                                    <field name="meli_buyer_nickname"/>
+                                    <field name="meli_buyer_first_name"/>
+                                    <field name="meli_buyer_last_name"/>
+                                </group>
+                                <group string="Seller">
+                                    <field name="meli_seller_id"/>
+                                </group>
+                            </group>      
+                            <group string="Tags and Context">
+                                <field name="meli_tag_ids" widget="many2many_tags"/>
+                                <field name="meli_internal_tag_ids" widget="many2many_tags"/>
+                                <field name="meli_context_channel"/>
+                                <field name="meli_context_site"/>
+                                <field name="meli_context_flow_ids" widget="many2many_tags"/>
+                            </group>
+
+                            <group string="Cancel Information">
+                                <field name="meli_cancel_group"/>
+                                <field name="meli_cancel_code"/>
+                                <field name="meli_cancel_description"/>
+                                <field name="meli_cancel_requested_by"/>
+                                <field name="meli_cancel_date"/>
+                                <field name="meli_cancel_application_id"/>
+                            </group>                                                              
+                        </page>
+                        <page string="Order Items">
+                            <field name="meli_item_ids">
+                                <tree editable="bottom">
+                                    <field name="meli_item_id"/>
+                                    <field name="meli_title"/>
+                                    <field name="meli_category_id"/>
+                                    <field name="meli_variation_id"/>
+                                    <field name="meli_quantity"/>
+                                    <field name="meli_measure"/>
+                                    <field name="meli_value"/>
+                                    <field name="meli_unit_price"/>
+                                    <field name="meli_full_unit_price"/>
+                                    <field name="meli_currency_id"/>
+                                    <field name="meli_sale_fee"/>
+                                    <field name="meli_listing_type_id"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page name="shipment_info" string="Shipment Information">
+                            <group string="Shipping">
+                                <field name="meli_shipping_id"/>
+                            </group>                 
+                            <group>
+                                <group>
+                                    <field name="meli_shipping_tracking_number"/>
+                                    <field name="meli_shipping_status"/>
+                                    <field name="meli_shipping_logistic_type"/>
+                                    <field name="meli_shipping_mode"/>
+                                    <field name="meli_shipping_marketplace"/>
+                                    <field name="meli_shipping_created_by"/>
+                                    <field name="meli_shipping_date_created"/>
+                                    <field name="meli_shipping_date_first_printed"/>
+                                </group>
+                                <group>
+                                    <field name="meli_shipping_order_cost"/>
+                                    <field name="meli_shipping_base_cost"/>
+                                    <field name="meli_shipping_service_id"/>
+                                    <field name="meli_shipping_priority_class_id"/>
+                                    <field name="meli_shipping_sender_id"/>
+                                    <field name="meli_shipping_receiver_id"/>
+                                    <field name="meli_shipping_last_updated"/>
+                                    <field name="meli_shipping_site_id"/>
+                                </group>
+                            </group>
+                            <group string="Shipping Option">
+                                <group>
+                                    <field name="meli_shipping_option_id"/>
+                                    <field name="meli_shipping_option_name"/>
+                                </group>
+                                <group>
+                                    <field name="meli_shipping_option_cost"/>
+                                    <field name="meli_shipping_option_list_cost"/>
+                                </group>
+                            </group>
+                            <group>
+                                <group string="Receiver Address">
+                                    <field name="meli_receiver_latitude"/>
+                                    <field name="meli_receiver_longitude"/>
+                                    <field name="meli_receiver_street_name"/>
+                                    <field name="meli_receiver_street_number"/>
+                                    <field name="meli_receiver_zip_code"/>
+                                    <field name="meli_receiver_city"/>
+                                    <field name="meli_receiver_state"/>
+                                    <field name="meli_receiver_country"/>
+                                </group>
+                                <group string="Sender Address">
+                                    <field name="meli_sender_latitude"/>
+                                    <field name="meli_sender_longitude"/>
+                                    <field name="meli_sender_street_name"/>
+                                    <field name="meli_sender_street_number"/>
+                                    <field name="meli_sender_zip_code"/>
+                                    <field name="meli_sender_city"/>
+                                    <field name="meli_sender_state"/>
+                                    <field name="meli_sender_country"/>
+                                </group>                        
+                            </group>
+
+                            <group>
+                                <field name="meli_shipping_tag_ids" widget="many2many_tags"/>
+                                <field name="meli_shipping_item_type_ids" widget="many2many_tags"/>
+                            </group>
+                            <group string="Substatus History">
+                                <field name="meli_shipping_substatus_history_ids">
+                                    <tree editable="bottom">
+                                        <field name="date"/>
+                                        <field name="substatus"/>
+                                        <field name="status"/>
+                                    </tree>
+                                </field>
+                            </group>
+                            <group string="Shipping Items">
+                                <field name="meli_shipping_item_ids">
+                                    <tree editable="bottom">
+                                        <field name="item_id"/>
+                                        <field name="description"/>
+                                        <field name="quantity"/>
+                                        <field name="dimensions"/>
+                                    </tree>
+                                </field>
+                            </group>                               
+                        </page>
+                        <!-- <page string="Mediations">
+                            <field name="meli_mediation_ids">
+                                <tree editable="bottom">
+                                    <field name="meli_mediation_id"/>
+                                </tree>
+                            </field>
+                        </page> -->
+                        <page string="Payments">
+                            <field name="meli_payment_ids">
+                                <tree editable="bottom">
+                                    <field name="meli_payment_id"/>
+                                    <field name="meli_payer_id"/>
+                                    <field name="meli_collector_id"/>
+                                    <field name="meli_reason"/>
+                                    <field name="meli_payment_method_id"/>
+                                    <field name="meli_currency_id"/>
+                                    <field name="meli_transaction_amount"/>
+                                    <field name="meli_total_paid_amount"/>
+                                    <field name="meli_status"/>
+                                    <field name="meli_date_created"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page name="meli_order_json" string="JSON Order">
+                            <group>
+                                <field name="meli_json_data" widget="text" readonly="1"/>
+                            </group>            
+                        </page>
+                        <page name="meli_shipping_json" string="JSON Shipment">
+                            <group>
+                                <field name="meli_shipping_json_data" widget="text" readonly="1"/>
+                            </group>            
+                        </page>                    
+                    </notebook>
+                </page>
+            </xpath>
+        </field>
+    </record>
+    
+</odoo>

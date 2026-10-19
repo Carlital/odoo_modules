@@ -1,0 +1,113 @@
+<odoo>
+  <data>
+	<record model="ir.ui.view" id="view_warehouse">
+        <field name="name">stock.warehouse.form.inherit.l10n.pe.eguide</field>
+        <field name="model">stock.warehouse</field>
+        <field name="inherit_id" ref="stock.view_warehouse"/>
+        <field name="arch" type="xml">
+        	
+        	<xpath expr="//field[@name='partner_id']" position="after">
+              <field name="pe_sequence_id" groups="l10n_pe_cpe.group_pe_cpe_manager" />
+	        </xpath>
+     
+        </field>
+    </record>
+
+	<record model="ir.ui.view" id="view_picking_form">
+        <field name="name">stock.picking.form.inherit.l10n.pe.eguide</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+        	<xpath expr="//button[@name=%(stock.act_stock_return_picking)d]" position="after">
+        		<button name="action_generate_eguide" string="Generate E-Guide" type="object" 
+        		invisible="pe_is_eguide == False and pe_guide_number != '/'" groups="l10n_pe_cpe.group_pe_cpe_user" />
+        		<!--button name="action_cancel_eguide" string="Cancel E-Guide" type="object"  
+        		attrs="{'invisible':True}" /-->
+        	</xpath>
+			<xpath expr="//button[@name='%(stock.action_report_delivery)d']" position="after">
+				 <button name="guide_print" string="Print Eguide" invisible="state != 'done'" type="object" groups="base.group_user"/>
+            </xpath>
+        	<xpath expr="//page[@name='extra']" position="after">
+           		<page string="Peruvian Customization" name="peruvian_customization" invisible="state not in ('done')" >
+           			<group>
+	           			<group>
+	           				<field name="pe_is_eguide" readonly="pe_guide_number != '/'"  />
+	           				<field name="pe_guide_id" groups="l10n_pe_cpe.group_pe_cpe_user" invisible="pe_is_eguide != '/'" readonly="True" />
+	           				<field name="pe_response" invisible="pe_is_eguide == False" readonly="True" />
+	           				<field name="pe_note" invisible="pe_is_eguide == False" readonly="True" />
+	           			</group>
+	           			<group>
+	           				<field name="pe_guide_number" invisible="pe_is_eguide == False" readonly="True" />
+	           				<field name="pe_return_code" invisible="pe_is_eguide == False" readonly="True" />
+
+							<field name="pe_other_street" invisible="pe_is_eguide == False" />
+							<field name="pe_country_id" invisible="pe_other_street == False" />
+							<field name="pe_state_id" invisible="pe_other_street == False" required="pe_other_street == True" options="{'no_create': True, 'no_create_edit':True}" />
+							<field name="pe_city_id" invisible="pe_other_street == False" required="pe_other_street == True" options="{'no_create': True, 'no_create_edit':True}" />
+							<field name="l10n_pe_district" invisible="pe_other_street == False" required="pe_other_street == True" options="{'no_create': True, 'no_create_edit':True}" />
+							<field name="pe_street" invisible="pe_other_street == False" required="pe_other_street == True" />
+	           			</group>
+	           		</group>
+           			<group string="Electronic Guide Informations" invisible="pe_is_eguide == False" >
+	           			<group>
+	           				<field name="pe_transfer_code" required="pe_is_eguide == True" readonly="pe_guide_number != '/'" groups="l10n_pe_cpe.group_pe_cpe_user" />
+							<field name="pe_description" required="pe_transfer_code == '13'" readonly="pe_guide_number != '/'" groups="l10n_pe_cpe.group_pe_cpe_user" />
+							<field name="pe_gross_weight" required="pe_is_eguide == True" readonly="pe_guide_number != '/'"  groups="l10n_pe_cpe.group_pe_cpe_user"/>
+							<field name="pe_unit_quantity" required="pe_transfer_code == '08'" readonly="pe_guide_number != '/'" groups="l10n_pe_cpe.group_pe_cpe_user"/>
+	           				<field name="pe_supplier_id" domain="[('parent_id', '=', False)]" readonly="pe_guide_number != '/'" groups="l10n_pe_cpe.group_pe_cpe_user" />
+	           			</group>
+	           			<group>
+
+							<field name="pe_date_issue" readonly="pe_guide_number != '/'" required="pe_is_eguide == True"/>
+							<field name="pe_transfer_date" readonly="pe_guide_number != '/'" required="pe_is_eguide == True"/>
+							<field name="pe_vehicle_m1_l" readonly="pe_guide_number != '/'" />
+
+							<field name="pe_is_programmed" readonly="pe_guide_number != '/'" />
+							<field name="pe_transport_mode" required="pe_is_eguide == True" readonly="pe_guide_number != '/'"  />
+							<field name="pe_carrier_id" invisible="pe_transport_mode != '01' or pe_vehicle_m1_l == True" required="pe_transport_mode == '01' or pe_vehicle_m1_l == False" readonly="pe_guide_number != '/'"
+								   domain="[('parent_id','=',False),('pe_doc_type','=','6')]" groups="l10n_pe_cpe.group_pe_cpe_user" />
+	           			</group>
+	           		</group>
+                <label for="pe_related_ids" string="Related Document:" readonly="pe_guide_number != '/'" />
+				<field name="pe_related_ids" nolabel="1" widget="one2many_list" mode="tree"
+					readonly="pe_guide_number != '/'" groups="l10n_pe_cpe.group_pe_cpe_user">
+					<tree string="Related Lines" editable="bottom">
+						<field name="document_type" required="True" />
+						<field name="name" required="True"/>
+						<field name="partner_id" required="True" />
+					</tree>
+				</field>
+
+				<label for="pe_carrier_ids" string="Carriers:" invisible="pe_transport_mode != '02' or pe_vehicle_m1_l == True" readonly="pe_guide_number!= '/'" />
+				<field name="pe_carrier_ids" invisible="pe_transport_mode != '02' or pe_vehicle_m1_l == True" readonly="pe_guide_number != '/'"
+					   domain="[('parent_id','=',False),('pe_doc_type','!=','6')]" groups="l10n_pe_cpe.group_pe_cpe_user" />
+	           		
+                <label for="pe_fleet_ids" string="Vehicles:" invisible="pe_transport_mode not in ['02']" readonly="pe_guide_number != '/'" />
+                <field name="pe_fleet_ids" nolabel="1" widget="one2many_list" mode="tree" 
+	           		invisible="pe_is_eguide == False" readonly="pe_guide_number != '/'">
+                        <tree string="Vehicles Lines" editable="bottom">
+                            <field name="fleet_id" />
+                            <field name="name" required="True"/>
+      						<field name="is_main" />
+                        </tree>
+                    </field>
+           		</page>
+           </xpath>
+     		<xpath expr="//field[@name='move_ids_without_package']//tree//field[@name='product_id']" position="after">
+				<field name="pe_name" />
+				<button name="action_pe_name_edit" string="Modificar" type="object" icon="fa-pencil" ></button>
+			</xpath>
+        </field>
+    </record>
+	<record model="ir.actions.server" id="action_pe_guide_document_status">
+		<field name="name">Check Eguide Status</field>
+		<field name="model_id" ref="stock.model_stock_picking"/>
+		<field name="binding_model_id" ref="stock.model_stock_picking" />
+		<field name="state">code</field>
+		<field name="code">
+if record:
+    action = record.pe_guide_ids.action_document_status()
+		</field>
+    </record>
+  </data>
+</odoo>

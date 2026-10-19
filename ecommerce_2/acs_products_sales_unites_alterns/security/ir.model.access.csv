@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_product_template_conversion,product.template.conversion,product.model_product_template,stock.group_stock_user,1,1,1,0
+access_product_product_conversion,product.product.conversion,product.model_product_product,stock.group_stock_user,1,1,1,0
+access_stock_picking_conversion,stock.picking.conversion,stock.model_stock_picking,stock.group_stock_user,1,1,1,0

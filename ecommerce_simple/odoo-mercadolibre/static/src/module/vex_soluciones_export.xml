@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<template xml:space="preserve">
+    <t t-name="vex_sync_mercado_libre.export" owl="1">
+      <!-- Side navigation menu -->
+      <div class="sidebar col-md-4" t-att-style="'box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);z-index:99; position: fixed; width: 400px; height: 100%; background: rgba(255, 255, 255, 0.9); padding: 20px; left:' + (state.isSidebarVisible ? '0' : '-400px') + '; transition: left 0.3s;'">
+        <div class="nav flex-column">
+      <!-- Content sidebar -->
+          <div class="d-flex align-items-center justify-content-center">
+            <div class="p-4 w-100 max-w-md">
+              <div class="d-flex justify-content-between align-items-center mb-3">
+                <h2 class="h5 font-weight-semibold text-dark">ADD A NEW EXPORT</h2>
+                <button class="hover:text-muted" t-on-click.prevent="()=>this.toggleSidebar()">❌</button>
+              </div>
+              <div class="border-bottom mb-3">
+                <ul class="nav nav-pills">
+                  <li class="nav-item cursor-pointer" t-on-click.prevent="()=>this.selectSubMenu('basicData')">
+                     <span class="nav-link" t-att-class="state.subMenuSelected === 'basicData' ? 'active' : 'text-muted'">1 BASIC DATA</span>
+                  </li>
+                  <li class="nav-item cursor-pointer" t-on-click.prevent="()=>this.selectSubMenu('filters')">
+                    <span class="nav-link" t-att-class="state.subMenuSelected === 'filters' ? 'active' : 'text-muted'">2 FILTERS</span>
+                  </li>
+                  <li class="nav-item cursor-pointer" t-on-click.prevent="()=>this.selectSubMenu('accounts')">
+                    <span class="nav-link" t-att-class="state.subMenuSelected === 'accounts' ? 'active' : 'text-muted'">3 ACCOUNTS</span>
+                  </li>
+                </ul>
+              </div>
+              <div class="">
+            <!-- CONTENT SIDEBAR SUBMENU -->
+                 <t t-if="state.subMenuSelected === 'basicData'">
+                   <form>
+                     <div class="mb-3">
+                       <label class="form-label " for="name">Name</label>
+                       <input type="text" id="name" placeholder="Enter a name" class="form-control" />
+                     </div>
+                     <div class="mb-3">
+                       <label class="form-label " for="date-time">Start date and time</label>
+                       <div class="d-flex gap-2">
+                         <input type="text" id="date" placeholder="26/07/2024" class="form-control w-50" />
+                         <input type="time" id="time" class="form-control w-50" />
+                       </div>
+                       <small class="form-text text-muted">Local time: 2024-07-26 10:37</small>
+                     </div>
+                     <div class="mb-3">
+                       <label class="form-label" for="post-every">Post every</label>
+                       <div class="d-flex gap-2 align-items-center">
+                         <input type="number" id="post-every" value="1" class="form-control w-25" />
+                         <select class="form-control w-75">
+                           <option>Hour</option>
+                           <option>Minute</option>
+                           <option>Day</option>
+                         </select>
+                       </div>
+                     </div>
+                     <div class="mb-3">
+                       <label class="form-check-label ">
+                         <input type="checkbox" class="form-check-input me-2" />
+                         Set a sleep timer
+                       </label>
+                     </div>
+                   </form>
+                  </t>
+                  <t t-if="state.subMenuSelected === 'filters'">
+                    <div class="">
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="updateProductsOdoo" />
+                        <label class="form-check-label" for="updateProductsOdoo">Update products</label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="includeNewProducts" />
+                        <label class="form-check-label" for="includeNewProducts">Include new products</label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="publishStock" />
+                        <label class="form-check-label" for="publishStock">Publish Stock</label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="publishPrice" />
+                        <label class="form-check-label" for="publishPrice">Publish Price</label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="postSKU" />
+                        <label class="form-check-label" for="postSKU">Post SKU</label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="productTemplateOverrideVariant" />
+                        <label class="form-check-label" for="productTemplateOverrideVariant">Product template override Variant</label>
+                      </div>
+                      <div class="form-group">
+                        <label for="overrideMethod">Override Method</label>
+                        <select class="form-control" id="overrideMethod">
+                        <option>Default, override description</option>
+                        <option>Option 2</option>
+                        <option>Option 3</option>
+                        </select>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="createProductAttributes" />
+                        <label class="form-check-label" for="createProductAttributes">Create Product Attributes</label>
+                    </div>
+                         </div>
+                  </t>
+                  <t t-if="state.subMenuSelected === 'accounts'">
+                    <div class="">
+                           <h5>Select Instances</h5>
+                            <div class="form-group">
+                            <form>
+                              <div class="d-flex flex-column">
+                                <t t-foreach="state.validInstances" t-as="instance" t-key="instance.id">
+                                  <div class="d-flex justify-content-between">
+                                    <label class="fw-semibold"><t t-esc="instance.name"/></label>
+                                    <input type="checkbox" id="instance.id" class="form-check-input" />
+                                  </div>
+                                </t>
+                              </div>
+                            </form>
+                          </div>
+                          </div>
+                  </t>
+                  <div class="d-flex justify-content-between mt-4">
+                     <button type="button" class="btn btn-secondary" t-on-click.prevent="()=>this.toggleSidebar()">CANCEL</button>
+                    <button type="submit" class="btn btn-primary" t-on-click.prevent="()=>this.toggleSidebar()">ADD AN EXPORT</button>
+                </div>
+              </div>
+            </div>
+        </div>
+        </div>
+      </div>
+  <!-- Content -->
+  <div class="content" t-att-style="'margin-left: ' + (state.isSidebarVisible ? '400px' : '0') + '; transition: margin-left 0.3s; height: 100%;'">
+    <div id="content-settings" style="height: 100%;">
+        <div class="d-flex" style="height: 100%;">
+          <div class="p-3 m-3 bg-light text-dark rounded shadow-sm" style="width: 100%;">
+            <h2 class="h1 mb-3">Exports<span class="badge bg-primary text-light rounded-pill">3</span></h2>
+            <div class="d-flex justify-content-between mb-3">
+            <div class="d-flex">
+              <input type="text" placeholder="Search" class="form-control me-2 flex-grow-1" />
+              <select class="form-select me-2">
+                <option value="4">4</option>
+                <option value="8">8</option>
+                <option value="12">12</option>
+              </select>
+            </div>
+            <div class="">
+              <button class="btn btn-secondary me-2">Calendar</button>
+              <button class="btn btn-primary me-2" t-on-click.prevent="()=>this.toggleSidebar()">Create Export</button>
+              <button class="btn btn-danger">Have Issues?</button>
+            </div>
+            </div>
+          
+            <div class="card mb-3">
+              <div class="card-header d-flex justify-content-between align-items-center">
+                <div class="d-flex align-items-center">
+                  <input type="checkbox" class="me-2" />
+                  <span class="text-primary me-2">📌</span>
+              <h2 class="h5 fw-semibold mb-0">articious poster 🌙</h2>
+                </div>
+                <div class="text-muted">Active</div>
+              </div>
+              <div class="card-body">
+                <p class="mb-2">Post type: Product, Order post by: Randomly without duplications, Select posts added in: Custom date range, interval: 1 hour(s)</p>
+                <div class="d-flex justify-content-between">
+                  <span>Start date: 2024-02-24 17:10:00</span>
+                  <span>Next Post: 2024-07-26 11:10</span>
+                  <span class="fw-semibold">Views: 50952</span>
+                  <span class="fw-semibold">Comments: 19</span>
+                  <button class="btn btn-link text-muted">Edit</button>
+                  <button class="btn btn-link text-danger">Delete</button>
+                </div>
+              </div>
+            </div>
+          
+              <div class="card mb-3">
+              <div class="card-header d-flex justify-content-between align-items-center">
+                <div class="d-flex align-items-center">
+                  <input type="checkbox" class="me-2" />
+                  <span class="text-primary me-2">📌</span>
+              <h2 class="h5 fw-semibold mb-0">articious poster 🌙</h2>
+                </div>
+                <div class="text-muted">Active</div>
+              </div>
+              <div class="card-body">
+                <p class="mb-2">Post type: Product, Order post by: Randomly without duplications, Select posts added in: Custom date range, interval: 1 hour(s)</p>
+                <div class="d-flex justify-content-between">
+                  <span>Start date: 2024-02-24 17:10:00</span>
+                  <span>Next Post: 2024-07-26 11:10</span>
+                  <span class="fw-semibold">Views: 50952</span>
+                  <span class="fw-semibold">Comments: 19</span>
+                  <button class="btn btn-link text-muted">Edit</button>
+                  <button class="btn btn-link text-danger">Delete</button>
+                </div>
+              </div>
+            </div>
+          
+              <div class="card mb-3">
+              <div class="card-header d-flex justify-content-between align-items-center">
+                <div class="d-flex align-items-center">
+                  <input type="checkbox" class="me-2" />
+                  <span class="text-primary me-2">📌</span>
+              <h2 class="h5 fw-semibold mb-0">articious poster 🌙</h2>
+                </div>
+                <div class="text-muted">Active</div>
+              </div>
+              <div class="card-body">
+                <p class="mb-2">Post type: Product, Order post by: Randomly without duplications, Select posts added in: Custom date range, interval: 1 hour(s)</p>
+                <div class="d-flex justify-content-between">
+                  <span>Start date: 2024-02-24 17:10:00</span>
+                  <span>Next Post: 2024-07-26 11:10</span>
+                  <span class="fw-semibold">Views: 50952</span>
+                  <span class="fw-semibold">Comments: 19</span>
+                  <button class="btn btn-link text-muted">Edit</button>
+                  <button class="btn btn-link text-danger">Delete</button>
+                </div>
+              </div>
+            </div>
+          
+          
+            <div class="d-flex  mt-4">
+              <button class="btn btn-secondary">1</button>
+              <button class="btn btn-secondary">Next</button>
+            </div>
+          
+          </div>
+        <!-- Right sidebar that is always visible -->
+        <div class="col-md-4 p-2 m-3 bg-light text-dark rounded shadow-sm" t-att-style="'box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);z-index:99; width: 400px; background: rgba(255, 255, 255, 0.9); padding: 20px; right:0; transition: right 0.3s;'">
+          <div class="nav">
+              <div class="p-4 w-100 max-w-md">
+              <h2 class=" mb-5 h4 font-weight-semibold text-dark">ACCESOS RAPIDOS</h2>
+                <div class="d-flex justify-content-between align-items-center mb-3 flex-column">
+                  <button class="cursor-pointer w-100 hover btn btn-primary m-1">Export All products</button>
+                  <button class="cursor-pointer w-100 hover btn btn-primary m-1">Export All orders</button>
+                  <button class="cursor-pointer w-100 hover btn btn-primary m-1">Export All shipments</button>
+                </div>
+              </div>
+          </div>
+        </div>
+        </div>
+      </div>
+    </div>
+    </t>
+</template>

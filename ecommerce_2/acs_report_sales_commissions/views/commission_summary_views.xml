@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo><!--
+Vista Lista (Tree) para Resumen de Comisiones -->
+    <record id="view_commission_summary_tree" model="ir.ui.view">
+        <field name="name">commission.summary.tree</field>
+        <field name="model">commission.summary</field>
+        <field name="arch" type="xml">
+            <list string="Resumen de Comisiones" create="false" edit="false" delete="false"
+                default_order="date_order desc" decoration-info="True">
+                <!-- Campos ocultos para las monedas -->
+                <field name="currency_id" column_invisible="1" />
+                <field name="company_currency_id" column_invisible="1" />
+                <field name="sale_order_id" widget="many2one_button" options="{'open_form': True}" />
+                <!-- Campos visibles -->
+                <field name="date_order" string="Fecha" />
+                <field name="partner_id" string="Cliente" />
+                <field name="seller_id" string="Vendedor" />
+                <field name="amount_untaxed" string="Monto Sin IGV (Moneda Original)" />
+                <field name="acs_type_exchange" string="Tipo de cambio" />
+                <field name="acs_amount_pen" string="Monto en soles" sum="Total en Soles" />
+                <field name="commission_percentage" string="% Parte de venta" />
+                <field name="sale_part_original_currency" string="Parte de venta en Soles" />
+                <field name="sale_part_pen" string="Parte de venta en Soles" sum="Total Parte Venta" />
+            </list>
+        </field>
+    </record>
+
+    <!-- Vista Search para filtros y agrupaciones -->
+    <record id="view_commission_summary_search" model="ir.ui.view">
+        <field name="name">commission.summary.search</field>
+        <field name="model">commission.summary</field>
+        <field name="arch" type="xml">
+            <search string="Buscar Comisiones">
+                <!-- Campos de búsqueda -->
+                <field name="partner_id" string="Cliente" />
+                <field name="seller_id" string="Vendedor" />
+
+                <!-- Agrupaciones -->
+                <group expand="0" string="Agrupar Por">
+                    <filter name="group_by_seller" string="Vendedor"
+                        context="{'group_by': 'seller_id'}" />
+                    <filter name="group_by_client" string="Cliente"
+                        context="{'group_by': 'partner_id'}" />
+                    <filter name="group_by_date" string="Fecha"
+                        context="{'group_by': 'date_order:month'}" />
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Vista Form para Resumen de Comisiones -->
+    <record id="view_commission_summary_form" model="ir.ui.view">
+        <field name="name">commission.summary.form</field>
+        <field name="model">commission.summary</field>
+        <field name="arch" type="xml">
+            <form string="Resumen de Comisión" create="false" edit="false" delete="false">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="currency_id" invisible="1" force_save="1" />
+                            <field name="company_currency_id" invisible="1" force_save="1" />
+                            <field name="date_order" readonly="1" force_save="1" />
+                            <field name="partner_id" readonly="1" force_save="1"
+                                options="{'no_open': True}" />
+                            <field name="seller_id" readonly="1" force_save="1"
+                                options="{'no_open': True}" />
+                            <field name="sale_order_id" />
+                        </group>
+                        <group>
+                            <field name="amount_untaxed" readonly="1" force_save="1" />
+                            <field name="acs_type_exchange" readonly="1" force_save="1" />
+                            <field name="acs_amount_pen" readonly="1" force_save="1" />
+                            <field name="commission_percentage" readonly="1" force_save="1" />
+                            <field name="sale_part_original_currency" readonly="1" force_save="1" />
+                            <field name="sale_part_pen" readonly="1" force_save="1" />
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action/Acción para abrir la vista -->
+    <record id="action_commission_summary" model="ir.actions.act_window">
+        <field name="name">Resumen de Comisiones</field>
+        <field name="res_model">commission.summary</field>
+        <field name="view_mode">list,form,search</field>
+        <field name="view_id" ref="view_commission_summary_tree" />
+        <field name="search_view_id" ref="view_commission_summary_search" />
+        <!-- Permitir abrir registros individualmente -->
+        <field name="target">current</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                ¡Resumen de Comisiones!
+            </p>
+            <p>
+                Aquí puedes ver el resumen detallado de todas las comisiones generadas
+                por las órdenes de venta facturadas. Haz clic en cualquier fila para ver la orden de
+                venta.
+            </p>
+        </field>
+    </record>
+
+    <!-- Menú para acceder a la vista en Reportes -->
+    <menuitem id="menu_commission_summary"
+        name="Resumen de Comisiones"
+        parent="sale.sale_order_menu"
+        action="action_commission_summary"
+        sequence="50" />
+
+</odoo>

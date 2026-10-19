@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <!-- Reglas de acceso para CRM Lead según BC-->
+
+    <!-- Lectura para todos menos Asesor -->
+    <record id="crm_lead_rule_read_all" model="ir.rule">
+        <field name="name">CRM Lead Read All</field>
+        <field name="model_id" ref="crm.model_crm_lead"/>
+        <field name="domain_force">[(1,'=',1)]</field>
+        <field name="groups" eval="[(4, ref('crm_custom_lead.group_post_venta')), (4, ref('crm_custom_lead.group_back_office')), (4, ref('crm_custom_lead.group_gerente')), (4, ref('crm_custom_lead.group_jefe_operaciones')), (4, ref('crm_custom_lead.group_supervisor'))]"/>
+    </record>
+
+    <!-- Edición fuera de la etapa Validación (excluye Asesor) -->
+    <record id="crm_lead_rule_write_out_validacion" model="ir.rule">
+        <field name="name">CRM Lead Write Out Validacion</field>
+        <field name="model_id" ref="crm.model_crm_lead"/>
+        <field name="domain_force" eval="str([('stage_id','!=', ref('crm_custom_lead.crm_stage_validacion'))])"/>
+        <field name="groups" eval="[(4, ref('crm_custom_lead.group_post_venta')), (4, ref('crm_custom_lead.group_back_office')), (4, ref('crm_custom_lead.group_gerente')), (4, ref('crm_custom_lead.group_jefe_operaciones')), (4, ref('crm_custom_lead.group_supervisor'))]"/>
+    </record>
+
+    <!-- Validador: accede/edita en etapa Validación -->
+    <record id="crm_lead_rule_write_validacion_validador" model="ir.rule">
+        <field name="name">CRM Lead Write Validacion Validador</field>
+        <field name="model_id" ref="crm.model_crm_lead"/>
+        <field name="domain_force" eval="str([('stage_id','=', ref('crm_custom_lead.crm_stage_validacion'))])"/>
+        <field name="groups" eval="[(4, ref('crm_custom_lead.group_validador'))]"/>
+    </record>
+
+    <!-- Asesor: ve solo sus leads -->
+    <record id="crm_lead_rule_read_own_asesor" model="ir.rule">
+        <field name="name">CRM Lead Read Own (Asesor)</field>
+        <field name="model_id" ref="crm.model_crm_lead"/>
+        <field name="domain_force">[('asesor.user_id','=',user.id)]</field>
+        <field name="groups" eval="[(4, ref('crm_custom_lead.group_asesor'))]"/>
+    </record>
+
+    <!-- Asesor: edita solo sus leads antes de Validación -->
+    <record id="crm_lead_rule_write_out_validacion_asesor" model="ir.rule">
+        <field name="name">CRM Lead Write Out Validacion (Asesor)</field>
+        <field name="model_id" ref="crm.model_crm_lead"/>
+        <field name="domain_force" eval="&quot;[('stage_id','!=', %d), ('asesor.user_id','=',user.id)]&quot; % ref('crm_custom_lead.crm_stage_validacion')"/>
+        <field name="groups" eval="[(4, ref('crm_custom_lead.group_asesor'))]"/>
+    </record>
+
+    <!-- Limitar visibilidad de etapas a solo las definidas por el módulo -->
+    
+</odoo>
+
+
+

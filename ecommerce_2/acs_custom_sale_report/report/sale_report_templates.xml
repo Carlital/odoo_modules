@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="sale_order_custom_report_template">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="order">
+                <t t-call="web.basic_layout">
+                    <div class="page">
+                        <!-- Header -->
+                        <style>
+                            *{
+                            font-family: arial !important;
+                            }
+                            table.table-client td{
+                            padding: 2px!important; font-size: 15px !important
+                            }
+                            table.table-client td &gt; strong{
+                            padding-right: 2px !important
+                            }
+                            table.table-striped tbody tr:nth-of-type(odd) {
+                            background-color: rgba(0, 0, 0, .05);
+                            }
+                            table.table-banks{
+                            width:100%; border:0px!important; border-collapse: collapse;
+                            }
+                            table.table-banks thead, table.table-banks tbody{
+                            border:0px!important
+                            }
+                            table.table-banks thead tr{
+                            border:1px solid #000 !important;background:#000;height: 30px
+                            !important;
+                            }
+                            table.table-banks thead th{
+                            color:#fff;text-align:center;vertical-align: middle
+                            }
+                            table.table-banks tbody tr{
+                            border:0px !important; border-bottom:1px dashed !important;height: 30px
+                            !important
+                            }
+                            table.table-banks tbody tr td{
+                            border:0px!important;vertical-align: middle
+                            }
+                            table.table-products tbody *{
+                            font-size: 14px
+                            }
+                        </style>
+                        <table style="width:100%; border:0px!important;border-collapse: collapse;">
+                            <tbody style="border:0px!important">
+                                <tr style="border:0px!important">
+                                    <td style="width:25%;vertical-align: top;border:0px!important">
+                                        <img t-att-src="'/logo'" style="max-width: 250px;" />
+                                    </td>
+                                    <td
+                                        style="width:45%;text-align:center;vertical-align: top;border:0px!important">
+
+                                        <h5 style="padding-bottom:0px;margin-bottom:0px">
+                                            <t t-esc="company.name" />
+                                        </h5>
+                                        R.U.C.: <t t-esc="company.vat" /><br />
+                                        <span
+                                            style="padding-top:0px;margin-top:0px;font-size:13px"><t
+                                                t-esc="company.street" /> - <t t-esc="company.city" />
+                                        , <t t-esc="company.state_id.name" />, <t
+                                                t-esc="company.country_id.name" /><br /> Teléfono: <t
+                                                t-esc="company.phone" /> | E-mail: <t
+                                                t-esc="company.email" /></span>
+                                    </td>
+                                    <td
+                                        style="width:30%;text-align:center;vertical-align: top;border:0px!important">
+                                        <h4>
+                                            <t t-if="order.state == 'sale'"> PEDIDO<br />
+                                            </t>
+                                        <t
+                                                t-if="order.state in ('draft', 'sent')"> COTIZACIÓN<br />
+                                            </t>
+                                        <t
+                                                t-if="order.state == 'cancel'"> NOTA ANULADA<br />
+                                            </t>
+                                            Nº <t t-esc="order.name" />
+                                        </h4>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <br />
+                        <!-- Client Information -->
+                        <table class="table-client"
+                            style="width:100%; border:0px!important;border-collapse: collapse;">
+                            <tbody style="border:0px!important">
+                                <tr style="border:0px!important">
+                                    <td style="border:0px!important;width:100px">
+                                        <strong>CLIENTE:</strong>
+                                    </td>
+                                    <td style="border:0px!important">
+                                        <t t-esc="order.partner_id.name" />
+                                    </td>
+                                    <td class="text-end" style="border:0px!important">
+                                        <t t-if="order.partner_id.phone or order.partner_id.mobile">
+                                            <strong>TELF/CEL:</strong>
+                                        </t>
+                                    </td>
+                                    <td style="border:0px!important">
+                                        <t t-if="order.partner_id.phone or order.partner_id.mobile">
+                                            <t t-if="order.partner_id.phone">
+                                                <t t-esc="order.partner_id.phone" />
+                                            </t>
+                                            <t
+                                                t-if="order.partner_id.phone and order.partner_id.mobile">
+                                                - <t t-esc="order.partner_id.mobile" />
+                                            </t>
+                                            <t
+                                                t-if="not order.partner_id.phone and order.partner_id.mobile">
+                                                <t t-esc="order.partner_id.mobile" />
+                                            </t>
+                                        </t>
+                                    </td>
+                                    <td class="text-end" style="border:0px!important">
+                                        <strong>FECHA:</strong>
+                                    </td>
+                                    <td style="border:0px!important">
+                                        <t
+                                            t-esc="order.date_order.strftime('%d/%m/%Y') if order.date_order else ''" />
+                                    </td>
+                                </tr>
+                                <tr style="border:0px!important">
+                                    <td style="border:0px!important">
+                                        <strong>DIRECCIÓN:</strong>
+                                    </td>
+                                    <td colspan="3" style="border:0px!important">
+                                        <t t-esc="order.partner_id.street" /> - <t
+                                            t-esc="order.partner_id.l10n_pe_district.name" />, <t
+                                            t-esc="order.partner_id.city_id.name" />, <t
+                                            t-esc="order.partner_id.state_id.name" />
+                                    </td>
+                                    <td class="text-end" style="border:0px!important">
+                                        <strong>F. VENC:</strong>
+                                    </td>
+                                    <td style="border:0px!important">
+                                        <t
+                                            t-esc="order.validity_date.strftime('%d/%m/%Y') if order.validity_date else ''" />
+                                    </td>
+                                </tr>
+                                <tr style="border:0px!important">
+                                    <td style="border:0px!important">
+                                        <strong>RUC/DNI:</strong>
+                                    </td>
+                                    <td style="border:0px!important">
+                                        <t t-esc="order.partner_id.vat" />
+                                    </td>
+                                    <td class="text-end" style="border:0px!important">
+                                        <t t-if="order.client_order_ref">
+                                            <strong>O.C:</strong>
+                                        </t>
+                                    </td>
+                                    <td style="border:0px!important">
+                                        <t t-if="order.client_order_ref">
+                                            <t t-esc="order.client_order_ref" />
+                                        </t>
+                                    </td>
+                                    <td class="text-end" style="border:0px!important">
+                                        <t t-if="order.payment_term_id">
+                                            <strong>COND. PAGO:</strong>
+                                        </t>
+                                    </td>
+                                    <td style="border:0px!important">
+                                        <t t-if="order.payment_term_id">
+                                            <t t-esc="order.payment_term_id.name" />
+                                        </t>
+                                    </td>
+                                </tr>
+                                <tr style="border:0px!important">
+                                    <td style="border:0px!important">
+                                        <t t-if="order.user_id">
+                                            <strong>VENDEDOR:</strong>
+                                        </t>
+                                    </td>
+                                    <td style="border:0px!important">
+                                        <t t-if="order.user_id">
+                                            <t t-esc="order.user_id.name" />
+                                        </t>
+                                        <t t-if="order.user_id.mobile"> - CEL: <t
+                                                t-esc="order.user_id.mobile" /></t>
+                                    </td>
+                                    <td style="border:0px!important">
+
+                                    </td>
+                                    <td style="border:0px!important">
+
+                                    </td>
+                                    <td class="text-end" style="border:0px!important">
+                                        <strong>MONEDA:</strong>
+                                    </td>
+                                    <td style="border:0px!important">
+                                        <t t-esc="order.currency_id.name" />
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <br />
+                        <!-- Products Table -->
+                        <table class="table table-bordered table-products table-striped">
+                            <thead>
+                                <tr>
+                                    <th style="width: 20px">N°</th>
+                                    <th>Descripción</th>
+                                    <th style="width: 30px">Cant.</th>
+                                    <th style="width: 40px">U.M.</th>
+                                    <th style="width: 45px">P.U.</th>
+                                    <th style="width: 50px"
+                                        t-if="order.order_line.filtered(lambda line: line.discount &gt; 0)">
+                                        Dcto(%)</th>
+                                    <th style="width: 60px">Importe</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-set="item" t-value="0" />
+                                <tr t-foreach="order.order_line" t-as="line">
+                                    <td class="text-center">
+                                        <t t-set="item" t-value="item + 1" />
+                                        <span t-esc="item" />
+                                    </td>
+                                    <td t-esc="line.name" />
+                                    <td class="text-end" t-esc="line.product_uom_qty" />
+                                    <td class="text-end" t-esc="line.product_uom.name" />
+                                    <td class="text-end">
+                                        <span t-field="line.price_unit"
+                                            t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: order.currency_id}" />
+                                    </td>
+                                    <td class="text-end"
+                                        t-if="order.order_line.filtered(lambda line: line.discount &gt; 0)"
+                                        t-esc="line.discount" />
+                                    <td class="text-end">
+                                        <span t-field="line.price_total"
+                                            t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: order.currency_id}" />
+                                    </td>
+                                </tr>
+                                <tr
+                                    t-if="not order.order_line.filtered(lambda line: line.discount &gt; 0)">
+                                    <td colspan="5" class="text-end">
+                                        <strong>TOTAL:</strong>
+                                    </td>
+                                    <td class="text-end">
+                                        <span t-field="order.amount_total"
+                                            t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: order.currency_id}" />
+                                    </td>
+                                </tr>
+                                <tr
+                                    t-if="order.order_line.filtered(lambda line: line.discount &gt; 0)">
+                                    <td colspan="6" class="text-end">
+                                        <strong>TOTAL:</strong>
+                                    </td>
+                                    <td class="text-end">
+                                        <span t-field="order.amount_total"
+                                            t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: order.currency_id}" />
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <!-- Totals -->
+                        <div class="text-end" style="display:none">
+                            <p style="display:none">
+                                <strong>Subtotal:</strong>
+                                <span t-field="order.amount_untaxed"
+                                    t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: order.currency_id}" />
+                            </p>
+                            <p style="display:none">
+                                <strong>IGV 18%:</strong>
+                                <span t-field="order.amount_tax"
+                                    t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: order.currency_id}" />
+                            </p>
+                            <p style="display:none">
+                                <strong>Total:</strong>
+                                <span t-field="order.amount_total"
+                                    t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: order.currency_id}" />
+                            </p>
+                        </div>
+                        <!-- Notas -->
+                        <div t-if="order.note" class="notes">
+                            <t t-esc="order.note" />
+                        </div>
+                        <!-- Bank Information -->
+                        <p>
+                            <strong>"SIRVASE A BONAR EN NUESTRAS CUENTAS"</strong>
+                        </p>
+                        <table class="table-banks">
+                            <thead>
+                                <tr>
+                                    <th>Banco</th>
+                                    <th>Moneda</th>
+                                    <th>Tipo</th>
+                                    <th>Cuenta</th>
+                                    <th>CCI</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>BCP</td>
+                                    <td>Soles</td>
+                                    <td>Corriente</td>
+                                    <td>355-2511864-0-20</td>
+                                    <td>002-355-002511864020-67</td>
+                                </tr>
+                                <tr>
+                                    <td>BBVA</td>
+                                    <td>Soles</td>
+                                    <td>Corriente</td>
+                                    <td>0011-0235-0100171749</td>
+                                    <td>011-235-000100171749-93</td>
+                                </tr>
+                                <tr>
+                                    <td>CAJA HUANCAYO</td>
+                                    <td>Soles</td>
+                                    <td>Corriente</td>
+                                    <td>1070022110084408924</td>
+                                    <td>808-002-211008408924-07</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="footer" style="font-family: Monaco;">
+                        <br />
+                        <div class="text-muted text-center"> Página: <span class="page" /> / <span
+                                class="topage" />
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <report id="sale_order_custom_report"
+        model="sale.order"
+        string="Reporte Ventas"
+        report_type="qweb-pdf"
+        name="acs_custom_sale_report.sale_order_custom_report_template"
+        file="acs_custom_sale_report.sale_order_custom_report_template"
+        attachment="(object.state in ('draft', 'sent') and 'Cotización - %s' % (object.name)) or 'Pedido - %s' % (object.name)" />
+</odoo>

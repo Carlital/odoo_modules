@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form_acs_pos_ondemand" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.acs.pos.ondemand</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="point_of_sale.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//block[@id='pos_interface_section']" position="after">
+                <block title="POS On-demand Search" id="acs_pos_ondemand_section">
+                    <setting string="Automatic Daily Top Sellers" help="Automatically add daily top-selling products to a POS category.">
+                        <div class="content-group">
+                            <div class="row mt16">
+                                <label for="acs_pos_ondemand_top_category_id" class="col-lg-4 o_light_label"/>
+                                <field name="acs_pos_ondemand_top_category_id" class="col-lg-8" options="{'no_create': False}"/>
+                            </div>
+                            <div class="row mt16">
+                                <label for="acs_pos_ondemand_top_limit" class="col-lg-4 o_light_label"/>
+                                <field name="acs_pos_ondemand_top_limit" class="col-lg-8"/>
+                            </div>
+                            <div class="row mt16">
+                                <label for="acs_pos_ondemand_min_qty" class="col-lg-4 o_light_label"/>
+                                <field name="acs_pos_ondemand_min_qty" class="col-lg-8"/>
+                            </div>
+                        </div>
+                    </setting>
+                </block>
+            </xpath>
+        </field>
+    </record>
+</odoo>

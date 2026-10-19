@@ -1,0 +1,90 @@
+/* Card Input Container */
+.card_input_container {
+    width: 100%;
+}
+
+.card_input_wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+/* Input styles */
+.card_number_input {
+    flex: 1;
+    padding-right: 100px !important;
+    font-family: 'Courier New', monospace;
+    font-size: 14px;
+    letter-spacing: 1px;
+}
+
+/* Estados del input */
+.card_number_input.is-typing {
+    border-color: #6c757d;
+}
+
+.card_number_input.is-valid {
+    border-color: #28a745 !important;
+    background-color: #f8fff9 !important;
+}
+
+.card_number_input.is-invalid {
+    border-color: #dc3545 !important;
+    background-color: #fff5f5 !important;
+}
+
+/* Indicador de tipo de tarjeta */
+.card_type_indicator {
+    position: absolute;
+    right: 8px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 3px 8px;
+    background: #f8f9fa;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 500;
+    color: #495057;
+    pointer-events: none;
+    border: 1px solid #dee2e6;
+}
+
+.card_icon {
+    font-size: 16px;
+}
+
+.card_label {
+    text-transform: uppercase;
+    font-size: 11px;
+    letter-spacing: 0.5px;
+}
+
+/* Mensajes de validación */
+.card_validation_message {
+    min-height: 24px;
+    margin-top: 4px;
+    font-size: 12px;
+}
+
+.card_validation_message .text-danger {
+    color: #dc3545;
+}
+
+.card_validation_message .text-success {
+    color: #28a745;
+}
+
+.card_validation_message i {
+    margin-right: 4px;
+}
+
+/* Readonly state */
+.card_number_input[readonly] {
+    background-color: #e9ecef !important;
+    cursor: not-allowed;
+}
+
+.card_number_input[readonly] + .card_type_indicator {
+    opacity: 0.7;
+}

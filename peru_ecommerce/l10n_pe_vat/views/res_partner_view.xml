@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record model="ir.ui.view" id="view_partner_form">
+        <field name="name">res.partner.view.form.inherit.l10n.pe.vat</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <sheet position="before">
+                <header invisible="country_code != 'PE'">
+                    <button string="Update RUC/DNI" type="object" name="update_document" context="{'force_update':True}" />
+                    <field name="pe_state" widget="statusbar" statusbar_visible="ACTIVO,BAJA DE OFICIO" readonly="0"
+                           statusbar_colors="{'ACTIVO':'green','BAJA DE OFICIO':'red','BAJA PROVISIONAL':'red','SUSPENSION TEMPORAL':'red'}"
+                           options="{'clickable': '1', 'fold_field': 'fold'}" />
+                </header>
+            </sheet>
+
+            <xpath expr="//field[@name='category_id']" position="after">
+                <field name="pe_doc_type" invisible="True" />
+                <field name="pe_condition" invisible="pe_doc_type != '6'" />
+                <field name="pe_is_validate" invisible="True" />
+            </xpath>
+            
+            <xpath expr="//page[@name='sales_purchases']" position="after">
+            	<page name="sunat_details" string="SUNAT" invisible="country_code != 'PE' and not is_company">
+	                <group name="container_sunat_general" invisible="not is_company">
+	                    <group string="General information">
+	                        <field name="pe_legal_name" placeholder="Legal Name" required="country_code == 'PE' and not is_company" />
+	                        <field name="pe_commercial_name" placeholder="Tradename" required="country_code == 'PE' and not is_company" />
+	                        <field name="pe_type_taxpayer" />
+	                        <field name="pe_emission_system" />
+	                        <field name="pe_accounting_system" />
+	                        <field name="pe_last_update" />
+	                    </group>
+	                    <group string="Retention Agent">
+	                        <field name="pe_retention_agent" />
+	                        <field name="pe_retention_agent_from" />
+	                        <field name="pe_retention_agent_resolution" />
+	                    </group>
+	                </group>
+                </page>
+	        </xpath>
+        </field>
+    </record>
+
+    <record id="view_partner_latam_form" model="ir.ui.view">
+        <field name="name">view_partner_latam_form</field>
+        <field name="inherit_id" ref="l10n_latam_base.view_partner_latam_form"/>
+        <field name="model">res.partner</field>
+        <field name="priority">100</field>
+        <field type="xml" name="arch">
+            <xpath expr="//field[@name='l10n_latam_identification_type_id']" position="attributes">
+                <attribute name="required">country_code != 'PE'</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>

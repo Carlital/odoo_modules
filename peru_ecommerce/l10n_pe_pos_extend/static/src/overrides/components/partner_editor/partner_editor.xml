@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="l10n_pe_pos_extend.PartnerDetailsEdit" t-inherit="point_of_sale.PartnerDetailsEdit" t-inherit-mode="extension">
+        <xpath expr="//input[hasclass('vat')]" position="before">
+            <button  class="btn" t-on-click="updatePeValues">
+                <i class="fa fa-search"></i>
+            </button>
+        </xpath>
+        <xpath expr="//select[@name='l10n_latam_identification_type_id']/option" position="before">
+            <option value="">None</option>
+        </xpath>
+    </t>
+
+</templates>

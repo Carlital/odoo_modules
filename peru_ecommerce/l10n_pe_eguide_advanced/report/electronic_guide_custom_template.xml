@@ -1,0 +1,409 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="report_pe_eguide_advanced_document">
+            <t t-if="not o" t-set="o" t-value="doc"/>
+
+            <t t-if="not company">
+                <!-- Multicompany -->
+                <t t-if="company_id">
+                    <t t-set="company" t-value="company_id"/>
+                </t>
+                <t t-elif="o and 'company_id' in o and o.company_id.sudo()">
+                    <t t-set="company" t-value="o.company_id.sudo()"/>
+                </t>
+                <t t-else="else">
+                    <t t-set="company" t-value="res_company"/>
+                </t>
+            </t>
+            <t t-set="o" t-value="o.with_context(lang=lang)" />
+            <div class="header" style="font-family: Monaco;">
+                <div class="row">
+                    <div class="col-3">
+                        <img t-if="company.logo" t-att-src="image_data_uri(company.logo)" style="max-height: 45px;" alt="Logo"/>
+                    </div>
+                    <div class="col-5">
+                        <t t-if="company.is_company_details_empty">
+                            <span t-field="company.name"/><br />
+                            <span t-field="company.street" style="font-weight: normal;"/><br />
+                            <span t-field="company.city" style="font-weight: normal;"/>-
+                            <span t-field="company.partner_id.city_id.name" style="font-weight: normal;"/>-
+                            <span t-field="company.state_id.name" style="font-weight: normal;"/>
+                        </t>
+                        <t t-else="">
+                            <span t-field="company.company_details">
+                                <div>
+                                    <strong>Company details block</strong>
+                                    <div>Contains the company details.</div>
+                                </div>
+                            </span>
+                        </t>
+                        <div class="text-end" style="margin-top:22px;" t-if="company.report_header" t-field="company.report_header" name="moto">Company tagline</div>
+                    </div>
+                    <div class="col-4">
+                        <div class="text-center" style="background-color: #eeeeee !important; border-radius: 10px; padding: 10px 15px 10px 15px;">
+                          <h1 style="font-size: 18px !important;">
+                            RUC <span t-field="company.vat"/> <br />
+                            <span>Guía de Remisión Remitente Electrónica</span>
+                            <t t-if="o.state in ['to_send', 'generate']">
+                                <span>Draft</span>
+                            </t>
+                            <t t-if="o.state in ['cancel','cancelled']">
+                                <span>Cancelled</span>
+                            </t>
+                            <span t-if="o.name != '/'" t-field="o.name"/><br />
+                          </h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="article" style="font-size: 12px !important;" t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id" t-att-data-oe-lang="o and o.env.context.get('lang')">
+
+
+                <div class="page" style="font-family: Monaco;">
+                    <!--                    paso 2-->
+                    <table class="table table-striped" style="border-collapse: collapse; width:100%;">
+                        <tr>
+                            <th class="text-center" style="width: 50%; border: 1px solid black !important;" >
+                                <span>Datos del Remitente</span>
+                            </th>
+                            <th class="text-center" style="border: 1px solid black !important;">
+                                <span>Datos del Destinatario</span>
+                            </th>
+                        </tr>
+                        <tr>
+                            <td style="border: 0px solid black; padding: 8px; font-size: 12px;">
+                                <t t-if="o.reason_transfer not in ['02', '04', '06', '08']">
+                                    RUC: <span t-field="o.company_id.vat"/><br />
+                                    Nombre: <span t-field="o.company_id.name"/><br />
+                                    Dirección: <span t-field="o.company_id.street"/>
+                                    <span t-field="o.company_id.state_id"/>-
+                                    <span t-field="o.company_id.city_id"/>
+                                    -
+                                    <span t-field="o.company_id.l10n_pe_district"/><br />
+                                </t>
+                                <t t-else="">
+                                    <t t-set="partner_id" t-value="o.partner_id.parent_id or o.partner_id"/>
+                                    Identificación:
+                                    <t t-if="partner_id.pe_doc_type == '1'">
+                                        <span>D.N.I.:</span>
+                                    </t>
+                                    <t t-if="partner_id.pe_doc_type == '6'">
+                                        <span>R.U.C.:</span>
+                                    </t>
+                                    <t t-if="partner_id.pe_doc_type not in ['1', '6']">
+                                        <span t-field="o.partner_id.vat"/>
+                                    </t><br />
+                                    Número de identificación:
+                                    <span t-esc="partner_id.vat"/><br />
+                                    Nombre: <span t-esc="partner_id.name"/><br />
+                                    Dirección: <span t-field="partner_id.street"/>
+                                    <span t-field="partner_id.state_id"/>-
+                                    <span t-field="partner_id.city_id"/>
+                                    -
+                                    <span t-field="partner_id.l10n_pe_district"/><br />
+                                </t>
+
+
+                            </td>
+                            <td style="border: 0px solid black; padding: 8px; font-size: 12px;">1Q
+                                <t t-if="o.reason_transfer in ['02', '04', '06', '08']">
+                                    RUC: <span t-field="o.company_id.vat"/><br />
+                                    Nombre: <span t-field="o.company_id.name"/><br />
+
+                                    <span t-if="o.company_id.street">Dirección:</span>
+                                    <span t-if="o.company_id.street" t-field="o.company_id.street"/>
+                                    <t t-if="o.company_id.l10n_pe_district">
+                                        <span t-field="o.company_id.l10n_pe_district"/>-
+                                        <span t-field="o.company_id.city_id"/>
+                                        -
+                                        <span t-field="o.company_id.state_id"/>
+                                    </t>
+                                </t>
+                                <t t-else="">
+                                    Identificación:
+                                    <t t-if="o.partner_id.pe_doc_type == '1'">
+                                        <span>D.N.I.:</span>
+                                    </t>
+                                    <t t-if="o.partner_id.pe_doc_type == '6'">
+                                        <span>R.U.C.:</span>
+                                    </t>
+                                    <t t-if="o.partner_id.pe_doc_type not in ['1', '6']">
+                                        <span t-field="o.partner_id.pe_doc_type"/>
+                                    </t><br />
+                                    Número de identificación:
+                                    <span t-esc="o.partner_id.vat"/><br />
+                                    Nombre: <span t-esc="o.partner_id.name"/><br />
+
+                                    <span t-if="o.partner_id.street">Dirección:</span>
+                                    <span t-if="o.partner_id.street" t-field="o.partner_id.street"/>
+                                    <t t-if="o.partner_id.l10n_pe_district">
+                                        <span t-field="o.partner_id.l10n_pe_district"/>-
+                                        <span t-field="o.partner_id.city_id"/>
+                                        -
+                                        <span t-field="o.partner_id.state_id"/>
+                                    </t>
+                                </t>
+
+                            </td>
+                        </tr>
+                    </table>
+                    <table class="table table-striped" style="border-collapse: collapse; width:100%;">
+                        <tr>
+                            <th style="border: 1px solid black !important;">
+                                <span>Fecha de Emision</span>
+                            </th>
+                            <th style="border: 1px solid black !important;">
+                                <span>Inicio del Traslado</span>
+                            </th>
+                            <th style="border: 1px solid black !important;">
+                                <span>Motivo del Traslado</span>
+                            </th>
+                            <!--th style="border: 1px solid black !important;" t-if="o.sale_id">
+                                <span>Orden de Venta</span>
+                            </th-->
+                            <th style="border: 1px solid black !important;">
+                                <span>Peso Bruto Total</span>
+                            </th>
+                            <th style="border: 1px solid black !important;">
+                                <span>Unidad de Medida</span>
+                            </th>
+                            <th style="border: 1px solid black !important;">
+                                <span>N° Bultos o Paletas</span>
+                            </th>
+                            <th style="border: 1px solid black !important;">
+                                <span>Modalidad</span>
+                            </th>
+
+                        </tr>
+                        <tr>
+                            <td>
+                                <span t-field="o.date_issue"/>
+                            </td>
+                            <td>
+                                <span t-field="o.transfer_date"/>
+                            </td>
+                            <td>
+                                <span t-field="o.reason_transfer"/>
+                            </td>
+                            <!--td t-if="o.sale_id">
+                                <span t-field="o.sale_id"/>
+                            </td-->
+                            <td>
+                                <span t-field="o.gross_weight"/>
+                            </td>
+                            <td>
+                                <span>KGM</span>
+                            </td>
+                            <td>
+                                <span t-field="o.unit_quantity"/>
+                            </td>
+                            <td>
+                                <span t-field="o.transport_mode"/>
+                            </td>
+                        </tr>
+                    </table>
+<!--                            paso 3-->
+                    <table class="table table-striped" style="border-collapse: collapse; width:100%;">
+                        <tr>
+                            <th style="border: 1px solid black !important;">
+                                <span>Cantidad</span>
+                            </th>
+                            <th style="border: 1px solid black !important;">
+                                <span>Unidad</span>
+                            </th>
+                            <th style="border: 1px solid black !important;">
+                                <span>Codigo</span>
+                            </th>
+                            <th class="text-center" style="border: 1px solid black !important;">
+                                <span>Descipcion</span>
+                            </th>
+                        </tr>
+                        <tr t-foreach="o.line_ids" t-as="line_id">
+                            <td>
+                                <span t-field="line_id.quantity"/>
+                            </td>
+                            <td>
+                                <span t-esc="line_id.uom_code"/>
+                            </td>
+                            <td>
+                                <span t-field="line_id.product_code"/>
+                            </td>
+                            <td class="text-center">
+                                <span t-field="line_id.name"/>
+                            </td>
+                        </tr>
+                    </table>
+<!--                             DATOS DE TRANSPORTE paso 4-->
+                    <table class="table table-striped" style="border-collapse: collapse; width:100%;">
+                        <tr>
+                            <th class="text-center" colspan="3" style="border: 1px solid black !important;">
+                                <span>Datos del Transporte</span>
+                            </th>
+                        </tr>
+                        <tr>
+                            <td style="width:50%;" rowspan="2">
+                                Direccion del punto de partida: <span t-field="o.src_street"/>
+                                <t t-if="o.src_district_id">
+                                    <span t-field="o.src_district_id"/>-
+                                    <span t-field="o.src_province_id"/>
+                                    -
+                                    <span t-field="o.src_state_id"/>
+                                </t><br />
+                                <t t-if="o.transport_mode=='02' and not o.vehicle_m1_l">
+                                    <t t-set="is_main" t-value="True"/>
+                                    <span t-field="o.company_id.name"/><br />
+                                    <span>RUC:</span><span t-field="o.company_id.vat"/><br />
+                                    <span t-if="o.company_id.street">Dirección:</span>
+                                    <span t-if="o.company_id.street" t-field="o.company_id.partner_id.street"/>
+                                    <t t-if="o.company_id.l10n_pe_district">
+                                        <span t-field="o.company_id.l10n_pe_district"/>-
+                                        <span t-field="o.company_id.city_id"/>
+                                        -
+                                        <span t-field="o.company_id.state_id"/>
+                                    </t>
+                                    <t t-as="driver_id" t-foreach="o.carrier_ids">
+                                        Tipo conductor:
+                                        <t t-if="is_main">
+                                            <span>Principal</span><br />
+                                            <t t-set="is_main" t-value="False"/>
+                                        </t>
+                                        <t t-else="">
+                                             <span>Secundario</span><br />
+                                        </t>
+                                        Identificacion: <span t-field="driver_id.doc_number"/><br />
+                                        Apellidos y Nombres: <span t-field="driver_id.name"/><br />
+                                        Licencia: <span t-field="driver_id.driver_license"/><br />
+                                    </t>
+
+                                </t>
+                                <t t-if="o.vehicle_m1_l">
+                                    INDICADOR DE TRASLADO EN VEHÍCULOS DE CATEGORÍA M1 O L<br />
+                                </t>
+
+
+                            </td>
+                            <td colspan="2">
+                                Dirección del punto de llegada:<span t-field="o.dst_street"/>
+                                <t t-if="o.dst_district_id">
+                                    <span t-field="o.dst_district_id"/>-
+                                    <span t-field="o.dst_province_id"/>
+                                    -
+                                    <span t-field="o.dst_state_id"/>
+                                </t><br />
+                                <t t-if="o.transport_mode=='01' and not o.vehicle_m1_l">
+                                    Razón Social del Transportista: <span t-esc="o.carrier_id.name"/><br />
+                                    Identificacion del transportista: <span t-esc="o.carrier_id.vat"/><br />
+
+                                </t>
+
+                            </td>
+                        </tr>
+                        <tr style="background-color: #fff;">
+                            <td>
+                                <t t-if="o.vehicle_ids">
+                                    Placa del Vehiculo: <span t-esc="'/'.join(o.vehicle_ids.mapped('name'))"/>
+                                </t>
+                            </td>
+                            <!--td>
+                                <t t-if="len(o.pe_fleet_ids)>1">
+                                    Placa del Carretera: <span t-esc="o.pe_fleet_ids[-1].name"/>
+                                </t>
+
+                            </td-->
+                        </tr>
+                    </table>
+
+<!--                            DOCUMENTOS RELACIONADOSpaso 5-->
+                    <table class="table table-striped" style="border-collapse: collapse; width:100%;" t-if="o.related_ids">
+                        <tr>
+                            <th class="text-center" style="width: 50%; border: 1px solid black !important; ">
+                                <span>Documentos relacionados</span>
+                            </th>
+                        </tr>
+                        <tr t-as="related_id" t-foreach="o.related_ids">
+                            <td>
+                                <span t-field="related_id.document_type"/>
+                            </td>
+                            <td>
+                                <span t-field="related_id.name"/>
+                            </td>
+                            <td>
+                                <span t-field="related_id.partner_id.vat"/> -
+                                <span t-field="related_id.partner_id.name"/>
+                            </td>
+                        </tr>
+                    </table>
+                    <p t-field="o.note"/>
+<!--                            EMITIR POR-REVISAR POR paso 6-->
+                    <table class="table table-striped" style="border-collapse: collapse; width:100%;">
+                        <tr style="background-color: #fff;">
+                            <td rowspan="3" style="width: 25%;">
+                                <img t-if="o.qr_code" t-att-src="'data:image/png;base64,%s' %o.qr_code.decode('utf-8')"
+                                style="width: 40mm;  height: 40mm;" />
+                            </td>
+                            <th style="width: 25%; border: 1px solid black !important; ">
+                                <strong>EMITIDO POR</strong>
+                            </th>
+                            <th style="width: 25%; border: 1px solid black !important; ">
+                                <strong>REVISADO POR</strong>
+                            </th>
+                            <th style="width: 25%; border: 1px solid black !important; ">
+                                <strong>RECIBI CONFORME</strong>
+                            </th>
+
+                        </tr>
+                        <tr style="background-color: #fff;">
+                            <td style="width: 25%; border: 1px solid black !important; ">
+                                <br />
+                                <span t-esc="o.env.user.name"/>
+                                <br />
+                                <br />
+                                <span>Fech. Imp.:</span><span t-esc="o.get_pe_print_date()"/><br />
+                            </td>
+                            <td style="width: 25%; border: 1px solid black !important; ">
+                                <br />
+                                <br />
+                                <br />
+                                <br />
+                            </td>
+                            <td style="width: 25%; border: 1px solid black !important;">
+                                <br />
+                                <br />
+                                <br />
+                                Doc. Identidad<br />
+                            </td>
+                        </tr>
+                        <tr style="background-color: #fff;" >
+                            <td colspan="3">
+                                Representacion impresa de: GUÍA DE REMISIÓN REMITENTE ELECTRÓNICA, consulte en
+                                <span t-field="o.company_id.website"/><br />
+                                <!--t t-if="o.company_id.sunat_resolution_type and o.company_id.sunat_resolution_number">
+                                    Autorizado mediante
+                                    <span t-field="o.company_id.sunat_resolution_type"/> N°
+                                    <span t-field="o.company_id.sunat_resolution_number"/>
+                                </t-->
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div t-attf-class="footer o_standard_footer" style="font-family: Monaco;">
+                <div class="text-center">
+
+                    <div t-field="company.report_footer">Company Report Footer</div>
+                    <div t-if="report_type == 'pdf'">
+                        Page: <span class="page"/> / <span class="topage"/>
+                    </div>
+                    <div t-if="report_type == 'pdf' and display_name_in_footer" class="text-muted">
+                        <span t-out="o.name">(document name)</span>
+                    </div>
+                </div>
+            </div>
+
+        </template>
+
+    </data>
+</odoo>

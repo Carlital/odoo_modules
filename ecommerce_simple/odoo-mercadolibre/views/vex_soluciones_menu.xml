@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record model="ir.actions.client" id="import_export">
+        <field name="name">Import/Export</field>
+        <field name="tag">vex_sync_mercado_libre.import_export</field>
+    </record>
+
+    <record model="ir.actions.client" id="welcome">
+        <field name="name">Dashboard</field>
+        <field name="tag">vex_sync_mercado_libre.welcome</field>
+    </record>
+
+    <record model="ir.actions.client" id="automatic_pricing">
+        <field name="name"></field>
+        <field name="tag">vex_sync_mercado_libre.automatic_pricing</field>
+    </record>
+
+    <record model="ir.actions.client" id="chatbot">
+        <field name="name"></field>
+        <field name="tag">vex_sync_mercado_libre.chatbot</field>
+    </record>
+
+    <record model="ir.actions.client" id="questions">
+        <field name="name"></field>
+        <field name="tag">vex_sync_mercado_libre.questions</field>
+    </record>
+
+    <record model="ir.actions.client" id="settings">
+        <field name="name"></field>
+        <field name="tag">vex_sync_mercado_libre.settings</field>
+    </record>
+
+    <record model="ir.actions.client" id="settings_general">
+        <field name="name"></field>
+        <field name="tag">vex_sync_mercado_libre.settings_general</field>
+    </record>
+
+    <record model="ir.actions.client" id="settings_stock">
+        <field name="name"></field>
+        <field name="tag">vex_sync_mercado_libre.settings_stock</field>
+    </record>
+
+    <record model="ir.actions.client" id="settings_accountant">
+        <field name="name"></field>
+        <field name="tag">vex_sync_mercado_libre.settings_accountant</field>
+    </record>
+
+    <record model="ir.actions.client" id="settings_ai">
+        <field name="name"></field>
+        <field name="tag">vex_sync_mercado_libre.settings_ai</field>
+    </record>
+
+    <record model="ir.actions.client" id="import">
+        <field name="name"></field>
+        <field name="tag">vex_sync_mercado_libre.import</field>
+    </record>
+
+    <record model="ir.actions.client" id="export">
+        <field name="name"></field>
+        <field name="tag">vex_sync_mercado_libre.export</field>
+    </record>
+
+    <record id="action_form_id_setting" model="ir.actions.act_window">
+        <field name="name">Instance</field>
+        <field name="res_model">vex.instance</field>
+        <field name="view_mode">kanban,form</field>
+    </record>
+
+    <record id="action_sale_report" model="ir.actions.act_window">
+    <field name="name">Sales reports</field>
+    <field name="res_model">sale.order.line</field>
+    <field name="view_mode">tree,form</field>
+    <field name="view_id" ref="sale.view_order_line_tree"/> <!-- Referencia a la vista tree -->           
+    <field name="target">current</field>
+    </record>
+
+    <record id="action_product_category" model="ir.actions.act_window">
+        <field name="name">Product Categories Trends</field>
+        <field name="res_model">product.category</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="view_category_tree"/> <!-- Esto es la vista tree que ya tienes -->
+    </record>
+
+
+    <menuitem id="vex_soluciones_menu_meli" name="Mercado Libre Sync" action="vex_sync_mercado_libre.welcome" web_icon="vex_sync_mercado_libre,static/img/icon.png" />
+
+    <menuitem id="vex_soluciones_reports" name="Dashboard" parent="vex_soluciones_menu_meli" action="vex_sync_mercado_libre.welcome" sequence="1" />
+    <menuitem id="vex_soluciones_reports_sales" name="Sales" parent="vex_soluciones_reports" action="vex_sync_mercado_libre.welcome" />
+    <menuitem id="vex_soluciones_reports_competence" name="Competence" parent="vex_soluciones_reports" action="vex_sync_mercado_libre.welcome" />
+    <menuitem id="vex_soluciones_reports_market" name="Market" parent="vex_soluciones_reports" action="vex_sync_mercado_libre.welcome" />
+    <menuitem id="vex_soluciones_reports_prediction" name="Prediction" parent="vex_soluciones_reports" action="vex_sync_mercado_libre.welcome" />
+    
+    <menuitem id="vex_soluciones_automatic_pricing" name="Automatic Pricing" parent="vex_soluciones_menu_meli" action="vex_sync_mercado_libre.automatic_pricing" sequence="6" />
+    <menuitem id="vex_soluciones_chatbot" name="Questions" parent="vex_soluciones_menu_meli" action="vex_sync_mercado_libre.chatbot" sequence="7" />
+
+    <menuitem id="vex_soluciones_sync" name="Sync" parent="vex_soluciones_menu_meli" action="vex_sync_mercado_libre.welcome" sequence="8" />
+    <menuitem id="vex_soluciones_import" name="Import" parent="vex_soluciones_sync" action="vex_sync_mercado_libre.import" />
+    <menuitem id="vex_soluciones_export" name="Export" parent="vex_soluciones_sync" action="vex_sync_mercado_libre.export" />
+
+    <menuitem id="vex_soluciones_reports_sales_history"
+        name="Sales report"
+        parent="vex_soluciones_reports_sales"
+        action="action_sale_report"
+        sequence="10"/>
+
+     <menuitem id="menu_product_category"
+      name="Product Categories Trends"
+      parent="vex_soluciones_reports_sales" 
+      action="action_product_category"
+      sequence="11"/>
+
+
+    <!-- <menuitem id="vex_soluciones_import_export" name="Import / Export" parent="vex_soluciones_menu_meli" action="vex_sync_mercado_libre.action_view_vex_config_settings" sequence="8" /> -->
+    <menuitem id="vex_soluciones_settings" name="Settings" parent="vex_soluciones_menu_meli" action="vex_sync_mercado_libre.action_form_id_setting" sequence="9" />
+
+
+
+</odoo>

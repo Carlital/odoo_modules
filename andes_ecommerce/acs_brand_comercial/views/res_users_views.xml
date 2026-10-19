@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <record id="view_brand_comercial_tours_users" model="ir.ui.view">
+        <field name="name">view.brand.comercial.tours.users</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='login']" position="after">
+                <group>
+                    <field name="brand_id"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

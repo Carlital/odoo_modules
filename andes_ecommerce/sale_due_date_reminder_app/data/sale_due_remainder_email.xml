@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+
+		<record id="sale_due_remainder_email_template" model="mail.template">
+			<field name="name">Sale Due Date Reminder</field>
+			<field name="email_from">{{object.user_id.email}}</field>
+			<field name="model_id" ref="sale.model_sale_order"/>
+			<field name="body_html" type="html">
+				<div style="margin: 0px; padding: 0px;">
+					<p style="margin: 0px; padding: 0px; font-size: 13px;"></p>
+						Dear  <t t-out="object.partner_id.name"/>,
+						<br /><br />
+						We wanted to let you know that you order <strong><t t-out="object.name"/></strong> is due today, <strong><t t-out="object.date_due"/></strong>.
+						<br /><br />
+						Order : <strong><t t-out="object.name"/></strong><br />
+						Order by : <strong><t t-out="object.user_id.name"/></strong><br />
+						Order Payment : <strong><t t-out="object.amount_total"/></strong><br />
+						Order Date : <t t-out="object.date_order"/><br /><br />
+						Feel free to contact us if you have any question.<br /><br /> 
+						 
+						Best regards,<br />
+						from <strong><t t-out="object.partner_id.company_id.name"/>
+						</strong>
+				</div>
+			</field>
+		</record>
+
+		<record id="sale_before_due_remainder_email_template" model="mail.template">
+			<field name="name">Sale before Due Date Reminder</field>
+			<field name="email_from">{{object.user_id.email}}</field>
+			<field name="model_id" ref="sale.model_sale_order"/>
+			<field name="body_html" type="html">
+				<div style="margin: 0px; padding: 0px;">
+					<p style="margin: 0px; padding: 0px; font-size: 13px;"></p>
+						Dear  <t t-out="object.partner_id.name"/>,
+						<br /><br />
+						This is friendly reminder that your order is going to due. According to our record your order <strong><t t-out="object.name"/></strong> from  
+  						will due on <strong><t t-out="object.date_due"/></strong> and only <strong>2 Days</strong> left.
+						<br /><br />
+						Please refer order detail and take necessary action.<br />
+						Order : <strong><t t-out="object.name"/></strong><br />
+						Due Date : <strong><t t-out="object.date_due"/></strong><br />
+						Order by : <strong><t t-out="object.user_id.name"/></strong><br />
+						Order Payment : <strong><t t-out="object.amount_total"/></strong><br />
+						Order Date : <t t-out="object.date_order"/><br /><br />
+						Feel free to contact us if you have any question.<br /><br /> 
+						Thanks in advance,<br />
+						from <strong><t t-out="object.partner_id.company_id.name"/>
+						</strong>
+				</div>
+			</field>
+		</record>
+	</data>
+</odoo>

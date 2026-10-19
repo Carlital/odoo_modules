@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Definir el formato de papel (80 mm de ancho) -->
+    <record id="account_move_ticket_paperformat" model="report.paperformat">
+        <field name="name">Ticket 80mm - Factura</field>
+        <field name="format">custom</field>
+        <field name="page_width">80</field>
+        <!-- 80 mm de ancho -->
+        <field name="page_height">297</field>
+        <!-- Altura A4 estándar, pero se ajustará según
+        contenido -->
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">1</field>
+        <field name="margin_bottom">1</field>
+        <field name="margin_left">0</field>
+        <field name="margin_right">0</field>
+        <field name="header_spacing">0</field>
+        <field name="dpi">80</field>
+    </record>
+    <!-- Definir el reporte -->
+    <record id="account_move_ticket_report" model="ir.actions.report">
+        <field name="name">Factura - Ticket</field>
+        <field name="model">account.move</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">acs_auto_pay_invoice_picking.account_move_ticket_report_template</field>
+        <field name="report_file">acs_auto_pay_invoice_picking.account_move_ticket_report</field>
+        <field name="paperformat_id"
+            ref="acs_auto_pay_invoice_picking.account_move_ticket_paperformat" />
+        <field name="print_report_name">'Factura - %s' % (object.name)</field>
+    </record>
+    <!-- Plantilla del reporte -->
+    <data>
+        <template id="account_move_ticket_report_template">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="invoice">
+                    <t t-call="web.basic_layout">
+                        <div class="page">
+                            
+                                <!-- Encabezado -->
+                                <div style="text-align: center; margin-bottom: 10px;">
+                                    <h1 style="font-size: 16pt; margin: 0;">
+                                        <t t-esc="invoice.company_id.name"/>
+                                    </h1>
+                                    <div style="font-size: 10pt;">RUC:
+                                        <t t-esc="invoice.company_id.vat"/>
+                                        <br />
+                                        <t t-esc="invoice.company_id.street"/>,
+                                        <t t-esc="invoice.company_id.partner_id.l10n_pe_district.name"/>,
+                                        <t t-esc="invoice.company_id.city"/>,
+                                        <t t-esc="invoice.company_id.state_id.name"/>,
+                                        <t t-esc="invoice.company_id.country_id.name"/>
+                                        <br />TELEF/CEL:
+                                        <t t-esc="invoice.company_id.phone"/>
+                                    </div>
+                                    <div style="font-size: 10pt; margin-top: 5px;">
+                                        ATENDIDO POR:
+                                        <t t-esc="invoice.user_id.name"/>
+                                    </div>
+                                </div>
+                                <!-- Fecha y número de factura -->
+                                <div style="text-align: center; margin-bottom: 10px;font-size: 10pt">
+                                    FECHA:
+                                    <span t-esc="invoice.invoice_date.strftime('%d/%m/%Y')" />
+                                    <div style="font-size: 12pt; font-weight: bold;">
+                                        <span t-if="invoice.move_type in ['out_refund','out_invoice'] and invoice.state in ['draft','cancel','posted'] and invoice.pe_invoice_code">
+                                            <t t-esc="invoice.get_pe_invoice_name()"/>
+                                            <t t-if="invoice.state == 'draft'"> Draft </t>
+                                            <t t-if="invoice.state == 'cancel'"> Cancelled </t>
+                                            <t t-if="invoice.pe_annul"> Annulled </t>
+                                            <t t-if="invoice.pe_is_cpe and invoice.move_type == 'out_invoice' and invoice.l10n_latam_document_number and invoice.l10n_latam_document_number != '/'"> Electrónica </t>
+                                        </span>
+                                        <br/>
+                                        <span t-if="invoice.move_type == 'out_invoice' and invoice.state == 'posted' and not invoice.pe_invoice_code">Invoice</span>
+                                        <span t-if="invoice.move_type == 'out_invoice' and invoice.state == 'draft' and not invoice.pe_invoice_code">Draft Invoice</span>
+                                        <span t-if="invoice.move_type == 'out_invoice' and invoice.state == 'cancel' and not invoice.pe_invoice_code">Cancelled Invoice</span>
+                                        <span t-if="invoice.move_type == 'out_refund' and not invoice.pe_invoice_code">Credit Note</span>
+                                        <span t-if="invoice.move_type == 'in_refund' and not invoice.pe_invoice_code">Vendor Credit Note</span>
+                                        <span t-if="invoice.move_type == 'in_invoice' and not invoice.pe_invoice_code">Vendor Bill</span>
+                                        <span t-if="invoice.l10n_latam_document_number != '/'" t-field="invoice.l10n_latam_document_number"/>
+                                    </div>
+                                </div>
+                                <!-- Cliente -->
+                                <div style="text-align: left; margin-bottom: 10px;font-size: 10pt;">
+                                    <strong>CLIENTE:</strong> <span>
+                                        <span t-field="invoice.partner_id.name" />
+                                        <br />
+                                        <span t-field="invoice.partner_id.street" /><t t-if="invoice.partner_id.l10n_pe_district.name">, <span t-field="invoice.partner_id.l10n_pe_district.name" /></t><t t-if="invoice.partner_id.city">, <span t-field="invoice.partner_id.city" /></t><t t-if="invoice.partner_id.country_id.name">, <span t-field="invoice.partner_id.country_id.name" /></t>
+                                        <br />
+                                        <t t-if="invoice.partner_id.vat"> <strong>RUC/DNI:</strong> <span t-field="invoice.partner_id.vat" /></t>
+                                    </span>
+                                </div>
+                                <!-- Líneas de la factura -->
+                                <table class="table table-bordered table-products table-striped" style="font-size: 10pt; border-collapse: collapse; margin-bottom: 10px;width:100%">
+                                    <thead>
+                                        <tr>                                      
+                                            <th style="text-align: left;"><strong>DESCRIP.</strong></th>
+                                            <th style="text-align: left;"><strong>CANT.</strong></th> 
+                                            <th style="text-align: right;"><strong>P.UNIT.</strong></th>
+                                            <th style="text-align: right;"><strong>IMPORTE</strong></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <t t-foreach="invoice.invoice_line_ids" t-as="line">
+                                            <tr style="border-bottom: 0;">
+                                                <td style="text-align: left;border: 0;padding-bottom:0" colspan="4">
+                                                    <span t-field="line.name"/>          
+                                                </td>
+                                            </tr>
+                                            <tr style="border-top: 0;border-left: 0;border-right: 0;border-bottom: 1px;">
+                                                <td style="text-align: right;border: 0;padding-top:0" colspan="2">
+                                                    <span t-field="line.quantity"/> <span t-field="line.product_uom_id.name"/>
+                                                </td>
+                                                <td style="text-align: right;border: 0;padding-top:0">
+                                                    <span t-field="line.price_unit" t-options="{'widget': 'monetary', 'display_currency': invoice.currency_id}"/>
+                                                </td>
+                                                <td style="text-align: right;border: 0;padding-top:0">
+                                                    <span t-field="line.price_subtotal" t-options="{'widget': 'monetary', 'display_currency': invoice.currency_id}"/>
+                                                </td>
+                                            </tr>
+                                        </t>                                        
+                                    </tbody>
+                                </table>                                
+                                <!-- Totales-->
+                                <table class="table table-bordered table-products table-striped" style="float: right; font-size: 10pt; border-collapse: collapse; margin-bottom: 10px;width: 60%;text-align: right">
+                                    <tbody>
+                                        <tr>
+                                            <td><strong>Subtotal:</strong></td>
+                                            <td><span t-field="invoice.currency_id.symbol"/><span t-esc="'%.2f' % invoice.amount_untaxed" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>IGV 18%:</strong></td>
+                                            <td><span t-field="invoice.currency_id.symbol"/><span t-esc="'%.2f' % invoice.amount_tax" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Total:</strong></td>
+                                            <td><span t-field="invoice.currency_id.symbol"/><span t-esc="'%.2f' % invoice.amount_total" /></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <!-- Plazo de pago -->
+                                <div style="text-align: left; font-size: 10pt;">
+                                    <strong>Plazo de pago:</strong><br/>
+                                    <span t-field="invoice.invoice_payment_term_id.name" />
+                                </div>
+                                <div class="row" style="with:100;clear:both">
+                                    <div class="col-12" style="text-align: left; font-size: 10pt;">
+                                        <span t-if="invoice.pe_legend_ids.filtered(lambda legnd: legnd.code =='1000')">
+                                            <strong>Monto en letras: </strong> <br/>
+                                            <span t-esc="invoice.pe_legend_ids.filtered(lambda legnd: legnd.code =='1000').name"/><br/>
+                                        </span>
+                                        <span t-if="invoice.pe_is_cpe and invoice.edi_document_ids"><strong>Resumen: </strong> <br/>
+                                            <span t-field="invoice.pe_digest"/><br/>
+                                        </span>
+                                        <t t-foreach="invoice.pe_legend_ids.filtered(lambda legnd: legnd.code != '1000')" t-as="p">
+                                        <span t-field="p.name"/><br/>
+                                        </t>
+                                    <b/>
+                                        <img t-if="invoice.pe_qr_code" t-att-src="'data:image/png;base64,%s' %invoice.pe_qr_code.decode('utf-8')" style="width: 40mm;  height: 40mm; text-align:center"/>
+                                    </div>
+                                </div>
+                            
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

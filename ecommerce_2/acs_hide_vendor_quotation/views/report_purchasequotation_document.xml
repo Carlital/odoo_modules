@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="report_purchasequotation_document_remove_partner"
+        inherit_id="purchase.report_purchasequotation_document">
+        <xpath expr="//div[@t-field='o.partner_id']" position="replace">
+            <!-- Eliminado: no se mostrará el proveedor -->
+        </xpath>
+    </template>
+</odoo>

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>SUNAT Tables & Catalogs for Peru</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Comprehensive collection of SUNAT Tables and Catalogs for Peruvian Localization in Odoo.">
+    <!-- Bootstrap and Font Awesome (standard in Odoo docs) -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet">
+    <style>
+        .odoo-app-description {
+            font-family: 'Roboto', sans-serif;
+            color: #333;
+        }
+        .odoo-app-description h2 {
+            color: #714B67;
+            font-weight: bold;
+            margin-top: 30px;
+        }
+        .odoo-app-description .icon-box {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .odoo-app-description .icon-box i {
+            font-size: 3rem;
+            color: #017e84;
+            margin-bottom: 10px;
+        }
+        .odoo-app-description .feature-list li {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container odoo-app-description">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <h1 class="my-5 display-4 text-primary">SUNAT Tables & Catalogs (Peru)</h1>
+                <p class="lead">Essential Master Data for Peruvian Localization</p>
+            </div>
+        </div>
+
+        <div class="row my-4">
+            <div class="col-md-12">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h2><i class="fas fa-info-circle"></i> Overview</h2>
+                        <p>
+                            This module provides a comprehensive set of SUNAT (Superintendencia Nacional de Aduanas y de Administración Tributaria) catalogs and tables required for compliant electronic invoicing and accounting in Peru. It serves as a foundational data module for other Peruvian localization modules.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row my-4">
+            <div class="col-md-12">
+                <h2><i class="fas fa-list-alt"></i> Included Catalogs</h2>
+                <p>The module loads and manages the following SUNAT Catalogs (Anexos):</p>
+                <div class="row">
+                    <div class="col-md-6">
+                        <ul class="feature-list">
+                            <li><strong>Catalog 01:</strong> Document Types (Tipo de Documento)</li>
+                            <li><strong>Catalog 02:</strong> Currency Codes (Tipo de Monedas)</li>
+                            <li><strong>Catalog 03:</strong> Unit of Measure (Unidad de Medida Comercial)</li>
+                            <li><strong>Catalog 04:</strong> Country Codes (Código de País)</li>
+                            <li><strong>Catalog 05:</strong> Tax Types (Tipos de Tributos)</li>
+                            <li><strong>Catalog 06:</strong> Identity Document Types (Tipo de Documento de Identidad)</li>
+                            <li><strong>Catalog 07:</strong> IGV Type (Tipo de Afectación del IGV)</li>
+                            <li><strong>Catalog 08:</strong> ISC Calculation System (Sistema de Cálculo del ISC)</li>
+                            <li><strong>Catalog 09:</strong> Credit Note Types (Tipo de Nota de Crédito)</li>
+                            <li><strong>Catalog 10:</strong> Debit Note Types (Tipo de Nota de Débito)</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <ul class="feature-list">
+                            <li><strong>Catalog 12:</strong> Related Documents (Documentos Relacionados)</li>
+                            <li><strong>Catalog 15:</strong> Additional Elements (Elementos Adicionales)</li>
+                            <li><strong>Catalog 17:</strong> Operation Types (Tipo de Operación)</li>
+                            <li><strong>Catalog 51:</strong> Operation Types (Tipo de Operación - Code 51)</li>
+                            <li><strong>Catalog 53:</strong> Charges/Discounts (Cargos o Descuentos)</li>
+                            <li><strong>Catalog 54:</strong> Detractions (Bienes y Servicios sujetos a Detracciones)</li>
+                            <li><strong>Catalog 59:</strong> Payment Methods (Medios de Pago)</li>
+                            <li>And many more (Catalogs 11, 14, 16, 18-24, 26, 27, 52, 55-58, 61)...</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row my-4">
+            <div class="col-md-12">
+                <h2><i class="fas fa-cogs"></i> Key Features</h2>
+                <div class="row text-center mt-4">
+                    <div class="col-md-4 icon-box">
+                        <i class="fas fa-database"></i>
+                        <h4>Standardized Data</h4>
+                        <p>All data is aligned with the latest SUNAT specifications and Annex codes.</p>
+                    </div>
+                    <div class="col-md-4 icon-box">
+                        <i class="fas fa-plug"></i>
+                        <h4>Easy Integration</h4>
+                        <p>Designed to be inherited and used by other localization modules for validation and selection.</p>
+                    </div>
+                    <div class="col-md-4 icon-box">
+                        <i class="fas fa-sync"></i>
+                        <h4>Automatic Loading</h4>
+                        <p>Data is loaded automatically via CSV files upon installation.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row my-4">
+            <div class="col-md-12">
+                <h2><i class="fas fa-book"></i> Usage</h2>
+                <p>
+                    This is a technical data module. Once installed, you can access the catalogs via the user interface if menu items are configured, or they are available in the background for other modules to reference (e.g., when creating an Invoice, selecting the "Document Type" will pull from Catalog 01).
+                </p>
+                <div class="alert alert-info" role="alert">
+                    <strong>Note:</strong> Ensure you have the `l10n_pe` module installed as a dependency.
+                </div>
+            </div>
+        </div>
+
+        <div class="row border-top mt-5 pt-3">
+            <div class="col-md-12 text-center text-muted">
+                <p>Developed by <strong>Grupo YACCK</strong></p>
+                <p><a href="http://www.grupoyacck.com" target="_blank">www.grupoyacck.com</a></p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

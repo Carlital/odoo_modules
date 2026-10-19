@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="acs_multiaddress_pos_18.AddDirectionPopup">
+        <Dialog size="'md'">
+            <t t-set-slot="header">
+                <h4 class="modal-title"><t t-esc="title"/></h4>
+            </t>
+            <div class="popup-add-direction">
+                <div class="address-form">
+                    <div class="mb-3">
+                        <label class="form-label">Calle</label>
+                        <input type="text"
+                            class="form-control"
+                            t-att-value="state.street"
+                            t-on-input="(ev) => this.onInputChange('street', ev)"/>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Calle 2</label>
+                        <input type="text"
+                            class="form-control"
+                            t-att-value="state.street2"
+                            t-on-input="(ev) => this.onInputChange('street2', ev)"/>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Ciudad</label>
+                        <input type="text"
+                            class="form-control"
+                            t-att-value="state.city"
+                            t-on-input="(ev) => this.onInputChange('city', ev)"/>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">País</label>
+                        <select class="form-select" t-on-change="(ev) => this.onInputChange('country_id', ev)">
+                            <option value="">None</option>
+                            <t t-foreach="state.countries" t-as="country" t-key="country.id">
+                                <option t-att-value="country.id">
+                                    <t t-esc="country.name"/>
+                                </option>
+                            </t>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <t t-set-slot="footer">
+                <button class="btn btn-primary" t-on-click="confirm">
+                    <t t-esc="confirmText"/>
+                </button>
+                <button class="btn btn-secondary" t-on-click="cancel">
+                    <t t-esc="cancelText"/>
+                </button>
+            </t>
+        </Dialog>
+    </t>
+</templates>

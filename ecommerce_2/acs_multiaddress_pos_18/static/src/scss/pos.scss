@@ -1,0 +1,65 @@
+.popup-select-direction,
+.popup-add-direction,
+.popup-edit-direction {
+    min-width: 500px;
+    max-width: 600px;
+
+    .selection-container,
+    .address-form {
+        padding: 1rem;
+    }
+
+    .input-group {
+        display: flex;
+        gap: 0.5rem;
+    }
+
+    .form-select {
+        flex: 1;
+    }
+
+    .btn-secondary {
+        min-width: 50px;
+    }
+
+    .modal-footer {
+        display: flex;
+        justify-content: flex-end;
+        gap: 0.5rem;
+        padding: 1rem;
+        border-top: 1px solid #dee2e6;
+    }
+}
+
+.client-details-contents {
+    .partner-list-contents {
+        .new-address {
+            background: rgb(247, 247, 247);
+            line-height: 30px;
+            border: 1px solid rgb(230, 230, 230);
+
+            .delete-direction {
+                color: red;
+                cursor: pointer;
+            }
+        }
+    }
+
+    .client-extra-direction {
+        padding: 10px;
+        cursor: pointer;
+        background: #f8f9fa;
+        border: 1px solid #dee2e6;
+        border-radius: 4px;
+        text-align: center;
+        margin: 10px 0;
+
+        &:hover {
+            background: #e9ecef;
+        }
+
+        i {
+            margin-right: 5px;
+        }
+    }
+}

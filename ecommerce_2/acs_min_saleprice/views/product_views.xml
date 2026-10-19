@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- Hereda la vista de formulario de product.template -->
+        <record id="product_template_form_view_min_saleprice" model="ir.ui.view">
+            <field name="name">product.template.form.min.saleprice</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_form_view" />
+            <field name="arch" type="xml">
+                <!-- Añade el campo después del campo 'list_price' (Precio de venta) -->
+                <xpath expr="//div[@name='list_price_uom']" position="after">
+                    <field name="min_saleprice" widget="monetary"
+                        options="{'currency_field': 'currency_id'}" />
+                </xpath>
+            </field>
+        </record>
+
+        <!-- Hereda la vista de formulario de product.product (variantes) -->
+        <record id="product_product_form_view_min_saleprice" model="ir.ui.view">
+            <field name="name">product.product.form.min.saleprice</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_normal_form_view" />
+            <field name="arch" type="xml">
+                <!-- Añade el campo en el mismo lugar que en la plantilla -->
+                <xpath expr="//field[@name='taxes_id']" position="before">
+                    <field name="min_saleprice" widget="monetary"
+                        options="{'currency_field': 'currency_id'}" />
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,131 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>FIE – Arquitectura (Componentes)</title>
+  <link rel="stylesheet" href="styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script>
+    mermaid.initialize({ startOnLoad: true, theme: 'default' });
+  </script>
+</head>
+<body>
+
+  <!-- Bloques visuales (si quieres mantenerlos en la página) -->
+  <div class="arch medium hidden">
+    <div class="layer">
+      <div class="box user">Admin/Editor</div>
+      <div class="box user">Público</div>
+    </div>
+    <div class="layer">
+      <div class="box edge">Nginx (TLS, proxy)</div>
+    </div>
+    <div class="layer">
+      <div class="box app">Odoo 17
+        <ul>
+          <li>google_sheets_import</li>
+          <li>cv_importer</li>
+          <li>Website</li>
+        </ul>
+      </div>
+      <div class="box etl">n8n
+        <ul>
+          <li>Descarga PDF</li>
+          <li>Extracción/LLM</li>
+          <li>Limpieza</li>
+        </ul>
+      </div>
+    </div>
+    <div class="layer">
+      <div class="box db">PostgreSQL</div>
+    </div>
+  </div>
+
+  <div class="arch high hidden">
+    <div class="layer">
+      <div class="box user">Admin/Editor</div>
+      <div class="box user">Público</div>
+    </div>
+    <div class="layer">
+      <div class="box edge">Nginx
+        <ul>
+          <li>HTTPS/HSTS</li>
+          <li>Proxy Odoo/n8n</li>
+        </ul>
+      </div>
+    </div>
+    <div class="layer">
+      <div class="box app">Odoo 17
+        <ul>
+          <li>importación/validación</li>
+          <li>orquestación/callback</li>
+          <li>website</li>
+          <li>auditoría</li>
+        </ul>
+      </div>
+      <div class="box etl">n8n
+        <ul>
+          <li>webhook/HTTP</li>
+          <li>PDF→texto</li>
+          <li>LLM</li>
+          <li>POST a Odoo</li>
+        </ul>
+      </div>
+    </div>
+    <div class="layer">
+      <div class="box db">PostgreSQL</div>
+    </div>
+  </div>
+
+  <h3 style="padding:8px 0 0 0;margin:0 0 8px 0;color:var(--muted);">Vista Mermaid (Componentes)</h3>
+
+  <div class="content" style="border:2px solid #000">
+    <pre class="mermaid" style="background:#fff;border:0;padding:10px;white-space:pre-wrap;">
+flowchart LR
+
+  %% Actores / Usuarios
+  U[Usuarios]
+
+  %% Servicios externos
+  GS[Google Sheets]
+  CV[Servidor CV ESPOCH]
+
+  %% Infraestructura interna (Docker)
+  subgraph Docker["Infraestructura Docker Compose (FIE)"]
+    NX[Nginx]
+
+    Odoo[[Odoo 17]]
+
+    DB[(PostgreSQL)]
+
+    N8N["n8n"]
+  end
+
+  %% Componentes internos de Odoo
+  subgraph Dentro_de_Odoo["Componentes en Odoo 17"]
+    MOD1[google_sheets_import]
+    MOD2[cv_importer]
+    Website[Website institucional]
+    MOD1 --> MOD2
+    MOD2 --> Website
+  end
+
+  %% Flujo principal de uso
+  U --> NX --> Odoo
+
+  %% Importación de datos
+  GS --> Odoo
+
+  %% Persistencia
+  Odoo <--> DB
+
+  %% Extracción de CV
+  Odoo --> N8N
+  N8N --> CV
+  N8N --> Odoo
+    </pre>
+  </div>
+
+</body>
+</html>

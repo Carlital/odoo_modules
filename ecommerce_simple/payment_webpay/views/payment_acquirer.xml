@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="acquirer_form_webpay" model="ir.ui.view">
+            <field name="name">acquirer.form.webpay</field>
+            <field name="model">payment.acquirer</field>
+            <field name="inherit_id" ref="payment.payment_acquirer_form"/>
+            <field name="arch" type="xml">
+              <field name="provider" position="after">
+                <field name="webpay_mode" attrs="{'invisible':[('provider','!=','webpay')]}"/>
+              </field>
+              <xpath expr='//group[@name="acquirer"]' position='after'>
+                <group attrs="{'invisible': ['|', '|', ('provider', '!=', 'webpay'), ('webpay_mode', '=', 'mall'), ('state','=', 'test')]}">
+                  <field name="webpay_commer_code" attrs="{'required': [('provider', '=', 'webpay'), ('state','!=', 'test')]}"/>
+                </group>
+                <group attrs="{'invisible': ['|', '|', ('provider', '!=', 'webpay'), ('webpay_mode', '=', 'mall'), ('state','=', 'test')]}">
+                    <field name="webpay_api_key_secret" attrs="{'required': [('provider', '=', 'webpay'), ('webpay_mode', '!=', 'mall'), ('state','!=', 'test')]}"/>
+                </group>
+                <a attrs="{'invisible': [('provider', '!=', 'webpay')]}" colspan="2" href="https://globalresponse.cl/test-account-creation" target="_blank">How to configure your Webpay account?</a>
+              </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

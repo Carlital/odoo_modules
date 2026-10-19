@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="vex_import_wizard" model="ir.ui.view">
+        <field name="name">vex.vex.import.wizard</field>
+        <field name="model">vex.import.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="vex_actions"
+                                attrs="{'invisible': [('vex_actions','=','excel_data')]}"/>
+                                
+                            <field name="vex_instance_id"
+                                domain="[('store_type', '=', 'mercadolibre')]"
+                                readonly="1"/>
+                                
+                            <field name="import_unit"
+                                attrs="{'invisible': [('vex_actions','=','excel_data')]}"/>
+                                
+                            <field name="meli_code_unit"
+                                attrs="{
+                                    'invisible': [('import_unit','=',False)],
+                                    'required': [('import_unit','=',True)]
+                                }"/>
+                        </group>
+
+                        <group>
+                            <field name="stock_import"
+                                attrs="{'invisible': [('vex_actions','!=','product')]}"/>
+                                
+                            <field name="import_images"
+                                attrs="{'invisible': [('vex_actions','!=','product')]}"/>
+                                
+                            <field name="import_images_website"
+                                attrs="{'invisible': [('vex_actions','!=','product')]}"/>
+                                
+                            <!-- 
+                            <field name="import_excel_data"
+                                attrs="{'invisible': [('vex_actions','!=','excel_data')]}"/>
+                            -->
+
+                            <field name="date_from"
+                                attrs="{
+                                    'invisible': [('vex_actions','!=','order')],
+                                    'required': [('vex_actions','=','order')]
+                                }"/>
+
+                            <field name="date_to"
+                                attrs="{
+                                    'invisible': [('vex_actions','!=','order')],
+                                    'required': [('vex_actions','=','order')]
+                                }"/>
+                        </group>
+                    </group>
+                </sheet>
+
+                <footer>
+                    <div class="row w-100 d-flex justify-content-end mr-1">
+                        <div class="col-2 d-flex justify-content-end p-0">
+                            <button
+                                type="object"
+                                name="synchronize"
+                                class="btn btn-primary ml-3"
+                                context="{'store_type': 'mercadolibre'}"
+                                attrs="{'invisible': [('vex_actions','=','excel_data')]}"
+                            >SYNCHRONIZE</button>
+
+                            <button
+                                string="Import Excel"
+                                type="object"
+                                name="action_open_import_wizard"
+                                class="btn-primary"
+                                attrs="{'invisible': [('vex_actions','!=','excel_data')]}"
+                            />
+                        </div>
+                    </div>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="vex_export_wizard" model="ir.ui.view">
+        <field name="name">vex.export.wizard.form</field>
+        <field name="model">vex.export.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Exportar datos a MercadoLibre">
+                <sheet>
+                    <group>
+                        <field name="vex_instance_id" readonly="1"/>
+                        <field name="vex_actions"/>
+                    </group>
+                    <notebook attrs="{'invisible': [('vex_actions', '!=', 'product')]}">
+                        <page string="ÓRDENES SIN ML ID">
+                            <field name="product_no_meli_ids" widget="many2many_list" readonly="0" nolabel="1">
+                                <tree>
+                                    <field name="ready_create" />
+                                    <field name="name" string="Nombre"/>
+                                    <field name="meli_title" string="ML Título"/>
+                                    <field name="meli_category_vex" string="ML Categoría"/>
+                                    <field name="meli_currency_id" string="Moneda"/>
+                                    <field name="meli_available_quantity" string="Cantidad"/>
+                                    <field name="meli_buying_mode" string="Modo de compra"/>
+                                    <field name="meli_condition" string="Condición"/>
+                                    <field name="meli_listing_type" string="Tipo de publicación"/>
+                                    <field name="meli_base_price" string="Precio base"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <footer>
+                    <div class="row w-100 d-flex justify-content-end mr-1">
+                        <div class="col-2 d-flex justify-content-end p-0">
+                            <button name="action_export" type="object" string="SYNCHRONIZE" class="btn-primary"/>
+                            <button string="Cancelar" class="btn-secondary" special="cancel"/>
+                        </div>
+                    </div>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+</odoo>

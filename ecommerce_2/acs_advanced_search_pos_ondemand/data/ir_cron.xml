@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="ir_cron_acs_pos_ondemand_top_sellers" model="ir.cron">
+            <field name="name">ACS POS: Add Daily Top Sellers Category</field>
+            <field name="model_id" ref="point_of_sale.model_pos_order_line"/>
+            <field name="state">code</field>
+            <field name="code">model._cron_update_daily_top_sellers_pos_category()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="nextcall" eval="(DateTime.now() + relativedelta(days=1)).strftime('%Y-%m-%d 04:55:00')"/>
+            <field name="active">True</field>
+        </record>
+    </data>
+</odoo>

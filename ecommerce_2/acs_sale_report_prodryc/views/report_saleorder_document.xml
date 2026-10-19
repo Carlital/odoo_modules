@@ -1,0 +1,507 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Definir el formato de papel personalizado -->
+        <record id="paperformat_sale_order" model="report.paperformat">
+            <field name="name">Formato Cotización o Pedido</field>
+            <field name="default" eval="False" />
+            <field name="format">A4</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">7</field>
+            <field name="margin_bottom">12</field>
+            <field name="margin_left">7</field>
+            <field name="margin_right">7</field>
+            <field name="header_line" eval="False" />
+            <field name="header_spacing">3</field>
+        </record>
+        <!-- Vincular el formato de papel al informe Cotización en PDF -->
+        <record id="sale.action_report_saleorder" model="ir.actions.report">
+            <field name="paperformat_id" ref="acs_sale_report_prodryc.paperformat_sale_order" />
+        </record>
+        <!-- Vincular el formato de papel al informe Cotización/orden -->
+        <record id="sale_pdf_quote_builder.action_report_saleorder_raw" model="ir.actions.report">
+            <field name="paperformat_id" ref="acs_sale_report_prodryc.paperformat_sale_order" />
+        </record>
+        <!-- Plantilla del informe -->
+        <template id="report_saleorder_document_inherit" inherit_id="sale.report_saleorder_document">
+            <xpath expr="//t[@t-name='sale.report_saleorder_document']" position="replace">
+                <t t-name="sale.report_saleorder_document">
+                    <t t-call="web.html_container">
+                        <t t-foreach="docs" t-as="doc">
+                            <!-- Forzar el idioma a es_PE -->
+                            <t t-set="doc" t-value="doc.with_context(lang='es_PE')"/>
+                            <t t-call="web.basic_layout">
+                                <style>
+                                    *{
+                                    font-family: arial !important;
+                                    }
+                                    table.table-client td{
+                                    padding: 2px!important; font-size: 15px !important
+                                    }
+                                    table.table-client td &gt; strong{
+                                    padding-right: 2px !important
+                                    }
+                                    table.table-striped tbody tr:nth-of-type(even) {
+                                    background-color: rgba(0, 0, 0, .05);
+                                    }
+                                    table.table-banks{
+                                    width:100%; border:0px!important; border-collapse: collapse;
+                                    }
+                                    table.table-banks thead, table.table-banks tbody{
+                                    border:0px!important
+                                    }
+                                    table.table-banks thead tr{
+                                    border:1px solid #000 !important;background:#000;height: 30px
+                                    !important;
+                                    }
+                                    table.table-banks thead th{
+                                    color:#fff;text-align:center;vertical-align: middle
+                                    }
+                                    table.table-banks tbody tr{
+                                    border:0px !important; border-bottom:1px dashed
+                                    !important;height: 30px
+                                    !important
+                                    }
+                                    table.table-banks tbody tr td{
+                                    border:0px!important;vertical-align: middle
+                                    }
+                                    table.table-products tbody *{
+                                    font-size: 14px
+                                    }
+                                </style>
+                                <div class="page">
+                                    <!-- Encabezado personalizado -->
+                                    <table style="width:100%; border:0px!important;border-collapse: collapse;">
+                                        <tbody style="border:0px!important">
+                                            <tr style="border:0px!important">
+                                                <td style="width:25%;vertical-align: top;border:0px!important">
+                                                    <t t-if="doc.company_id.logo">
+                                                        <img t-att-src="image_data_uri(doc.company_id.logo)" style="height: auto; width: 250px; vertical-align: middle;"/>
+                                                    </t>
+                                                </td>
+                                                <td style="width:45%;text-align:left;vertical-align: top;border:0px!important">
+                                                    <h5 style="padding-bottom:0px;margin-bottom:0px">
+                                                        <strong>
+                                                            <t t-esc="doc.company_id.name"/>
+                                                        </strong>
+                                                    </h5>
+                                                    <span style="padding-top:0px;margin-top:0px;font-size:13px;line-height: 1.3; display: inline-block;">
+                                                        <t t-esc="doc.company_id.street"/>
+                                                        <br/>
+                                                        <t t-esc="doc.company_id.partner_id.l10n_pe_district.name"/>,
+                                                        <t t-esc="doc.company_id.city"/>,
+                                                        <t t-esc="doc.company_id.state_id.name"/>
+                                                        <br/>
+                                                        Teléfono:
+                                                        <t t-esc="doc.company_id.phone"/>
+                                                        <br/>
+                                                        E-mail:
+                                                        <t t-esc="doc.company_id.email"/>
+                                                    </span>
+                                                </td>
+                                                <td style="width:30%;text-align:center;vertical-align: top;border:0px!important">
+                                                    <div style="border: 2px solid #333;border-radius:8px">
+                                                        <h4 style="display: block;margin-bottom: 0; padding: 5px 0 3px 0;">
+                                                            <strong>RUC
+                                                                <t t-esc="doc.company_id.vat"/>
+                                                            </strong>
+                                                        </h4>
+                                                        <h4 style="border-top: 2px; border-bottom:2px; border-color:#333; display:inline-block; width:100%; background:#b0b0b0; border-style:solid; border-right:0; border-left:0; margin-bottom:0; padding: 5px 0 3px 0;">
+                                                            <strong>
+                                                                <t t-if="doc.state == 'sale'"> PEDIDO
+                                                                    <br/>
+                                                                </t>
+                                                                <t t-if="doc.state in ('draft', 'sent')">
+                                                                    COTIZACIÓN
+                                                                    <br/>
+                                                                </t>
+                                                                <t t-if="doc.state == 'cancel'"> NOTA
+                                                                    ANULADA
+                                                                    <br/>
+                                                                </t>
+                                                            </strong>
+                                                        </h4>
+                                                        <h4 style="display: block;margin-bottom: 0; padding: 5px 0 3px 0;">
+                                                            <strong>Nº
+                                                                <t t-esc="doc.name"/>
+                                                            </strong>
+                                                        </h4>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <br/>
+                                    <!-- TABLA CLIENTE -->
+                                    <table class="table-client" style="width:100%; border:0px!important;border-collapse: collapse; font-size:13px!important">
+                                        <tbody style="border:0px">
+                                            <tr style="border:0px">
+                                                <td style="width: 66%; border:0px!important;vertical-align:top">
+                                                    <div style="border: 2px solid #333;border-radius:8px;padding:5px; margin-right:10px">
+                                                        <table style="width:100%; border:0px!important;border-collapse: collapse;">
+                                                            <tbody style="border:0px">
+                                                                <tr style="border:0px">
+                                                                    <td style="font-size:13px!important;border:0px" colspan="2">
+                                                                        <strong>DATOS DEL CLIENTE</strong>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr style="border:0px">
+                                                                    <td style="font-size:13px!important;border:0px">
+                                                                        <strong>RUC/DNI</strong>:
+                                                                    </td>
+                                                                    <td style="font-size:13px!important;border:0px">
+                                                                        <t t-esc="doc.partner_id.vat"/>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr style="border:0px">
+                                                                    <td style="font-size:13px!important;border:0px;width:120px">
+                                                                        <strong>RAZÓN SOCIAL</strong>:
+                                                                    </td>
+                                                                    <td style="font-size:13px!important;border:0px">
+                                                                        <t t-esc="doc.partner_id.name"/>
+                                                                    </td>
+                                                                    <tr style="border:0px">
+                                                                        <td style="font-size:13px!important;border:0px;height:44px">
+                                                                            <strong>DIRECCIÓN</strong>:
+                                                                        </td>
+                                                                        <td style="font-size:13px!important;border:0px">
+                                                                            <t t-esc="doc.partner_id.street"/>
+                                                                            -
+                                                                            <t t-esc="doc.partner_id.l10n_pe_district.name"/>
+                                                                            ,
+                                                                            <t t-esc="doc.partner_id.city_id.name"/>
+                                                                            ,
+                                                                            <t t-esc="doc.partner_id.state_id.name"/>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </td>
+                                                <td style="width: 34%; border:0px!important;vertical-align:top">
+                                                    <div style="border: 2px solid #333;border-radius:8px;padding:5px;">
+                                                        <table style="width:100%; border:0px!important;border-collapse: collapse;">
+                                                            <tbody style="border:0px">
+                                                                <tr style="border:0px">
+                                                                    <td colspan="2" style="border:0px;height:20px"/>
+                                                                </tr>
+                                                                <tr style="border:0px">
+                                                                    <td style="font-size:13px!important;border:0px">
+                                                                        <strong>FECHA DE EMISIÓN</strong>:
+                                                                    </td>
+                                                                    <td style="font-size:13px!important;border:0px">
+                                                                        <t t-esc="doc.get_local_date_str()"/>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr style="border:0px">
+                                                                    <td style="font-size:13px!important;border:0px">
+                                                                        <strong>FECHA DE VENCIMIENTO</strong>:
+                                                                    </td>
+                                                                    <td style="font-size:13px!important;border:0px">
+                                                                        <t t-esc="doc.validity_date.strftime('%d/%m/%Y') if doc.validity_date else ''"/>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr style="border:0px">
+                                                                    <td style="font-size:13px!important;border:0px">
+                                                                        <strong>MONEDA</strong>:
+                                                                    </td>
+                                                                    <td style="font-size:13px!important;border:0px">
+                                                                        <t t-esc="doc.currency_id.name"/>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr style="border:0px">
+                                                                    <td style="font-size:13px!important;border:0px">
+                                                                        <strong>FORMA DE PAGO</strong>:
+                                                                    </td>
+                                                                    <td style="font-size:13px!important;border:0px">
+                                                                        <t t-if="doc.payment_term_id">
+                                                                            <t t-esc="doc.payment_term_id.name"/>
+                                                                        </t>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <!-- TABLA PRODUCTOS-->
+                                    <br/>
+                                    <table style="border:0px" class="table table-bordered table-products table-striped">
+                                        <thead style="border:0px">
+                                            <tr style="border:0px">
+                                                <th style="width: 20px;background: #2f5597; border: 0px;color:#fff;border-radius:0px 0 0 0px">
+                                                    <strong>Item</strong>
+                                                </th>
+                                                <th style="width: 80px;background: #2f5597; border-color: #09224e; border: 0px;color:#fff;">
+                                                    <strong>Código</strong>
+                                                </th>
+                                                <th style="background: #2f5597; border-color: #09224e; border: 0px;color:#fff;">
+                                                    <strong>Descripción</strong>
+                                                </th>
+                                                <th style="width: 30px;background: #2f5597; border: 0px;color:#fff;">
+                                                    <strong>Cant.</strong>
+                                                </th>
+                                                <th style="width: 40px;background: #2f5597; border: 0px;color:#fff;">
+                                                    <strong>U.M.</strong>
+                                                </th>
+                                                <th style="width: 45px;background: #2f5597; border: 0px;color:#fff;">
+                                                    <strong>P.U.</strong>
+                                                </th>
+                                                <t t-if="doc.company_id.hide_col_discount == False">
+                                                    <th style="width: 50px;background: #2f5597; border: 0px;color:#fff;" t-if="doc.order_line.filtered(lambda line: line.discount &gt; 0)">
+                                                        Dcto(%)
+                                                    </th>
+                                                </t>
+                                                <th style="width: 60px;background: #2f5597; border: 0px;color:#fff;border-radius:0 0px 0px 0">
+                                                    <strong>Importe</strong>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody style="border:0px">
+                                            <t t-set="item" t-value="0"/>
+                                            <tr t-foreach="[l for l in doc.order_line if not l.display_type and not l.is_downpayment]" t-as="line" style="border:0px">
+                                                <td class="text-center" style="border:0px">
+                                                    <t t-set="item" t-value="item + 1"/>
+                                                    <span t-esc="item"/>
+                                                </td>
+                                                <td style="border:0px" class="text-end" t-esc="line.product_id.default_code"/>
+                                                <!-- <td style="border:0px" t-esc="line.name"/> -->
+                                                <td style="border:0px">
+                                                    <!-- Descripción principal -->
+                                                    <div t-esc="line.name.split(']')[1] if ']' in line.name else line.name"/>
+                                                    <!-- Descripción adicional (usando campo estándar) -->
+                                                    <!-- <t t-if="line.name != line.product_id.name">
+                                                        <div t-esc="line.name.replace('[%s]' % line.product_id.default_code, '') if line.product_id.default_code else line.name" style="font-size:0.8em; color:#666;"/>
+                                                    </t> -->
+                                                </td>
+                                                <td style="border:0px" class="text-end" t-esc="line.product_uom_qty"/>
+                                                <td style="border:0px" class="text-end" t-esc="line.product_uom.name"/>
+                                                <td style="border:0px" class="text-end">
+                                                    <t t-if="doc.company_id.hide_col_discount == False">
+                                                        <span t-field="line.price_unit" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: doc.currency_id}"/>
+                                                    </t>
+                                                    <t t-if="doc.company_id.hide_col_discount == True">
+                                                        <span t-field="line.sale_order_line_pdesc" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: doc.currency_id}"/>
+                                                    </t>
+                                                </td>
+                                                <t t-if="doc.company_id.hide_col_discount == False">
+                                                    <td style="border:0px" class="text-end" t-if="doc.order_line.filtered(lambda line: line.discount &gt; 0)" t-esc="line.discount"/>
+                                                </t>
+                                                <td style="border:0px" class="text-end">
+                                                    <t t-if="doc.company_id.hide_col_line_total == False">
+                                                        <span t-field="line.price_total" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: doc.currency_id}"/>
+                                                    </t>
+                                                    <t t-if="doc.company_id.hide_col_line_total == True">
+                                                        <span t-field="line.price_subtotal" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: doc.currency_id}"/>
+                                                    </t>
+                                                </td>
+                                            </tr>
+                                            <!--
+                                            <tr t-if="not doc.order_line.filtered(lambda line: line.discount &gt; 0)">
+                                                <td style="border:0px" colspan="5" class="text-end">
+                                                    <strong>TOTAL:</strong>
+                                                </td>
+                                                <td style="border:0px" class="text-end">
+                                                    <t t-if="doc.company_id.hide_col_line_total == False">
+                                                        <span t-field="doc.amount_total" t-options="{&quot;widget&quot;: &quot;monetary&quot;,
+                                            &quot;display_currency&quot;: doc.currency_id}"/>
+                                                    </t>
+                                                    <t t-if="doc.company_id.hide_col_line_total == True">
+                                                        <span t-field="doc.amount_untaxed" t-options="{&quot;widget&quot;: &quot;monetary&quot;,
+                                            &quot;display_currency&quot;: doc.currency_id}"/>
+                                                    </t>
+                                                </td>
+                                            </tr>
+                                            <tr t-if="doc.order_line.filtered(lambda line: line.discount &gt; 0)">
+                                                <t t-if="doc.company_id.hide_col_discount == False">
+                                                    <td style="border:0px" colspan="6" class="text-end">
+                                                        <strong>TOTAL:</strong>
+                                                    </td>
+                                                    <td style="border:0px" class="text-end">
+                                                        <t t-if="doc.company_id.hide_col_line_total == False">
+                                                            <span t-field="doc.amount_total" t-options="{&quot;widget&quot;: &quot;monetary&quot;,
+                                            &quot;display_currency&quot;: doc.currency_id}"/>
+                                                        </t>
+                                                        <t t-if="doc.company_id.hide_col_line_total == True">
+                                                            <span t-field="doc.amount_untaxed" t-options="{&quot;widget&quot;: &quot;monetary&quot;,
+                                            &quot;display_currency&quot;: doc.currency_id}"/>
+                                                        </t>
+                                                    </td>
+                                                </t>
+                                                <t t-if="doc.company_id.hide_col_discount == True">
+                                                    <td style="border:0px" colspan="5" class="text-end">
+                                                        <strong>TOTAL:</strong>
+                                                    </td>
+                                                    <td style="border:0px" class="text-end">
+                                                        <t t-if="doc.company_id.hide_col_line_total == False">
+                                                            <span t-field="doc.amount_total" t-options="{&quot;widget&quot;: &quot;monetary&quot;,
+                                            &quot;display_currency&quot;: doc.currency_id}"/>
+                                                        </t>
+                                                        <t t-if="doc.company_id.hide_col_line_total == True">
+                                                            <span t-field="doc.amount_untaxed" t-options="{&quot;widget&quot;: &quot;monetary&quot;,
+                                            &quot;display_currency&quot;: doc.currency_id}"/>
+                                                        </t>
+                                                    </td>
+                                                </t>
+                                            </tr>-->
+                                        </tbody>
+                                    </table>
+                                    <!-- Totals -->
+                                    <div class="text-end">
+                                        <p style="margin-bottom: 0;">
+                                            <strong>SUBTOTAL:</strong>
+                                            <span style="display: inline-block; width: 115px;" t-field="doc.amount_untaxed" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: doc.currency_id}"/>
+                                        </p>
+                                        <p style="margin-bottom: 0;">
+                                            <strong>IGV 18%:</strong>
+                                            <span style="display: inline-block; width: 115px;" t-field="doc.amount_tax" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: doc.currency_id}"/>
+                                        </p>
+                                        <p style="margin-bottom: 0;">
+                                            <strong>TOTAL:</strong>
+                                            <span style="display: inline-block; width: 115px;" t-field="doc.amount_total" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: doc.currency_id}"/>
+                                        </p>
+                                    </div>
+                                    <!-- Notas -->
+                                    <div t-if="doc.note" class="notes">
+                                        <t t-esc="doc.note"/>
+                                    </div>
+                                    <!-- Bank Information -->
+                                    <p>
+                                        <strong>"SIRVASE A BONAR EN NUESTRAS CUENTAS"</strong>
+                                    </p>
+                                    <div>
+                                        <style>
+                                            .table-ctas-banks *{
+                                                border:0;
+                                                vertical-align:top;
+                                                font-size: 12px;
+                                            }
+                                            .table-ctas-banks img{
+                                                width: 120px;
+                                                height:auto;
+                                                padding-right: 10px;
+                                            }
+                                        </style>
+                                        <table class="table-ctas-banks">
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        <img src="/acs_sale_report_prodryc/static/src/img/bcp.png" />
+                                                    </td>
+                                                    <td>CTA. CTE. SOLES: 191-2599600-0-84
+                                                        <br/>
+                                                    CTA. CTE. CCI: 00219100259960008457
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2"></td>
+                                                </tr>
+                                                <tr>
+                                                    <td/>
+                                                    <td>CTA. CTE. DOLARES: 191-9067926-1-19
+                                                        <br/>
+                                                    CTA. CTE. CCI: 00219100906792611959
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <!--
+                                    <table class="table-banks">
+                                        <thead>
+                                            <tr>
+                                                <th>Banco</th>
+                                                <th>Moneda</th>
+                                                <th>Tipo</th>
+                                                <th>Cuenta</th>
+                                                <th>CCI</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>BCP</td>
+                                                <td>Soles</td>
+                                                <td>Corriente</td>
+                                                <td>355-2511864-0-20</td>
+                                                <td>002-355-002511864020-67</td>
+                                            </tr>
+                                            <tr>
+                                                <td>BBVA</td>
+                                                <td>Soles</td>
+                                                <td>Corriente</td>
+                                                <td>0011-0235-0100171749</td>
+                                                <td>011-235-000100171749-93</td>
+                                            </tr>
+                                            <tr>
+                                                <td>CAJA HUANCAYO</td>
+                                                <td>Soles</td>
+                                                <td>Corriente</td>
+                                                <td>1070022110084408924</td>
+                                                <td>808-002-211008408924-07</td>
+                                            </tr>
+                                        </tbody>
+                                    </table> -->
+                                    <br/>
+                                    <div style="width:100%; border: 2px solid #333;border-radius:8px;padding:5px;font-size: 13px;">
+                                        <!-- Dias de validez-->
+                                        <t t-set="dias_validez" t-value="0"/>
+                                        <t t-set="texto_validez" t-value="'Sin Oferta'"/>
+                                        <t t-if="doc.validity_date and doc.date_order">
+                                            <!-- Convertimos datetime a date usando métodos string -->
+                                            <t t-set="fecha_emision" t-value="doc.date_order.strftime('%Y-%m-%d')"/>
+                                            <t t-set="fecha_vencimiento" t-value="doc.validity_date.strftime('%Y-%m-%d')"/>
+                                            <t t-set="dias_validez_calc" t-value="(datetime.datetime.strptime(fecha_vencimiento, '%Y-%m-%d').date() - datetime.datetime.strptime(fecha_emision, '%Y-%m-%d').date()).days"/>
+                                            <t t-if="dias_validez_calc > 1">
+                                                <!-- <t t-set="dias_validez" t-value="dias_validez_calc"/> -->
+                                                <t t-set="texto_validez" t-value="'%d DÍAS' % dias_validez_calc"/>
+                                            </t>
+                                            <t t-if="dias_validez_calc == 1">
+                                                <t t-set="texto_validez" t-value="'%d DÍA' % dias_validez_calc"/>
+                                            </t>
+                                        </t>
+                                        <!-- Dias de entrega-->
+                                        <t t-set="dias_entrega" t-value="0"/>
+                                        <t t-set="texto_entrega" t-value="'Entrega Inmediata'"/>
+                                        <t t-if="doc.date_order and doc.commitment_date">
+                                            <t t-set="fecha_emision" t-value="doc.date_order.strftime('%Y-%m-%d')"/>
+                                            <t t-set="fecha_entrega" t-value="doc.commitment_date.strftime('%Y-%m-%d')"/>
+                                            <t t-set="dias_calculados" t-value="(datetime.datetime.strptime(fecha_entrega, '%Y-%m-%d').date() - datetime.datetime.strptime(fecha_emision, '%Y-%m-%d').date()).days"/>
+                                            <t t-if="dias_calculados > 1">
+                                                <!-- <t t-set="dias_entrega" t-value="dias_calculados"/> -->
+                                                <t t-set="texto_entrega" t-value="'%d DÍAS' % dias_calculados"/>
+                                            </t>
+                                            <t t-if="dias_calculados == 1">
+                                                <t t-set="texto_entrega" t-value="'%d DÍA' % dias_calculados"/>
+                                            </t>
+                                        </t>
+                                        <strong>OBSERVACIONES:</strong>
+                                        <br/>
+                                        TIEMPO DE ENTREGA:
+                                        <t t-esc="texto_entrega"/>
+                                        <br/>
+                                        VALIDEZ DE OFERTA:
+                                        <t t-esc="texto_validez"/>
+                                        <br/>
+                                        LUGAR DE ENTREGA:
+                                        <t t-esc="doc.lugar_entrega or '-'"/>
+                                    </div>
+                                </div>
+                                <div class="footer" style="font-family: Monaco;">
+                                    <br/>
+                                    <div class="text-muted text-center"> Página:
+                                        <span class="page"/>
+                                        /
+                                        <span class="topage"/>
+                                    </div>
+                                </div>
+                            </t>
+                        </t>
+                    </t>
+                </t>
+            </xpath>
+        </template>
+    </data>
+</odoo>

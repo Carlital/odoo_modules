@@ -1,0 +1,25 @@
+<odoo>
+  <data>
+    <!-- Top menu item -->
+    <menuitem name="Electronic Guide" id="menu_electronic_guide_root" groups="l10n_pe_eguide_advanced.group_pe_eguide_personal_guides" />
+
+    <!-- menu categories -->
+    <menuitem name="Electronic Guide" id="menu_electronic_guide" parent="l10n_pe_eguide_advanced.menu_electronic_guide_root" 
+              groups="l10n_pe_eguide_advanced.group_pe_eguide_personal_guides" />
+    <menuitem name="Configuration" id="menu_electronic_guide_configuration" parent="l10n_pe_eguide_advanced.menu_electronic_guide_root"
+              groups="l10n_pe_eguide_advanced.group_pe_eguide_manager"/>
+
+    <!--menuitem name="Menu 2" id="l10n_pe_eguide_advanced.menu_2" parent="l10n_pe_eguide_advanced.menu_root"/-->
+
+    <!-- actions -->
+    <menuitem name="Settings" id="menu_general_settings" parent="l10n_pe_eguide_advanced.menu_electronic_guide_configuration"
+              action="l10n_pe_eguide_advanced.action_l10n_pe_eguide_advanced_config_settings" sequence="10" groups="l10n_pe_eguide_advanced.group_pe_eguide_manager"/>
+    <menuitem name="Sender" id="menu_electronic_guide_sender" parent="l10n_pe_eguide_advanced.menu_electronic_guide"
+              action="l10n_pe_eguide_advanced.action_pe_electronic_guide" groups="l10n_pe_eguide_advanced.group_pe_eguide_personal_guides"/>
+    <menuitem name="Session" id="menu_electronic_guide_session" parent="l10n_pe_eguide_advanced.menu_electronic_guide_configuration"
+              action="l10n_pe_eguide_advanced.action_pe_electronic_guide_session" groups="l10n_pe_eguide_advanced.group_pe_eguide_manager"/>
+    <menuitem name="Branch" id="menu_electronic_guide_branch" parent="l10n_pe_eguide_advanced.menu_electronic_guide_configuration"
+              action="l10n_pe_eguide_advanced.action_pe_electronic_guide_branch" groups="l10n_pe_eguide_advanced.group_pe_eguide_manager"/>
+
+  </data>
+</odoo>

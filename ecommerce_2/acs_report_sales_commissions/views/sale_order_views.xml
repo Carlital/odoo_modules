@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Extender la vista de formulario de sale.order -->
+        <record id="view_order_form_inherit_acs_report_sales_commissions" model="ir.ui.view">
+            <field name="name">sale.order.form.inherit.acs.report.sales.commissions</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form" />
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='validity_date']" position="before">
+                    <field name="quotation_state" required="1" />
+                </xpath>
+
+                <!-- Añadir el campo 'Motivo de no compra' después de las etiquetas -->
+                <xpath expr="//field[@name='tag_ids']" position="after">
+                    <field name="lost_reason_id"
+                        options="{'no_create': True, 'no_open': True}" />
+                </xpath>
+                <!-- 1. Reemplazar el campo 'Vendedor' para hacerlo condicionalmente de solo lectura -->
+                <xpath expr="//field[@name='user_id']" position="replace">
+                    <strong>Comisiones Vendedor 1:</strong>
+                    <!-- Versión de solo lectura para usuarios que NO son administradores de ventas -->
+                    <field name="user_id" readonly="1" force_save="1"
+                        groups="!sales_team.group_sale_manager" string="Vendedor 1"
+                        options="{'no_create': True, 'no_edit': True, 'no_open':True}" />
+                    <!-- Versión editable para administradores de ventas -->
+                    <field name="user_id" readonly="0" groups="sales_team.group_sale_manager"
+                        string="Vendedor 1"
+                        options="{'no_create': True, 'no_edit': True, 'no_open':True}" />
+                </xpath>
+
+                <!-- 2. Añadir los campos de comisión después del campo 'Vendedor' (user_id) -->
+                <xpath expr="//field[@name='team_id']" position="before">
+
+                    <field name="x_commission_part_seller1"
+                        widget="percentage" readonly="1" force_save="1"
+                        groups="!sales_team.group_sale_manager" />
+                    <field name="x_commission_part_seller1"
+                        widget="percentage" readonly="0"
+                        groups="sales_team.group_sale_manager" />
+
+                    <field name="x_sale_part_seller1"
+                        widget="monetary"
+                        options="{'currency_field': 'currency_id'}" readonly="1"
+                        force_save="1" />
+
+                    <!-- Campos en soles con referencia correcta a la moneda de la compañía -->
+                    <field name="company_currency_id" invisible="1" />
+                    <field name="x_sale_part_pen_seller1"
+                        widget="monetary" readonly="1" force_save="1"
+                        options="{'currency_field': 'company_currency_id'}" />
+
+                    <strong>Comisiones Vendedor 2:</strong>
+                    <field
+                        name="x_seller2_id" groups="!sales_team.group_sale_manager" readonly="1"
+                        force_save="1"
+                        options="{'no_create': True, 'no_edit': True, 'no_open':True}" />
+                    <field
+                        name="x_seller2_id" groups="sales_team.group_sale_manager" readonly="0"
+                        options="{'no_create': True, 'no_edit': True, 'no_open':True}" />
+
+                    <field name="x_commission_part_seller2"
+                        widget="percentage" readonly="1" force_save="1"
+                        groups="!sales_team.group_sale_manager" />
+                    <field name="x_commission_part_seller2"
+                        widget="percentage" readonly="0"
+                        groups="sales_team.group_sale_manager" />
+
+                    <field name="x_sale_part_seller2"
+                        widget="monetary"
+                        options="{'currency_field': 'currency_id'}" readonly="1"
+                        force_save="1" />
+
+                    <!-- Campo en soles con referencia correcta a la moneda de la compañía -->
+                    <field name="x_sale_part_pen_seller2"
+                        widget="monetary" readonly="1" force_save="1"
+                        options="{'currency_field': 'company_currency_id'}" />
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

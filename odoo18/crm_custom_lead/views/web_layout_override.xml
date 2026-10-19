@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <!-- Safe, version-agnostic injection: inherit web.layout and add CSS in <head> for Asesor only -->
+    <template id="hide_search_for_asesor_layout" inherit_id="web.layout" name="Hide Search Bar for Asesor (Layout)">
+        <xpath expr="//head" position="inside">
+            <t groups="crm_custom_lead.group_asesor">
+                <style type="text/css">
+                    .o_control_panel .o_cp_searchview,
+                    .o_control_panel .o_searchview,
+                    .o_cp_searchview { display: none !important; }
+                </style>
+            </t>
+        </xpath>
+    </template>
+</odoo>
+

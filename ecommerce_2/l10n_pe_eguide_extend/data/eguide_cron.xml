@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+        <record id="guide_extend_auto_send" model="ir.cron">
+            <field name="name">Envio Automatico de Guias - Extendido</field>
+            <field name="interval_number">12</field>
+            <field name="interval_type">hours</field>
+            <field name="numbercall">-1</field>
+            <field name="doall" eval="False"/>
+            <field name="user_id" ref="base.user_root"/>
+            <field name="state">code</field>
+            <field name="model_id" ref="l10n_pe_eguide_extend.model_pe_electronic_guide" />
+            <field name="code">model.send_async_eguide(days=7, limit=50)</field>
+            <field name="active" eval="True"/>
+        </record>
+    </data>
+</openerp>

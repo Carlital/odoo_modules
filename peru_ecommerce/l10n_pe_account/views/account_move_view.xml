@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record model="ir.ui.view" id="view_move_form">
+        <field name="name">account.move.inherit.l10n.pe.invoice</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field eval="100" name="priority"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='id']" position="after">
+              <field name="pe_annul" invisible="1"/>
+            </xpath>
+            
+             <xpath expr="//button[@name='button_cancel']" position="after">
+              <button name="button_pe_annul" type="object" invisible="state not in ('posted')"
+                string="Annul Entry" confirm="Are you sure you want to cancel this document?" groups="account.group_account_invoice" />
+            </xpath>
+
+            <xpath expr="//widget[last()]" position="after">
+              <widget name="web_ribbon" text="Annul" invisible="pe_annul == False"/>
+            </xpath>
+
+            <xpath expr="//label[@for='journal_id']" position="before">
+              <field name="pe_invoice_code" invisible="True"/>
+              <field name="pe_credit_note_code" invisible="country_code != 'PE' or pe_invoice_code != '07'"
+                     required="country_code == 'PE' and pe_invoice_code == '07'"
+                     readonly="state != 'draft'"/>
+              <field name="pe_debit_note_code" invisible="country_code != 'PE' or pe_invoice_code != '08'"
+                     required="country_code == 'PE' and pe_invoice_code == '08'"
+                     readonly="state != 'draft'"/>
+            </xpath>
+
+            <xpath expr="//field[@name='invoice_line_ids']/tree/field[@name='discount']" position="after">
+              <field name="pe_license_plate" invisible="True" />
+              <field name="pe_type_affectation" required="parent.country_code == 'PE' and (parent.move_type not in ('in_invoice', 'in_refund','in_receipt') or parent.pe_invoice_code in ('01','03','07','08'))" optional="show" />
+            </xpath>
+
+            <xpath expr="//field[@name='invoice_line_ids']/form/sheet/group/field[@name='discount']" position="after">
+              <field name="pe_license_plate" invisible="True" />
+              <field name="pe_type_affectation" required="parent.country_code == 'PE' and (parent.move_type not in ('in_invoice', 'in_refund','in_receipt') or parent.pe_invoice_code in ('01','03','07','08'))" />
+            </xpath>
+
+            <xpath expr="//page[@name='other_info']" position="inside">
+                <group string="Discount" invisible="country_code != 'PE' and move_type not in ['out_invoice','out_refund']">
+                    <group>
+                        <field name="pe_discount_type" readonly="state != 'draft'"/>
+                    </group>
+                    <group>
+                        <field name="pe_discount_percentage" invisible="pe_discount_type == 'fixed'" readonly="state != 'draft'"/>
+                        <field name="pe_discount_amount" invisible="pe_discount_type == 'discount'" readonly="state != 'draft'"/>
+                    </group>
+
+                </group>
+
+                <group string="Detraction" invisible="country_code != 'PE' and move_type not in ['out_invoice','out_refund']">
+                  <group>
+                    <field name="pe_subject_detraction" readonly="state != 'draft'"/>
+                  </group>
+
+                    <group>
+                    <field name="pe_detraction_amount" readonly="state != 'draft'"/>
+                  </group>
+
+                </group>
+              <group string="Retention" invisible="country_code != 'PE' and move_type not in ['out_invoice','out_refund']">
+                  <group>
+                    <field name="pe_subject_retention"  readonly="state != 'draft'"/>
+                  </group>
+
+                    <group>
+                    <field name="pe_retention_amount" readonly="state != 'draft'"/>
+                  </group>
+
+                </group>
+
+                <group string="Cuotas" invisible="country_code != 'PE' and move_type not in ['out_invoice','out_refund']">
+                  <group>
+                    <field name="pe_qty_fees" required="True" readonly="state != 'draft'"/>
+                  </group>
+                  <group>
+                    <button name="generate_pe_fees" invisible="state != 'draft'" nolabel="1" type="object" class="btn-primary" string="Generate Quotas"/>
+                  </group>
+                  <field name="pe_payment_lines" nolabel="1" readonly="state != 'draft'"/>
+                </group>
+                
+            </xpath>
+            <xpath expr="//field[@name='invoice_line_ids']/tree//field[@name='price_subtotal']" position="after">
+                <field name="pe_prepaid_invoice_id" invisible="True" />
+                <button name="%(action_pe_prepaid_wizard)d" icon="fa-usd" type="action" attrs="{'column_invisible':[('parent.country_code', '!=', 'PE'),('parent.move_type','not in',['out_invoice','out_refund']),('parent.state','!=','draft')]}" />
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>

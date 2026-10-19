@@ -1,0 +1,92 @@
+{
+  "date": "2025-06-17",
+  "orders_synced_today": 750,
+  "total_orders": 130,
+  "new_customers_this_month": 139,
+  "total_customers": 161675,
+  "total_products": 5217,
+  "total_questions": 0,
+  "sales_distribution_by_channel": {
+    "labels": ["2025-01", "2025-02", "2025-03", "2025-04", "2025-05", "2025-06"],
+    "datasets": [
+      {
+        "label": "Catalog",
+        "data": [12000, 18000, 20000, 20000, 15000, 0]
+      },
+      {
+        "label": "Supermarket",
+        "data": [8000, 12000, 18000, 18000, 10000, 0]
+      }
+    ]
+  },
+  "customers_evolution": {
+    "labels": ["2025-01", "2025-02", "2025-03", "2025-04", "2025-05", "2025-06"],
+    "datasets": [
+      {
+        "label": "Customers",
+        "data": [0.1, 0.2, 0.4, 0.6, 0.8, 1.0]
+      }
+    ]
+  },
+  "total_earnings": {
+    "labels": ["2025-01", "2025-02", "2025-03", "2025-04", "2025-05", "2025-06"],
+    "datasets": [
+      {
+        "label": "New Clients",
+        "data": [0.1, 0.3, 0.5, 0.6, 0.8, 1.0]
+      }
+    ]
+  },
+  "top_categories_sold": [],
+  "top_clients": [],
+  "top_products": [],
+  "completed_and_canceled": {
+    "labels": ["2025-02", "2025-03", "2025-04", "2025-05", "2025-06"],
+    "datasets": [
+      {
+        "label": "Completed",
+        "data": [10000, 16000, 15000, 1000, 0]
+      },
+      {
+        "label": "Canceled",
+        "data": [500, 1000, 800, 50, 0]
+      }
+    ]
+  },
+  "questions": {
+    "labels": ["History"],
+    "datasets": [
+      {
+        "label": "History",
+        "data": [18]
+      }
+    ]
+  },
+  "average_customer_order": {
+    "labels": ["2025-01", "2025-02", "2025-03", "2025-04", "2025-05", "2025-06"],
+    "datasets": [
+      {
+        "label": "Sales evolution",
+        "data": [100, 150, 170, 200, 190, 180]
+      }
+    ]
+  },
+  "recent_orders": [
+    {
+      "name": "Juan Pérez",
+      "order_number": "SO123",
+      "mail": "juan@example.com",
+      "phone": "+51 999999999",
+      "amount": 120.50,
+      "products": 3
+    },
+    {
+      "name": "Ana Díaz",
+      "order_number": "SO124",
+      "mail": "ana@example.com",
+      "phone": "+51 988888888",
+      "amount": 350.00,
+      "products": 7
+    }
+  ]
+}

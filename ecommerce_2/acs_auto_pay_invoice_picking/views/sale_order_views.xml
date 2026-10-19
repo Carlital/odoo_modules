@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_order_form_inherit_acs" model="ir.ui.view">
+        <field name="name">sale.order.form.inherit.acs</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form" />
+        <field name="arch" type="xml">
+            <!-- Botón para imprimir factura -->
+            <div class="oe_button_box" name="button_box" position="inside">
+                <button name="action_print_invoice_ticket"
+                    type="object"
+                    string="CPE TKT"
+                    class="oe_stat_button"
+                    icon="fa-receipt"
+                    invisible="not invoice_number" />
+                <button name="action_print_order_ticket"
+                    type="object"
+                    string="P/V TKT"
+                    class="oe_stat_button"
+                    icon="fa-receipt"
+                />
+            </div>
+            <!-- "Tipo de CPE" y "CPE Automático" arriba de "Cliente" -->
+            <field name="partner_id" position="before">
+                <style>
+                    .highlight-red > span{
+                    background-color: #ff0000;
+                    padding: 5px;
+                    color: #fff;
+                    border-radius: 5px;
+                    font-weight: bold;
+                    }
+                </style>
+                <field
+                    class="highlight-red"
+                    name="document_type_display"
+                    readonly="1"
+                    nolabel="1"
+                    widget="char"
+                />
+                <div class="oe_title">
+                    <group>
+                        <group>
+                            <field name="auto_invoice"
+                                readonly="state != 'draft' or not auto_pay"
+                            />
+                        </group>
+                        <group>
+                            <field name="auto_pay" readonly="state != 'draft'" />
+                        </group>
+                    </group>
+                </div>
+            </field>
+            <!-- Añadir sección de líneas de pago cuando auto_pay es True -->
+            <notebook position="inside">
+                <page string="Métodos de Pago" invisible="auto_pay==False">
+                    <field name="payment_line_ids" readonly="state != 'draft'">
+                        <list editable="bottom">
+                            <field name="journal_id" />
+                            <field name="amount" />
+                            <field name="currency_id" column_invisible="True" />
+                        </list>
+                    </field>
+                    <field name="payment_status" widget="badge"
+                        decoration-success="payment_status == 'paid'"
+                        decoration-warning="payment_status == 'partial'"
+                        decoration-danger="payment_status == 'not_paid'" />
+                </page>
+            </notebook>
+            <!-- "Términos de pago" con readonly condicional -->
+            <field name="payment_term_id" position="attributes">
+                <attribute name="readonly">auto_pay == True</attribute>
+            </field>
+            <!-- "Entrega Automática" y "CPE #" debajo de "Términos de pago" -->
+            <field name="payment_term_id" position="after">
+                <field name="auto_picking" readonly="state != 'draft'" />
+                <field name="invoice_number" readonly="1" />
+                <field name="cpe_response" readonly="1" />
+            </field>
+        </field>
+    </record>
+    <!-- Vista de formulario para el wizard de pagos -->
+    <record id="view_sale_order_payment_wizard_form" model="ir.ui.view">
+        <field name="name">sale.order.payment.wizard.form</field>
+        <field name="model">sale.order.payment.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Configurar Pagos">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="sale_order_id" invisible="1" />
+                            <field name="amount_total" readonly="1" string="Total del Pedido" />
+                        </group>
+                        <group>
+                            <field name="amount_due" readonly="1" string="Saldo Pendiente" />
+                            <field name="currency_id" invisible="1" />
+                            <field name="amount_paid" invisible="1" string="Total Pagado" />
+                        </group>
+                    </group>
+                    <!--
+                    <separator string="Métodos de Pago" />-->
+                    <field name="payment_line_ids">
+                        <list editable="bottom">
+                            <field name="journal_id" required="1" options="{'no_create': True}" />
+                            <field name="amount" required="1" sum="TOTAL PAGADO" />
+                            <field name="currency_id" column_invisible="True" />
+                        </list>
+                    </field>
+                </sheet>
+                <footer>
+                    <button name="action_confirm_payments" string="Confirmar Pagos" type="object"
+                        class="btn-primary" invisible="amount_due>0" />
+                    <button special="cancel" string="Cancelar" class="btn-secondary" />
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+        <record id="view_pricelist_based_product_report_wizard" model="ir.ui.view">
+            <field name="name">pricelist.based.product.report.wizard.form</field>
+            <field name="model">pricelist.based.product.report.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Pricelist Based Product Report">
+                    <group>
+                    <group>
+                        <field name="partner_id"/>
+                        <field name="json_file" filename="filename" invisible="1"/>
+                        <field name="filename" invisible="1"/>
+                    </group>
+                    </group>
+                    <footer>
+                        <button name="generate_report" string="Print" type="object" class="btn-primary"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_report_pricelist_based_product" model="ir.actions.act_window">
+            <field name="name">Pricelist Based Product Report</field>
+            <field name="res_model">pricelist.based.product.report.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+        <!-- <menuitem id="menu_report_pricelist_based_product" name="Pricelist Based Product Report" action="action_report_pricelist_based_product" parent="stock.menu_warehouse_report"/> -->
+
+</odoo>

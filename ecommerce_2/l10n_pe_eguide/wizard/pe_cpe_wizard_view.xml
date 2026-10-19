@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record model="ir.ui.view" id="view_form_pe_cpe_wizard">
+        <field name="name">pe.cpe.wizard.form</field>
+        <field name="model">pe.cpe.wizard</field>
+        <field name="inherit_id" ref="l10n_pe_cpe.view_form_pe_cpe_wizard"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='container_cpe']" position="inside">
+                <group string="Electronic Guide">
+                    <field name="pe_guide_user" required="pe_ws_server in ['sunat']" invisible="pe_ws_server not in ['sunat']"/>
+                    <field name="pe_guide_password" password="password" required="pe_ws_server in ['sunat','nubefact_pse']" invisible="pe_ws_server not in ['sunat','nubefact_pse']" />
+                    <field name="pe_guide_ws_url"/>
+                    <field name="pe_guide_client_id" required="pe_ws_server in ['sunat']" invisible="pe_ws_server not in ['sunat']"/>
+                    <field name="pe_guide_client_secret" required="pe_ws_server in ['sunat']" invisible="pe_ws_server not in ['sunat']"/>
+                    <field name="pe_eguide_verify_url"/>
+                </group>
+            </xpath>
+            
+        </field>
+    </record>
+</odoo>

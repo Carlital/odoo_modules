@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="crm_custom_lead.ChipSelectorTemplate">
+        <div class="chip_selector_widget">
+            <t t-foreach="options" t-as="option" t-key="option.value">
+                <div class="chip_option"
+                    t-att-class="{'selected': isSelected(option.value), 'readonly': props.readonly}"
+                    t-on-click="() => this.selectOption(option.value)">
+                    <img t-att-src="option.image" 
+                        t-att-alt="option.label"
+                        class="chip_image"/>
+                    <span class="chip_label" t-esc="option.label"/>
+                    <div t-if="isSelected(option.value)" class="chip_checkmark">
+                        <i class="fa fa-check-circle"/>
+                    </div>
+                </div>
+            </t>
+        </div>
+    </t>
+</templates>

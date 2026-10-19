@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<template xml:space="preserve">
+    <t t-name="vex_sync_mercado_libre.automatic_pricing" owl="1">
+      <div class="o_dashboard_view my-5 mx-3">
+        <div class=" text-dark">
+          <div class="d-flex align-items-center">
+            <h1 class="h2 font-weight-bold">Dashboard</h1>
+            <button class="btn btn-primary" style="margin-left: 40px; height: fit-content;">Download generated report</button>
+          </div>
+      
+          <div class="row mt-4">
+
+            <div class="col-md-4 mb-4 grid-stack-item" gs-w="4" gs-h="3" style="display: flex; align-items: center; justify-content: center;">
+                <div class="grid-stack-item-content card-body" style="width: 100%; height: 100%;">
+                  <canvas t-ref="precioBajoChart" style="width: 100% !important; height: 100% !important;"></canvas>
+                </div>
+            </div>
+          
+            <div class="col-md-4 mb-4 grid-stack-item" gs-w="4" gs-h="3" style="display: flex; align-items: center; justify-content: center;">
+                <div class="grid-stack-item-content card-body" style="width: 100%; height: 100%;">
+                  <canvas t-ref="precioIgualChart" style="width: 100% !important; height: 100% !important;"></canvas>
+                </div>
+            </div>
+          
+            <div class="col-md-4 mb-4 grid-stack-item" gs-w="4" gs-h="3" style="display: flex; align-items: center; justify-content: center;">
+                <div class="grid-stack-item-content card-body" style="width: 100%; height: 100%;">
+                  <canvas t-ref="precioAltoChart" style="width: 100% !important; height: 100% !important;"></canvas>
+                </div>
+            </div>
+            
+          </div>
+
+      
+          <h3 class="h4 font-weight-bold mb-3">Products Ranking</h3>
+          <div class="bg-white p-4 rounded-lg shadow">
+            <div class="mb-3 d-flex justify-content-between">
+              <div class="d-flex align-items-center">
+                <span>Show: </span>
+                <select class="py-1 px-2 border border-zinc-200 dark:border-zinc-700 rounded">
+                    <option value="10">10</option>
+                    <option value="20">20</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                  </select>
+                <span>entries</span>
+              </div>
+              <div class="d-flex align-items-center">
+                <span>Search:</span>
+                <input type="text" class="form-control" style="height: fit-content;"/>
+              </div>
+            </div>
+            <table class="table table-bordered table-hover">
+              <thead class="bg-light">
+                <tr>
+                  <th scope="col">Image</th>
+                  <th scope="col">Product</th>
+                  <th scope="col">Lowest Price</th>
+                  <th scope="col">Highest Price</th>
+                  <th scope="col">Your Price</th>
+                  <th scope="col">Price Level</th>
+                  <th scope="col">Category</th>
+                  <th scope="col">Brand</th>
+                  <th scope="col">Origin</th>
+                  <th scope="col">Competition</th>
+                  <th scope="col">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><img src="https://placehold.co/50x50" alt="Producto 1" class="img-fluid"/></td>
+                  <td>MIRAFLORES TAB C/100UD</td>
+                  <td class="text-danger">$7.30</td>
+                  <td class="text-sucess">$9.40</td>
+                  <td>$8.00</td>
+                  <td class="text-danger">HIGH</td>
+                  <td>SISTEMA NEUMÓTICO</td>
+                  <td>MIRAFLORES</td>
+                  <td>42</td>
+                  <td>3</td>
+                  <td><button class="btn btn-danger btn-sm">Remove</button></td>
+                </tr>
+                <tr>
+                  <td><img src="https://placehold.co/50x50" alt="Producto 1" class="img-fluid"/></td>
+                  <td>MIRAFLORES TAB C/100UD</td>
+                  <td class="text-danger">$7.30</td>
+                  <td class="text-sucess">$9.40</td>
+                  <td>$8.00</td>
+                  <td class="text-success">LOW</td>
+                  <td>SISTEMA NEUMÓTICO</td>
+                  <td>MIRAFLORES</td>
+                  <td>42</td>
+                  <td>3</td>
+                  <td><button class="btn btn-danger btn-sm">Remove</button></td>
+                </tr>
+                <tr>
+                  <td><img src="https://placehold.co/50x50" alt="Producto 1" class="img-fluid"/></td>
+                  <td>MIRAFLORES TAB C/100UD</td>
+                  <td class="text-danger">$7.30</td>
+                  <td class="text-sucess">$9.40</td>
+                  <td>$8.00</td>
+                  <td class="text-success">LOW</td>
+                  <td>SISTEMA NEUMÓTICO</td>
+                  <td>MIRAFLORES</td>
+                  <td>42</td>
+                  <td>3</td>
+                  <td><button class="btn btn-danger btn-sm">Remove</button></td>
+                </tr>
+                <tr>
+                  <td><img src="https://placehold.co/50x50" alt="Producto 1" class="img-fluid"/></td>
+                  <td>MIRAFLORES TAB C/100UD</td>
+                  <td class="text-danger">$7.30</td>
+                  <td class="text-sucess">$9.40</td>
+                  <td>$8.00</td>
+                  <td class="text-danger">HIGH</td>
+                  <td>SISTEMA NEUMÓTICO</td>
+                  <td>MIRAFLORES</td>
+                  <td>42</td>
+                  <td>3</td>
+                  <td><button class="btn btn-danger btn-sm">Remove</button></td>
+                </tr>
+                <tr>
+                  <td><img src="https://placehold.co/50x50" alt="Producto 1" class="img-fluid"/></td>
+                  <td>MIRAFLORES TAB C/100UD</td>
+                  <td class="text-danger">$7.30</td>
+                  <td class="text-sucess">$9.40</td>
+                  <td>$8.00</td>
+                  <td class="text-danger">HIGH</td>
+                  <td>SISTEMA NEUMÓTICO</td>
+                  <td>MIRAFLORES</td>
+                  <td>42</td>
+                  <td>3</td>
+                  <td><button class="btn btn-danger btn-sm">Remove</button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+          
+          
+    </t>
+</template>

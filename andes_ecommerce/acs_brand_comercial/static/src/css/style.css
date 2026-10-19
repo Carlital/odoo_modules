@@ -1,0 +1,7 @@
+.table-striped > tbody > tr:nth-of-type(odd) {
+   background-color: #eef0f0;
+}
+
+.table-striped > thead > tr{
+  border: 0.8px solid #333;
+}

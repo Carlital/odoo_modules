@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_vex_dashboard_record_tree" model="ir.ui.view">
+        <field name="name">vex.dashboard.record.tree</field>
+        <field name="model">vex.dashboard.record</field>
+        <field name="arch" type="xml">
+            <tree string="Dashboard Records">
+                <field name="date"/>
+                <field name="orders_synced_today"/>
+                <field name="total_orders"/>
+                <field name="new_customers_this_month"/>
+                <field name="total_customers"/>
+                <field name="total_products"/>
+                <field name="total_questions"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_vex_dashboard_record_form" model="ir.ui.view">
+        <field name="name">vex.dashboard.record.form</field>
+        <field name="model">vex.dashboard.record</field>
+        <field name="arch" type="xml">
+            <form string="Dashboard Record">
+                <sheet>
+                    <group>
+                        <field name="instance_id"/>
+                        <field name="date"/>
+                        <field name="orders_synced_today"/>
+                        <field name="total_orders"/>
+                        <field name="new_customers_this_month"/>
+                        <field name="total_customers"/>
+                        <field name="total_products"/>
+                        <field name="total_questions"/>
+                    </group>
+                    <group string="JSON Data">
+                        <field name="top_clients_json" widget="text"/>
+                        <field name="top_products_json" widget="text"/>
+                        <field name="recent_orders_json" widget="text"/>
+                        <field name="customers_evolution_json" widget="text"/>
+                        <field name="total_earnings_json" widget="text"/>
+                        <field name="average_customer_order_json" widget="text"/>
+                        <field name="top_categories_json" widget="text"/>
+                        <field name="completed_and_canceled_json" widget="text"/>
+                        <field name="sales_by_channel_json" widget="text"/>
+                        <field name="questions_by_category_json" widget="text"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- <record id="action_vex_dashboard_record" model="ir.actions.act_window">
+        <field name="name">Dashboard Records</field>
+        <field name="res_model">vex.dashboard.record</field>
+        <field name="view_mode">tree,form</field>
+    </record> -->
+
+    <record id="action_vex_dashboard_record_server" model="ir.actions.server">
+        <field name="name">Dashboard Records</field>
+        <field name="model_id" ref="odoo-mercadolibre.model_vex_dashboard_record"/> 
+        <field name="state">code</field>
+        <field name="code">
+            action = {'type': 'ir.actions.act_window',
+                    'name': 'Dashboard Records',
+                    'res_model': 'vex.dashboard.record',
+                    'view_mode': 'tree,form',
+                    #'domain': [('marketplace_ids', 'in', [env.ref('odoo-mercadolibre.vex_marketplace_mercadolibre').id])],
+                    'context': {'default_instance_id': env.user.meli_instance_id.id if env.user.meli_instance_id else False,
+                        'search_default_instance_filter': True}
+                    }
+        </field>
+    </record>
+
+    <menuitem id="menu_vex_dashboard_record"
+              name="Dashboard Records"
+              parent="menu_main_odoo-mercadolibre"
+              action="action_vex_dashboard_record_server"
+              sequence="20"/>
+</odoo>

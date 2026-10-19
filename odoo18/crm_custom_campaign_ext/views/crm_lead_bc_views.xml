@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_crm_lead_form_bc_inherit" model="ir.ui.view">
+            <field name="name">crm.lead.form.bc.inherit</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm_custom_lead.view_crm_lead_form_custom"/>
+            <field name="priority" eval="80"/>
+            <field name="arch" type="xml">
+
+                <!-- Insertamos nuestras pestañas en el notebook principal del lead -->
+                <xpath expr="//sheet/notebook" position="inside">
+
+                    <!-- TAB PRODUCTO -->
+                    <page string="Producto">
+                        <group>
+                            <!-- Asegúrate bc_campaign_id esté en el formulario (puede venir de otra inheritance).
+                                 Si no existe, coloca/coloca su campo antes de este bloque. -->
+                            <field name="bc_campaign_id" invisible="1" modifymodel="true"/>
+
+                            <field name="bc_subcampaign_id"
+                                   domain="[('campaign_id','=', bc_campaign_id), ('active','=', True)]"/>
+                            <field name="bc_plan_id"
+                                   domain="[('subcampaign_id','=', bc_subcampaign_id), ('active','=', True)]"/>
+
+                            <!-- Mostrar resumen con la tarjeta HTML del plan seleccionado -->
+                            <field name="bc_oferta_resumen_html" readonly="1" nolabel="0" class="o_bc_offer_summary"/>
+
+                            <field name="bc_plan_icons_html" readonly="1" nolabel="1"/>
+                            <!-- DEBUG: ver nombres detectados -->
+                            <field name="bc_debug_icon_names" readonly="1" nolabel="1"/>
+                        </group>
+                    </page>
+
+                    <!-- TAB GUION -->
+                    <page string="Guion">
+                        <group>
+                            <field name="bc_oferta_guion" readonly="1"/>
+
+                            <!-- Botón visual (ahora sin attrs, siempre visible).
+                                 JS va a copiar solo si hay texto -->
+                            <a class="btn btn-secondary o_bc_copy_guion">
+                                Copiar guion
+                            </a>
+                        </group>
+                    </page>
+
+                </xpath>
+
+            </field>
+        </record>
+    </data>
+</odoo>

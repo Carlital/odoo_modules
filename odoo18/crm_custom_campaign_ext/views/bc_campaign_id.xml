@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+    <!-- Reemplaza el field custom_campaign_id por bc_campaign_id en el formulario de oportunidad -->
+    <record id="crm_custom_campaign_ext_inherit_crm_lead_form" model="ir.ui.view">
+      <field name="name">crm.lead.form.inherit.show.bc_campaign</field>
+      <field name="model">crm.lead</field>
+      <!-- inherit_id corregido: vista que realmente contiene custom_campaign_id -->
+      <field name="inherit_id" ref="crm_custom_lead.view_crm_lead_form_custom"/>
+      <field name="arch" type="xml">
+        <xpath expr="//field[@name='custom_campaign_id']" position="replace">
+          <field name="bc_campaign_id" widget="many2one" options="{'no_create': False}" placeholder="Campaña (BC)"/>
+        </xpath>
+      </field>
+    </record>
+
+  </data>
+</odoo>

@@ -1,0 +1,20 @@
+<odoo>
+    <record id="pricelist_based_product_details_report" model="ir.actions.report">
+        <field name="name">Descarga catálogo y stock</field>
+        <field name="model">report.pricelist_based_product_report.report_pricelist_products</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">pricelist_based_product_report.report_pricelist_products</field>
+    </record>
+
+
+
+
+    <template id="my_pricelist_report_link" name="Link to pricelist report" inherit_id="portal.portal_my_home" priority="100">
+        <xpath expr="//div[hasclass('o_portal_my_home')]" position="after">
+            <li class="list-group-item">
+                <a href="/my/pricelist_report/csv" target="_blank">Descarga catálogo y stock</a>
+            </li>
+        </xpath>
+    </template>
+
+</odoo>

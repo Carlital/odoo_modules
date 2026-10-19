@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="res_config_settings_view_form_cpe" model="ir.ui.view">
+            <field name="name">res.config.settings.view.form.inherit.l10n_pe_cpe</field>
+            <field name="model">res.config.settings</field>
+            <field name="inherit_id" ref="account.res_config_settings_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//block[@id='analytic']" position="after">
+                    <block title="Electronic Payment Voucher" id="analytic">
+                        <setting string="CPE" company_dependent="1" >
+                            <div class="mt8">
+                                <button name="action_cpe_config_wizard" icon="fa-arrow-right" type="object" string="Configure Wizard" class="btn-link"/>
+                            </div>
+                        </setting>
+                        <setting id="pe_max_days" string="Default Maximum days" company_dependent="1" help="Default Maximum days of CPE">
+                            <field name="pe_max_days" />
+                        </setting>
+                    </block>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

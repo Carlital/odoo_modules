@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <record id="view_invoice_form" model="ir.ui.view">
+        <field name="name">view.invoice.form</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='invoice_cash_rounding_id']" position="after">
+                <field name="brand_comercial_id"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

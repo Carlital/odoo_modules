@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="Orderline" t-inherit="point_of_sale.Orderline" t-inherit-mode="extension" owl="1">
+        <!-- Eliminar el botón "Create Product" -->
+        <xpath expr="//div[hasclass('product-price')]" position="inside">
+            <i class="fa fa-pencil ms-2"
+           role="button"
+           title="Editar (requiere token)"
+           style="cursor: pointer;"
+           t-on-click.stop="requestToken"
+           />
+        </xpath>
+    </t>
+    
+</templates>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+<template id="pricelist_based_product_report.report_pricelist_products" >
+    <t t-call="web.html_container">
+    <t t-call="web.internal_layout">
+        <div class="page">
+
+            <div class="text-center">
+                <h2>Product Details</h2>
+            </div>
+
+            <table  class="table table-sm">
+                <thead><tr>
+                    <th>SKU</th>
+                    <th>Product</th>
+                    <th>Stock Available</th>
+                    <th>Price</th>
+                    <th>Proposed Selling Price</th>
+                </tr></thead>
+                <tbody>
+                <tr t-foreach='products' t-as='line'>
+                    <td><t t-esc="line['code']" /></td>
+                    <td><t t-esc="line['product_name']" /></td>
+                    <td>
+                        <t t-esc="line['quantity']" />
+<!--                        <t t-if='line["uom"] != "Unit(s)"'>-->
+<!--                            <t t-esc='line["uom"]' />-->
+<!--                        </t>-->
+                    </td>
+                    <td>
+                        <t t-esc='line["customer_price"]' />
+                    </td>
+                    <td><t t-esc="line['selling_price']"/></td>
+                </tr>
+                </tbody>
+            </table>
+
+            <br/>
+
+
+
+        </div>
+    </t>
+    </t>
+
+</template>
+</data>
+</openerp>

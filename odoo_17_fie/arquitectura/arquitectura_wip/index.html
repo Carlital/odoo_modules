@@ -1,0 +1,145 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>FIE – Bocetos y Arquitectura (Pre‑desarrollo)</title>
+  <link rel="stylesheet" href="styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script>mermaid.initialize({ startOnLoad: true, theme: 'default' });</script>
+</head>
+<body>
+
+        <div class="arch medium hidden">
+          <div class="layer">
+            <div class="box user">Admin/Editor</div>
+            <div class="box user">Público</div>
+          </div>
+          <div class="layer">
+            <div class="box edge">Nginx (TLS, proxy)</div>
+          </div>
+          <div class="layer">
+            <div class="box app">Odoo 17
+              <ul>
+                <li>google_sheets_import</li>
+                <li>cv_importer</li>
+                <li>Website</li>
+              </ul>
+            </div>
+            <div class="box etl">n8n
+              <ul>
+                <li>Descarga PDF</li>
+                <li>Extracción/LLM</li>
+                <li>Limpieza</li>
+              </ul>
+            </div>
+          </div>
+          <div class="layer">
+            <div class="box db">PostgreSQL</div>
+          </div>
+        </div>
+        <div class="arch high hidden">
+          <div class="layer">
+            <div class="box user">Admin/Editor</div>
+            <div class="box user">Público</div>
+          </div>
+          <div class="layer">
+            <div class="box edge">Nginx
+              <ul>
+                <li>HTTPS/HSTS</li>
+                <li>Proxy Odoo/n8n</li>
+              </ul>
+            </div>
+          </div>
+          <div class="layer">
+            <div class="box app">Odoo 17
+              <ul>
+                <li>importación/validación</li>
+                <li>orquestación/callback</li>
+                <li>website</li>
+                <li>auditoría</li>
+              </ul>
+            </div>
+            <div class="box etl">n8n
+              <ul>
+                <li>webhook/HTTP</li>
+                <li>PDF→texto</li>
+                <li>LLM</li>
+                <li>POST a Odoo</li>
+              </ul>
+            </div>
+          </div>
+          <div class="layer">
+            <div class="box db">PostgreSQL</div>
+          </div>
+        </div>
+        <h3 style="padding:8px 0 0 0;margin:0 0 8px 0;color:var(--muted);">Vista Mermaid</h3>
+        <div class="content" style="border:2px solid #000">
+          <pre class="mermaid" style="background:#fff;border:0;padding:10px;white-space:pre-wrap;">
+flowchart LR
+
+  %% Actores / Usuarios
+  U[Usuarios\nAdmin / Editor\nPublico]
+
+  %% Servicios externos
+  GS[Google Sheets\nImportacion]
+  CV[Servidor CV ESPOCH\nPDF institucional]
+
+  %% Infraestructura interna (Docker)
+  subgraph Docker["Infraestructura Docker Compose (FIE)"]
+    NX[Nginx\nReverse Proxy HTTPS]
+
+    Odoo[[Odoo 17]]
+
+    DB[(PostgreSQL)]
+
+    N8N["n8n Orquestador ETL\n- Webhook inicio\n- Descargar PDF CV\n- Extraer y presegmentar\n- LLM + extractor\n- Limpieza y score\n- Callback /cv/callback\n- Reintentos por registro"]
+  end
+
+  %% Componentes internos de Odoo
+  subgraph Dentro_de_Odoo["Componentes en Odoo 17"]
+    MOD1[google_sheets_import\n- Validacion minima\n- Lote de importacion\n- Unicidad por cedula\n- Plantilla oficial FIE\n- Publico solo lectura]
+    MOD2[cv_importer\n- Encolar por docente\n- Iniciar extraccion a n8n\n- Recibir callback\n- Cambiar estado\n- Publicar Website\n- Auditoria]
+    MOD1 --> MOD2
+  end
+
+  %% Flujo principal de uso
+  U -->|Consulta perfiles publicados| NX --> Odoo
+
+  %% Importacion de datos
+  GS -->|Importacion desde hoja| Odoo
+
+  %% Persistencia
+  Odoo <--> DB
+
+  %% Extraccion de CV
+  Odoo -->|Iniciar extraccion por cedula| N8N
+  N8N -->|Descarga PDF| CV
+  N8N -->|Callback /cv/callback| Odoo
+
+  %% Estados y seguridad
+  classDef note fill:#ffffff,stroke:#000000,color:#000000;
+  NR["Estados por registro\n- Pendiente\n- Validado\n- Error\n- Publicado\n\nSeguridad:\n- HTTPS obligatorio\n- Roles y permisos internos\n- Variables de entorno seguras"]:::note
+  Odoo --- NR
+
+  %% Firma / autoría
+  AUTOR["Elaborado por: Carla Lomas\nProyecto EduCV\nArquitectura de Sistema"]:::note
+  
+
+  %% Colores por tipo
+  classDef usuarios fill:#e6e0ff,stroke:#4b3fa3,color:#000;
+  classDef externos fill:#e8f4ff,stroke:#1a5c99,color:#000;
+  classDef docker fill:#e9ffe8,stroke:#2b6b2b,color:#000;
+  classDef odoo fill:#fffbe6,stroke:#8a6d00,color:#000;
+
+  class U usuarios;
+  class GS,CV externos;
+  class Docker,NX,Odoo,DB,N8N docker;
+  class Dentro_de_Odoo,MOD1,MOD2,MOD3 odoo;
+
+
+           </pre>
+        </div>
+      </article>
+</body>
+</html>

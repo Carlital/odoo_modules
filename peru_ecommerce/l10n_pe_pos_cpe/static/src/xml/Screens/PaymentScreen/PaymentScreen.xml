@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="PaymentScreen" t-inherit="point_of_sale.PaymentScreen" t-inherit-mode="extension" owl="1">
+        <xpath expr="//div[hasclass('payment-controls')]" position="inside">
+            <t t-foreach="pe_journal_ids" t-as="pe_journal_id"
+               t-key="pe_journal_id.id">
+                <div class="button js_pe_invoice" t-if="!currentOrder.pe_credit_note_code"
+                    t-on-click="() => toggleSetPeJournal(this, pe_journal_id.id)"
+                    t-att-class="{ highlight: currentOrder.get_pe_journal_id()==pe_journal_id.id }">
+                    <i class="fa fa-file-text-o" /> <t t-esc="pe_journal_id.name" />
+                </div>
+            </t>
+        </xpath>
+        <xpath expr="//div[hasclass('js_invoice')]" position="attributes">
+            <attribute name="style">display: none;</attribute>
+        </xpath>
+    </t>
+</templates>

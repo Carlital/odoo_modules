@@ -1,0 +1,24 @@
+/* Alinear el bloque del courier a la derecha del bloque de dirección */
+.o_form_view .direccion-titular-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+}
+
+/* Estilo del bloque de courier (manteniendo labels visibles) */
+.o_form_view .bloque-courier {
+    flex: 0 0 40%;
+    margin-top: -10px;
+    background: #fafafa;
+    border: 1px solid #dcdcdc;
+    border-radius: 6px;
+    padding: 12px 18px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+/* Espaciado entre campos y etiquetas */
+.o_form_view .bloque-courier .o_form_label {
+    font-weight: 600;
+    color: #555;
+}

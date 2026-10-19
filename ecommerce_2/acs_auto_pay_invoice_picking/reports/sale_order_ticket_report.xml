@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Definir el formato de papel (80 mm de ancho) -->
+    <record id="sale_order_ticket_paperformat" model="report.paperformat">
+        <field name="name">Ticket 80mm</field>
+        <field name="format">custom</field>
+        <field name="page_width">80</field>  <!-- 80 mm de ancho -->
+        <field name="page_height">297</field>  <!-- Altura A4 estándar, pero se ajustará según
+        contenido -->
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">1</field>
+        <field name="margin_bottom">1</field>
+        <field name="margin_left">0</field>
+        <field name="margin_right">0</field>
+        <field name="header_spacing">0</field>
+        <field name="dpi">80</field>
+    </record>
+
+    <!-- Definir el reporte -->
+    <record id="sale_order_ticket_report" model="ir.actions.report">
+        <field name="name">Orden de Venta - Ticket</field>
+        <field name="model">sale.order</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">acs_auto_pay_invoice_picking.sale_order_ticket_report_template</field>
+        <field name="report_file">acs_auto_pay_invoice_picking.sale_order_ticket_report</field>
+        <field name="paperformat_id"
+            ref="acs_auto_pay_invoice_picking.sale_order_ticket_paperformat" />
+        <field name="print_report_name">'Orden de Venta - %s' % (object.name)</field>
+    </record>
+
+    <!-- Plantilla del reporte -->
+    <data>
+        <template id="sale_order_ticket_report_template">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="order">
+                    <t t-call="web.basic_layout">
+                        <div class="page">                  
+                            
+                                <!-- Encabezado -->
+                                <div style="text-align: center; margin-bottom: 10px;">
+                                    <h1 style="font-size: 16pt; margin: 0;"><t t-esc="order.company_id.name"/></h1>
+                                    <div style="font-size: 10pt;">RUC: <t t-esc="order.company_id.vat"/><br /><t t-esc="order.company_id.street"/>, <t t-esc="order.company_id.partner_id.l10n_pe_district.name"/>, <t t-esc="order.company_id.city"/>, <t t-esc="order.company_id.state_id.name"/>, <t t-esc="order.company_id.country_id.name"/><br />TELEF/CEL: <t t-esc="order.company_id.phone"/> </div>
+                                    <div style="font-size: 10pt; margin-top: 5px;">
+                                        ATENDIDO POR: <t t-esc="order.user_id.name"/>
+                                    </div>
+                                </div>
+
+                                <!-- Fecha y número de orden -->
+                                <div style="text-align: center; margin-bottom: 10px;font-size: 10pt">
+                                    FECHA: <span t-esc="order.date_order.strftime('%d/%m/%Y %H:%M:%S')" />
+                                    <div style="font-size: 12pt; font-weight: bold;"> <span  t-if="order.state == 'sale'">Orden #</span><span  t-if="order.state != 'sale'">Cotización #</span> <span
+                                            t-field="order.name" />
+                                    </div>
+                                </div>
+
+                                <!-- Cliente -->
+                                <div style="text-align: left; margin-bottom: 10px;font-size: 10pt;">
+                                    <strong>CLIENTE:</strong> <span>
+                                        <span t-field="order.partner_id.name" />
+                                        <br />
+                                        <span t-field="order.partner_id.street" /><t t-if="order.partner_id.l10n_pe_district.name">, <span t-field="order.partner_id.l10n_pe_district.name" /></t><t t-if="order.partner_id.city">, <span t-field="order.partner_id.city" /></t><t t-if="order.partner_id.country_id.name">, <span t-field="order.partner_id.country_id.name" /></t>
+                                        <br />
+                                        <t t-if="order.partner_id.vat"> <strong>RUC/DNI:</strong> <span t-field="order.partner_id.vat" /></t>
+                                    </span>
+                                </div>
+
+                                <!-- Líneas de la orden -->
+                                <table class="table table-bordered table-products table-striped" style="font-size: 10pt; border-collapse: collapse; margin-bottom: 10px;width:100%">
+                                    <thead>
+                                        <tr>                                      
+                                            <th style="text-align: left;"><strong>DESCRIP.</strong></th>
+                                            <th style="text-align: left;"><strong>CANT.</strong></th> 
+                                            <th style="text-align: right;"><strong>P.UNIT.</strong></th>
+                                            <th style="text-align: right;"><strong>IMPORTE</strong></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <t t-foreach="order.order_line" t-as="line">
+                                            <tr style="border-bottom: 0;">
+                                                <td style="text-align: left;border: 0;padding-bottom:0" colspan="4">
+                                                    <span t-field="line.name"/>          
+                                                </td>
+                                            </tr>
+                                            <tr style="border-top: 0;border-left: 0;border-right: 0;border-bottom: 1px;">
+                                                <td style="text-align: right;border: 0;padding-top:0" colspan="2">
+                                                    <span t-field="line.product_uom_qty"/> <span t-field="line.product_uom.name"/>
+                                                </td>
+                                                <td style="text-align: right;border: 0;padding-top:0">
+                                                    <span t-field="line.price_unit" t-options="{'widget': 'monetary', 'display_currency': order.currency_id}"/>
+                                                </td>
+                                                <td style="text-align: right;border: 0;padding-top:0">
+                                                    <span t-field="line.price_subtotal" t-options="{'widget': 'monetary', 'display_currency': order.currency_id}"/>
+                                                </td>
+                                            </tr>
+                                        </t>
+                                    </tbody>
+                                </table>
+
+                                <!-- Totales-->
+                                <table class="table table-bordered table-products table-striped" style="float: right; font-size: 10pt; border-collapse: collapse; margin-bottom: 10px;width: 60%;text-align: right">
+                                    <tbody>
+                                        <tr>
+                                            <td><strong>Subtotal:</strong></td>
+                                            <td><span t-field="order.currency_id.symbol"/><span t-esc="'%.2f' % order.amount_untaxed" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>IGV 18%:</strong></td>
+                                            <td><span t-field="order.currency_id.symbol"/><span t-esc="'%.2f' % order.amount_tax" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Total:</strong></td>
+                                            <td><span t-field="order.currency_id.symbol"/><span t-esc="'%.2f' % order.amount_total" /></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                <!-- Plazo de pago -->
+                                <div style="text-align: left; font-size: 10pt;">
+                                    <strong>Plazo de pago:</strong><br/>
+                                    <span t-field="order.payment_term_id.name" />
+                                </div>
+                            
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

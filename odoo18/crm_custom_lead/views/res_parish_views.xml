@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <record id="view_res_parish_tree" model="ir.ui.view">
+        <field name="name">res.parish.tree</field>
+        <field name="model">res.parish</field>
+        <field name="arch" type="xml">
+            <list import="1">
+                <field name="country_id" string="País"/>
+                <field name="state_id" string="Provincia"/>
+                <field name="city_id" string="Ciudad"/>
+                <field name="name" string="Parroquia"/>
+                <field name="zip" string="ZIP"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_res_parish_form" model="ir.ui.view">
+        <field name="name">res.parish.form</field>
+        <field name="model">res.parish</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="country_id" string="País"/>
+                        <field name="state_id" string="Provincia" domain="[('country_id','=',country_id)]"/>
+                        <field name="city_id" string="Ciudad" domain="[('state_id','=',state_id)]"/>
+                        <field name="name" string="Parroquia"/>
+                        <field name="zip" string="ZIP"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Menú Locación debajo de CRM (visible para todos los usuarios internos) -->
+    <menuitem id="menu_location_root" name="Locación" parent="crm.crm_menu_root"/>
+
+    <record id="action_res_parish" model="ir.actions.act_window">
+        <field name="name">Ubicaciones</field>
+        <field name="res_model">res.parish</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="menu_res_parish" name="Ubicaciones" parent="menu_location_root" action="action_res_parish"/>
+
+</odoo>
+

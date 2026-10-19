@@ -1,0 +1,7 @@
+/* Estilos para la columna "Productos cotizados" en el reporte de ventas */
+
+.o_list_view .o_list_renderer .o_field_preformatted.quoted_products_cell {
+    font-size: 12px;
+    /* Opcional: Ajusta la altura de la línea para mejorar la legibilidad */
+    line-height: 1.4; 
+}

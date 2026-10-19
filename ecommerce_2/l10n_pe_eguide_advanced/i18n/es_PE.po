@@ -1,0 +1,1891 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* l10n_pe_eguide_advanced
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 17.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-08-11 22:52+0000\n"
+"PO-Revision-Date: 2024-08-11 19:23-0500\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: es_PE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.4.2\n"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.actions.report,print_report_name:l10n_pe_eguide_advanced.action_report_cpe
+msgid "('%s' % (object.name).replace(\"/\",'_'))"
+msgstr "('%s' % (object.name).replace(\"/\",'_'))"
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_custom
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_standard
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_stylized
+msgid "(document name)"
+msgstr "(nombre de documento)"
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_custom
+msgid "1Q"
+msgstr ""
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_custom
+msgid ""
+"<br/>\n"
+"                                        Apellidos y Nombres:"
+msgstr ""
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_custom
+msgid ""
+"<br/>\n"
+"                                        Licencia:"
+msgstr ""
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_custom
+msgid ""
+"<br/>\n"
+"                                    <span>RUC:</span>"
+msgstr ""
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_custom
+msgid ""
+"<br/>\n"
+"                                    Dirección:"
+msgstr ""
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_custom
+msgid ""
+"<br/>\n"
+"                                    Identificacion del transportista:"
+msgstr ""
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_custom
+msgid ""
+"<br/>\n"
+"                                    Nombre:"
+msgstr ""
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_standard
+msgid ""
+"<br/>\n"
+"                                    N°"
+msgstr ""
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_custom
+msgid ""
+"<br/>\n"
+"                                    Número de identificación:"
+msgstr ""
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_custom
+msgid ""
+"<br/>\n"
+"                                <br/>\n"
+"                                <br/>\n"
+"                                Doc. Identidad<br/>"
+msgstr ""
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_custom
+msgid ""
+"<br/>\n"
+"                                <br/>\n"
+"                                <span>Fech. Imp.:</span>"
+msgstr ""
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_custom
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_stylized
+msgid ""
+"<br/>\n"
+"                            <span>Guía de Remisión Remitente Electrónica</span>"
+msgstr ""
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_standard
+msgid ""
+"<br/>\n"
+"                            Número de licencia de conducir:"
+msgstr ""
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_standard
+msgid ""
+"<br/>\n"
+"                        <br/>\n"
+"                        <strong>Fecha y hora de emisión:</strong>"
+msgstr ""
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.view_pe_electronic_guide_form
+msgid "<span class=\"oe_inline o_form_label mx-3\"> Unit </span>"
+msgstr "<span class=\"oe_inline o_form_label mx-3\"> Unidad </span>"
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_standard
+msgid "<span>BORRADOR</span>"
+msgstr ""
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_standard
+msgid "<span>CANCELADO</span>"
+msgstr ""
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_stylized
+msgid "<span>CANTIDAD</span>"
+msgstr ""
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_custom
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_stylized
+msgid "<span>Cancelled</span>"
+msgstr "<span>Cancelado</span>"
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_custom
+msgid "<span>Cantidad</span>"
+msgstr ""
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_custom
+msgid "<span>Codigo</span>"
+msgstr ""
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_stylized
+msgid "<span>CÓD.</span>"
+msgstr ""
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_custom
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_standard
+msgid "<span>D.N.I.:</span>"
+msgstr ""
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_stylized
+msgid "<span>DESCRIPCIÓN</span>"
+msgstr ""
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_custom
+msgid "<span>Datos del Destinatario</span>"
+msgstr ""
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_custom
+msgid "<span>Datos del Remitente</span>"
+msgstr ""
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_custom
+msgid "<span>Datos del Transporte</span>"
+msgstr ""
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_custom
+msgid "<span>Descipcion</span>"
+msgstr ""
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_custom
+msgid "<span>Documentos relacionados</span>"
+msgstr ""
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_custom
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_stylized
+msgid "<span>Draft</span>"
+msgstr "<span>Borrador</span>"
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_stylized
+msgid "<span>Electronics</span><br/>"
+msgstr "<span>Electronica</span><br/>"
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_custom
+msgid "<span>Fecha de Emision</span>"
+msgstr ""
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_standard
+msgid "<span>GUÍA DE REMISIÓN ELECTRÓNICA REMITENTE</span>"
+msgstr ""
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_custom
+msgid "<span>Inicio del Traslado</span>"
+msgstr ""
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_custom
+msgid "<span>KGM</span>"
+msgstr ""
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_custom
+msgid "<span>Modalidad</span>"
+msgstr ""
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_custom
+msgid "<span>Motivo del Traslado</span>"
+msgstr ""
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_standard
+msgid "<span>No</span>"
+msgstr ""
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_stylized
+msgid "<span>Nro.</span>"
+msgstr ""
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_custom
+msgid "<span>N° Bultos o Paletas</span>"
+msgstr ""
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_custom
+msgid "<span>Peso Bruto Total</span>"
+msgstr ""
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_custom
+msgid "<span>Principal</span><br/>"
+msgstr ""
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_custom
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_standard
+msgid "<span>R.U.C.:</span>"
+msgstr ""
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_custom
+msgid "<span>Secundario</span><br/>"
+msgstr ""
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_standard
+msgid "<span>Si</span>"
+msgstr ""
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_stylized
+msgid "<span>U/M</span>"
+msgstr ""
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_custom
+msgid "<span>Unidad de Medida</span>"
+msgstr ""
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_custom
+msgid "<span>Unidad</span>"
+msgstr ""
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_standard
+msgid "<strong> Bienes por transportar</strong>"
+msgstr ""
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_standard
+msgid "<strong> Datos de los conductores </strong>"
+msgstr ""
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_standard
+msgid "<strong> Datos de los vehículos </strong>"
+msgstr ""
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_standard
+msgid ""
+"<strong> Datos del Destinatario :</strong>\n"
+"                            MINERA MAXIMO JESUS SOCIEDA ANONIMA CERRADA - REGISTRO ÚNICO DE CONTRIBUYENTES N°"
+msgstr ""
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_custom
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_stylized
+msgid "<strong>Company details block</strong>"
+msgstr "<strong>Bloque de detalles Compañía</strong>"
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_standard
+msgid "<strong>Datos del traslado</strong>"
+msgstr ""
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_custom
+msgid "<strong>EMITIDO POR</strong>"
+msgstr ""
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_standard
+msgid "<strong>Fecha de inicio de Traslado :</strong>"
+msgstr ""
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_standard
+msgid "<strong>Indicador de retorno de vehículo con envases o embalajes vacios:</strong> No"
+msgstr ""
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_standard
+msgid "<strong>Indicador traslado en vehículos de categoría M1 o L:</strong>"
+msgstr ""
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_standard
+msgid "<strong>Modalidad de traslado:</strong>"
+msgstr ""
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_standard
+msgid "<strong>Motivo de Traslado :</strong>"
+msgstr ""
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_standard
+msgid "<strong>Observaciones</strong>"
+msgstr ""
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_standard
+msgid "<strong>Peso Bruto total de la carga:</strong>"
+msgstr ""
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_standard
+msgid "<strong>Principal:</strong>"
+msgstr ""
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_standard
+msgid "<strong>Punto de Partida:</strong>"
+msgstr ""
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_standard
+msgid "<strong>Punto de llegada :</strong>"
+msgstr ""
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_custom
+msgid "<strong>RECIBI CONFORME</strong>"
+msgstr ""
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_custom
+msgid "<strong>REVISADO POR</strong>"
+msgstr ""
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_standard
+msgid "<strong>Secundario:</strong>"
+msgstr ""
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_standard
+msgid "<strong>Unidad de Medida del Peso Bruto:</strong>"
+msgstr ""
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide__access_warning
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_branch__access_warning
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_session__access_warning
+msgid "Access warning"
+msgstr "Advertencia de acceso"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide__message_needaction
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_branch__message_needaction
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_session__message_needaction
+msgid "Action Needed"
+msgstr "Acción necesaria"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_branch__active
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_session__active
+msgid "Active"
+msgstr "Activo"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide__activity_ids
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_branch__activity_ids
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_session__activity_ids
+msgid "Activities"
+msgstr "Actividades"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide__activity_exception_decoration
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_branch__activity_exception_decoration
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_session__activity_exception_decoration
+msgid "Activity Exception Decoration"
+msgstr "Decoración de excepción de actividad"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide__activity_state
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_branch__activity_state
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_session__activity_state
+msgid "Activity State"
+msgstr "Estado de actividad"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide__activity_type_icon
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_branch__activity_type_icon
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_session__activity_type_icon
+msgid "Activity Type Icon"
+msgstr "Icono de Tipo de Actividad"
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.view_pe_electronic_guide_form
+msgid "Addressee"
+msgstr "Destinatario"
+
+#. module: l10n_pe_eguide_advanced
+#: model:res.groups,name:l10n_pe_eguide_advanced.group_pe_eguide_all_guides
+msgid "All Guides"
+msgstr "Todas las guías"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide__message_attachment_count
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_branch__message_attachment_count
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_session__message_attachment_count
+msgid "Attachment Count"
+msgstr "Cantidad de archivos adjuntos"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.actions.server,name:l10n_pe_eguide_advanced.guide_advanced_auto_send_ir_actions_server
+msgid "Automatic Electronic Guide Sending - Advanced"
+msgstr "Envío Automático de Guías Electrónicas - Avanzado"
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_stylized
+msgid "Autorizado mediante"
+msgstr ""
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_line__barcode
+msgid "Barcode"
+msgstr "Código de barras"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.actions.act_window,name:l10n_pe_eguide_advanced.action_pe_electronic_guide_branch
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_session__branch_id
+#: model:ir.ui.menu,name:l10n_pe_eguide_advanced.menu_electronic_guide_branch
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.view_pe_electronic_guide_branch_form
+msgid "Branch"
+msgstr "Sucursal"
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_stylized
+msgid "CONDUCTOR:"
+msgstr ""
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model,name:l10n_pe_eguide_advanced.model_pe_eguide_advanced_wizard
+msgid "CPE Wizard"
+msgstr ""
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.view_form_eguide_advanced_wizard_wizard
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.view_pe_electronic_guide_form
+msgid "Cancel"
+msgstr "Cancelar"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields.selection,name:l10n_pe_eguide_advanced.selection__pe_electronic_guide__state__cancelled
+msgid "Cancelled"
+msgstr "Cancelado"
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_standard
+msgid "Cantidad"
+msgstr ""
+
+#. module: l10n_pe_eguide_advanced
+#. odoo-python
+#: code:addons/l10n_pe_eguide_advanced/models/pe_electronic_guide.py:0
+#, python-format
+msgid "Carrier number document is required for %s"
+msgstr "Se requiere documento con número de transportista para %s"
+
+#. module: l10n_pe_eguide_advanced
+#. odoo-python
+#: code:addons/l10n_pe_eguide_advanced/models/pe_electronic_guide.py:0
+#, python-format
+msgid "Carrier type document is required for %s"
+msgstr "Se requiere documento de tipo transportista para %s"
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.view_pe_electronic_guide_form
+msgid "Carriers:"
+msgstr "Transportistas:"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_branch__code
+msgid "Code"
+msgstr "Código"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model,name:l10n_pe_eguide_advanced.model_res_company
+msgid "Companies"
+msgstr "Compañias"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_eguide_advanced_wizard__company_id
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide__company_id
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_branch__company_id
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_session__company_id
+msgid "Company"
+msgstr "Compañía"
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_custom
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_standard
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_stylized
+msgid "Company Report Footer"
+msgstr ""
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_custom
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_stylized
+msgid "Company tagline"
+msgstr ""
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_branch__complete_name
+msgid "Complete Name"
+msgstr "Nombre completo"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model,name:l10n_pe_eguide_advanced.model_res_config_settings
+msgid "Config Settings"
+msgstr "Ajustes de configuración"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.ui.menu,name:l10n_pe_eguide_advanced.menu_electronic_guide_configuration
+msgid "Configuration"
+msgstr "Configuración"
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.res_config_settings_view_form
+msgid "Configure Wizard"
+msgstr ""
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.view_form_eguide_advanced_wizard_wizard
+msgid "Confirm"
+msgstr "Confirmar"
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_custom
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_stylized
+msgid "Contains the company details."
+msgstr "Contiene los detalles de la empresa."
+
+#. module: l10n_pe_eguide_advanced
+#. odoo-python
+#: code:addons/l10n_pe_eguide_advanced/models/pe_electronic_guide.py:0
+#, python-format
+msgid "Could not get the data"
+msgstr "No se pudieron obtener los datos"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide__country_id
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_branch__country_id
+msgid "Country"
+msgstr "País"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_eguide_advanced_wizard__create_uid
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide__create_uid
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_branch__create_uid
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_driver__create_uid
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_line__create_uid
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_related__create_uid
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_session__create_uid
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_vehicle__create_uid
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_eguide_advanced_wizard__create_date
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide__create_date
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_branch__create_date
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_driver__create_date
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_line__create_date
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_related__create_date
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_session__create_date
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_vehicle__create_date
+msgid "Created on"
+msgstr "Creado el"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields.selection,name:l10n_pe_eguide_advanced.selection__res_company__pe_guide_report_template__custom
+msgid "Custom"
+msgstr "Personalizado"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields,help:l10n_pe_eguide_advanced.field_pe_electronic_guide__access_url
+#: model:ir.model.fields,help:l10n_pe_eguide_advanced.field_pe_electronic_guide_branch__access_url
+#: model:ir.model.fields,help:l10n_pe_eguide_advanced.field_pe_electronic_guide_session__access_url
+msgid "Customer Portal URL"
+msgstr "URL del Portal del Cliente"
+
+#. module: l10n_pe_eguide_advanced
+#. odoo-python
+#: code:addons/l10n_pe_eguide_advanced/models/pe_electronic_guide.py:0
+#, python-format
+msgid "Customer is required"
+msgstr "Se requiere cliente"
+
+#. module: l10n_pe_eguide_advanced
+#. odoo-python
+#: code:addons/l10n_pe_eguide_advanced/models/pe_electronic_guide.py:0
+#, python-format
+msgid "Customer number document is required"
+msgstr "Se requiere documento de número de cliente"
+
+#. module: l10n_pe_eguide_advanced
+#. odoo-python
+#: code:addons/l10n_pe_eguide_advanced/models/pe_electronic_guide.py:0
+#, python-format
+msgid "Customer type document is required"
+msgstr "Se requiere documento tipo cliente"
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_standard
+msgid "Código bien"
+msgstr ""
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_stylized
+msgid "DATOS DEL PUNTO DE PARTIDA Y PUNTO DE LLEGADA"
+msgstr ""
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_stylized
+msgid "DATOS DEL TRANSPORTE"
+msgstr ""
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_stylized
+msgid "DATOS DEL TRASLADO"
+msgstr ""
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_stylized
+msgid "DENOMINACIÓN:"
+msgstr ""
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_stylized
+msgid "DESTINATARIO"
+msgstr ""
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_stylized
+msgid "DNI"
+msgstr ""
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide__date_issue
+msgid "Date Issue"
+msgstr "Fecha de emisión"
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_standard
+msgid "Descripción detallada"
+msgstr ""
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_line__name
+msgid "Description"
+msgstr "Descripción"
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.view_pe_electronic_guide_form
+msgid "Destination Address"
+msgstr "Dirección de Destino"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide__dst_branch_id
+msgid "Destination Branch"
+msgstr "Sucursal de Destino"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide__dst_district_id
+msgid "Destination District"
+msgstr "Distrito de Destino"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide__dst_province_id
+msgid "Destination Province"
+msgstr "Provincia de Destino"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide__dst_state_id
+msgid "Destination State"
+msgstr "Departamento de Destino"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide__dst_street
+msgid "Destination Street"
+msgstr "Dirección de Destino"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide__digest
+msgid "Digest"
+msgstr ""
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_custom
+msgid "Direccion del punto de partida:"
+msgstr ""
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_custom
+msgid "Dirección del punto de llegada:"
+msgstr ""
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_custom
+msgid "Dirección:"
+msgstr ""
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_eguide_advanced_wizard__display_name
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide__display_name
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_branch__display_name
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_driver__display_name
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_line__display_name
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_related__display_name
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_session__display_name
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_vehicle__display_name
+msgid "Display Name"
+msgstr "Nombre para mostrar"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_branch__district_id
+msgid "District"
+msgstr "Distrito"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_driver__doc_number
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_related__name
+msgid "Document Number"
+msgstr "Número de Documento"
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.view_pe_electronic_guide_form
+msgid "Document Status"
+msgstr "Estado del Documento"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_driver__doc_type
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_related__document_type
+msgid "Document Type"
+msgstr "Tipo de Documento"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model,name:l10n_pe_eguide_advanced.model_pe_electronic_guide_related
+msgid "Documento Relacionado a la Guia"
+msgstr ""
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.view_pe_electronic_guide_form
+msgid "Draft"
+msgstr "Borrador"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model,name:l10n_pe_eguide_advanced.model_pe_electronic_guide_driver
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_driver__driver_id
+msgid "Driver"
+msgstr "Conductor"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_driver__driver_license
+msgid "Driver License"
+msgstr "Licencia de Conducir"
+
+#. module: l10n_pe_eguide_advanced
+#. odoo-python
+#: code:addons/l10n_pe_eguide_advanced/models/pe_electronic_guide.py:0
+#, python-format
+msgid "Driver's license is required for %s"
+msgstr "Se requiere licencia de conducir para %s"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide__carrier_ids
+msgid "Drivers"
+msgstr "Conductores"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_eguide_advanced_wizard__pe_guide_adv_client_id
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_res_company__pe_guide_adv_client_id
+msgid "EGA Client Id"
+msgstr "EGA ID API SUNAT"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_eguide_advanced_wizard__pe_guide_adv_client_secret
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_res_company__pe_guide_adv_client_secret
+msgid "EGA Client Secret"
+msgstr "EGA Clave API SUNAT"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_eguide_advanced_wizard__pe_guide_adv_verify_url
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_res_company__pe_guide_adv_verify_url
+msgid "EGA Eguide Verify Url"
+msgstr "EGA URL de Verificación"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_res_company__pe_guide_adv_password
+msgid "EGA Password"
+msgstr "EGA Contraseña"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_eguide_advanced_wizard__pe_guide_adv_password
+msgid "EGA Password/Token"
+msgstr "EGA Contraseña/Token"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_eguide_advanced_wizard__pe_guide_adv_private_key
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_res_company__pe_guide_adv_private_key
+msgid "EGA Private key"
+msgstr "Clave privada"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_eguide_advanced_wizard__pe_guide_adv_public_key
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_res_company__pe_guide_adv_public_key
+msgid "EGA Public key"
+msgstr "Clave pública"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_eguide_advanced_wizard__pe_guide_adv_server
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_res_company__pe_guide_adv_server
+msgid "EGA Server"
+msgstr "Servidor"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_eguide_advanced_wizard__pe_guide_adv_user
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_res_company__pe_guide_adv_user
+msgid "EGA User"
+msgstr "Usuario"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.actions.act_window,name:l10n_pe_eguide_advanced.action_pe_electronic_guide
+#: model:ir.actions.report,name:l10n_pe_eguide_advanced.action_report_cpe
+#: model:ir.model,name:l10n_pe_eguide_advanced.model_pe_electronic_guide
+#: model:ir.module.category,name:l10n_pe_eguide_advanced.module_pe_eguide
+#: model:ir.ui.menu,name:l10n_pe_eguide_advanced.menu_electronic_guide
+#: model:ir.ui.menu,name:l10n_pe_eguide_advanced.menu_electronic_guide_root
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.res_config_settings_view_form
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.view_pe_electronic_guide_branch_tree
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.view_pe_electronic_guide_form
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.view_pe_electronic_guide_session_form
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.view_pe_electronic_guide_session_tree
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.view_pe_electronic_guide_tree
+msgid "Electronic Guide"
+msgstr "Guía Electrónica"
+
+#. module: l10n_pe_eguide_advanced
+#. odoo-python
+#: code:addons/l10n_pe_eguide_advanced/models/pe_electronic_guide_session.py:0
+#, python-format
+msgid "Electronic Guide %s"
+msgstr "Guía electrónica %s"
+
+#. module: l10n_pe_eguide_advanced
+#. odoo-python
+#: code:addons/l10n_pe_eguide_advanced/models/res_config_settings.py:0
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.res_config_settings_view_form
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.view_form_eguide_advanced_wizard_wizard
+#, python-format
+msgid "Electronic Guide Advanced"
+msgstr "Guía Electrónica Avanzada"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model,name:l10n_pe_eguide_advanced.model_pe_electronic_guide_branch
+msgid "Electronic Guide Branch"
+msgstr "Guía Electrónica de la Sucursal"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model,name:l10n_pe_eguide_advanced.model_pe_electronic_guide_session
+msgid "Electronic Guide Session"
+msgstr "Sesión de Guía Electrónica"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide__date_end
+msgid "End Date"
+msgstr "Fecha de Finalización"
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.view_pe_electronic_guide_branch_form
+msgid "Example \"0000\""
+msgstr "Ejemplo \"0000\""
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.view_pe_electronic_guide_session_form
+msgid "Example \"T001\""
+msgstr "Ejemplo \"T001\""
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_stylized
+msgid "FECHA EMISIÓN:"
+msgstr ""
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_stylized
+msgid "FECHA INICIO DE TRASLADO:"
+msgstr ""
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide__message_follower_ids
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_branch__message_follower_ids
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_session__message_follower_ids
+msgid "Followers"
+msgstr "Seguidores"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide__message_partner_ids
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_branch__message_partner_ids
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_session__message_partner_ids
+msgid "Followers (Partners)"
+msgstr "Seguidores (Socios)"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields,help:l10n_pe_eguide_advanced.field_pe_electronic_guide__activity_type_icon
+#: model:ir.model.fields,help:l10n_pe_eguide_advanced.field_pe_electronic_guide_branch__activity_type_icon
+#: model:ir.model.fields,help:l10n_pe_eguide_advanced.field_pe_electronic_guide_session__activity_type_icon
+msgid "Font awesome icon e.g. fa-tasks"
+msgstr ""
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.view_pe_electronic_guide_form
+msgid "General Information"
+msgstr "Información General"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields.selection,name:l10n_pe_eguide_advanced.selection__pe_electronic_guide__state__generate
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.view_pe_electronic_guide_form
+msgid "Generate"
+msgstr "Generar"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields,help:l10n_pe_eguide_advanced.field_pe_electronic_guide_line__sequence
+msgid "Gives the sequence of this line when displaying the invoice."
+msgstr "Proporciona la secuencia de esta línea al mostrar la factura."
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide__gross_weight
+msgid "Gross Weigh"
+msgstr "Peso Bruto"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide__gross_weight_unit
+msgid "Gross Weight Unit"
+msgstr "Unidad Medida"
+
+#. module: l10n_pe_eguide_advanced
+#. odoo-python
+#: code:addons/l10n_pe_eguide_advanced/models/pe_electronic_guide.py:0
+#, python-format
+msgid "Gross weight must be greater than zero"
+msgstr "El peso bruto debe ser mayor que cero"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_driver__guide_id
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_line__guide_id
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_related__guide_id
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_vehicle__guide_id
+msgid "Guide"
+msgstr "Guía"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide__description
+msgid "Guide Description"
+msgstr "Descripción de la Guía"
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.view_pe_electronic_guide_form
+msgid "Guide Lines"
+msgstr "Items de Guía"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_eguide_advanced_wizard__pe_guide_adv_ws_url
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_res_company__pe_guide_adv_ws_url
+msgid "Guide Web Service URL"
+msgstr "URL del servicio web"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide__has_message
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_branch__has_message
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_session__has_message
+msgid "Has Message"
+msgstr "Tiene mensaje"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide__hash_qr
+msgid "Hash Qr"
+msgstr "Hash-Qr"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide__hash_qr_url
+msgid "Hash Qr Url"
+msgstr "Hash-Qr Url"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_eguide_advanced_wizard__id
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide__id
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_branch__id
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_driver__id
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_line__id
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_related__id
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_session__id
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_vehicle__id
+msgid "ID"
+msgstr ""
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_stylized
+msgid "INDICADOR DE TRASLADO EN VEHÍCULOS DE CATEGORÍA M1 O L:"
+msgstr ""
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_custom
+msgid "INDICADOR DE TRASLADO EN VEHÍCULOS DE CATEGORÍA M1 O L<br/>"
+msgstr ""
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide__activity_exception_icon
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_branch__activity_exception_icon
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_session__activity_exception_icon
+msgid "Icon"
+msgstr ""
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields,help:l10n_pe_eguide_advanced.field_pe_electronic_guide__activity_exception_icon
+#: model:ir.model.fields,help:l10n_pe_eguide_advanced.field_pe_electronic_guide_branch__activity_exception_icon
+#: model:ir.model.fields,help:l10n_pe_eguide_advanced.field_pe_electronic_guide_session__activity_exception_icon
+msgid "Icon to indicate an exception activity."
+msgstr "Icono para indicar una actividad de excepción."
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_custom
+msgid "Identificacion:"
+msgstr "Identificación:"
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_custom
+msgid "Identificación:"
+msgstr ""
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields,help:l10n_pe_eguide_advanced.field_pe_electronic_guide__message_needaction
+#: model:ir.model.fields,help:l10n_pe_eguide_advanced.field_pe_electronic_guide_branch__message_needaction
+#: model:ir.model.fields,help:l10n_pe_eguide_advanced.field_pe_electronic_guide_session__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr "Si está marcada, los mensajes nuevos requieren su atención."
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields,help:l10n_pe_eguide_advanced.field_pe_electronic_guide__message_has_error
+#: model:ir.model.fields,help:l10n_pe_eguide_advanced.field_pe_electronic_guide__message_has_sms_error
+#: model:ir.model.fields,help:l10n_pe_eguide_advanced.field_pe_electronic_guide_branch__message_has_error
+#: model:ir.model.fields,help:l10n_pe_eguide_advanced.field_pe_electronic_guide_branch__message_has_sms_error
+#: model:ir.model.fields,help:l10n_pe_eguide_advanced.field_pe_electronic_guide_session__message_has_error
+#: model:ir.model.fields,help:l10n_pe_eguide_advanced.field_pe_electronic_guide_session__message_has_sms_error
+msgid "If checked, some messages have a delivery error."
+msgstr "Si está marcada, algunos mensajes tendrán un error de entrega."
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields,help:l10n_pe_eguide_advanced.field_pe_electronic_guide_line__barcode
+msgid "International Article Number used for product identification."
+msgstr "Número de artículo internacional utilizado para la identificación del producto."
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide__message_is_follower
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_branch__message_is_follower
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_session__message_is_follower
+msgid "Is Follower"
+msgstr "Es seguidor"
+
+#. module: l10n_pe_eguide_advanced
+#. odoo-python
+#: code:addons/l10n_pe_eguide_advanced/models/pe_electronic_guide.py:0
+#, python-format
+msgid "It is necessary to add a driver"
+msgstr "Es necesario agregar un conductor"
+
+#. module: l10n_pe_eguide_advanced
+#. odoo-python
+#: code:addons/l10n_pe_eguide_advanced/models/pe_electronic_guide.py:0
+#, python-format
+msgid "It is necessary to add a vehicle"
+msgstr "Es necesario agregar un vehículo"
+
+#. module: l10n_pe_eguide_advanced
+#. odoo-python
+#: code:addons/l10n_pe_eguide_advanced/models/pe_electronic_guide.py:0
+#, python-format
+msgid "It is necessary transport mode"
+msgstr "Es necesario agregar un modo de transporte"
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_stylized
+msgid "LICENCIA DE CONDUCIR:"
+msgstr ""
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_eguide_advanced_wizard__write_uid
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide__write_uid
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_branch__write_uid
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_driver__write_uid
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_line__write_uid
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_related__write_uid
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_session__write_uid
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_vehicle__write_uid
+msgid "Last Updated by"
+msgstr "Última actualización por"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_eguide_advanced_wizard__write_date
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide__write_date
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_branch__write_date
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_driver__write_date
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_line__write_date
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_related__write_date
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_session__write_date
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_vehicle__write_date
+msgid "Last Updated on"
+msgstr "Última actualización el"
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.view_pe_electronic_guide_branch_form
+msgid "Lima Branch"
+msgstr "Sucursal Lima"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide__line_ids
+msgid "Lines"
+msgstr "Items"
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_custom
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_stylized
+msgid "Logo"
+msgstr ""
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_stylized
+msgid "MODALIDAD DE TRANSPORTE:"
+msgstr ""
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_stylized
+msgid "MOTIVO DE TRASLADO:"
+msgstr ""
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_vehicle__is_main
+msgid "Main"
+msgstr "Principal"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide__message_main_attachment_id
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_branch__message_main_attachment_id
+msgid "Main Attachment"
+msgstr "Adjunto Principal"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide__main_carrier_id
+msgid "Main Driver"
+msgstr "Conductor Principal"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide__main_vehicle_id
+msgid "Main Vehicle"
+msgstr "Vehículo Principal"
+
+#. module: l10n_pe_eguide_advanced
+#: model:res.groups,name:l10n_pe_eguide_advanced.group_pe_eguide_manager
+msgid "Manager"
+msgstr "Administrador"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide__message_has_error
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_branch__message_has_error
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_session__message_has_error
+msgid "Message Delivery error"
+msgstr "Error en la Entrega del Mensaje"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide__message_ids
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_branch__message_ids
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_session__message_ids
+msgid "Messages"
+msgstr "Mensajes"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide__my_activity_date_deadline
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_branch__my_activity_date_deadline
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_session__my_activity_date_deadline
+msgid "My Activity Deadline"
+msgstr "Fecha límite de mi actividad"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide__name
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_branch__name
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_driver__name
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_session__name
+msgid "Name"
+msgstr "Nombre"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide__activity_date_deadline
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_branch__activity_date_deadline
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_session__activity_date_deadline
+msgid "Next Activity Deadline"
+msgstr "Próxima actividad Fecha límite"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide__activity_summary
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_branch__activity_summary
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_session__activity_summary
+msgid "Next Activity Summary"
+msgstr "Próximo resumen de actividad"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide__activity_type_id
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_branch__activity_type_id
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_session__activity_type_id
+msgid "Next Activity Type"
+msgstr "Siguiente tipo de actividad"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide__note
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide__response_note
+msgid "Note"
+msgstr "Nota"
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.view_pe_electronic_guide_form
+msgid "Notes:"
+msgstr "Notas"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields.selection,name:l10n_pe_eguide_advanced.selection__pe_eguide_advanced_wizard__pe_guide_adv_server__nubefact_ose
+#: model:ir.model.fields.selection,name:l10n_pe_eguide_advanced.selection__res_company__pe_guide_adv_server__nubefact_ose
+msgid "NubeFact OSE"
+msgstr ""
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields.selection,name:l10n_pe_eguide_advanced.selection__pe_eguide_advanced_wizard__pe_guide_adv_server__nubefact_pse
+#: model:ir.model.fields.selection,name:l10n_pe_eguide_advanced.selection__res_company__pe_guide_adv_server__nubefact_pse
+msgid "NubeFact PSE"
+msgstr ""
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide__message_needaction_counter
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_branch__message_needaction_counter
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_session__message_needaction_counter
+msgid "Number of Actions"
+msgstr "Número de Acciones"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide__message_has_error_counter
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_branch__message_has_error_counter
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_session__message_has_error_counter
+msgid "Number of errors"
+msgstr "Número de errores"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields,help:l10n_pe_eguide_advanced.field_pe_electronic_guide__message_needaction_counter
+#: model:ir.model.fields,help:l10n_pe_eguide_advanced.field_pe_electronic_guide_branch__message_needaction_counter
+#: model:ir.model.fields,help:l10n_pe_eguide_advanced.field_pe_electronic_guide_session__message_needaction_counter
+msgid "Number of messages requiring action"
+msgstr "Número de mensajes que requieren acción"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields,help:l10n_pe_eguide_advanced.field_pe_electronic_guide__message_has_error_counter
+#: model:ir.model.fields,help:l10n_pe_eguide_advanced.field_pe_electronic_guide_branch__message_has_error_counter
+#: model:ir.model.fields,help:l10n_pe_eguide_advanced.field_pe_electronic_guide_session__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr "Número de mensajes con error de entrega"
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_standard
+msgid "Nº"
+msgstr ""
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_stylized
+msgid "NÚMERO DE BULTOS:"
+msgstr ""
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_standard
+msgid "Número de placa"
+msgstr ""
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_stylized
+msgid "OBSERVACIONES:"
+msgstr ""
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide__other_carrier_ids
+msgid "Other Drivers"
+msgstr "Otros conductores"
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.view_pe_electronic_guide_form
+msgid "Other Info"
+msgstr "Otra información"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide__other_vehicle_ids
+msgid "Other Vehicles"
+msgstr "Otros vehículos"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields.selection,name:l10n_pe_eguide_advanced.selection__pe_eguide_advanced_wizard__pe_guide_adv_server__otros
+#: model:ir.model.fields.selection,name:l10n_pe_eguide_advanced.selection__res_company__pe_guide_adv_server__otros
+msgid "Otros"
+msgstr ""
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_stylized
+msgid "PESO BRUTO TOTAL (KGM):"
+msgstr ""
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_stylized
+msgid "PUNTO DE LLEGADA:"
+msgstr ""
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_stylized
+msgid "PUNTO DE PARTIDA:"
+msgstr ""
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_custom
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_standard
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_stylized
+msgid "Page: <span class=\"page\"/> / <span class=\"topage\"/>"
+msgstr "Página: <span class=\"page\"/> / <span class=\"topage\"/>"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide__partner_id
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_related__partner_id
+msgid "Partner"
+msgstr "Cliente"
+
+#. module: l10n_pe_eguide_advanced
+#: model:res.groups,name:l10n_pe_eguide_advanced.group_pe_eguide_personal_guides
+msgid "Personal Guides"
+msgstr "Guías Personales"
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_custom
+msgid "Placa del Vehiculo:"
+msgstr ""
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_vehicle__name
+msgid "Plate"
+msgstr "Placa"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide__access_url
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_branch__access_url
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_session__access_url
+msgid "Portal Access URL"
+msgstr ""
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_line__product_id
+msgid "Product"
+msgstr "Producto"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_line__product_code
+msgid "Product Code"
+msgstr "Código del Producto"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_branch__province_id
+msgid "Province"
+msgstr "Provincia"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide__qr_code
+msgid "Qr Code"
+msgstr "Código QR"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_line__quantity
+msgid "Quantity"
+msgstr "Cantidad"
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_custom
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_stylized
+msgid "RUC"
+msgstr ""
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_standard
+msgid "RUC N°"
+msgstr ""
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_custom
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_stylized
+msgid "RUC:"
+msgstr ""
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_custom
+msgid "Razón Social del Transportista:"
+msgstr ""
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide__reason_transfer
+msgid "Reason for Transfer"
+msgstr "Motivo de la Transferencia"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide__related_ids
+msgid "Related Document"
+msgstr "Documento Relacionado"
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.view_pe_electronic_guide_form
+msgid "Related Document:"
+msgstr "Documento Relacionado:"
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.view_pe_electronic_guide_form
+msgid "Related Lines"
+msgstr "Líneas relacionadas"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_res_company__pe_guide_report_template
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_res_config_settings__pe_guide_report_template
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.res_config_settings_view_form
+msgid "Report Template"
+msgstr "Plantilla de Informe"
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_custom
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_stylized
+msgid "Representacion impresa de: GUÍA DE REMISIÓN REMITENTE ELECTRÓNICA, consulte en"
+msgstr ""
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide__response
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.view_pe_electronic_guide_form
+msgid "Response"
+msgstr "Respuesta"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide__response_id
+msgid "Response File"
+msgstr "Archivo de Respuesta"
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.view_pe_electronic_guide_form
+msgid "Response Note:"
+msgstr "Nota de Respuesta:"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide__activity_user_id
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_branch__activity_user_id
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_session__activity_user_id
+msgid "Responsible User"
+msgstr "Usuario Responsable"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide__response_return_code
+msgid "Return Code"
+msgstr "Código de Retorno"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide__message_has_sms_error
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_branch__message_has_sms_error
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_session__message_has_sms_error
+msgid "SMS Delivery error"
+msgstr "Error de entrega de SMS"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields.selection,name:l10n_pe_eguide_advanced.selection__pe_eguide_advanced_wizard__pe_guide_adv_server__sunat
+#: model:ir.model.fields.selection,name:l10n_pe_eguide_advanced.selection__res_company__pe_guide_adv_server__sunat
+msgid "SUNAT"
+msgstr ""
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide__access_token
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_branch__access_token
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_session__access_token
+msgid "Security Token"
+msgstr "Token de Seguridad"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide__sent_date
+msgid "Send Date"
+msgstr "Fecha de Envío"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model,name:l10n_pe_eguide_advanced.model_pe_electronic_guide_send
+msgid "Send Document"
+msgstr "Enviar Documento"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.ui.menu,name:l10n_pe_eguide_advanced.menu_electronic_guide_sender
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.view_pe_electronic_guide_form
+msgid "Sender"
+msgstr "Remitente"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields.selection,name:l10n_pe_eguide_advanced.selection__pe_electronic_guide__state__sent
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.view_pe_electronic_guide_form
+msgid "Sent"
+msgstr "Enviado"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_line__sequence
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_session__sequence_id
+msgid "Sequence"
+msgstr "Secuencia"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide__session_id
+msgid "Serie"
+msgstr "Serie"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.actions.act_window,name:l10n_pe_eguide_advanced.action_pe_electronic_guide_session
+#: model:ir.ui.menu,name:l10n_pe_eguide_advanced.menu_electronic_guide_session
+msgid "Session"
+msgstr "Sesión"
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.res_config_settings_view_form
+msgid "Set Report Template"
+msgstr "Establecer Plantilla de Informe"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.module.category,description:l10n_pe_eguide_advanced.module_pe_eguide
+msgid "Set up electronic guide"
+msgstr "Configurar Guía Electrónica"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.actions.act_window,name:l10n_pe_eguide_advanced.action_l10n_pe_eguide_advanced_config_settings
+#: model:ir.ui.menu,name:l10n_pe_eguide_advanced.menu_general_settings
+msgid "Settings"
+msgstr "Ajustes"
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_stylized
+msgid "Si"
+msgstr ""
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.view_pe_electronic_guide_form
+msgid "Source Address"
+msgstr "Dirección de Origen"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide__src_branch_id
+msgid "Source Branch"
+msgstr "Sucursal de origen"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide__src_district_id
+msgid "Source District"
+msgstr "Distrito de Origen"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide__src_province_id
+msgid "Source Province"
+msgstr "Provincia de Origen"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide__src_state_id
+msgid "Source State"
+msgstr "Estado de Origen"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide__src_street
+msgid "Source Street"
+msgstr "Dirección de Origen"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields.selection,name:l10n_pe_eguide_advanced.selection__res_company__pe_guide_report_template__standard
+msgid "Standard"
+msgstr "Estándar"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide__state
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_branch__state_id
+msgid "State"
+msgstr "Estado"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields,help:l10n_pe_eguide_advanced.field_pe_electronic_guide__activity_state
+#: model:ir.model.fields,help:l10n_pe_eguide_advanced.field_pe_electronic_guide_branch__activity_state
+#: model:ir.model.fields,help:l10n_pe_eguide_advanced.field_pe_electronic_guide_session__activity_state
+msgid ""
+"Status based on activities\n"
+"Overdue: Due date is already passed\n"
+"Today: Activity date is today\n"
+"Planned: Future activities."
+msgstr ""
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_branch__street
+msgid "Street"
+msgstr "Dirección"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields.selection,name:l10n_pe_eguide_advanced.selection__res_company__pe_guide_report_template__stylized
+msgid "Stylized"
+msgstr "Estilizado"
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.view_pe_electronic_guide_form
+msgid "Sunat Sent/Response"
+msgstr "Sunat Enviado/Respuesta"
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_stylized
+msgid "TRANSPORTISTA:"
+msgstr ""
+
+#. module: l10n_pe_eguide_advanced
+#. odoo-python
+#: code:addons/l10n_pe_eguide_advanced/models/pe_electronic_guide.py:0
+#, python-format
+msgid "The issue date must be less than the delivery date"
+msgstr "La fecha de emisión debe ser menor que la fecha de entrega."
+
+#. module: l10n_pe_eguide_advanced
+#. odoo-python
+#: code:addons/l10n_pe_eguide_advanced/models/pe_electronic_guide.py:0
+#, python-format
+msgid "The location of the branch of destination must be the same as the destination address"
+msgstr "La ubicación de la sucursal de destino debe ser la misma que la dirección de destino."
+
+#. module: l10n_pe_eguide_advanced
+#. odoo-python
+#: code:addons/l10n_pe_eguide_advanced/models/pe_electronic_guide.py:0
+#, python-format
+msgid "The location of the branch of origin must be the same as the source address"
+msgstr "La ubicación de la sucursal de origen debe ser la misma que la dirección de origen."
+
+#. module: l10n_pe_eguide_advanced
+#. odoo-python
+#: code:addons/l10n_pe_eguide_advanced/models/pe_electronic_guide.py:0
+#, python-format
+msgid "The type of document of the issuer must be RUC"
+msgstr "El tipo de documento del emisor debe ser RUC"
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.actions.act_window,help:l10n_pe_eguide_advanced.action_pe_electronic_guide_branch
+msgid "This is the Electronic Guide Branch."
+msgstr "Esta es la Sucursal de Guía Electrónica."
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.actions.act_window,help:l10n_pe_eguide_advanced.action_pe_electronic_guide_session
+msgid "This is the Electronic Guide Session."
+msgstr "Esta es la Sesión de Guía Electrónica."
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.actions.act_window,help:l10n_pe_eguide_advanced.action_pe_electronic_guide
+msgid "This is the Electronic Guide."
+msgstr "Esta es la Guía Electrónica."
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide__ticket
+msgid "Ticket"
+msgstr ""
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_custom
+msgid "Tipo conductor:"
+msgstr ""
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields.selection,name:l10n_pe_eguide_advanced.selection__pe_electronic_guide__state__to_cancel
+msgid "To Cancel"
+msgstr "Para Cancelar"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields.selection,name:l10n_pe_eguide_advanced.selection__pe_electronic_guide__state__to_check
+msgid "To Check"
+msgstr "Para Verificar"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields.selection,name:l10n_pe_eguide_advanced.selection__pe_electronic_guide__state__to_send
+msgid "To Send"
+msgstr "Por Enviar"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide__transfer_date
+msgid "Transfer Date"
+msgstr "Fecha de Transferencia"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide__is_programmed
+msgid "Transfer Programmed"
+msgstr "Transferencia Programada"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide__transport_mode
+msgid "Transport Mode"
+msgstr "Modo de Transporte"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields,help:l10n_pe_eguide_advanced.field_pe_electronic_guide__activity_exception_decoration
+#: model:ir.model.fields,help:l10n_pe_eguide_advanced.field_pe_electronic_guide_branch__activity_exception_decoration
+#: model:ir.model.fields,help:l10n_pe_eguide_advanced.field_pe_electronic_guide_session__activity_exception_decoration
+msgid "Type of the exception activity on record."
+msgstr "Tipo de actividad de excepción registrada."
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_standard
+msgid "Unidad de medida"
+msgstr ""
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_line__uom_code
+msgid "Unit Code"
+msgstr "Código de Unidad"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide__unit_quantity
+msgid "Unit Quantity"
+msgstr "Cantidad Unitaria"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide__user_id
+msgid "User"
+msgstr "Usuario"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_session__user_ids
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.view_pe_electronic_guide_session_form
+msgid "Users"
+msgstr "Usuarios"
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.report_pe_eguide_advanced_document_stylized
+msgid "VEHÍCULO:"
+msgstr ""
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_vehicle__vehicle_id
+msgid "Vehicle"
+msgstr "Vehículo"
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.view_pe_electronic_guide_form
+msgid "Vehicle Lines"
+msgstr "Líneas de Vehículos"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide__vehicle_m1_l
+msgid "Vehicle M1 L"
+msgstr "Vehículo M1 L"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide__vehicle_ids
+msgid "Vehicles"
+msgstr "Vehículos"
+
+#. module: l10n_pe_eguide_advanced
+#: model_terms:ir.ui.view,arch_db:l10n_pe_eguide_advanced.view_pe_electronic_guide_form
+msgid "Vehicles:"
+msgstr "Vehículos:"
+
+#. module: l10n_pe_eguide_advanced
+#. odoo-python
+#: code:addons/l10n_pe_eguide_advanced/models/pe_electronic_guide.py:0
+#, python-format
+msgid "Warning for %s"
+msgstr "Advertencia para %s"
+
+#. module: l10n_pe_eguide_advanced
+#. odoo-python
+#: code:addons/l10n_pe_eguide_advanced/wizard/pe_eguide_advanced_wizard.py:0
+#, python-format
+msgid "Warning!"
+msgstr "¡Advertencia!"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide__website_message_ids
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_branch__website_message_ids
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide_session__website_message_ids
+msgid "Website Messages"
+msgstr "Mensajes del Sitio Web"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields,help:l10n_pe_eguide_advanced.field_pe_electronic_guide__website_message_ids
+#: model:ir.model.fields,help:l10n_pe_eguide_advanced.field_pe_electronic_guide_branch__website_message_ids
+#: model:ir.model.fields,help:l10n_pe_eguide_advanced.field_pe_electronic_guide_session__website_message_ids
+msgid "Website communication history"
+msgstr "Historial de comunicación del sitio web"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model.fields,field_description:l10n_pe_eguide_advanced.field_pe_electronic_guide__attachment_id
+msgid "XML Sign"
+msgstr "XML Firmado"
+
+#. module: l10n_pe_eguide_advanced
+#. odoo-python
+#: code:addons/l10n_pe_eguide_advanced/wizard/pe_eguide_advanced_wizard.py:0
+#, python-format
+msgid "You can't use this server, please select another one"
+msgstr "No puedes usar este servidor, por favor selecciona otro"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model,name:l10n_pe_eguide_advanced.model_pe_electronic_guide_line
+msgid "pe.electronic.guide.line"
+msgstr ""
+
+#. module: l10n_pe_eguide_advanced
+#. odoo-python
+#: code:addons/l10n_pe_eguide_advanced/models/pe_electronic_guide.py:0
+#, python-format
+msgid "the DNI entered is incorrect"
+msgstr "el DNI introducido es incorrecto"
+
+#. module: l10n_pe_eguide_advanced
+#: model:ir.model,name:l10n_pe_eguide_advanced.model_pe_electronic_guide_vehicle
+msgid "vehicle"
+msgstr "vehículo"

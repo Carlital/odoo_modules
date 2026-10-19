@@ -1,0 +1,12 @@
+<odoo>
+  <data>
+
+    <menuitem name="Electronic Books" id="pe_le_root_line_menu" parent="account.menu_finance_entries" sequence="1"  />
+
+    <menuitem name="Electronic Books" id="pe_le_root_menu" parent="account.menu_finance_reports" sequence="1"  />
+
+    <menuitem name="Peruvian Account" id="pe_account_root_menu" parent="account.account_account_menu" 
+    sequence="1"  />
+
+  </data>
+</odoo>

@@ -1,0 +1,1 @@
+This module provides a custom PDF report for sales quotations and orders in Odoo 17, designed to match the provided template. It uses only native Odoo fields and dynamically retrieves company data from res.company.

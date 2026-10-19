@@ -1,0 +1,8 @@
+/*
+* Estilos para la vista de lista de Ordenes de Fabricación
+* Colores de fondo para las filas según el estado del pedido.
+*/
+
+.acs-ordenes-fabricacion .o_cp_action_menus {
+                display: none !important;
+                }

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Vista de Lista (Tree View) para product.supplierinfo -->
+    <record id="view_product_supplierinfo_tree_custom" model="ir.ui.view">
+        <field name="name">product.supplierinfo.tree.custom</field>
+        <field name="model">product.supplierinfo</field>
+        <field name="arch" type="xml">
+            <list string="Información de Proveedor">
+                <field name="partner_id" />
+                <field name="product_id" />
+                <field name="product_name" />
+                <field name="product_code" />
+                <field name="stock_condition" />
+                <field name="price" string="Precio de compra" />
+                <field name="currency_id" />
+            </list>
+        </field>
+    </record>
+
+    <!-- Vista de Formulario Heredada -->
+    <record id="view_product_supplierinfo_form_custom" model="ir.ui.view">
+        <field name="name">product.supplierinfo.form.custom</field>
+        <field name="model">product.supplierinfo</field>
+        <field name="inherit_id" ref="product.product_supplierinfo_form_view" />
+        <field name="arch" type="xml">
+            <!-- Añadimos el campo stock_condition en el grupo vendor -->
+            <xpath expr="//group[@name='vendor']" position="inside">
+                <field name="stock_condition" />
+            </xpath>
+
+            <!-- Añadimos el chatter después del sheet -->
+            <xpath expr="//sheet" position="after">
+                <chatter />
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Acción de Ventana -->
+    <record id="action_product_supplierinfo_custom" model="ir.actions.act_window">
+        <field name="name">Tarifas de Proveedor</field>
+        <field name="res_model">product.supplierinfo</field>
+        <field name="view_mode">list,form</field>
+        <field name="view_id" ref="view_product_supplierinfo_tree_custom" />
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Aún no hay tarifas de proveedor definidas.
+            </p>
+            <p>
+                Crea tarifas de proveedor desde la pestaña 'Compra' en la ficha de un producto.
+            </p>
+        </field>
+    </record>
+
+    <!-- Elemento de Menú -->
+    <menuitem
+        id="menu_product_supplierinfo_custom"
+        name="Tarifas de Proveedor"
+        parent="stock.menu_stock_inventory_control"
+        action="action_product_supplierinfo_custom"
+        sequence="99" />
+
+</odoo>

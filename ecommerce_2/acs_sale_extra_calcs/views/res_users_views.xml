@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Herencia para la vista "Mi Perfil" -->
+    <record id="view_users_profile_form_inherit_acs" model="ir.ui.view">
+        <field name="name">res.users.profile.form.inherit.acs</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="hr.res_users_view_form_profile" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='signature']" position="before">
+                <field name="auto_sign_on_order_production" />
+            </xpath>
+        </field>
+    </record>
+</odoo>

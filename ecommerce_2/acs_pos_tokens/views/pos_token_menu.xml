@@ -1,0 +1,10 @@
+<odoo>
+    <menuitem 
+        id="menu_pos_token_root" 
+        name="Tokens POS" 
+        parent="point_of_sale.menu_point_config_product"
+        action="action_pos_token"
+        groups="acs_pos_tokens.group_pos_token_full_access"
+        sequence="50"
+    />
+</odoo>

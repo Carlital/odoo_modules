@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!--Account Move lines-->
+        <record id="account_generate_letter_id" model="ir.ui.view">
+            <field name="name">Post Journal Entries</field>
+            <field name="model">account.generate.letters</field>
+            <field name="arch" type="xml">
+                <form string="Generate Letters">
+                    <group>
+                        <field name="numero_letras"/>
+                        <field name='journal_id' required="1"/>
+                        <field name='company_id' invisible="1"/>
+                        <field name='payment_type' invisible="1"/>
+                        <field name="currency_id"/>
+                        <field name="proveedor_id"/>
+                        <field name="total"/>
+                    </group>
+                    <footer>
+                        <button string="Generar Letras" name="generate_letters" type="object" default_focus="1" class="btn-primary"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+	
+	<record id="account_letter_generated_id" model="ir.ui.view">
+            <field name="name">Letter</field>
+            <field name="model">account.letters.generated</field>
+            <field name="arch" type="xml">
+                <form string="Generate Letters">
+                    <group>
+                        <field name="name" invisible="1"/>
+                        <field invisible="1" name="company_id" />
+                        <field name="proveedor_id" readonly="1"/>
+                        <field name="line_ids" />
+		            </group>
+                    <footer>
+                        <button string="Confirmar" type="object" name="confirmar_generacion" default_focus="1" class="btn-primary"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+
+	<record id="account_letter_lines_id" model="ir.ui.view">
+            <field name="name">Letter Lines</field>
+            <field name="model">account.letters.lines</field>
+            <field name="arch" type="xml">
+                <list string="Generate Letters" create="false" editable="bottom">
+                        <field name="numero" readonly="1"/>
+                        <field name="fecha" readonly="1"/>
+                        <field name="fecha_vencimiento"/>
+                        <field name="importe" sum="Total"/>
+                 </list>
+            </field>
+        </record>
+
+    </data>
+</odoo>

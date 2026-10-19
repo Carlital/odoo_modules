@@ -1,0 +1,16 @@
+<odoo>
+  <data>
+	<record model="ir.ui.view" id="view_warehouse">
+        <field name="name">stock.warehouse.form.inherit.l10n.pe.branch</field>
+        <field name="model">stock.warehouse</field>
+        <field name="inherit_id" ref="stock.view_warehouse"/>
+        <field name="arch" type="xml">
+        	
+        	<xpath expr="//field[@name='partner_id']" position="after">
+              <field name="pe_branch_id" groups="l10n_pe_cpe.group_pe_cpe_manager" />
+	        </xpath>
+     
+        </field>
+    </record>
+  </data>
+</odoo>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="crm_custom_lead.CardInputMaskTemplate">
+        <div class="card_input_container">
+            <div class="card_input_wrapper">
+                <input
+                    type="text"
+                    t-ref="cardInput"
+                    class="o_input card_number_input"
+                    t-att-class="{
+                        'is-valid': state.isValid === true,
+                        'is-invalid': state.isValid === false,
+                        'is-typing': state.isValid === null and inputValue.length > 0
+                    }"
+                    t-att-placeholder="props.placeholder || 'Ej. 4111 1111 1111 1111'"
+                    t-att-value="inputValue"
+                    t-att-readonly="props.readonly"
+                    t-att-required="props.required"
+                    t-on-input="onInput"
+                    t-on-keydown="onKeyDown"
+                    t-on-paste="onPaste"
+                    t-on-blur="onBlur"
+                    autocomplete="off"
+                    inputmode="numeric"
+                />
+                
+                <!-- Indicador visual del tipo de tarjeta -->
+                <div class="card_type_indicator" t-if="state.cardType">
+                    <span class="card_icon" t-esc="cardTypeIcon"/>
+                    <span class="card_label" t-esc="cardTypeLabel"/>
+                </div>
+            </div>
+            
+            <!-- Mensaje de validación (solo al terminar) -->
+            <div class="card_validation_message">
+                <div t-if="state.isValid === false" class="text-danger">
+                    <i class="fa fa-times-circle"/> Número de tarjeta inválido
+                </div>
+                <div t-if="state.isValid === true" class="text-success">
+                    <i class="fa fa-check-circle"/> Tarjeta válida
+                </div>
+            </div>
+        </div>
+    </t>
+</templates>

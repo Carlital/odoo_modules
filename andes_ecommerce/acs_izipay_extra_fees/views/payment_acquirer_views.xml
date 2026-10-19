@@ -1,0 +1,19 @@
+<odoo>
+    <data>
+        <record id="view_payment_provider_form_inherit_izipay" model="ir.ui.view">
+            <field name="name">Izipay Provider Form Inherit</field>
+            <field name="model">payment.provider</field>
+            <field name="inherit_id" ref="payment.payment_provider_form"/>
+            <field name="arch" type="xml">
+                <group name="provider_credentials" position="after">
+                    <div invisible="code not in ('micuentaweb', 'micuentawebmulti', 'izipay')">
+                        <group string="Configuración de Recargo">
+                            <field name="surcharge_percentage"/>
+                            <field name="surcharge_product_id"/>
+                        </group>
+                    </div>
+                </group>
+            </field>
+        </record>
+    </data>
+</odoo>

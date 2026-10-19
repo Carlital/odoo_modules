@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="view_account_debit_note" model="ir.ui.view">
+            <field name="name">account.debit.note.form.inherit.l10n.pe.invoice</field>
+            <field name="model">account.debit.note</field>
+            <field name="inherit_id" ref="account_debit_note.view_account_debit_note" />
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='reason']" position="after" >
+                    <field name="country_code" invisible="True"/>
+                    <field name="pe_debit_note_code" required="country_code == 'PE'" invisible="country_code != 'PE'" />
+                </xpath>
+                <xpath expr="//field[@name='reason']" position="attributes" >
+                  <attribute name="required">country_code == 'PE'</attribute>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

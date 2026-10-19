@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <template id="report_box_closure_report">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="web.internal_layout">
+                        <div class="page">
+                            <div class="row" id="hash_header">
+                                <div class="col-12 text-center">
+                                    <h2 style="font-size: 20px;">Close the Box</h2>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12 text-center">
+                                    <h3 style="font-size: 16px;">Box <span t-field="o.name"/> - <span t-field="o.config_id.name"/></h3>
+                                    <h3 style="font-size: 16px;">Session <span t-field="o.start_at"/> - <span t-field="o.stop_at"/></h3>
+                                    <br />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12" style="font-size: 12px; padding: 2px 2px 2px 2px !important;">
+                                    <table class="table table-bordered">
+                                        <thead style="display: table-row-group">
+                                            <tr>
+                                                <th>Payment Type</th>
+                                                <th>Amount Total</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <t t-foreach="data[o.id]['totals']" t-as="total">
+                                                <tr>
+                                                    <td class="text-center">
+                                                        <span t-esc="total['name']"/>
+                                                    </td>
+                                                    <td class="text-right">
+                                                        <span t-esc="total['amount_total']"/>
+                                                    </td>
+                                                </tr>
+                                            </t>
+                                            <tr style="font-weight: bold;">
+                                                <td class="text-center">
+                                                    TOTAL
+                                                </td>
+                                                <td class="text-right">
+                                                    <span t-esc="data[o.id]['amount_total']"/>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6" style="font-size: 12px; padding: 2px 2px 2px 2px !important;">
+                                    <table class="table table-bordered">
+                                        <thead style="display: table-row-group">
+                                            <tr>
+                                                <th class="text-center" scope="col">Date</th>
+                                                <th class="text-center" scope="col">Payment Method</th>
+                                                <th class="text-center" scope="col">Amount</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <t t-foreach="data[o.id]['lines']" t-as="result">
+                                                <tr>
+                                                    <td class="text-center">
+                                                        <span t-esc="result['payment_date']"/>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <span t-esc="result['name']"/>
+                                                    </td>
+                                                    <td class="text-right">
+                                                        <span t-esc="result['amount']"/>
+                                                    </td>
+                                                </tr>
+                                            </t>
+                                            <tr style="font-weight: bold;">
+                                                <td class="text-center" colspan="2">
+                                                    Total
+                                                </td>
+                                                <td class="text-right">
+                                                    <span t-esc="data[o.id]['amount_total']"/>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

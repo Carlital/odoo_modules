@@ -1,0 +1,292 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <!-- Lista -->
+    <record id="view_crm_lead_list_custom" model="ir.ui.view">
+        <field name="name">crm.lead.list.custom</field>
+        <field name="model">crm.lead</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="custom_campaign_id"/>
+                <field name="asesor" string="Asesor" readonly="1" options="{'no_open': True}" force_save="1"/>
+                <field name="fecha_negociacion"/>
+                <field name="tipo_documento"/>
+                <field name="numero_documento"/>
+                <field name="correo" string="Correo" placeholder="email@dominio.com" force_save="1"/>
+                <!-- <field name="numero_a_portar"/> -->
+                <field name="stage_id"/>
+                <field name="estado_asesor"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Formulario heredado -->
+    <record id="view_crm_lead_form_custom" model="ir.ui.view">
+        <field name="name">crm.lead.form.custom.inherit</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+        <field name="priority" eval="30"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet" position="replace">
+                <sheet>
+                    <group>
+                        <field name="is_asesor_in_validacion" invisible="1"/>
+                        <field name="name" modifiers="{'readonly': [('is_asesor_in_validacion','=', True)]}"/>
+                        <field name="stage_id" readonly="1"/>
+                        <field name="custom_campaign_id" modifiers="{'readonly': [('is_asesor_in_validacion','=', True)]}"/>
+                        <field name="asesor" string="Asesor" readonly="1" options="{'no_open': True}" force_save="1"/>
+                        <field name="fecha_negociacion" readonly="1"/>
+                    </group>
+                    <notebook>
+                        <page string="Titular">
+                            <group>
+                                <field name="apellido_titular" string="Apellido Titular" force_save="1" modifiers="{'readonly': [('is_asesor_in_validacion','=', True)]}"/>
+                                <field name="nombre_titular" string="Nombre Titular" force_save="1" modifiers="{'readonly': [('is_asesor_in_validacion','=', True)]}"/>
+                                <field name="tipo_documento" modifiers="{'readonly': [('is_asesor_in_validacion','=', True)]}"/>
+                                <field name="numero_documento" modifiers="{'readonly': [('is_asesor_in_validacion','=', True)]}"/>
+                                <field name="correo" string="Correo" placeholder="email@dominio.com" force_save="1" modifiers="{'readonly': [('is_asesor_in_validacion','=', True)]}"/>
+                            </group>
+                        </page>
+                        <page string="Cesión">
+                            <group>
+                                <field name="cesion_contrato" modifiers="{'readonly': [('is_asesor_in_validacion','=', True)]}"/>
+                                <field name="nombres_cediente" modifiers="{'readonly': [('is_asesor_in_validacion','=', True)]}"/>
+                                <field name="cedula_cediente" modifiers="{'readonly': [('is_asesor_in_validacion','=', True)]}"/>
+                            </group>
+                        </page>
+                        <page string="Referencias">
+                            <group>
+                                <field name="telf_ref_1" modifiers="{'readonly': [('is_asesor_in_validacion','=', True)]}"/>
+                                <field name="telf_ref_2" modifiers="{'readonly': [('is_asesor_in_validacion','=', True)]}"/>
+                                <field name="nombre_referencia" modifiers="{'readonly': [('is_asesor_in_validacion','=', True)]}"/>
+                                <field name="parentezco" modifiers="{'readonly': [('is_asesor_in_validacion','=', True)]}"/>
+                            </group>
+                        </page>
+
+                        <!-- TAB para Dirección Titular -->
+                        <page string="Dirección Titular">
+                            <!-- Campos base visibles siempre -->
+                            <group>
+                                <group>
+                                    <label for="provincia_domicilio"/>
+                                    <div class="o_row">
+                                        <field name="provincia_domicilio" class="oe_inline" style="width: 250px;" invisible="provincia_desconocida"/>
+                                        <field name="provincia_desconocida_note" class="oe_inline" style="width: 250px;" invisible="not provincia_desconocida"/>
+                                        <field name="provincia_desconocida" class="oe_inline" nolabel="1"/>
+                                        <label for="provincia_desconocida" string="Desconocido" class="oe_inline"/>
+                                    </div>
+                                    
+                                    <label for="ciudad_domicilio"/>
+                                    <div class="o_row">
+                                        <field name="ciudad_domicilio" domain="[('state_id','=',provincia_domicilio)]" class="oe_inline" style="width: 250px;" invisible="ciudad_desconocida"/>
+                                        <field name="ciudad_desconocida_note" class="oe_inline" style="width: 250px;" invisible="not ciudad_desconocida"/>
+                                        <field name="ciudad_desconocida" class="oe_inline" nolabel="1"/>
+                                        <label for="ciudad_desconocida" string="Desconocido" class="oe_inline"/>
+                                    </div>
+                                    
+                                    <label for="parroquia"/>
+                                    <div class="o_row">
+                                        <field name="parroquia" domain="[('city_id','=',ciudad_domicilio)]" class="oe_inline" style="width: 250px;" invisible="parroquia_desconocida"/>
+                                        <field name="parroquia_desconocida_note" class="oe_inline" style="width: 250px;" invisible="not parroquia_desconocida"/>
+                                        <field name="parroquia_desconocida" class="oe_inline" nolabel="1"/>
+                                        <label for="parroquia_desconocida" string="Desconocido" class="oe_inline"/>
+                                    </div>
+                                    
+                                    <label for="sector"/>
+                                    <div class="o_row">
+                                        <field name="sector" class="oe_inline" style="width: 250px;" invisible="sector_desconocido"/>
+                                        <field name="sector_desconocido_note" class="oe_inline" style="width: 250px;" invisible="not sector_desconocido"/>
+                                        <field name="sector_desconocido" class="oe_inline" nolabel="1"/>
+                                        <label for="sector_desconocido" string="Desconocido" class="oe_inline"/>
+                                    </div>
+                                    
+                                    <field name="misma_direccion_entrega"/>
+                                </group>
+                                
+                                <!-- Columna derecha: Courier y Chip (solo si misma_direccion_entrega = True) -->
+                                <group invisible="not misma_direccion_entrega">
+                                    <field name="courier" string="Courier"/>
+                                    
+                                    <!-- Si courier != motorizado -->
+                                    <field name="chip" string="Tipo de SIM" widget="chip_selector" invisible="courier == 'motorizado' or not courier"/>
+                                    <field name="despacho" string="Modo de despacho" invisible="chip != 'sim_virtual' or courier == 'motorizado'"/>
+                                    
+                                    <!-- Si courier == motorizado -->
+                                    <field name="motorizado_id" 
+                                           invisible="courier != 'motorizado'"
+                                           options="{'no_create_edit': False, 'no_open': False, 'no_quick_create': True}"
+                                           context="{'default_es_motorizado_manual': True, 'form_view_ref': 'crm_custom_lead.view_hr_employee_motorizado_form_simple'}"/>
+                                    <field name="calle_principal" string="Calle Principal" invisible="courier != 'motorizado'"/>
+                                    <field name="calle_secundaria" string="Calle Secundaria" invisible="courier != 'motorizado'"/>
+                                    <field name="nomenclatura" string="Nomenclatura" invisible="courier != 'motorizado'"/>
+                                    <field name="referencias_entrega" string="Referencias de Entrega" invisible="courier != 'motorizado'"/>
+                                    <field name="url_google_maps" string="Ubicación (Google Maps)" invisible="courier != 'motorizado'"/>
+                                    <field name="chip" string="Tipo de SIM" widget="chip_selector" invisible="courier != 'motorizado'"/>
+                                    <field name="despacho" string="Modo de despacho" invisible="chip != 'sim_virtual' or courier != 'motorizado'"/>
+                                </group>
+                            </group>
+                        </page>
+
+                        <!-- TAB Entrega Chip cuando misma_direccion_entrega es False -->
+                        <page string="Entrega Chip" invisible="misma_direccion_entrega">
+                            <!-- Campos de dirección de entrega -->
+                            <group>
+                                <field name="provincia_entrega"/>
+                                <field name="ciudad_entrega"/>
+                                <field name="sector_entrega"/>
+                            </group>
+
+                            <group>
+                                <field name="calle_principal"/>
+                                <field name="calle_secundaria"/>
+                                <field name="nomenclatura"/>
+                                <field name="referencias_entrega"/>
+                                <field name="url_google_maps"/>
+                            </group>
+
+                            <group>
+                                <field name="courier"/>
+                                <field name="motorizado_id" 
+                                       invisible="courier != 'motorizado'"
+                                       options="{'no_create_edit': False, 'no_open': False, 'no_quick_create': True}"
+                                       context="{'default_es_motorizado_manual': True, 'form_view_ref': 'crm_custom_lead.view_hr_employee_motorizado_form_simple'}"/>
+                            </group>
+
+                            <group>
+                                <field name="chip" widget="chip_selector"/>
+                                <field name="despacho" invisible="chip != 'sim_virtual'"/>
+                            </group>
+                        </page>
+
+                        <!-- TAB Pago -->
+                        <page string="Pago">
+                            <group>
+                                <field name="forma_pago"/>
+                            </group>
+
+                            <!-- Si forma_pago = debito_bancario -->
+                            <group invisible="forma_pago != 'debito_bancario'">
+                                <field name="entidad_financiera"/>
+                            </group>
+
+                            <!-- Si entidad_financiera = banco -->
+                            <group invisible="not (forma_pago == 'debito_bancario' and entidad_financiera == 'banco')">
+                                <field name="nombre_banco"/>
+                                <field name="numeracion_banco" string="Numero de cuenta"/>
+                            </group>
+
+                            <!-- Si entidad_financiera = cooperativa -->
+                            <group invisible="not (forma_pago == 'debito_bancario' and entidad_financiera == 'cooperativa')">
+                                <field name="nombre_cooperativa"/>
+                                <field name="numeracion_cooperativa" string="Numero de cuenta"/>
+                            </group>
+
+                            <!-- Si forma_pago = debito_tarjeta -->
+                            <group invisible="forma_pago != 'debito_tarjeta'">
+                                <field name="numero_tarjeta" placeholder="Ej. 4111 1111 1111 1111" widget="card_input_mask"/>
+                                <field name="tipo_tarjeta" readonly="True" invisible="not tipo_tarjeta"/>
+                                <field name="fecha_caducidad"/>
+                            </group>
+                        </page>
+
+                        <page string="Oferta / Otros">
+                            <group>
+                                <field name="descuento_oferta_comercial" modifiers="{'readonly': [('is_asesor_in_validacion','=', True)]}"/>
+                                <field name="bono_llamadas_ilimitadas" modifiers="{'readonly': [('is_asesor_in_validacion','=', True)]}"/>
+                                <field name="id_grabacion_contrato" modifiers="{'readonly': [('is_asesor_in_validacion','=', True)]}"/>
+                                <field name="carga_base" modifiers="{'readonly': [('is_asesor_in_validacion','=', True)]}"/>
+                                <field name="estado_asesor" modifiers="{'readonly': [('is_asesor_in_validacion','=', True)]}"/>
+                                <field name="observacion" modifiers="{'readonly': [('is_asesor_in_validacion','=', True)]}"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Búsqueda -->
+    <record id="crm_lead_view_search_custom" model="ir.ui.view">
+        <field name="name">crm.lead.search.custom</field>
+        <field name="model">crm.lead</field>
+        <field name="arch" type="xml">
+            <search string="Buscar Leads">
+                <field name="name"/>
+                <field name="asesor" string="Asesor" readonly="1" options="{'no_open': True}" force_save="1"/>
+                <field name="estado_asesor"/>
+                <field name="stage_id"/>
+                <filter name="grp_asesor" string="Por Asesor" context="{'group_by':'asesor'}"/>
+                <filter name="grp_estado_asesor" string="Por Estado Asesor" context="{'group_by':'estado_asesor'}"/>
+                <filter name="grp_etapa" string="Por Etapa" context="{'group_by':'stage_id'}"/>
+            </search>
+        </field>
+    </record>
+
+    <!-- Acción Única -->
+    <record id="action_crm_lead_custom" model="ir.actions.act_window">
+        <field name="name">Leads Personalizados</field>
+        <field name="res_model">crm.lead</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="crm_lead_view_search_custom"/>
+        <field name="context">{'disable_quick_create': True, 'disable_kanban_quick_create': True}</field>
+    </record>
+
+    <!-- Menú -->
+    <menuitem id="menu_crm_lead_custom_root" name="Leads Personalizados" parent="crm.crm_menu_root" action="action_crm_lead_custom"/>
+
+    <!-- Quick Create override: crm.quick_create_opportunity_form -->
+    <record id="crm_lead_quick_create_inherit_custom" model="ir.ui.view">
+        <field name="name">crm.lead.form.quick_create.custom.override</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.quick_create_opportunity_form"/>
+        <field name="priority" eval="50"/>
+        <field name="arch" type="xml">
+            <xpath expr="/form" position="replace">
+                <form>
+                    <group>
+                        <!-- Mostrar Asesor propio (empleado) en solo lectura -->
+                        <field name="asesor" string="Asesor" readonly="1" options="{'no_open': True}" force_save="1"/>
+                        <!-- Ocultar el partner original para evitar edición -->
+                        <field name="partner_id" invisible="1"/>
+
+                        <field name="name" placeholder="Oportunidad"/>
+                        <field name="correo" string="Correo" placeholder="email@dominio.com" force_save="1"/>
+                        <field name="nombre_titular" string="Nombre Titular" force_save="1"/>
+                        <field name="apellido_titular" string="Apellido Titular" force_save="1"/>
+
+                        <!-- Hidden fields from base view -->
+                        <field name="company_currency" invisible="1"/>
+                        <field name="company_id" invisible="1"/>
+                        <field name="user_id" invisible="1"/>
+                        <field name="user_company_ids" invisible="1"/>
+                        <field name="team_id" invisible="1"/>
+                        <field name="type" invisible="1"/>
+                        <field name="partner_name" invisible="1"/>
+                        <field name="contact_name" invisible="1"/>
+                        <field name="country_id" invisible="1"/>
+                        <field name="state_id" invisible="1"/>
+                        <field name="city" invisible="1"/>
+                        <field name="street" invisible="1"/>
+                        <field name="street2" invisible="1"/>
+                        <field name="zip" invisible="1"/>
+                        <field name="mobile" invisible="1"/>
+                        <field name="website" invisible="1"/>
+                        <field name="function" invisible="1"/>
+                        <field name="title" invisible="1"/>
+                        <field name="activity_ids" invisible="1"/>
+                    </group>
+                </form>
+            </xpath>
+        </field>
+    </record>
+    <record id="crm_case_kanban_disable_quick_create" model="ir.ui.view">
+        <field name="name">crm.lead.kanban.no_quick_create</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_case_kanban_view_leads"/>
+        <field name="arch" type="xml">
+            <xpath expr="//kanban" position="attributes">
+                <attribute name="quick_create">false</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>

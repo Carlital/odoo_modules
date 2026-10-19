@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ====== WIZARD: Importar Planes desde XLSX ====== -->
+    <record id="view_plan_import_wizard" model="ir.ui.view">
+        <field name="name">bc.plan.import.wizard.form</field>
+        <field name="model">bc.plan.import.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Importar desde XLSX">
+                <group>
+                    <field name="campaign_id"/>
+                    <field name="subcampaign_id"/>
+                    <field name="xlsx_file" filename="filename"/>
+                    <field name="filename"/>
+                    <field name="sheet_name" placeholder="Dejar vacío para autodetectar"/>
+                    <field name="create_template"/>
+                    <field name="header_row"/>
+                    <field name="plan_header"/>
+                    <field name="template_name" modifiers="{'invisible': [('create_template','=', False)]}"/>
+                    <field name="create_plans"/>
+                </group>
+                <footer>
+                    <button string="Importar" type="object" class="btn-primary" name="action_import"/>
+                    <button string="Cancelar" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_plan_import_wizard" model="ir.actions.act_window">
+        <field name="name">Importar Planes</field>
+        <field name="res_model">bc.plan.import.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <!-- ====== BINDINGS EN MENÚ ACCIONES ====== -->
+
+    <record id="action_plan_import_wizard_bind_campaign" model="ir.actions.act_window">
+        <field name="name">Importar Planes (XLSX)</field>
+        <field name="res_model">bc.plan.import.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <!-- Mantiene el modelo legacy si así lo usas -->
+        <field name="binding_model_id" ref="crm_custom_campaign_ext.model_bc_campaign"/>
+        <field name="binding_type">action</field>
+    </record>
+
+    <!-- Subcampaña (bc.subcampaign) -->
+    <record id="action_plan_import_wizard_bind_subcampaign" model="ir.actions.act_window">
+        <field name="name">Importar Planes (XLSX)</field>
+        <field name="res_model">bc.plan.import.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <!-- OJO: external id del modelo bc.subcampaign en ESTE módulo -->
+        <field name="binding_model_id" ref="crm_custom_campaign_ext.model_bc_subcampaign"/>
+        <field name="binding_type">action</field>
+    </record>
+
+</odoo>

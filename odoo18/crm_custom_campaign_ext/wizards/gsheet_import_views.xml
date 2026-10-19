@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_bc_gsheet_import_wizard" model="ir.ui.view">
+        <field name="name">bc.gsheet.import.wizard.form</field>
+        <field name="model">bc.gsheet.import.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Importar desde Google Sheets" groups="base.group_system,crm_custom_lead.group_jefe_operaciones">
+                <sheet>
+                    <group>
+                        <field name="subcampaign_id" readonly="1"/>
+                        <field name="sheet_url" placeholder="https://docs.google.com/spreadsheets/d/..."/>
+                        <field name="sheet_tab"/>
+                        <field name="sheet_range"/>
+                        <field name="mode"/>
+                        <field name="preview_json" widget="text" readonly="1" modifiers='{"invisible": [["mode", "!=", "preview"]]}'/>
+                    </group>
+                </sheet>
+                <footer>
+                    <button name="action_preview" type="object" string="Previsualizar" class="btn-secondary" modifiers='{"invisible": [["mode", "!=", "preview"]]}'/>
+                    <button name="action_create" type="object" string="Crear Planes" class="btn-primary"/>
+                    <button string="Cancelar" special="cancel" class="btn-secondary"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_bc_gsheet_import_wizard" model="ir.actions.act_window">
+        <field name="name">Importar desde Google Sheets</field>
+        <field name="res_model">bc.gsheet.import.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="groups_id" eval="[(6,0,[ref('base.group_system'), ref('crm_custom_lead.group_jefe_operaciones')])]"/>
+    </record>
+</odoo>

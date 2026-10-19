@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="point_of_sale.QuantityPopup" owl="1">
+        <div class="popup popup-number">
+            <header class="title" t-out="props.title"/>
+            <main class="popup-main body">
+                <div class="product-name" t-out="productName"/>
+                <div class="popup-input quantity-container">
+                    <div class="control-buttons">
+                        <button class="button decrease" t-on-click="updateQuantity(-1)" t-att-disabled="quantity &lt;= 1">
+                            <i class="fa fa-minus"/>
+                        </button>
+                        <input class="popup-input-number" type="text" t-model="state.quantity" t-on-change="validateQuantity"/>
+                        <button class="button increase" t-on-click="updateQuantity(1)">
+                            <i class="fa fa-plus"/>
+                        </button>
+                    </div>
+                </div>
+            </main>
+            <footer class="footer">
+                <div class="button cancel" t-on-click="cancel">
+                    <t t-out="props.cancelText"/>
+                </div>
+                <div class="button confirm" t-on-click="confirm">
+                    <t t-out="props.confirmText"/>
+                </div>
+            </footer>
+        </div>
+    </t>
+</templates>

@@ -1,0 +1,366 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<template xml:space="preserve">
+    <t t-name="vex_sync_mercado_libre.settings" owl="1">
+      <div class="o_action_manager custom-whatsapp-suite" bis_skin_checked="1"
+            style="overflow: auto !important;">
+      <!-- Side navigation menu -->
+          <div class="sidebar" t-att-style="'box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);z-index:99; position: fixed; width: 200px; height: 100%; background: rgba(255, 255, 255, 0.9); padding: 20px; left:' + (state.isSidebarVisible ? '0' : '-200px') + '; transition: left 0.3s;'">
+            <h5 class="sidebar-title" style="padding-bottom: 10px; margin-bottom: 20px; border-bottom: 1px solid #e7e7e7;">Settings</h5>
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a href="#" class="nav-link" t-on-click.prevent="()=>this.selectMenuOption('general')" t-att-class="{ activeMenu: state.selectedMenuOption === 'general' }">General</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link" t-on-click.prevent="()=>this.selectMenuOption('stock')" t-att-class="{ activeMenu: state.selectedMenuOption === 'stock' }">Stock</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link" t-on-click.prevent="()=>this.selectMenuOption('accountant')" t-att-class="{ activeMenu: state.selectedMenuOption === 'accountant' }">Accountant</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link" t-on-click.prevent="()=>this.selectMenuOption('ai')" t-att-class="{ activeMenu: state.selectedMenuOption === 'ai' }">AI</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link" t-on-click.prevent="()=>this.selectMenuOption('logs')" t-att-class="{ activeMenu: state.selectedMenuOption === 'logs' }">Log .</a>
+                </li>
+                 <li class="nav-item">
+                    <a href="#" class="nav-link" t-on-click.prevent="()=>this.selectMenuOption('categories')" t-att-class="{ activeMenu: state.selectedMenuOption === 'categories' }">Categories</a>
+                 </li>
+                  <li class="nav-item">
+                      <a href="#" class="nav-link" t-on-click.prevent="()=>this.selectMenuOption('odoo-to-ml')" t-att-class="{ activeMenu: state.selectedMenuOption === 'odoo-to-ml' }">Odoo to Mercado Libre</a>
+                  </li>
+                  <li class="nav-item">
+                      <a href="#" class="nav-link" t-on-click.prevent="()=>this.selectMenuOption('ml-to-odoo')" t-att-class="{ activeMenu: state.selectedMenuOption === 'ml-to-odoo' }">Mercado Libre to Odoo</a>
+                  </li>
+                  <li class="nav-item">
+                      <a href="#" class="nav-link" t-on-click.prevent="()=>this.selectMenuOption('import-export')" t-att-class="{ activeMenu: state.selectedMenuOption === 'import-export' }">Import/Export</a>
+                  </li>
+            </ul>
+        </div>
+      <!-- Content -->
+        <div class="content" t-att-style="'margin-left: ' + (state.isSidebarVisible ? '200px' : '0') + '; transition: margin-left 0.3s;'">
+            <div id="content-settings">
+              <t t-if="state.selectedMenuOption === 'general'">
+                <div class="container mt-4">
+                  <h2 class="text-xl font-semibold mb-4">Syncronizer</h2>
+                  <div class="flex items-center mb-2">
+                    <span class="mr-2">Frequency(minutes):</span>
+                    <input type="text" class="form-control" />
+                  </div>
+                </div>
+              </t>
+              <t t-if="state.selectedMenuOption === 'stock'">
+                  <div class="container mt-4">
+                    <div class="row">
+                      <div class="col-6">
+                        <h2 class="h4 text-primary mb-4">Automatic warehouse selection for Orders</h2>
+                        <div class="mb-4">
+                          <label for="stock-warehouse-default" class="form-label text-foreground">Stock Warehouse Default</label>
+                          <div class="mt-1">
+                            <select id="stock-warehouse-default" class="form-select text-base border border-border bg-background rounded-md">
+                              <option>Default Ecommerce</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div>
+                          <label for="stock-location-to-post" class="form-label text-foreground">Stock Location To Post</label>
+                          <div class="mt-1">
+                            <select id="stock-location-to-post" class="form-select text-base border border-border bg-background rounded-md">
+                              <option>ECOM/Stock</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-6">
+                        <h2 class="h4 text-primary mb-4">Automatic location selection for Stock posting</h2>
+                        <div class="mb-4">
+                          <label for="stock-warehouse-default" class="form-label text-foreground">Stock Warehouse Default for FULL</label>
+                          <div class="mt-1">
+                            <select id="stock-warehouse-default" class="form-select text-base border border-border bg-background rounded-md">
+                              <option>Full MercadoLibre</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div>
+                          <label for="stock-location-to-post" class="form-label text-foreground">Stock Location To Post for Full</label>
+                          <div class="mt-1">
+                            <select id="stock-location-to-post" class="form-select text-base border border-border bg-background rounded-md">
+                              <option>FULLM/Stock</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <p></p>
+                    <h2 class="h4 text-primary mb-4">Location and SKU Rules</h2>
+                    <div class="row">
+                <!-- Process all notifications -->
+                        <div class="form-check mb-4">
+                          <label class="label" for="processAllNotifications">Process all notifications</label>
+                          <input type="checkbox" id="processAllNotifications" />
+                        </div>
+                <!-- Check MercadoLibre active location to post -->
+                        <div class="form-check mb-4">
+                          <label class="label" for="checkMercadoLibreLocation">Check MercadoLibre active location to post</label>
+                          <input type="checkbox" id="checkMercadoLibreLocation" />
+                          </div>
+                <!-- Set stock quantities in each location accordingly -->
+                        <div class="form-check mb-4">
+                          <label class="label" for="syncStockQuantities">Set stock quantities in each location accordingly</label>
+                          <input type="checkbox" id="syncStockQuantities" />
+                          </div>
+                <!-- Rule for mapping external Sku to local Sku -->
+                          <div class="form-group mb-4 col-6">
+                            <label for="externalSkuMapping">Rule for mapping external Sku to local Sku</label>
+                            <select class="form-control" id="externalSkuMapping">
+                              <option>Ideal for packs</option>
+                              <option>Option 2</option>
+                              <option>Option 3</option>
+                            </select>
+                  <!-- Rule for mapping formula -->                          
+                            <label for="mappingFormula">Rule for mapping formula</label>
+                            <select class="form-control" id="mappingFormula">
+                              <option>Option 1</option>
+                              <option>Option 2</option>
+                              <option>Option 3</option>
+                            </select>
+                          </div>
+                    </div>
+                </div>
+              </t>
+              <t t-if="state.selectedMenuOption === 'accountant'">
+                <div class="container mt-4">
+                  <div class="row">
+                    <div class="col-6">
+                      <h2 class="h4 text-primary mb-4">Payments Configuration</h2>
+                      <div class="form-check mb-2 d-flex justify-content-between">
+                        <label class="form-check-label" for="process-ml-payments">Mercado Libre Partner</label>
+                        <a href="#" class="">Mercado Libre</a>
+                      </div>
+                      <div class="form-check mb-2 d-flex justify-content-between">
+                        <label class="form-check-label" for="process-ml-payments">Account Journal for Mecado Libre</label>
+                        <a href="#" class="">Mercado Libre (MXN)</a>
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <h2 class="h4 text-primary mb-4">Automatic Record Payment</h2>
+                      <div class="form-check mb-2">
+                        <input class="form-check-input" type="checkbox" id="process-customer-payments" />
+                        <label class="form-check-label" for="process-customer-payments">Process payments from Customer</label>
+                      </div>
+                      <div class="form-check mb-2">
+                        <input class="form-check-input" type="checkbox" id="process-supplier-ml-payments" />
+                        <label class="form-check-label" for="process-supplier-ml-payments">Process payments fee to Supplier ML</label>
+                      </div>
+                      <div class="form-check mb-2">
+                        <input class="form-check-input" type="checkbox" id="process-shipping-list-cost-payments" />
+                        <label class="form-check-label" for="process-shipping-list-cost-payments">Process payments shipping list cost to Supplier ML</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </t>
+              <t t-if="state.selectedMenuOption === 'ai'">
+                <div class="container mt-4">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <h5>Automatización ML a Odoo</h5>
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="processAllNotifications" />
+                        <label class="form-check-label" for="processAllNotifications">Process all notifications</label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="importOrders" />
+                        <label class="form-check-label" for="importOrders">Importar pedidos</label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="importShipments" />
+                        <label class="form-check-label" for="importShipments">Importar envíos</label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="importClients" />
+                        <label class="form-check-label" for="importClients">Importar clientes</label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="importQuestions" />
+                        <label class="form-check-label" for="importQuestions">Importar preguntas</label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="searchSKU" />
+                        <label class="form-check-label" for="searchSKU">Search SKU</label>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="importNonexistentProducts" />
+                        <label class="form-check-label" for="importNonexistentProducts">Importar productos inexistentes</label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="updateAddVariants" />
+                        <label class="form-check-label" for="updateAddVariants">Actualiza/agrega variantes</label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="updateProducts" />
+                        <label class="form-check-label" for="updateProducts">Actualizar productos</label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="importNewProducts" />
+                        <label class="form-check-label" for="importNewProducts">Importar nuevos productos</label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="cronGetProducts" />
+                        <label class="form-check-label" for="cronGetProducts">Cron Get Products and take Stock from ML</label>
+                      </div>
+                      <div class="form-group">
+                        <label for="actionOnOrderReceive">Acción al recibir un pedido</label>
+                        <select class="form-control" id="actionOnOrderReceive">
+                          <option>Option 1</option>
+                          <option>Option 2</option>
+                          <option>Option 3</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row mt-4">
+                    <div class="col-md-6">
+                      <h5>Automatización Odoo a ML</h5>
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="updateProductsOdoo" />
+                        <label class="form-check-label" for="updateProductsOdoo">Actualizar productos</label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="includeNewProducts" />
+                        <label class="form-check-label" for="includeNewProducts">Incluir nuevos productos</label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="publishStock" />
+                        <label class="form-check-label" for="publishStock">Publicar Stock</label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="publishPrice" />
+                        <label class="form-check-label" for="publishPrice">Publicar Precio</label>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="postSKU" />
+                        <label class="form-check-label" for="postSKU">Post SKU</label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="productTemplateOverrideVariant" />
+                        <label class="form-check-label" for="productTemplateOverrideVariant">Product template override Variant</label>
+                      </div>
+                      <div class="form-group">
+                        <label for="overrideMethod">Método para Sobrescribir</label>
+                        <select class="form-control" id="overrideMethod">
+                          <option>Predeterminado, sobrescribe descripción</option>
+                          <option>Option 2</option>
+                          <option>Option 3</option>
+                        </select>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="createProductAttributes" />
+                        <label class="form-check-label" for="createProductAttributes">Create Product Attributes</label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="doNotUseFirstImage" />
+                        <label class="form-check-label" for="doNotUseFirstImage">Do not use first image</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </t>
+              <t t-if="state.selectedMenuOption === 'logs'">
+                <div class="container mt-4">
+                  <h2 class="mb-4">Logs del Servidor</h2>
+                  <table class="table table-striped table-bordered">
+                      <thead class="thead-dark">
+                          <tr>
+                              <th scope="col">Fecha</th>
+                              <th scope="col">Nivel</th>
+                              <th scope="col">Mensaje</th>
+                              <th scope="col">Origen</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          <tr>
+                              <td>2024-07-19 10:15:30</td>
+                              <td><span class="badge badge-info">Info</span></td>
+                              <td>Servidor iniciado correctamente.</td>
+                              <td>System</td>
+                          </tr>
+                          <tr>
+                              <td>2024-07-19 10:17:45</td>
+                              <td><span class="badge badge-warning">Warning</span></td>
+                              <td>Uso de memoria alto.</td>
+                              <td>Monitor</td>
+                          </tr>
+                          <tr>
+                              <td>2024-07-19 10:20:10</td>
+                              <td><span class="badge badge-danger">Error</span></td>
+                              <td>Error de conexión a la base de datos.</td>
+                              <td>Database</td>
+                          </tr>
+                      </tbody>
+                  </table>
+              </div>
+              </t>
+              <t t-if="state.selectedMenuOption === 'categories'">
+              </t>
+              <t t-if="state.selectedMenuOption === 'odoo-to-ml'">
+              </t>
+              <t t-if="state.selectedMenuOption === 'ml-to-odoo'">
+              </t>
+              <t t-if="state.selectedMenuOption === 'import-export'">
+            <!-- flex container -->
+                <div class="container mt-4 d-flex">
+                  <div class="col-6">
+                    <h2 class="h4 text-primary mb-4">Import Synchronization</h2>
+                    <div class="mb-4">
+                      <label for="store" class="form-label text-foreground">Store</label>
+                      <div class="mt-1">
+                        <select id="store" class="form-select text-base border border-border bg-background rounded-md">
+                          <option>Default Ecommerce</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="mb-4">
+                      <label for="instance_id" class="form-label
+                      text-foreground">Instance ID</label>
+                      <div class="mt-1">
+                        <select id="instance_id" class="form-select text-base border border-border bg-background rounded-md">
+                          <option>Instance 1</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="mb-4">
+                      <label for="frequency" class="form-label text-foreground">Frequency</label>
+                      <div class="mt-1">
+                        <input type="text" class="form-control" />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <h2 class="h4 text-primary mb-4">Export Synchronization</h2>
+                    <div class="mb-4">
+                      <label for="export_to" class="form-label text-foreground">Export To</label>
+                        <select id="export_to" class="form-select text-base border border-border bg-background rounded-md">
+                          <option>Instance 1</option>
+                        </select>
+                    </div>
+                    <div class="mb-4">
+                      <label for="export_stock" class="form-label text-foreground">Export Stock</label>
+                        <input type="checkbox" class="" />
+                    </div>
+                    <div class="mb-4">
+                      <label for="export_price" class="form-label text-foreground">Export Price</label>
+                        <input type="checkbox" class="" />
+                    </div>
+                  </div>
+                </div>
+              </t>
+              </div>
+              </div>
+          </div>
+
+    </t>
+</template>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_saleorder_document_inherit" inherit_id="sale.report_saleorder_document">
+        <!-- Agregar las nuevas columnas en el encabezado después de la columna "Cantidad" -->
+        <xpath expr="//th[@name='th_description']" position="before">
+            <th>Item</th>            
+        </xpath>
+        
+        <xpath expr="//th[@name='th_quantity']" position="after">
+            <th>Cant. Pzs</th>
+            <th>UDV</th>
+            <th>Largue Pza</th>
+            <th>Precio Pza</th>
+        </xpath>
+        
+        <!-- Agregar las nuevas columnas en cada fila del cuerpo después de la columna "Cantidad" -->
+        <xpath expr="//t[@t-foreach='lines_to_report']" position="before">
+            <t t-set="item" t-value="0"/>                       
+         </xpath>
+         <xpath expr="//td[@name='td_name']" position="before">
+            <t t-set="item" t-value="item + 1"/>
+            <td><t t-esc="item"/></td>            
+         </xpath>
+        <xpath expr="//td[@name='td_quantity']" position="after">
+            <td class="text-end">
+                <t t-esc="line.acs_cant_pzs and '%.2f' % line.acs_cant_pzs or '-'"/>
+            </td>
+            <td>
+                <t t-esc="line.acs_udv.name or '-'"/>
+            </td>
+            <td>
+                <t t-esc="line.acs_largue_pza or '-'"/>
+            </td>
+            <td>
+                <t t-esc="line.acs_price_pza or '-'"/>
+            </td>
+        </xpath>
+    </template>
+</odoo>

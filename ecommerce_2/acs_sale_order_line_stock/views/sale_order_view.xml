@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_order_form_inherit_acs_stock" model="ir.ui.view">
+            <field name="name">sale.order.form.inherit.acs.stock</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form" />
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='order_line']//list//field[@name='product_uom_qty']"
+                    position="after">
+
+                    <!-- Campos de stock en tiempo real -->
+                    <field name="stock_actual"
+                        string="Stock Actual"
+                        optional="show"
+                        column_invisible="parent.state in ['sale', 'done', 'cancel']"
+                        decoration-danger="stock_actual &lt; product_uom_qty"
+                        decoration-warning="stock_actual &gt;= product_uom_qty and stock_actual &lt; product_uom_qty * 2" />
+
+                    <field name="stock_virtual"
+                        string="Stock Virtual"
+                        optional="show"
+                        column_invisible="parent.state in ['sale', 'done', 'cancel']"
+                        decoration-danger="stock_virtual &lt; product_uom_qty"
+                        decoration-warning="stock_virtual &gt;= product_uom_qty and stock_virtual &lt; product_uom_qty * 2" />
+
+                    <!-- Campos de snapshot al confirmar 
+                    <field name="stock_actual_at_confirmation"
+                        string="Stock Actual (Conf.)"
+                        optional="hide"
+                        column_invisible="parent.state not in ['sale', 'done']" />
+
+                    <field name="stock_virtual_at_confirmation"
+                        string="Stock Virtual (Conf.)"
+                        optional="hide"
+                        column_invisible="parent.state not in ['sale', 'done']" />-->
+
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

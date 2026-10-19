@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+    <record id="account_letter_invoice_wizard_form" model="ir.ui.view">
+      <field name="name">account.letter.invoice.wizard.form</field>
+      <field name="model">account.letter.invoice.wizard</field>
+      <field name="arch" type="xml">
+        <form>
+          <group>
+            <group>
+              <field name="partner_id" />
+              <field name="payment_type" />
+              <field name="quantity_fees"/>
+              <field name="days_first_period"/>
+              <field name="days_period"/>
+              <field name="due_date" required="True"/>
+              <field name="start_date" invisible="1"/>
+            </group>
+            <group>
+              <field name="amount"/>
+              <field name="date"/>
+              <field name="journal_id"/>
+              <field groups="base.group_multi_currency" name="currency_id"/>
+              <field groups="base.group_multi_company" name="company_id" options="{'no_create': True}"/>
+            </group>
+          </group>
+          <field name="invoice_ids" nolabel="1" 
+            
+            ></field>
+
+          <footer>
+            <button class="btn-primary" name="action_confirm" string="Confirm" type="object"/>
+            <button class="btn-default" special="cancel" string="Cancel" type="object"/>
+          </footer>
+        </form>
+      </field>
+    </record>
+    <record id="action_account_letter_invoice_wizard_receivable" model="ir.actions.act_window">
+        <field name="name">Multi Letters</field>
+        <field name="res_model">account.letter.invoice.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="context">{'default_payment_type': 'inbound','default_invoice_type': 'out_invoice'}</field>
+    </record>
+
+    <record id="action_account_letter_invoice_wizard_payable" model="ir.actions.act_window">
+        <field name="name">Multi Letters</field>
+        <field name="res_model">account.letter.invoice.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="context">{'default_payment_type': 'outbound','default_invoice_type': 'in_invoice'}</field>
+    </record>
+
+
+    <record id="account_letters_wizard_wizard" model="ir.ui.view">
+      <field name="name">account.letter.wizard.from</field>
+      <field name="model">account.letter.wizard</field>
+      <field name="arch" type="xml">
+        <form>
+          <group>
+            <group>
+              <field name="partner_id" readonly="True"/>
+              <field name="type" invisible="1"/>
+              <field name="date"/>
+            </group>
+            <group>
+              <field name="amount_total"/>
+              <field name="amount_total_lines" invisible="1"/>
+              <field name="show_msg" invisible="1"/>
+              <field name="currency_id" groups="base.group_multi_currency"/>
+              <field name="company_id" groups="base.group_multi_company" />
+            </group>
+          </group>
+          <field name="line_ids" nolabel="1">
+              <list string="letter Lines" editable="bottom">
+                  <field name="date" />
+                  <field name="date_due" />
+                  <field name="amount_total" sum="Total"/>
+                  
+              </list>
+          </field>
+          <h3 style="color:red;" invisible="show_msg != True">La sumatoria de las cuotas es diferente al total</h3>
+          <footer>
+            <button class="btn-primary" name="action_confirm" string="Confirm" type="object"/>
+            <button class="btn-default" special="cancel" string="Cancel" type="object"/>
+          </footer>
+        </form>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_account_letters_line_wizard">
+      <field name="model">account.letter.line.wizard</field>
+      <field name="arch" type="xml">
+          <form>
+              <group>
+                <group>
+                  <field name="partner_id" invisible="1" />
+                  <field name="date" invisible="1" />
+                  <field name="type" invisible="1" />
+                </group>
+                <group>
+                  <field name="company_id" invisible="1" />
+                  <field name="currency_id" invisible="1" />
+                </group>
+              </group>
+              <field name="line_ids" nolabel="1" widget="one2many_list"
+                context="{'default_type':type,'default_company_id':company_id,'default_currency_id':currency_id,'default_partner_id':partner_id}" >
+                  <list string="Invoices Lines" editable="bottom">
+                      <field name="invoice_id" domain="[('partner_id','=',parent.partner_id),('state','in',['posted']),('move_type','in',{'outbound':['in_invoice','out_refund'],'inbound': ['out_invoice','in_refund']}.get(parent.type,[]))]" />
+                      <field name="currency_id" invisible="1" />
+                      <field name="amount" />
+                  </list>
+              </field>
+              <footer class="oe_edit_only">
+                  <button string="Save" special="save" class="oe_highlight"/>
+                  <button string="Discard" special="cancel"/>
+              </footer>
+          </form>
+      </field>
+    </record>
+    <record id="action_account_letters_wizard" model="ir.actions.act_window">
+        <field name="name">account.letter.wizard.action</field>
+        <field name="res_model">account.letter.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+    <menuitem action="action_account_letter_invoice_wizard_receivable" id="menu_action_account_letter_invoice_wizard_receivable" parent="account.menu_finance_receivables" sequence="31"/>
+    <menuitem action="action_account_letter_invoice_wizard_payable" id="menu_action_account_letter_invoice_wizard_payable" parent="account.menu_finance_payables" sequence="31"/>
+
+
+    <record id="account_letter_cancel_wizard_form" model="ir.ui.view">
+      <field name="name">cancel.letter.confirm.wizard.form</field>
+      <field name="model">cancel.letter.confirm.wizard</field>
+      <field name="arch" type="xml">
+        <form>
+          <group>
+            <field name="message" nolabel="1"/>
+            <field name="letter_id" invisible="1"/>
+          </group>
+          <footer>
+            <button class="btn-primary" name="action_confirm" string="Confirm" type="object"/>
+            <button class="btn-default" special="cancel" string="Cancel" type="object"/>
+          </footer>
+        </form>
+      </field>
+    </record>
+  </data>
+</odoo>

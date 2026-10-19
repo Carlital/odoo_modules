@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Registrar el snippet en el editor de sitio web -->
+    <template id="snippet_directorio_register" name="Directorio Institucional" 
+              inherit_id="website.snippets">
+        <xpath expr="//div[@id='snippet_structure']/div[@class='o_panel_body']" position="inside">
+            <t t-snippet="directorio_institucional.snippet_directorio_template" 
+               t-thumbnail="/directorio_institucional/static/description/icon.png" 
+               string="Directorio Institucional">
+                <keywords>directorio teléfono contactos personal institucional</keywords>
+            </t>
+        </xpath>
+    </template>
+
+    <!-- Template del snippet de directorio -->
+    <template id="snippet_directorio_template" name="Bloque Directorio Institucional">
+        <section class="s_directorio_institucional oe_structure py-5" data-name="Directorio Institucional">
+            <div class="container">
+                
+                <!-- Cabecera del directorio -->
+                <div class="directorio-header-section text-center mb-5">
+                    <h1 class="directorio-main-title">Directorio Institucional</h1>
+                    <p class="directorio-subtitle">Escuela Superior Politécnica de Chimborazo</p>
+                </div>
+
+                <!-- Filtros de búsqueda -->
+                <div class="directorio-filter-wrapper mb-4">
+                    <div class="row g-3 align-items-end">
+                        
+                        <!-- Búsqueda por nombre -->
+                        <div class="col-md-5">
+                            <label class="directorio-label" for="busqueda_nombre">
+                                Buscar por nombre o apellido
+                            </label>
+                            <div class="directorio-input-group">
+                                <i class="fa fa-search directorio-input-icon"></i>
+                                <input type="text" 
+                                       class="form-control directorio-input" 
+                                       id="busqueda_nombre" 
+                                       placeholder="Ingrese nombre o apellido"/>
+                            </div>
+                        </div>
+
+                        <!-- Filtro por unidad -->
+                        <div class="col-md-5">
+                            <label class="directorio-label" for="filtro_unidad">
+                                Filtrar por unidad
+                            </label>
+                            <select class="form-select directorio-select" id="filtro_unidad">
+                                <option value="">Todas las unidades</option>
+                                <!-- Las opciones se cargarán dinámicamente via JavaScript -->
+                            </select>
+                        </div>
+
+                        <!-- Botón filtrar -->
+                        <div class="col-md-2">
+                            <button class="btn directorio-btn-filter w-100" id="btn-filtrar-directorio">
+                                <i class="fa fa-filter me-2"></i>Filtrar
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Resultados -->
+                <div class="directorio-results-section mt-4">
+                    <div class="row g-3" id="lista-directorio">
+                        <!-- Los resultados se cargarán aquí dinámicamente -->
+                    </div>
+                </div>
+
+                <!-- Paginación -->
+                <div class="text-center mt-4">
+                    <nav>
+                        <div id="pagination-directorio"></div>
+                    </nav>
+                </div>
+
+            </div>
+        </section>
+    </template>
+
+</odoo>

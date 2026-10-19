@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_pos_token_all_read,pos.token read access,model_pos_token,,1,0,0,0
+access_pos_token_full_access,pos.token full access,model_pos_token,acs_pos_tokens.group_pos_token_full_access,1,1,1,1
+access_pos_token_use_all_read,pos.token.use read access,model_pos_token_use,,1,1,1,1

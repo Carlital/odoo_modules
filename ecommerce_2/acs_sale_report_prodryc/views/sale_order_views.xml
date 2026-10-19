@@ -1,0 +1,13 @@
+<odoo>
+    <record id="view_order_form_add_lugar_entrega" model="ir.ui.view">
+        <field name="name">sale.order.form.add.lugar.entrega</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <!-- Ubicación exacta usando la jerarquía completa -->
+            <xpath expr="//page[@name='other_information']/group/group[@name='sale_shipping']" position="inside">
+                <field name="lugar_entrega" class="oe_inline" placeholder="Dirección exacta de entrega"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

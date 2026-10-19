@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<template xml:space="preserve">
+    <t t-name="vex_sync_mercado_libre.settings_general" owl="1">
+        <div class="p-4">
+            <h2 class="text-xl font-semibold mb-4">Setting General</h2>
+            <div class="flex items-center mb-2">
+              <span class="mr-2">Setting General</span>
+              <input type="text" class="form-control" />
+            </div>
+          </div>
+    </t>
+</template>

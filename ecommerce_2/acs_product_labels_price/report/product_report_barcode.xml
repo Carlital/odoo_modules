@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="paperformat_acs_product_labels_products" model="report.paperformat">
+            <field name="name">Lista de productos - Etiqueta cod. de barras</field>
+            <field name="default" eval="True" />
+            <field name="format">custom</field>
+            <field name="page_height">30</field>
+            <field name="page_width">112</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">0</field>
+            <field name="margin_bottom">0</field>
+            <field name="margin_left">0</field>
+            <field name="margin_right">0</field>
+            <field name="header_line" eval="False" />
+            <field name="header_spacing">56</field>
+            <field name="dpi">90</field>
+        </record>
+
+        <record id="product.report_product_template_label_2x7" model="ir.actions.report">
+            <field name="name">Product Label Price ACS</field>
+            <field name="report_name">Product Label Price ACS</field>
+            <field name="model">product.template</field>
+            <field name="paperformat_id"
+                ref="acs_product_labels_price.paperformat_acs_product_labels_products" />
+        </record>
+
+        <!-- <record id="product.report_product_template_label" model="ir.actions.report">
+            <field name="name">Product Label Price ACS</field>
+            <field name="report_name">Product Label Price ACS</field>
+            <field name="model">product.template</field>
+            <field name="paperformat_id" ref="acs_product_labels_price.paperformat_acs_product_labels_products"
+        />
+        </record> -->
+        <template id="report_simple_label">
+            <t t-call="web.basic_layout">
+                <div class="page">
+                    <t t-foreach="docs" t-as="doc">
+                        <t t-foreach="range(doc.qty_to_print)" t-as="qty">
+                            <style>
+                                table, table * {
+                                border: none !important;
+                                border-collapse: collapse !important;
+                                }
+                            </style>
+                            <table style="margin-bottom:0px; display: inline-block; width: 49.6%;">
+                                <colgroup>
+                                    <col width="5mm" />
+                                    <col width="47.5mm" />
+                                    <col width="17mm" />
+                                    <col width="45.5mm" />
+                                    <col width="1mm" />
+                                </colgroup>
+                                <tbody>
+                                    <tr>
+                                        <td></td>
+                                        <td
+                                            style="text-align: center; font-size: 14.5px;padding-top:5px">
+                                            <strong style="font-size: 11px;">P. PUBLICO</strong><br />
+                                            S/ <strong t-field="doc.list_price"
+                                                t-options='{"widget": "float", "precision": 2}' />
+                                        </td>
+                                        <td></td>
+                                        <td
+                                            style="text-align: center; font-size: 14.5px;padding-top:5px">
+                                            <strong style="font-size: 11px;">P. MAYOR</strong><br />
+                                            S/ <strong t-if="doc.wholesale_price"
+                                                t-field="doc.wholesale_price.fixed_price"
+                                                t-options='{"widget": "float", "precision": 2}' /><strong
+                                                t-if="not doc.wholesale_price"
+                                                t-field="doc.list_price"
+                                                t-options='{"widget": "float", "precision": 2}' />
+                                        </td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="5" width="100%"
+                                            style="text-align: left; font-size: 10px;font-weight: 300; line-height:1; padding: 0 15px 0 18px;">
+                                            <strong
+                                                style="overflow:hidden; text-overflow:ellipsis;display:-webkit-box; -webkit-box-orient:vertical;-webkit-line-clamp:2;height: 20px"
+                                                t-field="doc.name" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3" style="text-align: center; font-size: 11px;">
+                                            <!-- <span t-field="doc.standard_name"/> -->
+                                            <span t-field="doc.default_code" />
+                                        </td>
+                                        <td colspan="2" style="text-align: center; font-size: 11px;">
+                                            <span style="display:none" t-field="doc.barcode"
+                                                t-options="{'widget': 'barcode', 'symbology': 'auto', 'width': 600, 'height': 150, 'img_style': 'width:100%;height:20%;'}" />
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td colspan="5"
+                                            style="text-align: center; vertical-align: middle;">
+                                            <img t-if="doc.barcode and len(doc.barcode) == 13"
+                                                t-att-src="'/report/barcode/?barcode_type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('EAN13', quote_plus(doc.barcode or ''), 800, 150)"
+                                                style="width:100%;height:20%;" />
+
+                                            <img t-elif="doc.barcode and len(doc.barcode) == 8"
+                                                t-att-src="'/report/barcode/?barcode_type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('EAN8', quote_plus(doc.barcode or ''), 800, 150)"
+                                                style="width:100%;height:20%;" />
+
+                                            <img t-else=""
+                                                t-att-src="'/report/barcode/?barcode_type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('Code128', quote_plus(doc.barcode or ''), 800, 150)"
+                                                style="width:100%;height:20%;" />
+
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </t>
+                    </t>
+
+                </div>
+            </t>
+        </template>
+
+        <record id="report_product_label" model="ir.actions.report">
+            <field name="name">Products Labels</field>
+            <field name="model">product.product</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">acs_product_labels_price.report_simple_label</field>
+            <field name="report_file">acs_product_labels_price.report_simple_label</field>
+            <field name="paperformat_id" ref="product.paperformat_label_sheet" />
+            <field name="print_report_name">'Products Labels - %s' % (object.name)</field>
+            <field name="binding_model_id" eval="False" />
+            <field name="binding_type">report</field>
+        </record>
+
+    </data>
+</odoo>

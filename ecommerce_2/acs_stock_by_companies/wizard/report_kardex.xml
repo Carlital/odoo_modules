@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Form view for "model" -->
+    <record id="view_model_form" model="ir.ui.view">
+        <field name="name">view.product.kardex.form</field>
+        <field name="model">product.kardex</field>
+        <field name="arch" type="xml">
+            <form string="model_form" create="true" delete="true" edit="true">
+                <group col="4">
+                    <group>
+                        <field name="filter_by_country" widget="boolean_toggle" class="oe_inline" />
+                    </group>
+                    <group>
+                        <field name="filter_by_category" widget="boolean_toggle" class="oe_inline" />
+                    </group>
+                    <group>
+                        <field name="filter_by_brand" widget="boolean_toggle" class="oe_inline" />
+                    </group>
+                </group>
+                <group name="company">
+                    <field name="company_ids" widget="many2many_tags" required="1"/>
+                    <field name="country_ids" widget="many2many_tags" invisible="filter_by_country == False"/>
+                    <field name="product_category_ids" widget="many2many_tags" invisible="filter_by_category == False"/>
+                    <field name="product_brand_ids" widget="many2many_tags" invisible="filter_by_brand == False"/>
+                </group>
+                <footer>
+                    <button string="Generar" type="object" name="generar" class="btn-primary"/>
+                    <button string="Cancelar" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+
+    <record id="action_product_kardex_act_window" model="ir.actions.act_window">
+        <field name="type">ir.actions.act_window</field>
+        <field name="name">Stock By Company</field>
+        <field name="res_model">product.kardex</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+
+    <menuitem id="menu_stock_by_company" name="Stock By Company" parent="stock.menu_warehouse_report" sequence="290" action="action_product_kardex_act_window"/>
+
+
+</odoo>

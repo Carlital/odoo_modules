@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_billing_activity_tree" model="ir.ui.view">
+        <field name="name">billing.activity.tree</field>
+        <field name="model">billing.activity</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="code"/>
+                <field name="ruc"/>
+                <field name="owner_user_id"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_billing_activity_form" model="ir.ui.view">
+        <field name="name">billing.activity.form</field>
+        <field name="model">billing.activity</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="code"/>
+                        <field name="ruc"/>
+                        <field name="owner_user_id"/>
+                        <field name="active"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_billing_activity" model="ir.actions.act_window">
+        <field name="name">Actividades de Facturacion</field>
+        <field name="res_model">billing.activity</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>

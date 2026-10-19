@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+		<template id="querycpe" name="CPE Search">
+            <t t-call="website.layout">
+
+                <div id="wrap" class="oe_structure oe_empty">
+                    <section class="s_title parallax s_parallax_is_fixed bg-black-50 pt24 pb24" data-vcss="001" data-snippet="s_title" data-scroll-background-ratio="1">
+                        <span class="s_parallax_bg oe_img_bg" style="background-image: url('/web/image/website.s_banner_default_image'); background-position: 50% 0;"/>
+                        <div class="o_we_bg_filter bg-black-50"/>
+                        <div class="container">
+                            <h1>Seach CPE</h1>
+                        </div>
+                    </section>
+                    <section class="s_text_block pt40 pb40 o_colored_level " data-snippet="s_text_block">
+                        <div class="container s_allow_columns">
+                            <div class="row">
+                                <div class="col-lg-8 mt-4 mt-lg-0">
+
+                                    <section class="s_website_form" data-vcss="001" data-snippet="s_website_form">
+                                        <div class="container">
+                                            <form id="contactus_form" action="/website/form/" method="post" enctype="multipart/form-data" class="o_mark_required" data-mark="*" data-model_name="pe.query.cpe.form" data-success-mode="redirect" data-success-page="/no-exist" data-pre-fill="true">
+                                                <div class="s_website_form_rows row s_col_no_bgcolor">
+                                                    <div class="form-group col-12 s_website_form_field s_website_form_custom s_website_form_required" data-type="char" data-name="Field">
+                                                        <div class="row s_col_no_resize s_col_no_bgcolor">
+                                                            <label class="col-form-label col-sm-auto s_website_form_label" style="width: 200px" for="vat">
+                                                                <span class="s_website_form_label_content">N° Client Document</span>
+                                                            </label>
+                                                            <div class="col-sm">
+                                                                <input id="vat" type="text" class="form-control s_website_form_input" name="vat" data-fill-with="vat"/>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group col-12 s_website_form_field s_website_form_custom" data-type="char" data-name="Field">
+                                                        <div class="row s_col_no_resize s_col_no_bgcolor">
+                                                            <label class="col-form-label col-sm-auto s_website_form_label" style="width: 200px" for="number">
+                                                                <span class="s_website_form_label_content">Number</span>
+                                                                <span class="s_website_form_mark"> *</span>
+                                                            </label>
+                                                            <div class="col-sm">
+                                                                <input id="number" type="text" class="form-control s_website_form_input" name="number" required="" data-fill-with="number"/>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group col-12 s_website_form_field s_website_form_required" data-type="date" data-name="Field">
+                                                        <div class="row s_col_no_resize s_col_no_bgcolor">
+                                                            <label class="col-form-label col-sm-auto s_website_form_label" style="width: 200px" for="invoice_date">
+                                                                <span class="s_website_form_label_content">Date Invoice</span>
+                                                                <span class="s_website_form_mark"> *</span>
+                                                            </label>
+                                                            <div class="col-sm">
+                                                                <input id="invoice_date" type="text" class="form-control s_website_form_input s_website_form_date" name="invoice_date" required="" data-fill-with="invoice_date"/>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group col-12 s_website_form_field s_website_form_required" data-type="float" data-name="Field">
+                                                        <div class="row s_col_no_resize s_col_no_bgcolor">
+                                                            <label class="col-form-label col-sm-auto s_website_form_label" style="width: 200px" for="amount">
+                                                                <span class="s_website_form_label_content">Amount</span>
+                                                                <span class="s_website_form_mark"> *</span>
+                                                            </label>
+                                                            <div class="col-sm">
+                                                                <input id="amount" type="number" class="form-control s_website_form_input" name="amount" required=""/>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group col-12 s_website_form_submit" data-name="Submit Button">
+                                                        <div style="width: 200px;" class="s_website_form_label"/>
+                                                        <a href="#" role="button" class="btn btn-primary btn-lg s_website_form_send s_website_cpe_form_send">Submit</a>
+                                                        <span id="s_website_form_result"></span>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </section>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </t>
+        </template>
+
+
+        <record id="l10n_pe_cpe_form.querycpe_noexist" model="website.page">
+            <field name="name">CPE No exist</field>
+            <field name="type">qweb</field>
+            <field name="url">/no-exist</field>
+            <field name="website_indexed" eval="False"/>
+            <field name="is_published">True</field>
+            <field name="key">l10n_pe_cpe_form.querycpe_noexist</field>
+            <field name="arch" type="xml">
+                <t name="CPE No Exist" t-name="website.contactus_thanks">
+                    <t t-call="website.layout">
+                        <div id="wrap" class="oe_structure oe_empty">
+                            <section class="s_text_block pt40 pb40 o_colored_level " data-snippet="s_text_block">
+                                <div class="container s_allow_columns">
+                                    <div class="row">
+                                        <div class="col-lg-7 col-xl-6 mr-lg-auto">
+                                            <span class="d-block fa fa-4x fa-thumbs-up mx-auto rounded-circle bg-primary"/><br/>
+                                            <div class="pb16 pt16 s_hr" data-snippet="s_hr" data-name="Separator">
+                                                <hr class="mx-auto border-top w-50 border-dark text-center"/>
+                                            </div>
+                                            <h5 class="text-center">
+                                                <span class="fa fa-check-circle"/>
+                                                <span>El documento solicitado no ha sido encontrado</span>
+                                            </h5>
+                                            <p class="text-center">We will get back to you shortly.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                    </t>
+                </t>
+            </field>
+        </record>
+
+        <record id="querycpe_page" model="website.page">
+            <field name="url">/cpe</field>
+            <field name="is_published">True</field>
+            <field name="view_id" ref="querycpe"/>
+            <!--field name="cache_time">0</field-->
+            <field name="track">True</field>
+        </record>
+
+        <record id="menu_querycpe" model="website.menu">
+            <field name="name">CPE</field>
+            <field name="url">/cpe</field>
+            <field name="parent_id" ref="website.main_menu"/>
+            <field name="sequence" type="int">50</field>
+        </record>
+
+    </data>
+</odoo>

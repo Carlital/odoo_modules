@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Extender la vista List de pos.order -->
+    <record id="view_pos_order_search_inherit_acs" model="ir.ui.view">
+        <field name="name">pos.order.search.inherit.acs</field>
+        <field name="model">pos.order</field>
+        <field name="inherit_id" ref="point_of_sale.view_pos_order_filter" />
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='invoiced']" position="after">
+                <filter string="Archivado" name="not_active" domain="[('active', '=', False)]"/>
+                <filter string="Activo" name="active" domain="[('active', '=', True)]"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

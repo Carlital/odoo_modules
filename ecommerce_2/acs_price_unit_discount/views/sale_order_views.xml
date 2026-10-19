@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_sale_order_form_pdesc" model="ir.ui.view">
+        <field name="name">sale.order.form.pdesc</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form" />
+        <field name="arch" type="xml">
+            <!-- Añadir campo en la vista de árbol de líneas de venta -->
+            <xpath expr="//field[@name='order_line']/list//field[@name='discount']" position="after">
+                <field name="sale_order_line_pdesc" string="P.Unit. Desc" />
+            </xpath>
+            <!-- Añadir campo en la vista de formulario de líneas de venta -->
+            <xpath expr="//field[@name='order_line']/form//field[@name='price_unit']"
+                position="after">
+                <field name="sale_order_line_pdesc" string="P.Unit. Desc" />
+            </xpath>
+            <!-- Resaltar en rojo si el precio con descuento es menor que 0 -->
+            <xpath expr="//field[@name='order_line']/list" position="attributes">
+                <attribute name="decoration-danger">sale_order_line_pdesc &lt; 0</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>

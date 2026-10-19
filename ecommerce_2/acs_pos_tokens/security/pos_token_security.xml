@@ -1,0 +1,11 @@
+<odoo>
+    <data noupdate="0">
+
+        <!-- Grupo con acceso total -->
+        <record id="group_pos_token_full_access" model="res.groups">
+            <field name="name">Acceso Tokens</field>
+            <field name="category_id" ref="base.module_category_hidden"/>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_acs_advanced_search_acs_advanced_search,acs_advanced_search.acs_advanced_search,model_acs_advanced_search_acs_advanced_search,,1,0,0,0

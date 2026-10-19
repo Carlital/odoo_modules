@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Heredar la vista de subcampaña para agregar el widget visual -->
+    <record id="view_bc_subcampaign_form_ui_inherit" model="ir.ui.view">
+        <field name="name">bc.subcampaign.form.ui.inherit</field>
+        <field name="model">bc.subcampaign</field>
+        <field name="inherit_id" ref="crm_custom_campaign_ext.view_bc_subcampaign_form"/>
+        <field name="priority" eval="100"/>
+        <field name="arch" type="xml">
+            
+            <!-- Reemplazar el contenido de la pestaña "Vista comercial" -->
+            <xpath expr="//field[@name='bc_gallery_html']" position="replace">
+                <!-- Usar el widget JavaScript/OWL que carga el CSS y funcionalidades -->
+                <field name="campaign_id" widget="bc_subcampaign_gallery" nolabel="1"/>
+            </xpath>
+            
+            <!-- Ocultar el campo debug -->
+            <xpath expr="//field[@name='bc_gallery_debug_names']" position="replace"/>
+
+        </field>
+    </record>
+
+</odoo>

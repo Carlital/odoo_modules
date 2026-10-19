@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="l10n_pe_pos_cpe.ReceiptHeaderInherit" t-inherit="point_of_sale.ReceiptHeader" t-inherit-mode="extension">
+        <xpath expr="//div[@t-if='props.data.header']" position="before">
+            <t t-if="props.data.pe_move_name!=''">
+                <div>--------------------------------</div>
+                <strong><t t-esc="props.data.pe_invoice_name || ''" /></strong> <br />
+                <strong><t t-esc="props.data.pe_move_name || ''" /></strong>
+            </t>
+            <t t-if="props.data.pe_src_move_name">
+                <br />
+                <div style="text-align: center; font-size: 75%;">Source: <t t-esc='props.data.pe_src_move_name' /></div>
+            </t>
+        </xpath>
+    </t>
+</templates>

@@ -1,0 +1,18 @@
+<odoo>
+    <record id="view_product_price_report_wizard" model="ir.ui.view">
+        <field name="name">product.price.report.wizard.form</field>
+        <field name="model">product.price.report.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Product Price Report">
+                <group>
+                    <field name="start_date" />
+                    <field name="end_date" />
+                </group>
+                <footer>
+                    <button string="Generate Report" type="object" name="generate_excel_report" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,231 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <data noupdate="0">
+    <record id="plan_template_base" model="bc.plan.template">
+      <field name="name">Plantilla Base</field>
+      <field name="subcampaign_id" ref="crm_custom_campaign_ext.sub_dig_portabilidad"/>
+      <field name="bc_subcampaign_id" ref="crm_custom_campaign_ext.bc_sub_dig_portabilidad"/>
+      <field name="active">True</field>
+    </record>
+
+    <!-- Sections -->
+    <record id="plan_template_base_sec_1" model="bc.plan.template.section">
+      <field name="template_id" ref="crm_custom_campaign_ext.plan_template_base"/>
+      <field name="sequence">10</field>
+      <field name="name">1. Informacion general</field>
+    </record>
+
+    <record id="plan_template_base_attr_tarifa" model="bc.plan.template.attr">
+      <field name="template_id" ref="crm_custom_campaign_ext.plan_template_base"/>
+      <field name="sequence">110</field>
+      <field name="name">Tarifa básica</field>
+      <field name="code">tarifa_basica</field>
+      <field name="data_type">float</field>
+      <field name="section_id" ref="crm_custom_campaign_ext.plan_template_base_sec_1"/>
+    </record>
+
+    <record id="plan_template_base_sec_2" model="bc.plan.template.section">
+      <field name="template_id" ref="crm_custom_campaign_ext.plan_template_base"/>
+      <field name="sequence">20</field>
+      <field name="name">2. Beneficios y condiciones</field>
+    </record>
+    <record id="plan_template_base_sec_3" model="bc.plan.template.section">
+      <field name="template_id" ref="crm_custom_campaign_ext.plan_template_base"/>
+      <field name="sequence">30</field>
+      <field name="name">3. Paquete de datos</field>
+    </record>
+    <record id="plan_template_base_sec_4" model="bc.plan.template.section">
+      <field name="template_id" ref="crm_custom_campaign_ext.plan_template_base"/>
+      <field name="sequence">40</field>
+      <field name="name">4. Llamadas y mensajes</field>
+    </record>
+    <record id="plan_template_base_sec_5" model="bc.plan.template.section">
+      <field name="template_id" ref="crm_custom_campaign_ext.plan_template_base"/>
+      <field name="sequence">50</field>
+      <field name="name">5. Observaciones</field>
+    </record>
+
+    <!-- Attributes (sin campo unit) -->
+
+    <record id="plan_template_base_attr_tarifa_basica_imp" model="bc.plan.template.attr">
+      <field name="template_id" ref="crm_custom_campaign_ext.plan_template_base"/>
+      <field name="sequence">120</field>
+      <field name="name">Tarifa basica con impuestos</field>
+      <field name="code">tarifa_basica_con_impuestos</field>
+      <field name="data_type">float</field>
+      <field name="section_id" ref="crm_custom_campaign_ext.plan_template_base_sec_1"/>
+    </record>
+
+    <record id="plan_template_base_attr_descuento" model="bc.plan.template.attr">
+      <field name="template_id" ref="crm_custom_campaign_ext.plan_template_base"/>
+      <field name="sequence">130</field>
+      <field name="name">Descuento por portabilidad y altas nuevas</field>
+      <field name="code">descuento_portabilidad_altas</field>
+      <field name="data_type">char</field>
+      <field name="section_id" ref="crm_custom_campaign_ext.plan_template_base_sec_1"/>
+    </record>
+
+    <record id="plan_template_base_attr_tarifa_descuento" model="bc.plan.template.attr">
+      <field name="template_id" ref="crm_custom_campaign_ext.plan_template_base"/>
+      <field name="sequence">140</field>
+      <field name="name">Tarifa con descuento aplicado</field>
+      <field name="code">tarifa_descuento_aplicado</field>
+      <field name="data_type">float</field>
+      <field name="section_id" ref="crm_custom_campaign_ext.plan_template_base_sec_1"/>
+    </record>
+
+    <!-- 2. Beneficios y condiciones -->
+    <record id="plan_template_base_attr_beneficio_exclusivo" model="bc.plan.template.attr">
+        <field name="template_id" ref="crm_custom_campaign_ext.plan_template_base"/>
+        <field name="sequence">210</field>
+        <field name="name">Beneficio exclusivo Movistar</field>
+        <field name="code">beneficio_exclusivo</field>
+        <field name="data_type">char</field>
+        <field name="section_id" ref="crm_custom_campaign_ext.plan_template_base_sec_2"/>
+    </record>
+    <record id="plan_template_base_attr_solo_bancarizado" model="bc.plan.template.attr">
+        <field name="template_id" ref="crm_custom_campaign_ext.plan_template_base"/>
+        <field name="sequence">220</field>
+        <field name="name">Solo bancarizado (beneficio adicional)</field>
+        <field name="code">solo_bancarizado</field>
+        <field name="data_type">char</field>
+        <field name="section_id" ref="crm_custom_campaign_ext.plan_template_base_sec_2"/>
+    </record>
+    <record id="plan_template_base_attr_vigencia_bancarizado" model="bc.plan.template.attr">
+        <field name="template_id" ref="crm_custom_campaign_ext.plan_template_base"/>
+        <field name="sequence">230</field>
+        <field name="name">Vigencia de beneficio bancarizado</field>
+        <field name="code">vigencia_bancarizado</field>
+        <field name="data_type">char</field>
+        <field name="section_id" ref="crm_custom_campaign_ext.plan_template_base_sec_2"/>
+    </record>
+
+    <!-- 3. Paquete de datos -->
+    <record id="plan_template_base_attr_nav_libre" model="bc.plan.template.attr">
+        <field name="template_id" ref="crm_custom_campaign_ext.plan_template_base"/>
+        <field name="sequence">310</field>
+        <field name="name">Navegacion libre (GB)</field>
+        <field name="code">navegacion_libre_gb</field>
+        <field name="data_type">float</field>
+        <field name="unit">GB</field>
+        <field name="section_id" ref="crm_custom_campaign_ext.plan_template_base_sec_3"/>
+    </record>
+    <record id="plan_template_base_attr_redes" model="bc.plan.template.attr">
+        <field name="template_id" ref="crm_custom_campaign_ext.plan_template_base"/>
+        <field name="sequence">320</field>
+        <field name="name">Redes sociales (GB o Libre)</field>
+        <field name="code">redes_sociales</field>
+        <field name="data_type">char</field>
+        <field name="section_id" ref="crm_custom_campaign_ext.plan_template_base_sec_3"/>
+    </record>
+    <record id="plan_template_base_attr_streaming" model="bc.plan.template.attr">
+        <field name="template_id" ref="crm_custom_campaign_ext.plan_template_base"/>
+        <field name="sequence">330</field>
+        <field name="name">Plataformas de streaming (GB o detalle de apps incluidas)</field>
+        <field name="code">streaming</field>
+        <field name="data_type">char</field>
+        <field name="section_id" ref="crm_custom_campaign_ext.plan_template_base_sec_3"/>
+    </record>
+    <record id="plan_template_base_attr_whatsapp" model="bc.plan.template.attr">
+        <field name="template_id" ref="crm_custom_campaign_ext.plan_template_base"/>
+        <field name="sequence">340</field>
+        <field name="name">WhatsApp (Libre o limite)</field>
+        <field name="code">whatsapp</field>
+        <field name="data_type">char</field>
+        <field name="section_id" ref="crm_custom_campaign_ext.plan_template_base_sec_3"/>
+    </record>
+    <record id="plan_template_base_attr_componente_int" model="bc.plan.template.attr">
+        <field name="template_id" ref="crm_custom_campaign_ext.plan_template_base"/>
+        <field name="sequence">350</field>
+        <field name="name">Componente internacional (Roaming o LDI)</field>
+        <field name="code">componente_internacional</field>
+        <field name="data_type">char</field>
+        <field name="section_id" ref="crm_custom_campaign_ext.plan_template_base_sec_3"/>
+    </record>
+    <record id="plan_template_base_attr_mas_musica" model="bc.plan.template.attr">
+        <field name="template_id" ref="crm_custom_campaign_ext.plan_template_base"/>
+        <field name="sequence">360</field>
+        <field name="name">Mas musica y mas video</field>
+        <field name="code">mas_musica_video</field>
+        <field name="data_type">char</field>
+        <field name="section_id" ref="crm_custom_campaign_ext.plan_template_base_sec_3"/>
+    </record>
+    <record id="plan_template_base_attr_total_megas" model="bc.plan.template.attr">
+        <field name="template_id" ref="crm_custom_campaign_ext.plan_template_base"/>
+        <field name="sequence">370</field>
+        <field name="name">Total de megas</field>
+        <field name="code">total_megas</field>
+        <field name="data_type">float</field>
+        <field name="unit">GB</field>
+        <field name="section_id" ref="crm_custom_campaign_ext.plan_template_base_sec_3"/>
+    </record>
+
+    <!-- 4. Llamadas y mensajes -->
+    <record id="plan_template_base_attr_min_otros" model="bc.plan.template.attr">
+        <field name="template_id" ref="crm_custom_campaign_ext.plan_template_base"/>
+        <field name="sequence">410</field>
+        <field name="name">Minutos a otras operadoras moviles</field>
+        <field name="code">minutos_otras_operadoras</field>
+        <field name="data_type">char</field>
+        <field name="section_id" ref="crm_custom_campaign_ext.plan_template_base_sec_4"/>
+    </record>
+    <record id="plan_template_base_attr_llamadas_movistar" model="bc.plan.template.attr">
+        <field name="template_id" ref="crm_custom_campaign_ext.plan_template_base"/>
+        <field name="sequence">420</field>
+        <field name="name">Llamadas Movistar</field>
+        <field name="code">llamadas_movistar</field>
+        <field name="data_type">char</field>
+        <field name="section_id" ref="crm_custom_campaign_ext.plan_template_base_sec_4"/>
+    </record>
+    <record id="plan_template_base_attr_min_ldi" model="bc.plan.template.attr">
+        <field name="template_id" ref="crm_custom_campaign_ext.plan_template_base"/>
+        <field name="sequence">430</field>
+        <field name="name">Minutos Mundo (LDI)</field>
+        <field name="code">minutos_mundo_ldi</field>
+        <field name="data_type">char</field>
+        <field name="section_id" ref="crm_custom_campaign_ext.plan_template_base_sec_4"/>
+    </record>
+    <record id="plan_template_base_attr_sms" model="bc.plan.template.attr">
+        <field name="template_id" ref="crm_custom_campaign_ext.plan_template_base"/>
+        <field name="sequence">440</field>
+        <field name="name">SMS todo destino</field>
+        <field name="code">sms_todo_destino</field>
+        <field name="data_type">integer</field>
+        <field name="section_id" ref="crm_custom_campaign_ext.plan_template_base_sec_4"/>
+    </record>
+    <record id="plan_template_base_attr_familia" model="bc.plan.template.attr">
+        <field name="template_id" ref="crm_custom_campaign_ext.plan_template_base"/>
+        <field name="sequence">450</field>
+        <field name="name">Familia y amigos</field>
+        <field name="code">familia_amigos</field>
+        <field name="data_type">char</field>
+        <field name="section_id" ref="crm_custom_campaign_ext.plan_template_base_sec_4"/>
+    </record>
+
+    <!-- 5. Observaciones -->
+    <record id="plan_template_base_attr_comentarios" model="bc.plan.template.attr">
+        <field name="template_id" ref="crm_custom_campaign_ext.plan_template_base"/>
+        <field name="sequence">510</field>
+        <field name="name">Comentarios adicionales</field>
+        <field name="code">comentarios_adicionales</field>
+        <field name="data_type">text</field>
+        <field name="section_id" ref="crm_custom_campaign_ext.plan_template_base_sec_5"/>
+    </record>
+    <record id="plan_template_base_attr_promos" model="bc.plan.template.attr">
+        <field name="template_id" ref="crm_custom_campaign_ext.plan_template_base"/>
+        <field name="sequence">520</field>
+        <field name="name">Promociones o beneficios temporales</field>
+        <field name="code">promociones_temporales</field>
+        <field name="data_type">text</field>
+        <field name="section_id" ref="crm_custom_campaign_ext.plan_template_base_sec_5"/>
+    </record>
+    <record id="plan_template_base_attr_vigencia_plan" model="bc.plan.template.attr">
+        <field name="template_id" ref="crm_custom_campaign_ext.plan_template_base"/>
+        <field name="sequence">530</field>
+        <field name="name">Fecha de vigencia del plan</field>
+        <field name="code">fecha_vigencia_plan</field>
+        <field name="data_type">char</field>
+        <field name="section_id" ref="crm_custom_campaign_ext.plan_template_base_sec_5"/>
+    </record>
+   </data>
+</odoo>

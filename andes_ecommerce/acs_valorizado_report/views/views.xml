@@ -1,0 +1,24 @@
+<odoo>
+  <data>
+    <template id="report_delivery_document" inherit_id="stock.report_delivery_document">
+      <xpath expr="//div[@class='page']//div[@class='oe_structure'][2]" position="before">
+        <div class="row mt32 mb32">
+          <div class="col-auto">
+              <strong>Valorizado Total:</strong>
+                  <p t-field="o.valorizado_total"/>
+          </div>
+      </div>
+      </xpath>
+    </template>
+    <record id="inherit_view_id_view_picking_form" model="ir.ui.view">
+      <field name="name">stock.picking.view.form.inherit</field>
+      <field name="model">stock.picking</field>
+      <field name="inherit_id" ref="stock.view_picking_form"/>
+      <field name="arch" type="xml">
+        <xpath expr="//group[@name='other_infos']" position="inside">
+          <field name="valorizado_total" />
+        </xpath>
+      </field>
+    </record>
+  </data>
+</odoo>

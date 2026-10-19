@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="report_producttemplatelabelprice_acs">
+        <t t-call="web.basic_layout">
+            <div class="page">
+                <t t-foreach="docs" t-as="o">
+                    <t t-foreach="o.product_variant_ids" t-as="product">
+                        <t t-call="acs_product_labels_price.report_simple_labelprice_acs">
+                            <t t-set="product" t-value="product"/>
+                        </t>
+                    </t>
+                </t>
+            </div>
+        </t>
+    </template>
+
+</odoo>

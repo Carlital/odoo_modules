@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Extender la vista de formulario de res.users -->
+        <record id="view_users_form_inherit_acs_report_sales_commissions" model="ir.ui.view">
+            <field name="name">res.users.form.inherit.acs.report.sales.commissions</field>
+            <field name="model">res.users</field>
+            <field name="inherit_id" ref="base.view_users_form" />
+            <field name="arch" type="xml">
+                <!-- Añadir el campo 'Vendedor comisionista' en la pestaña de Preferencias o Acceso -->
+                <xpath expr="//field[@name='allow_picking_conversion']" position="after">
+                    <field name="x_is_commission_agent" />
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

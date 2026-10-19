@@ -1,0 +1,18 @@
+<odoo>
+    <record id="view_order_tree_meli_channel_group" model="ir.ui.view">
+        <field name="name">sale.order.list.select.meli_channel_group</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_sales_order_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='customer']" position="after">
+                <filter name="meli_channel_group" string="Channel of Sale" context="{'group_by': 'meli_channel'}"/>
+            </xpath>
+            <xpath expr="//filter[@name='customer']" position="after">
+            <filter string="Categories" 
+                    name="group_by_category" 
+                    domain="[]" 
+                    context="{'group_by':'categ_id'}"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,373 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="vex_instance_view_form_inherit" model="ir.ui.view">
+        <field name="name">vex_instance_view_form_inherit</field>
+        <field name="model">vex.instance</field>
+        <field name="inherit_id" ref="vex_sync_store.vex_soluciones_instance_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='instance_state']" position="inside">
+                <field name="meli_company" attrs="{'invisible': [('store', '!=', 'mercadolibre')]}" />
+                <field name="license_key" attrs="{'invisible': [('store', '!=', 'mercadolibre')]}" />
+                <label for="license_valid" attrs="{'invisible': [('store', '!=', 'mercadolibre')]}" />
+                <div class="o_row" col="2" attrs="{'invisible': [('store', '!=', 'mercadolibre')]}">
+                    <field name="license_valid" />
+                    <button class="oe_link" icon="fa-refresh" type="object" name="valid_license_key" string="Validar Licencia"/>
+                </div>
+            </xpath>
+
+            <xpath expr="//div[hasclass('oe_title')]" position="inside">
+            </xpath>
+
+            <xpath expr="//group[@name='container_instance_state']" position="inside">
+                <div class="oe_title" attrs="{'invisible': [('status_auth', '!=', 'authenticated')]}">
+                    <div class="o_row">
+                        <div class="o_col o_col-6">
+                            <label for="perfil_first_name">First Name</label>
+                            <h3 title="First Name of the profile">
+                                <field name="perfil_first_name" />
+                            </h3>
+                        </div>
+                        <div class="o_col o_col-6">
+                            <label for="perfil_last_name">Last Name</label>
+                            <h3 title="Last Name of the profile">
+                                <field name="perfil_last_name" />
+                            </h3>
+                        </div>
+                    </div>
+                    <div class="o_row">
+                        <div class="o_col o_col-6">
+                            <label for="perfil_nickname">Nickname</label>
+                            <h3 title="Nickname" class="text-muted">
+                                <field name="perfil_nickname" readonly="1"/>
+                            </h3>
+                        </div>
+                        <div class="o_col o_col-6">
+                            <label for="perfil_email">Email</label>
+                            <h3 title="Nickname" class="text-muted">
+                                <field name="perfil_email" readonly="1"/>
+                            </h3>
+                        </div>
+
+                    </div>
+                    <div class="o_row">
+                        <div class="o_col o_col-6">
+                            <label for="perfil_phone">Phone</label>
+                            <h3 title="Nickname" class="text-muted">
+                                <field name="perfil_phone" />
+                            </h3>
+                        </div>
+                        <div class="o_col o_col-6">
+                            <label for="perfil_address">Address</label>
+                            <h3 title="Last Name of the profile" class="text-muted">
+                                <field name="perfil_address" />
+                            </h3>
+                        </div>
+                    </div>
+                    <div class="o_row">
+                        <div class="o_col o_col-3">
+                            <label for="perfil_user_type">User Type</label>
+                            <h3 title="Nickname" class="text-muted">
+                                <field name="perfil_user_type" />
+                            </h3>
+                        </div>
+                        <div class="o_col o_col-3">
+                            <label for="perfil_country_id">Country ID</label>
+                            <h3 title="Last Name of the profile" class="text-muted">
+                                <field name="perfil_country_id" readonly="1"/>
+                            </h3>
+                        </div>
+                        <div class="o_col o_col-3">
+                            <label for="perfil_site_id">Site ID</label>
+                            <h3 title="Last Name of the profile" class="text-muted">
+                                <field name="perfil_site_id" readonly="1"/>
+                            </h3>
+                        </div>
+                        <div class="o_col o_col-3" col="2">
+                            <label for="perfil_city">City</label>
+                            <h3 title="Last Name of the profile" class="text-muted">
+                                <field name="perfil_city" readonly="1"/>
+                            </h3>
+                            <button class="oe_link" icon="fa-refresh" type="object" name="write_perfil" string="Sync Perfil"/>
+                        </div>
+                        <!-- <div class="o_col o_col-3">
+                        </div> -->
+                    </div>
+                </div>
+                <!-- <group>
+                    <group>
+                        <field name="perfil_city"/>
+                        <field name="perfil_registration_date"/>
+                        <field name="perfil_seller_experience"/>
+                    </group>
+                    <group>
+                        <field name="perfil_site_id"/>
+                        <field name="perfil_status_buy_allow"/>
+                        <field name="perfil_status_sell_allow"/>
+                    </group>
+                </group> -->
+            </xpath>
+
+            <xpath expr="//div[@name='button_box']/button[@name='action_toggle_is_unsynchronized']" position="before">
+                <!-- <button name="import_instance" class="oe_stat_button" type="object">
+                    <div class="o_stat_info o_field_widget">
+                        <i class="fa fa-download"></i>
+                        <span class="text-danger" style="margin-left: 8px;">Import</span>
+                    </div>
+                </button>
+                <button name="action_toggle_is_unsynchronized" class="oe_stat_button" type="object">
+                    <div class="o_stat_info o_field_widget">
+                        <i class="fa fa-upload"></i>
+                        <span class="text-danger" style="margin-left: 8px;">Export</span>
+                    </div>
+                </button> -->
+                <!-- Logout button -->
+                <button name="clear_perfil" class="oe_stat_button" type="object" attrs="{'invisible': [('status_auth', '!=', 'authenticated')]}">
+                    <div class="o_stat_info o_field_widget">
+                        <i class="fa fa-sign-out"></i>
+                        <span style="margin-left: 8px;">Cerrar sesión</span>
+                    </div>
+                </button>
+
+                <!-- Botón Importar pedidos -->
+                <button name="import_orders_by_seller" class="oe_stat_button" type="object" attrs="{'invisible': [('status_auth', '!=', 'authenticated')]}">
+                    <div class="o_stat_info o_field_widget">
+                        <i class="fa fa-shopping-cart"></i>
+                        <span style="margin-left: 8px;">Importar pedidos</span>
+                    </div>
+                </button>
+
+                <!-- Botón Importar masivamente -->
+                <!-- <button name="update_client_data_by_id" class="oe_stat_button" type="object" attrs="{'invisible': [('status_auth', '!=', 'authenticated')]}">
+                    <div class="o_stat_info o_field_widget">
+                        <i class="fa fa-cloud-upload"></i>
+                        <span style="margin-left: 8px;">Importar clientes</span>
+                    </div>
+                </button> -->
+
+                <!-- Botón Importar preguntas -->
+                <button name="import_items_questions" class="oe_stat_button" type="object" attrs="{'invisible': [('status_auth', '!=', 'authenticated')]}">
+                    <div class="o_stat_info o_field_widget">
+                        <i class="fa fa-question"></i>
+                        <span style="margin-left: 8px;">Importar preguntas</span>
+                    </div>
+                </button>
+
+                <!-- Botón Actualizar productos -->
+                <button name="import_items" class="oe_stat_button" type="object" attrs="{'invisible': [('status_auth', '!=', 'authenticated')]}">
+                    <div class="o_stat_info o_field_widget">
+                        <i class="fa fa-refresh"></i>
+                        <span style="margin-left: 8px;">Actualizar productos</span>
+                    </div>
+                </button>
+
+                <!-- Botón Importar categorías -->
+                <button name="import_categoria" class="oe_stat_button" type="object" attrs="{'invisible': [('status_auth', '!=', 'authenticated')]}">
+                    <div class="o_stat_info o_field_widget">
+                        <i class="fa fa-folder-open"></i>
+                        <span style="margin-left: 8px;">Importar categorías</span>
+                    </div>
+                </button>
+
+                <!-- Botón Pausar no registrados -->
+                <button name="notify_feature_in_development" class="oe_stat_button" type="object" attrs="{'invisible': [('status_auth', '!=', 'authenticated')]}">
+                    <div class="o_stat_info o_field_widget">
+                        <i class="fa fa-pause"></i>
+                        <span style="margin-left: 8px;">Pausar no registrados</span>
+                    </div>
+                </button>
+            </xpath>
+
+            <xpath expr="//notebook[@name='store_config']" position="inside">
+                <page string="Credentials" name="credentials" attrs="{'invisible': [('store', '!=', 'mercadolibre')]}">
+                    <group>
+                        <group>
+                            <field name="meli_app_id" placeholder="0000000000000000" />
+                            <field name="meli_secret_key" password="True" placeholder="Enter your secret key here" />
+                            <field name="meli_country" />
+                            <field name="meli_default_currency"/>
+                        </group>
+                        <group>
+                            <field name="meli_url_get_server_code" widget="url" invisible="1"/>
+                            <field name="meli_redirect_uri" placeholder="www.dominio.com" />
+                            <label for="meli_server_code"/>
+                            <div class="o_row" col="2">
+                                <field name="meli_server_code" placeholder="Enter the manual code in case you don't catch the redirect"/>
+                                <button class="oe_link" icon="fa-globe" type="object" name="get_auth_code" string="Auth"/>
+                            </div>
+                        </group>
+                    </group>
+                </page>
+                <page name="token" string="Token" attrs="{'invisible': [('store', '!=', 'mercadolibre')]}">
+                    <div class="col-12">
+                        <group>
+                            <label for="meli_access_token" />
+                            <div class="o_row" col="2">
+                                <field name="meli_access_token" placeholder="APP_USR-0000000000000000-000000-2948cc077e97f6a29173beb25018d34c-000000000"/>
+                                <button class="oe_link" icon="fa-refresh" type="object" name="get_access_token" string="Get Token"/>
+                            </div>
+                            <label for="meli_refresh_token" />
+                            <div class="o_row" col="2">
+                                <field name="meli_refresh_token" placeholder="TG-669eac3b3bb0970001371d3d-000000000"/>
+                                <button class="oe_link" icon="fa-refresh" type="object" name="refresh_token" string="Refresh Token"/>
+                            </div>
+                        </group>
+                    </div>
+                </page>
+                <page string="Configuration" name="configuration" attrs="{'invisible': [('store', '!=', 'mercadolibre')]}">
+                    <group>
+                        <field name="meli_location_id" />
+                    </group>
+                </page>
+                <page string="Accountant" name="accountant" attrs="{'invisible': [('store', '!=', 'mercadolibre')]}">
+                    <group string="Payments Configuration">
+                        <field name="ml_partner_id" attrs="{'readonly': True }"/>
+                        <field name="ml_account_journal_id" attrs="{'readonly': True }"/>
+                    </group>
+                    <group string="Automatic Record Payment">
+                        <field name="process_payments_customer" attrs="{'readonly': True }"/>
+                        <field name="process_payments_fee_supplier_ml" attrs="{'readonly': True }"/>
+                        <field name="process_payments_shipping_supplier_ml" attrs="{'readonly': True }"/>
+                    </group>
+                </page>
+                <page string="AI" name="ai" attrs="{'invisible': [('store', '!=', 'mercadolibre')]}">
+                    <group string="Integración con OpenAI">
+                        <field name="openai_active"/>
+                        <field name="openai_api_key" placeholder="Enter your OpenAI API Key here" attrs="{'readonly': [('openai_active', '=', False)]}"/>
+                        <field name="openai_model" attrs="{'readonly': [('openai_active', '=', False)]}"/>
+                        <field name="openai_usage_limit" attrs="{'readonly': [('openai_active', '=', False)]}"/>
+                    </group>
+                </page>
+                <page name="import" string="Import" attrs="{'invisible': [('store', '!=', 'mercadolibre')]}">
+                    <group string="Do you want to allow the import of?">
+                        <field name="meli_import_product" string="Products"/>
+                        <field name="meli_import_product_dropshipping" attrs="{'invisible': [('meli_import_product', '==', False)]}"/>
+                        <field name="meli_import_order" string="Orders"/>
+                        <field name="meli_to_bring_order" attrs="{'invisible': [('meli_import_order', '==', False)]}" string="Status Orders"/>
+                        <field name="meli_create_invoice" attrs="{'invisible': [('meli_to_bring_order', '!=', 'order')]}"/>
+                        <field name="meli_invoice_status" attrs="{'invisible': [('meli_create_invoice', '!=', True)]}"/>
+                        <!-- <field name="meli_import_category" /> -->
+                    </group>
+                    <group string="Import price rule">
+                        <field name="meli_behavior_price_rule" />
+                        <field name="meli_import_price_list" />
+                        <field name="meli_import_increase_or_discount" attrs="{'invisible': [('meli_import_price_list', '==', False)], 'required': [('meli_import_price_list', '==', True)]}"/>
+                        <field name="meli_import_type_amount" attrs="{'invisible': [('meli_import_price_list', '==', False)], 'required': [('meli_import_price_list', '==', True)]}"/>
+                        <field name="meli_import_amount" attrs="{'invisible': [('meli_import_price_list', '==', False)]}"/>
+                    </group>
+                    <group string="Automatización ML a Odoo">
+                        <field name="process_all_notifications" attrs="{'readonly': True }"/>
+                        <field name="importar_pedidos" attrs="{'readonly': True }"/>
+                        <field name="importar_envios" attrs="{'readonly': True }"/>
+                        <field name="importar_clientes" attrs="{'readonly': True }"/>
+                        <field name="importar_preguntas" attrs="{'readonly': True }"/>
+                        <field name="search_sku" attrs="{'readonly': True }"/>
+                    </group>
+                </page>
+                <page string="Export" name="export" attrs="{'invisible': [('store', '!=', 'mercadolibre')]}">
+                    <group string="Do you want to allow the export of?">
+                        <field name="meli_export_product" />
+                    </group>
+                    <group string="Export price rule">
+                        <field name="meli_export_price_list" />
+                        <field name="meli_export_increase_or_discount" attrs="{'invisible': [('meli_export_price_list', '==', False)], 'required': [('meli_export_price_list', '==', True)]}"/>
+                        <field name="meli_export_type_amount" attrs="{'invisible': [('meli_export_price_list', '==', False)], 'required': [('meli_export_price_list', '==', True)]}"/>
+                        <field name="meli_export_amount" attrs="{'invisible': [('meli_export_price_list', '==', False)], 'required': [('meli_export_price_list', '==', True)]}"/>
+                    </group>
+                    <group string="Automatización Odoo a ML">
+                        <field name="actualizar_productos" attrs="{'readonly': True }"/>
+                        <field name="incluir_nuevos_productos" attrs="{'readonly': True }"/>
+                        <field name="publicar_stock" attrs="{'readonly': True }"/>
+                        <field name="publicar_precio" attrs="{'readonly': True }"/>
+                    </group>
+                </page>
+                <page string="Log" name="log" attrs="{'invisible': [('store', '!=', 'mercadolibre')]}">
+                    <header>
+                        <group>
+                            <button name="clear_instance_logs" type="object" string="Clear Logs" class="btn-primary"/>
+                        </group>
+                        <group>
+                            <field name="log_limit" />
+                        </group>
+                    </header>
+                    <field name="log_ids">
+                        <tree default_order="date desc">
+                            <field name="date" string="Date" decoration-info="level == 'info'" decoration-warning="level == 'warning'" decoration-danger="level == 'error'" />
+                            <field name="level" string="Log Level" widget="badge" decoration-info="level == 'info'" decoration-warning="level == 'warning'" decoration-danger="level == 'error'"/>
+                            <field name="name" string="Description" decoration-info="level == 'info'" decoration-warning="level == 'warning'" decoration-danger="level == 'error'" />
+                        </tree>
+                        <form string="Log Details">
+                            <group>
+                                <field name="date" />
+                                <field name="level" />
+                                <field name="name" />
+                                <field name="instance_id" />
+                            </group>
+                        </form>
+                    </field>
+                </page>
+                <page string="Notification" name="notification" attrs="{'invisible': [('store', '!=', 'mercadolibre')]}">
+                    <header>
+                        <group>
+                            <button name="clear_notifications" type="object" string="Clear Notifications" class="btn-primary"/>
+                        </group>
+                        <group>
+                            <field name="notification_limit"/>
+                        </group>
+                    </header>
+                    <field name="notification_ids">
+                        <tree>
+                            <field name="notification_id" string="Notification ID"/>
+                            <field name="topic" string="Topic"/>
+                            <field name="resource" string="Resource"/>
+                            <field name="sent_date" string="Sent Date"/>
+                            <field name="received_date" string="Received Date"/>
+                            <field name="attempts" string="Attempts"/>
+                        </tree>
+                        <form string="Notification Details">
+                            <group>
+                                <field name="notification_id"/>
+                                <field name="topic"/>
+                                <field name="resource"/>
+                                <field name="user_id"/>
+                                <field name="application_id"/>
+                                <field name="sent_date"/>
+                                <field name="received_date"/>
+                                <field name="attempts"/>
+                                <field name="actions"/>
+                                <field name="raw_data"/>
+                            </group>
+                        </form>
+                    </field>
+                </page>
+            </xpath>
+
+        </field>
+    </record>
+
+    <record id="view_vex_log_form" model="ir.ui.view">
+        <field name="name">vex.log.form</field>
+        <field name="model">vex.log</field>
+        <field name="arch" type="xml">
+            <form string="Vex Log">
+                <group>
+                    <field name="date"/>
+                    <field name="level"/>
+                    <field name="name"/>
+                    <field name="instance_id"/>
+                </group>
+            </form>
+        </field>
+    </record>
+    <record id="view_vex_log_tree" model="ir.ui.view">
+        <field name="name">vex.log.tree</field>
+        <field name="model">vex.log</field>
+        <field name="arch" type="xml">
+            <tree string="Vex Log">
+                <field name="date"/>
+                <field name="level"/>
+                <field name="name"/>
+                <field name="instance_id"/>
+            </tree>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    
+    <!-- Vista de formulario extendida para res.partner -->
+    <record id="view_partner_form_directorio" model="ir.ui.view">
+        <field name="name">res.partner.form.directorio</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="Directorio Institucional" 
+                      invisible="not x_es_directorio">
+                    <group>
+                        <group string="Información Institucional">
+                            <field name="x_cargo_institucional" placeholder="Ej: Director de TIC"/>
+                            <field name="x_unidad_pertenece" placeholder="Ej: Dirección de Tecnologías"/>
+                        </group>
+                        <group string="Contacto Institucional">
+                            <field name="x_telefono_institucional" placeholder="593(03) 2998-200"/>
+                            <field name="x_extension_telefonica" placeholder="1110"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="x_es_directorio" invisible="1"/>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Vista de lista extendida para res.partner -->
+    <record id="view_partner_tree_directorio" model="ir.ui.view">
+        <field name="name">res.partner.tree.directorio</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//tree" position="attributes">
+                <attribute name="decoration-info">x_es_directorio == True</attribute>
+            </xpath>
+            <xpath expr="//field[@name='display_name']" position="after">
+                <field name="x_es_directorio" column_invisible="1"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

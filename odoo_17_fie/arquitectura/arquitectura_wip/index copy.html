@@ -1,0 +1,243 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Procesos modulares – Importación y publicación de docentes</title>
+
+  <!-- Mermaid -->
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script>
+    mermaid.initialize({ startOnLoad: true, theme: "default" });
+  </script>
+
+  <style>
+    body {
+      font-family: system-ui, sans-serif;
+      line-height: 1.4;
+      background: #fafafa;
+      color: #000;
+      padding: 16px;
+    }
+
+    h1 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin: 0 0 12px;
+    }
+
+    h2 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin: 24px 0 8px;
+    }
+
+    .block {
+      border: 2px solid #000;
+      background: #fff;
+      padding: 12px;
+      margin-bottom: 24px;
+    }
+
+    /* Mejora visual de nodos Mermaid */
+    .mermaid svg .node rect,
+    .mermaid svg .node polygon {
+      rx: 4;
+      ry: 4;
+      stroke-width: 1;
+      fill: #efefff !important;
+      stroke: #4b4b8a !important;
+    }
+    .mermaid svg .cluster rect {
+      fill: #fffcd9 !important;
+      stroke: #999460 !important;
+      rx: 4;
+      ry: 4;
+      stroke-width: 1.2;
+    }
+    .mermaid svg .edgePath path {
+      stroke: #444;
+      stroke-width: 1.2;
+    }
+    .mermaid svg .label {
+      color: #000 !important;
+      font-size: 12px !important;
+    }
+
+    /* Para que cada diagrama pueda crecer a lo ancho sin encogerse de golpe */
+    .diagram-wrapper {
+      overflow-x: auto;
+      max-width: 100%;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Procesos modulares – Importación y publicación de docentes</h1>
+
+  <!-- ========================= -->
+  <!-- DIAGRAMA 0: VISTA GENERAL -->
+  <!-- ========================= -->
+  <div class="block">
+    <h2>Vista general del flujo institucional</h2>
+    <div class="diagram-wrapper">
+      <pre class="mermaid">
+flowchart LR
+
+    USERS["Usuarios
+(Admin / Editor / Público)"]
+
+    SHEETS["Google Sheets
+(Hoja oficial de docentes)"]
+
+    ODOO["Odoo 17
+- Importa docentes
+- Gestiona estados
+- Publica perfiles"]
+
+    N8N["n8n (Extracción CV)
+- Descarga PDF institucional
+- Limpia y estructura datos
+- Envía resultado a Odoo"]
+
+    SITE["Página pública del docente
+(CV validado)"]
+
+    USERS -->|"Consulta perfiles publicados"| ODOO
+    SHEETS -->|"Importación de datos"| ODOO
+    ODOO -->|"Solicita extracción del CV"| N8N
+    N8N -->|"Callback con CV estructurado"| ODOO
+    ODOO -->|"Publica solo si Validado"| SITE
+      </pre>
+    </div>
+  </div>
+
+
+  <!-- ========================================== -->
+  <!-- DIAGRAMA 1: google_sheets_import (DETALLE) -->
+  <!-- ========================================== -->
+  <div class="block">
+    <h2>Módulo: google_sheets_import (ingreso y preparación de docentes)</h2>
+    <div class="diagram-wrapper">
+      <pre class="mermaid">
+flowchart TB
+
+subgraph GSI["google_sheets_import"]
+direction TB
+
+    GSI_AUTH["Autenticación y lectura
+desde Google Sheets autorizada"]
+
+    GSI_VALID["Validación mínima
+Columnas obligatorias y formato básico"]
+
+    GSI_UNIQUE["Detección de duplicados
+Cédula repetida en el lote
+o ya existente en Odoo"]
+
+    GSI_NORMAL["Normalización ligera
+Mayúsculas, acentos, espacios"]
+
+    GSI_UPSERT["Crear / actualizar docente en Odoo
+(usa la cédula como clave)"]
+
+    GSI_ESTADO["Asignar estado inicial
+Pendiente o Validado"]
+
+    GSI_LOTE["Registrar lote de importación
+Conteos, tiempos, estado general"]
+
+    GSI_AUDIT["Auditoría por fila
+Qué se leyó, qué cambió, errores"]
+
+    GSI_RETRY["Reintento controlado
+Reprocesar solo líneas Pendiente/Error
+Sin duplicar datos"]
+
+    %% flujo interno
+    GSI_AUTH --> GSI_VALID --> GSI_UNIQUE --> GSI_NORMAL --> GSI_UPSERT --> GSI_ESTADO --> GSI_LOTE
+    GSI_VALID --> GSI_AUDIT
+    GSI_UNIQUE --> GSI_AUDIT
+    GSI_UPSERT --> GSI_AUDIT
+    GSI_ESTADO --> GSI_AUDIT
+    GSI_LOTE --> GSI_AUDIT
+    GSI_RETRY --> GSI_UPSERT
+end
+      </pre>
+    </div>
+  </div>
+
+
+  <!-- ====================================== -->
+  <!-- DIAGRAMA 2: cv_importer (DETALLE)      -->
+  <!-- ====================================== -->
+  <div class="block">
+    <h2>Módulo: cv_importer (extracción de CV y publicación en Website)</h2>
+    <div class="diagram-wrapper">
+      <pre class="mermaid">
+flowchart TB
+
+subgraph CVI["cv_importer"]
+direction TB
+
+    CVI_SELECT["Seleccionar docentes por
+Cédula válida / marcados aptos"]
+
+    CVI_ENQUEUE["Encolar docente
+Generar referencia única"]
+
+    CVI_START["Llamar a n8n
+Iniciar extracción del CV institucional"]
+
+    CVI_NONBLOCK["Gestión en segundo plano
+Odoo sigue funcionando mientras espera resultados"]
+
+    CVI_CALLBACK["Recibir callback privado con datos estructurados"]
+
+    CVI_VERSION["Guardar versión del CV normalizada"]
+
+    CVI_STATE["Actualizar estado del proceso
+Pendiente -> En proceso -> Validado | Error"]
+
+    CVI_PUBLISH["Publicar en Website
+Solo si el estado es Validado"]
+
+    CVI_AUDIT["Auditoría completa
+Quién, cuándo, resultado, reintentos"]
+
+    CVI_IDEMP["Evitar duplicados y tolerar reenvíos"]
+
+    %% flujo interno
+    CVI_SELECT --> CVI_ENQUEUE --> CVI_START --> CVI_NONBLOCK --> CVI_CALLBACK --> CVI_VERSION --> CVI_STATE --> CVI_PUBLISH
+    CVI_ENQUEUE --> CVI_IDEMP --> CVI_START
+    CVI_CALLBACK --> CVI_AUDIT
+    CVI_VERSION --> CVI_AUDIT
+    CVI_STATE --> CVI_AUDIT
+    CVI_PUBLISH --> CVI_AUDIT
+end
+      </pre>
+    </div>
+  </div>
+
+
+  <!-- ============================== -->
+  <!-- DIAGRAMA 3: vínculo entre mods -->
+  <!-- ============================== -->
+  <div class="block">
+    <h2>Encadenamiento entre módulos</h2>
+    <div class="diagram-wrapper">
+      <pre class="mermaid">
+flowchart LR
+
+    IMPORT["google_sheets_import
+Docente creado / actualizado en Odoo"] --> CVI["cv_importer
+Seleccionar docentes aptos"]
+
+    CVI --> WEBSITE["Página pública del docente
+CV verificado y publicado"]
+      </pre>
+    </div>
+  </div>
+
+</body>
+</html>

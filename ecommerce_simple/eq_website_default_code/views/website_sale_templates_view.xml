@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+    <template id="website_default_code_snippet_option" inherit_id="website.snippet_options">
+        <xpath expr="//we-row[@id='o_wsale_grid_left_panel']" position="before">
+            <we-checkbox string="Prod.Internal Reference"
+                data-customize-website-views="eq_website_default_code.products_item_default_codes"
+                data-no-preview="true" data-reload="/"/>
+        </xpath>
+
+        <xpath expr="//div[@data-js='WebsiteSaleProductPage']//we-select[@data-name='variants_opt']" position="before">
+            <we-checkbox string="Prod.Internal Reference"
+                data-customize-website-views="eq_website_default_code.product_default_codes"
+                data-no-preview="true" data-reload="/"/>
+        </xpath>
+
+    </template>
+
+    <template id="product_default_codes" inherit_id="website_sale.product" active="True" name="Product Internal Reference">
+        <xpath expr="//div[@id='product_details']//form//div[@id='contact_us_wrapper']" position="after">
+           <t t-if="combination_info['default_code']">
+                <div clas="d-flex flex-wrap align-items-center">
+                    <hr/>
+                    <div>
+                        <span style="font-weight: bold;">SKU: </span>
+                        <span style="margin-left:3px;font-weight: bold;" class="default_code" t-esc="combination_info['default_code']" />
+                    </div>
+                    <div>
+                        <span style="font-weight: bold;">PVP: $</span>
+                        <span style="margin-left:3px;font-weight: bold;" class="pvp" t-esc="combination_info['pvp']" t-options="{'widget': 'monetary', 'display_currency': product.currency_id, 'format': '#.##0,00'}"/>
+                    </div>
+                </div>
+            </t>
+        </xpath>
+    </template>
+
+    <template id="products_item_default_codes" inherit_id="website_sale.products_item" active="True" name="Product Internal Reference">
+        <xpath expr="//*[hasclass('o_wsale_products_item_title')]" position="after">
+            <t t-if="product.default_code">
+                <div>
+                    <div>
+                        <span class="h6 mb-0" style="font-weight: bold;">SKU: </span>
+                        <span class="h6 mb-0" style="font-weight: bold;" t-field="product.default_code"/>
+                    </div>
+                    <div>
+                        <span class="h6 mb-0" style="font-weight: bold;">PVP: </span>
+                        <span class="h6 mb-0" style="font-weight: bold;" t-field="product.product_tmpl_pvp" t-options="{'widget': 'monetary', 'display_currency': website.currency_id, 'format': '#.##0,00'}" />
+                    </div>
+                </div>
+            </t>
+        </xpath>
+    </template>
+
+    </data>
+</odoo>

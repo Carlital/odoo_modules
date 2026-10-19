@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <!-- Vista de formulario simple para creación rápida de motorizado -->
+    <record id="view_hr_employee_motorizado_form_simple" model="ir.ui.view">
+        <field name="name">hr.employee.motorizado.form.simple</field>
+        <field name="model">hr.employee</field>
+        <field name="priority">100</field>
+        <field name="arch" type="xml">
+            <form string="Crear Motorizado">
+                <group>
+                    <field name="name" string="Nombre Completo" placeholder="Ej: Juan Pérez" required="1"/>
+                    <!-- Campo oculto para marcar como motorizado -->
+                    <field name="es_motorizado_manual" invisible="1"/>
+                </group>
+            </form>
+        </field>
+    </record>
+    
+    <!-- Vista lista de motorizados -->
+    <record id="view_hr_employee_motorizado_list" model="ir.ui.view">
+        <field name="name">hr.employee.motorizado.list</field>
+        <field name="model">hr.employee</field>
+        <field name="priority">50</field>
+        <field name="arch" type="xml">
+            <list string="Motorizados">
+                <field name="name" string="Nombre"/>
+                <field name="telefono_motorizado" string="Teléfono"/>
+                <field name="cedula_motorizado" string="Cédula"/>
+            </list>
+        </field>
+    </record>
+    
+    <!-- Acción para abrir motorizados -->
+    <record id="action_hr_employee_motorizado" model="ir.actions.act_window">
+        <field name="name">Motorizados</field>
+        <field name="res_model">hr.employee</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('es_motorizado', '=', True)]</field>
+        <field name="context">{'default_es_motorizado_manual': True}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Crea tu primer motorizado
+            </p>
+            <p>
+                Los motorizados son empleados encargados de realizar entregas.
+                No tienen acceso al sistema.
+            </p>
+        </field>
+    </record>
+    
+    <!-- Menú opcional para gestionar motorizados -->
+    <menuitem id="menu_hr_employee_motorizado"
+              name="Motorizados"
+              parent="hr.menu_hr_root"
+              action="action_hr_employee_motorizado"
+              sequence="100"/>
+</odoo>

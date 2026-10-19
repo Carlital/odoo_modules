@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_billing_excel_root" name="Facturacion Flexible" parent="account.menu_finance" sequence="95" groups="account.group_account_invoice"/>
+
+    <menuitem id="menu_billing_excel_configuration" name="Configuracion" parent="menu_billing_excel_root" sequence="10" groups="account.group_account_manager"/>
+
+    <menuitem id="menu_billing_activity" name="Actividades" parent="menu_billing_excel_configuration" action="action_billing_activity" sequence="10" groups="account.group_account_manager"/>
+
+    <menuitem id="menu_invoice_import_template" name="Plantillas Excel" parent="menu_billing_excel_configuration" action="action_invoice_import_template" sequence="20" groups="account.group_account_manager"/>
+
+    <record id="action_open_invoice_excel_import_wizard" model="ir.actions.act_window">
+        <field name="name">Importar Facturas Excel</field>
+        <field name="res_model">invoice.excel.import.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <record id="action_open_billing_activity_selector" model="ir.actions.act_window">
+        <field name="name">Seleccionar Actividad Visible</field>
+        <field name="res_model">billing.activity.selector.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <record id="action_open_invoice_activity_report_wizard" model="ir.actions.act_window">
+        <field name="name">Reporte de Facturas por Actividad</field>
+        <field name="res_model">invoice.activity.report.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem id="menu_invoice_excel_import" name="Importar Facturas" parent="menu_billing_excel_root" action="action_open_invoice_excel_import_wizard" sequence="20" groups="account.group_account_invoice"/>
+
+    <menuitem id="menu_invoice_activity_selector" name="Elegir Actividad" parent="menu_billing_excel_root" action="action_open_billing_activity_selector" sequence="30" groups="account.group_account_invoice"/>
+
+    <menuitem id="menu_invoice_activity_report" name="Reporte por Actividad" parent="menu_billing_excel_root" action="action_open_invoice_activity_report_wizard" sequence="40" groups="account.group_account_invoice"/>
+</odoo>

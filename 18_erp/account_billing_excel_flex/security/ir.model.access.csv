@@ -1,0 +1,8 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_billing_activity_manager,billing.activity manager,model_billing_activity,account.group_account_manager,1,1,1,1
+access_billing_activity_user,billing.activity user,model_billing_activity,account_billing_excel_flex.group_activity_restricted_invoice_view,1,1,1,0
+access_invoice_import_template_manager,invoice.import.template manager,model_account_invoice_import_template,account.group_account_manager,1,1,1,1
+access_invoice_import_template_line_manager,invoice.import.template.line manager,model_account_invoice_import_template_line,account.group_account_manager,1,1,1,1
+access_invoice_excel_import_wizard,invoice.excel.import.wizard,model_invoice_excel_import_wizard,account.group_account_invoice,1,1,1,1
+access_billing_activity_selector_wizard,billing.activity.selector.wizard,model_billing_activity_selector_wizard,account.group_account_invoice,1,1,1,1
+access_invoice_activity_report_wizard,invoice.activity.report.wizard,model_invoice_activity_report_wizard,account.group_account_invoice,1,1,1,1

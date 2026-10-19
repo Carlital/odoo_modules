@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="product_pricelist_sync_view_form" model="ir.ui.view">
+        <field name="name">product.pricelist.sync.form</field>
+        <field name="model">product.pricelist</field>
+        <field name="inherit_id" ref="product.product_pricelist_view" />
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <button name="action_sync_prices"
+                    string="Sincronizar Precios"
+                    type="object"
+                    class="oe_highlight"
+                    invisible="not is_source_pricelist or not target_pricelist_id" />
+            </xpath>
+            <field name="currency_id" position="after">
+                <field name="is_source_pricelist" />
+                <field name="target_pricelist_id"
+                    invisible="not is_source_pricelist"
+                    required="is_source_pricelist" />
+                <field name="source_pricelist_id" readonly="1" />
+            </field>
+        </field>
+    </record>
+
+    <!-- Tarea programada para actualizar precios -->
+    <record id="ir_cron_sync_pricelist_prices" model="ir.cron">
+        <field name="name">Sincronizar Precios de Listas</field>
+        <field name="model_id" ref="product.model_product_pricelist" />
+        <field name="state">code</field>
+        <field name="code">model._update_on_currency_rate_change()</field>
+        <field name="interval_type">hours</field>
+        <field name="interval_number">1</field>
+        <field name="priority">0</field>
+        <field name="user_id" ref="base.user_root" />
+        <field name="active">True</field>
+    </record>
+</odoo>

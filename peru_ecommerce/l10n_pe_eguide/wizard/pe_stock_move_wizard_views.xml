@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+    <record model="ir.ui.view" id="view_pe_stock_move_wizard_from">
+      <field name="model">pe.stock.move.wizard</field>
+      <field name="arch" type="xml">
+          <form>
+              <group>
+                <group>
+                  <field name="name" required="True"  />
+                </group>
+                <group>
+                  <field name="move_id" invisible="True" />
+                </group>
+              </group>
+              <footer class="oe_edit_only">
+                  <button class="btn-primary" name="action_name_apply" string="Apply" type="object"/>
+                  <button string="Discard" special="cancel"/>
+              </footer>
+          </form>
+      </field>
+    </record>
+
+  </data>
+</odoo>

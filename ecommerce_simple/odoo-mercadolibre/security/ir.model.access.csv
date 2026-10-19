@@ -1,0 +1,15 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_vex_meli_mediation_user,vex.meli.mediation user,model_vex_meli_mediation,base.group_user,1,1,1,1
+access_vex_meli_mediation_manager,vex.meli.mediation manager,model_vex_meli_mediation,base.group_system,1,1,1,1
+access_vex_log_user,vex.log user,model_vex_log,base.group_user,1,1,1,1
+access_vex_log_manager,vex.log manager,model_vex_log,base.group_system,1,1,1,1
+access_vex_notification_user,vex.notification user,model_vex_notification,base.group_user,1,1,1,1
+access_vex_notification_manager,vex.notification manager,model_vex_notification,base.group_system,1,1,1,1
+acesss_vex_meli_questions_manager,vex.meli.questions manager,model_vex_meli_questions,base.group_system,1,1,1,1
+access_product_export_wizard_user,access.product.export.wizard.user,model_product_export_wizard,base.group_user,1,1,1,1
+access_product_export_wizard_manager,access.product.export.wizard.manager,model_product_export_wizard,base.group_system,1,1,1,1
+access_product_channel_user,product.channel user,model_product_channel,base.group_user,1,1,1,1
+access_product_channel_manager,product.channel manager,model_product_channel,base.group_system,1,1,1,1
+
+access_trend_wizard,trend.wizard,model_trend_wizard,,1,1,1,1
+access_trend_wizard_line,trend.wizard.line,model_trend_wizard_line,,1,1,1,1

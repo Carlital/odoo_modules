@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!--Account Move lines-->
+        <record id="account_letter_payment_wizard_view" model="ir.ui.view">
+            <field name="name">Register Payment</field>
+            <field name="model">account.letter.payment.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Register Payment">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="letter_id" invisible="1" />
+                                <field name="company_id" invisible="1" />
+                                <label for="amount" />
+                                <div name="amount_div" class="o_row">
+                                    <field name="amount" />
+                                    <field name="currency_id" />
+                                </div>
+                                <field name="journal_id"/>
+                                <field name="payment_date" />
+                                <field name="communication" />
+                            </group>
+                        </group>
+                    </sheet>
+                    <footer>
+                        <button string="Validate" name="validate" type="object" class="btn-primary" />
+                        <button string="Cancel" class="btn-secondary" special="cancel" />
+                    </footer>
+                </form>
+
+            </field>
+        </record>
+
+    </data>
+</odoo>

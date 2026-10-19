@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Vista de formulario para product.template -->
+    <record id="product_template_form_view_conversion" model="ir.ui.view">
+        <field name="name">product.template.form.conversion</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_form_view" />
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='inventory']" position="inside">
+                <group string="Conversión de Unidades" name="conversion_group">
+                    <field name="is_convertible_to_meter" />
+                    <field name="conversion_ratio"
+                        invisible="not is_convertible_to_meter"
+                        required="is_convertible_to_meter" />
+                    <field name="meter_counterpart_product_id"
+                        invisible="not is_convertible_to_meter"
+                        required="is_convertible_to_meter"
+                        domain="[('id', '!=', id)]" />
+                    <field name="stock_in_meters"
+                        invisible="not is_convertible_to_meter"
+                        readonly="1" />
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Vista de lista para product.template -->
+    <record id="product_template_tree_view_conversion" model="ir.ui.view">
+        <field name="name">product.template.tree.conversion</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_tree_view" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='qty_available']" position="after">
+                <field name="is_convertible_to_meter" optional="hide" />
+                <field name="stock_in_meters" optional="hide" />
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Vista de búsqueda para product.template -->
+    <record id="product_template_search_view_conversion" model="ir.ui.view">
+        <field name="name">product.template.search.conversion</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_search_view" />
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='categ_id']" position="after">
+                <separator />
+                <filter string="Convertibles a Metro" name="convertible_to_meter"
+                    domain="[('is_convertible_to_meter', '=', True)]" />
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Menú para productos convertibles -->
+    <record id="action_product_convertible" model="ir.actions.act_window">
+        <field name="name">Productos Convertibles</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">product.template</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('is_convertible_to_meter', '=', True)]</field>
+        <field name="context">{'search_default_convertible_to_meter': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                ¡Crea tu primer producto convertible!
+            </p>
+            <p>
+                Los productos convertibles son aquellos que se compran en unidades de peso
+                pero se venden en unidades de longitud (metros lineales).
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="menu_product_convertible"
+        name="Productos Convertibles"
+        parent="stock.menu_stock_inventory_control"
+        action="action_product_convertible"
+        sequence="15" />
+
+</odoo>

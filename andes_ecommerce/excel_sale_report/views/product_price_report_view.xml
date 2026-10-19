@@ -1,0 +1,14 @@
+<odoo>
+    <record id="action_product_price_report" model="ir.actions.act_window">
+        <field name="name">Product Price Report</field>
+        <field name="res_model">product.price.report.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem id="menu_product_price_report" 
+              name="Product Price Report"
+              parent="sale.menu_sale_report"
+              action="action_product_price_report"
+              sequence="50"/>
+</odoo>

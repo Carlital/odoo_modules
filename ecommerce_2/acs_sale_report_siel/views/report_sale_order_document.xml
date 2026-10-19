@@ -1,0 +1,285 @@
+<odoo>
+    <template id="report_sale_order_document_acs_siel" inherit_id="sale.report_saleorder_document">
+        <!-- 
+            Localizamos el bloque de la dirección de facturación y envío usando su condición t-if.
+            Luego, lo reemplazamos completamente con nuestro nuevo formato.
+        -->
+        <xpath expr="//t[@t-set='address']" position="replace">
+        </xpath>
+        <xpath expr="//t[@t-set='layout_document_title']" position="replace">
+            <t t-set="layout_document_title">
+                <span t-if="is_proforma">Pro-Forma Invoice # </span>
+                <span t-elif="doc.state in ['draft','sent']">Cotización # </span>
+                <span t-else="">Pedido # </span>
+                <span t-field="doc.name">SO0000</span>
+            </t>
+        </xpath>
+        <xpath
+            expr="//t[@t-if='doc.partner_shipping_id == doc.partner_invoice_id                              and doc.partner_invoice_id != doc.partner_id                              or doc.partner_shipping_id != doc.partner_invoice_id']"
+            position="replace">
+            <!-- Nuevo bloque de información del cliente -->
+            <style>
+                .table-sm,
+                .table-sm tbody,
+                .table-sm thead,
+                .table-sm td,
+                .table-sm th,
+                .table-sm tr {
+                border: 0 !important;
+                }
+                .o_table_boxed .table-sm:not(.o_ignore_layout_styling)::before {
+                border-radius: 10px;
+                }
+                body,
+                *{
+                font-size: 14px;
+                }
+            </style>
+            <table class="table table-sm" t-if="doc.partner_invoice_id">
+                <tr>
+                    <td>
+                        <t
+                            t-if="doc.partner_invoice_id.l10n_latam_identification_type_id.name == 'RUC'">
+                            <strong>RAZÓN SOCIAL:</strong>
+                        </t>
+                        <t
+                            t-if="doc.partner_invoice_id.l10n_latam_identification_type_id.name != 'RUC'">
+                            <strong>NOMBRE:</strong>
+                        </t>
+                    </td>
+                    <td colspan="5">
+                        <span t-field="doc.partner_invoice_id.name" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>RUC/DNI:</strong>
+                    </td>
+                    <td>
+                        <span t-field="doc.partner_invoice_id.vat" />
+                    </td>
+                    <td style="text-align:right;padding-right:10px">
+                        <strong t-if="doc.partner_invoice_id.mobile">CELULAR:</strong>
+                    </td>
+                    <td>
+                        <span t-field="doc.partner_invoice_id.mobile" />
+                    </td>
+                    <td style="text-align:right;padding-right:10px">
+                        <strong t-if="doc.partner_invoice_id.email">E-MAIL:</strong>
+                    </td>
+                    <td>
+                        <span t-field="doc.partner_invoice_id.email" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>DIRECCIÓN:</strong>
+                    </td>
+                    <td colspan="5">
+                        <span t-esc="doc.partner_id.street" />
+                        <br />
+                        <span
+                            t-esc="', '.join(filter(None, [doc.partner_id.l10n_pe_district.name,doc.partner_id.city_id.name,doc.partner_id.state_id.name,doc.partner_id.country_id.name]))" />
+                    </td>
+                </tr>
+            </table>
+        </xpath>
+        <xpath
+            expr="//div[@id='informations']"
+            position="replace">
+            <div class="row mb-4" id="informations">
+                <div t-if="doc.date_order" class="col" name="informations_date">
+                    <strong t-if="is_proforma">Issued Date</strong>
+                    <strong t-elif="doc.state in ['draft', 'sent']">FECHA</strong>
+                    <strong t-else="">FECHA DE PEDIDO</strong>
+                    <div t-field="doc.date_order" t-options="{&quot;widget&quot;: &quot;date&quot;}" />
+                </div>
+                <div t-if="doc.user_id.name" class="col">
+                    <strong>ATENDIDO POR</strong>
+                    <div t-field="doc.user_id">Mitchell Admin</div>
+                </div>
+                <div t-if="doc.validity_date and doc.state in ['draft', 'sent']" class="col"
+                    name="expiration_date">
+                    <strong>F. VENCIMIENTO</strong>
+                    <div t-field="doc.validity_date">2023-12-31</div>
+                </div>
+                <div t-if="doc.state not in ['draft', 'sent']" class="col"
+                    name="payment_term_id">
+                    <strong>PLAZO DE PAGO</strong>
+                    <div t-field="doc.payment_term_id">Pago Inmediato</div>
+                </div>
+                <div t-if="doc.client_order_ref" class="col" name="informations_reference">
+                    <strong>O. COMPRA</strong>
+                    <div t-field="doc.client_order_ref">SO0000</div>
+                </div>
+
+                <!-- <div class="col">
+                    <strong>MONEDA</strong>
+                    <div t-field="doc.currency_id.currency_unit_label">SOLES</div>
+                </div> -->
+            </div>
+        </xpath>
+        <xpath expr="//table[@class='o_has_total_table table o_main_table table-borderless']"
+            position="replace">
+            <style>
+                table.without-lines tbody tr td{
+                border-bottom: 0 !important;
+                padding-top: 3px !important;
+                padding-bottom: 3px !important;
+                }
+                table.without-lines thead tr th{
+                padding-top: 3px !important;
+                padding-bottom: 3px !important;
+                font-weight: 900 !important;
+                }
+            </style>
+            <table class="o_has_total_table table o_main_table table-borderless without-lines">
+                <!-- In case we want to repeat the header, remove "display: table-row-group" -->
+                <thead style="display: table-row-group">
+                    <tr>
+                        <th name="th_item" class="text-start">Nº</th>
+                        <th name="th_description" class="text-start">DESCRIPCIÓN</th>
+                        <th name="th_quantity" class="text-end text-nowrap">CANT.</th>
+                        <th name="th_priceunit" class="text-end text-nowrap">P. UNIT (SIN IGV)</th><!--
+                        <th name="th_discount" t-if="display_discount" class="text-end">
+                            <span>Disc.%</span>
+                        </th>
+                        <th name="th_taxes" class="text-end">Taxes</th>-->
+                        <th name="th_subtotal" class="text-end">
+                            <span>MONTO (SIN IGV)</span>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody class="sale_tbody">
+                    <t t-set="item" t-value="0" />
+                    <t t-set="current_subtotal" t-value="0" />
+                    <t t-foreach="lines_to_report" t-as="line">
+                        <t t-set="current_subtotal" t-value="current_subtotal + line.price_subtotal" />
+
+                        <tr
+                            t-att-class="'fw-bold o_line_section' if line.display_type == 'line_section' or line.product_type == 'combo' else 'fst-italic o_line_note' if line.display_type == 'line_note' else ''">
+                            <t t-if="not line.display_type and line.product_type != 'combo'">
+                                <td class="text-center">
+                                    <t t-set="item" t-value="item + 1" />
+                                    <span t-esc="item" />
+                                </td>
+                                <td name="td_name">
+                                    <span t-field="line.name">Bacon Burger</span>
+                                </td>
+                                <td name="td_quantity" class="o_td_quantity text-end">
+                                    <span t-field="line.product_uom_qty" class="text-nowrap">3</span>
+                                    <span t-field="line.product_uom">units</span>
+                                    <span t-if="line.product_packaging_id"> (<span
+                                            t-field="line.product_packaging_qty"
+                                            t-options="{&quot;widget&quot;: &quot;integer&quot;}" /> <span
+                                            t-field="line.product_packaging_id" />) </span>
+                                </td>
+                                <td name="td_priceunit" class="text-end text-nowrap">
+                                    <span t-field="line.sale_order_line_pdesc">3</span>
+                                </td><!--
+                                <td t-if="display_discount" class="text-end">
+                                    <span t-field="line.discount">-</span>
+                                </td>
+                                <t t-set="taxes"
+                                    t-value="', '.join([(tax.invoice_label or tax.name) for tax in line.tax_id])" />
+                                <td name="td_taxes"
+                                    t-attf-class="text-end {{ 'text-nowrap' if len(taxes) &lt; 10 else '' }}">
+                                    <span t-out="taxes">Tax 15%</span>
+                                </td>-->
+                                <td t-if="not line.is_downpayment" name="td_subtotal"
+                                    class="text-end o_price_total">
+                                    <span t-field="line.price_subtotal">27.00</span>
+                                </td>
+                            </t>
+                            <t
+                                t-elif="line.display_type == 'line_section' or line.product_type == 'combo'">
+                                <td name="td_section_line" colspan="99">
+                                    <span t-field="line.name">A section title</span>
+                                </td>
+                                <t t-set="current_section" t-value="line" />
+                                <t t-set="current_subtotal" t-value="0" />
+                            </t>
+                            <t t-elif="line.display_type == 'line_note'">
+                                <td name="td_note_line" colspan="99">
+                                    <span t-field="line.name">A note, whose content usually applies
+                                        to the section or product above.</span>
+                                </td>
+                            </t>
+                        </tr>
+
+                        <t
+                            t-if="current_section and ( line_last or lines_to_report[line_index+1].display_type == 'line_section' or lines_to_report[line_index+1].product_type == 'combo' or ( line.combo_item_id and not lines_to_report[line_index+1].combo_item_id)) and not line.is_downpayment">
+                            <t t-set="current_section" t-value="None" />
+                            <tr class="is-subtotal text-end">
+                                <td name="td_section_subtotal" colspan="99">
+                                    <strong class="mr16">Subtotal</strong>
+                                    <span t-out="current_subtotal"
+                                        t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: doc.currency_id}">
+                                        31.05</span>
+                                </td>
+                            </tr>
+                        </t>
+                    </t>
+                </tbody>
+            </table>
+        </xpath>
+        <xpath expr="//span[@t-field='doc.note']"
+            position="after">
+            <div class="row mt-4">
+                <table class="table table-borderless table-ctas-banks without-lines"
+                    style="width: 70%; page-break-inside: avoid;text-transform: uppercase;">
+                    <thead>
+                        <tr class="text-center" style="text-align: center;">
+                            <th style="text-align: center;">BANCO</th>
+                            <th style="text-align: center;">Nº DE CUENTA</th>
+                            <th style="text-align: center;">CÓDIGO DE CUENTA CCI</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="border-top:1px solid #000 !important">
+                            <td>
+                                <!--<img
+                            t-att-src="'/acs_sale_extra_calcs/static/src/img/BCP.png'"
+                            style="height;auto; max-width: 150px;" alt="BCP"/>--> BCP (S/.) </td>
+                            <td>305-1201546-0-35</td>
+                            <td>002-305-001201546035-10</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <!--<img
+                            t-att-src="'/acs_sale_extra_calcs/static/src/img/BCP.png'"
+                            style="height;auto; max-width: 150px;" alt="BCP"/>--> BCP ($) </td>
+                            <td>305-1188805-1-47</td>
+                            <td>002-305-001188805147-18</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <!--<img
+                            t-att-src="'/acs_sale_extra_calcs/static/src/img/BBVA.png'"
+                            style="height;auto; max-width: 150px;" alt="BBVA"/>--> SCOTIABANK (S/.) </td>
+                            <td>000-9064621</td>
+                            <td>009-409-000009064621-47</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <!--<img
+                            t-att-src="'/acs_sale_extra_calcs/static/src/img/BBVA.png'"
+                            style="height;auto; max-width: 150px;" alt="BBVA"/>--> BBVA (S/.) </td>
+                            <td>0011-0285-0100084342</td>
+                            <td>0011-0285-0100084342-43</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <!--<img
+                            t-att-src="'/acs_sale_extra_calcs/static/src/img/BN.png'"
+                            style="height;auto; max-width: 150px;" alt="Banco de la Nación"/>--> B. Nación M.N (S/.) </td>
+                            <td colspan="3">Cuenta de Detracciones Nº 00-231-111433</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </xpath>
+        <xpath expr="//p[@t-if='not is_html_empty(doc.payment_term_id.note)']" position="replace">
+        </xpath>
+    </template>
+</odoo>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="invoice_report_wizard" model="ir.ui.view">
+        <field name="name">Invoice Report</field>
+        <field name="model">pe.invoice.report.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+                <group name="main_info">
+                    <field name="company_id" options="{'no_create': True}" groups="base.group_multi_company"/>
+                </group>
+                <group name="filters">
+                    <group name="date_range">
+                        <field name="start_date"/>
+                        <field name="end_date"/>
+                    </group>
+                    <group name="other_filters">
+                        <field name="partner_ids" widget="many2many_tags" options="{'no_create': True}" />
+                        <field name="user_ids" widget="many2many_tags" options="{'no_create': True}" />
+                    </group>
+
+                </group>
+                <footer>
+                    <button name="button_export_xlsx_sunat" string="Export Sunat XLSX" type="object" class="oe_highlight"/>
+                    or
+                    <button string="Cancel" class="oe_link" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!--act_window id="action_invoice_report_wizard"
+                name="invoice Report"
+                res_model="pe.invoice.report.wizard"
+                view_type="form"
+                view_mode="form"
+                view_id="invoice_report_wizard"
+                target="new" /-->
+
+    <record id="action_invoice_report_wizard" model="ir.actions.act_window">
+        <field name="name">invoice Report</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">pe.invoice.report.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="invoice_report_wizard"/>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem name="Invoice Report" id="account_invoice_report_wizard_menu" parent="account.account_reports_management_menu"
+      action="l10n_pe_report.action_invoice_report_wizard" sequence="10" />
+
+</odoo>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="l10n_pe_cpe_form.model_pe_query_cpe_form" model="ir.model">
+      <field name="website_form_key">pe_query_cpe_form</field>
+      <field name="website_form_access">True</field>
+      <field name="website_form_label">Search CPE</field>
+    </record>
+
+    <function model="ir.model.fields" name="formbuilder_whitelist">
+      <value>pe.query.cpe.form</value>
+      <value eval="[
+        'vat',
+        'number',
+        'invoice_date',
+        'amount',
+        'invoice_id',
+        'document_type_code'
+        ]"/>
+    </function>
+</odoo>

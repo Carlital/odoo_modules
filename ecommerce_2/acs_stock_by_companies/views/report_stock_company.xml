@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="report_stock_by_company">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <t t-foreach="docs" t-as="doc">
+                    <div class="page">
+                        <div>
+                            <div>
+                                <p style="font-size: 16px;">
+                                    <span style="font-weight: bold;">Usuario:</span>
+                                    <t t-esc="doc.user_id.name" />
+                                </p>
+                            </div>
+                            <div>
+                                <p style="font-size: 16px;">
+                                    <span style="font-weight: bold;">Fecha:</span>
+                                    <t t-esc="doc.date.strftime('%d/%m/%Y')" />
+                                </p>
+                            </div>
+                        </div>
+                        <div>
+                            <t t-set="company_ids" t-value="doc._get_companies()"/>
+                            <t t-set="locations" t-value="doc._get_location_by_company_order()"/>
+                            <t t-set="products" t-value="doc._fill_products_quant()"/>
+
+                            <table style="width:100%">
+                                <tr>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <t t-if="doc.has_categories">
+                                        <th></th>
+                                    </t>
+                                    <t t-if="doc.has_brands">
+                                        <th></th>
+                                    </t>
+                                    <th></th>
+                                    <t t-if="doc.has_countries ">
+                                        <th></th>
+                                    </t>
+                                    <t t-foreach="company_ids" t-as="line">
+                                        <th t-att-colspan="company_ids[line]['tam']">
+                                            <t t-esc="company_ids[line]['name']"/>
+                                        </th>
+                                    </t>
+                                </tr>
+                                <tr>
+                                    <th>Notas Internas</th>
+                                    <th>Producto</th>
+                                    <th>Proveedor</th>
+
+                                    <!-- si hay marcas imprime-->
+                                    <t t-if="doc.has_categories">
+                                        <th>Categoria</th>
+                                    </t>
+                                    <t t-if="doc.has_brands">
+                                        <th>Marca</th>
+                                    </t>
+                                    <th>Código de Barras</th>
+                                    <t t-if="doc.has_countries ">
+                                        <th>Pais de Procendencia</th>
+                                    </t>
+                                    <t t-foreach="locations" t-as="location">
+                                        <th>
+                                            <t t-esc="locations[location]"/>
+                                        </th>
+                                    </t>
+                                </tr>
+                                <t t-foreach="products" t-as="product">
+                                    <tr style="font-size: 10px;">
+                                        <td >
+                                            <t t-esc="products[product]['internal_note']"/>
+                                        </td>
+                                        <td style="padding: 2px;">
+                                            <t t-esc="products[product]['product_name']"/>
+
+                                            <t t-if="products[product]['variant_name']">
+                                                <span>- Variante</span>
+                                                <span>
+                                                    <t t-esc="products[product]['variant_name']"/>
+                                                </span>
+                                            </t>
+
+                                        </td>
+                                        <td style="padding: 2px;">
+                                            <t t-if="products[product]['supplier_num']">
+                                                <t t-if="not products[product]['supplier']">
+                                                    <span>Sin Proveedor</span>
+                                                </t>
+                                                <t t-if="products[product]['supplier']">
+                                                    <t t-esc="products[product]['supplier']"/>
+                                                </t>
+                                            </t>
+                                        </td>
+                                        <t t-if="doc.has_categories">
+                                            <td style="padding: 2px;">
+                                                <t t-esc="products[product]['category']"/>
+                                            </td>
+                                        </t>
+                                        <t t-if="doc.has_brands">
+                                            <td style="padding: 2px;">
+                                                <t t-esc="products[product]['brand']"/>
+                                            </td>
+                                        </t>
+                                        <td style="padding: 2px;">
+                                            <t t-esc="products[product]['barcode']"/>
+                                        </td>
+                                        <t t-if="doc.has_countries">
+                                            <td style="padding: 2px;">
+                                                <t t-esc="products[product]['paises']"/>
+                                            </td>
+                                        </t>
+                                        <t t-foreach="products[product]['valores']" t-as="valor">
+                                            <td style="padding: 2px;">
+                                                <t t-esc="valor if valor > 0 else 0"/>
+                                            </td>
+                                        </t>
+                                    </tr>
+                                </t>
+                            </table>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+</odoo>
